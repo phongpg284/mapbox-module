@@ -7,6 +7,10 @@ const polygonFillOpacity = 0.7;
 const lineColor = "#ff5050";
 const lineWidth = 3.5;
 
+
+let fieldData;
+fieldData = JSON.parse(localStorage.getItem("fields"));
+
 mapboxgl.accessToken = accessToken;
 
 const map = new mapboxgl.Map({
@@ -154,6 +158,32 @@ const draw = new MapboxDraw({
   ],
 });
 map.addControl(draw);
+map.on("load", () => {
+  map.addLayer({
+    id: "defaultFill",
+    type: "fill",
+    source: {
+      type: "geojson",
+      data: fieldData,
+    },
+    paint: {
+      "fill-color": polygonFillColor,
+      "fill-opacity": polygonFillOpacity,
+    },
+  });
+  map.addLayer({
+    id: "defaultLine",
+    type: "line",
+    source: {
+      type: "geojson",
+      data: fieldData,
+    },
+    paint: {
+      "line-color": lineColor,
+      "line-width": lineWidth,
+    },
+  });
+});
 
 map.on("draw.create", updateArea);
 map.on("draw.delete", updateArea);
@@ -161,7 +191,14 @@ map.on("draw.update", updateArea);
 
 function updateArea(e) {
   const data = draw.getAll();
-  console.log(data);
+  if (fieldData) {
+    var newGeoJSON = {
+      type: "FeatureCollection",
+      features: [...fieldData.features, ...data.features],
+    };
+    localStorage.setItem("fields", JSON.stringify(newGeoJSON));
+  } else localStorage.setItem("fields", JSON.stringify(data));
+
   const answer = document.getElementById("calculated-area");
   if (data.features.length > 0) {
     const area = turf.area(data);

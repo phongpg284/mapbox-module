@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongodb": "^4.1.0"
   },
   "name": "mapbox",
   "version": "1.0.0",
