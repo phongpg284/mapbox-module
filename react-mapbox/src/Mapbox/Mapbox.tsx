@@ -1,16 +1,23 @@
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
+import DrawControl from "react-mapbox-gl-draw";
 import "mapbox-gl/dist/mapbox-gl.css";
-
-const accessToken =
-  "pk.eyJ1IjoidHB3Mjg0IiwiYSI6ImNrc2VrYnk0bjExaWIybnJveGFtOGV0eDAifQ.pSJ4eAaCbdrjhzmqXMRK_A";
+import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
+import { styles } from "./style";
+import { accessToken, defaultCenter, defaultZoom} from "./config";
 
 const Map = ReactMapboxGl({
   accessToken: accessToken,
 });
 
-// in render()
-
 const Mapbox = () => {
+  const onDrawCreate = ({ features }: any) => {
+    console.log(features);
+  };
+
+  const onDrawUpdate = ({ features }: any) => {
+    console.log(features);
+  };
+
   return (
     <Map
       style="mapbox://styles/mapbox/satellite-v9"
@@ -18,10 +25,13 @@ const Mapbox = () => {
         height: "100vh",
         width: "100vw",
       }}
+      center={defaultCenter}
+      zoom={defaultZoom}
     >
-      <Layer type="symbol" id="marker" layout={{ "icon-image": "marker-15" }}>
+      {/* <Layer type="symbol" id="marker" layout={{ "icon-image": "marker-15" }}>
         <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
-      </Layer>
+      </Layer> */}
+      <DrawControl onDrawCreate={onDrawCreate} onDrawUpdate={onDrawUpdate} styles={styles}/>
     </Map>
   );
 };
