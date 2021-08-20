@@ -20,6 +20,17 @@ const map = new mapboxgl.Map({
   zoom: 12, // starting zoom
 });
 
+map.addControl(new mapboxgl.GeolocateControl({
+  positionOptions: {
+      enableHighAccuracy: true
+  },
+  trackUserLocation: true,
+  showUserHeading: true
+}), "bottom-right");
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+map.addControl(new mapboxgl.FullscreenControl({container: document.querySelector('body')}), "bottom-right");
+
+
 const draw = new MapboxDraw({
   displayControlsDefault: false,
   // Select which mapbox-gl-draw control buttons to add to the map.
@@ -157,7 +168,7 @@ const draw = new MapboxDraw({
     },
   ],
 });
-map.addControl(draw);
+map.addControl(draw,"bottom-right");
 map.on("load", () => {
   map.addLayer({
     id: "defaultFill",
@@ -191,6 +202,7 @@ map.on("draw.update", updateArea);
 
 function updateArea(e) {
   const data = draw.getAll();
+  console.log("data", data)
   if (fieldData) {
     var newGeoJSON = {
       type: "FeatureCollection",

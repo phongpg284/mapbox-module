@@ -6,10 +6,9 @@ var db;
 const app = express();
 app.use(express.static("src"));
 
-MongoClient.connect("mongodb://localhost:27017/mapbox", function (err, db) {
-  if (err) throw new Error(err);
-  db = db;
-  app.listen(port, () => console.log(`Connect success port ${port}`));
-});
+// MongoClient.connect("mongodb://localhost:27017/mapbox", function (err, db) {
+//   if (err) throw new Error(err);
+//   db = db;
+// });
 
-
+app.listen(port, () => console.log(`Connect success port ${port}`));

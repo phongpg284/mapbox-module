@@ -10,3 +10,12 @@ export const polygonFillOpacity = 0.7;
 export const lineColor = "#ff5050";
 export const lineWidth = 3.5;
 
+export const fillPaint = {
+  "fill-color": polygonFillColor,
+  "fill-opacity": polygonFillOpacity,
+};
+
+export const linePaint = {
+  "line-color": lineColor,
+  "line-width": lineWidth,
+};
