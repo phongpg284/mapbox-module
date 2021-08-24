@@ -4,7 +4,11 @@ import "./style.css";
 
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { render } from "react-dom";
-import { FullscreenControl, GeolocateControl, NavigationControl } from "mapbox-gl";
+import {
+  FullscreenControl,
+  GeolocateControl,
+  NavigationControl,
+} from "mapbox-gl";
 import ReactMapboxGl, { Layer, Source } from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import { styles } from "./style";
@@ -19,8 +23,14 @@ import {
 } from "./config";
 
 type LayerType = "streets-v11" | "satellite-v9" | "light-v10" | "dark-v10";
+interface IProps {
+  height?: string;
+  width?: string;
+  maxHeight?: string;
+  maxWidth?: string;
+}
 
-const Mapbox = forwardRef((props, ref) => {
+const Mapbox: any = forwardRef<any, IProps>(({ ...props }, ref) => {
   let drawRef: any;
   const [visibleLayer, setVisibleLayer] = useState<LayerType>("satellite-v9");
   const mapboxInstance = useRef(null);
@@ -120,7 +130,9 @@ const Mapbox = forwardRef((props, ref) => {
     );
     mapbox.addControl(new NavigationControl(), "bottom-right");
     mapbox.addControl(
-      new FullscreenControl({ container: document.querySelector("body") }),
+      new FullscreenControl({
+        container: document.querySelector(".mapboxgl-map") as any,
+      }),
       "bottom-right"
     );
     mapbox.addControl(new LayerControl(), "top-right");
@@ -154,8 +166,10 @@ const Mapbox = forwardRef((props, ref) => {
       <Map
         style={`mapbox://styles/mapbox/${visibleLayer}`}
         containerStyle={{
-          height: "80vh",
-          width: "80vw",
+          height: props.height ? props.height : "100vh",
+          width: props.width ? props.width : "100vw",
+          maxWidth: props.maxWidth ? props.maxWidth : "100%",
+          maxHeight: props.maxHeight ? props.maxHeight : "100%",
         }}
         center={defaultCenter}
         zoom={defaultZoom}
@@ -183,16 +197,18 @@ const Mapbox = forwardRef((props, ref) => {
           )}
         </div>
 
-        <DrawControl
-          ref={(drawControl) => (drawRef = drawControl)}
-          displayControlsDefault={false}
-          controls={{ polygon: true, trash: true }}
-          default_mode="draw_polygon"
-          onDrawCreate={onDrawCreate}
-          onDrawUpdate={onDrawUpdate}
-          styles={styles}
-          position="bottom-right"
-        />
+        {mapboxInstance && (
+          <DrawControl
+            ref={(drawControl) => (drawRef = drawControl)}
+            displayControlsDefault={false}
+            controls={{ polygon: true, trash: true }}
+            default_mode="draw_polygon"
+            onDrawCreate={onDrawCreate}
+            onDrawUpdate={onDrawUpdate}
+            styles={styles}
+            position="bottom-right"
+          />
+        )}
       </Map>
     </div>
   );

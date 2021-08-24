@@ -1,9 +1,28 @@
+.container {
+    margin: 15px;
+}
 .content {
+    /* border: solid 5px; */
+    margin-bottom: 20px;
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
+.create-input {
+    width: 40vw;
+}
+
 .create-form {
     display: flex;
+}
+
+.submit-buttons{
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+.ant-button {
+    margin-left: 5px;
 }

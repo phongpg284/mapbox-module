@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "antd": "^4.16.13",
     "express": "^4.17.1",
     "mongodb": "^4.1.0"
   },
@@ -7,6 +8,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {
+    "@types/react": "^17.0.19",
     "nodemon": "^2.0.12"
   },
   "scripts": {
