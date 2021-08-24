@@ -1,12 +1,11 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
-import { forwardRef, useImperativeHandle } from "react";
-import ReactMapboxGl, {
-  Layer,
-  RotationControl,
-  Source,
-  ZoomControl,
-} from "react-mapbox-gl";
+import "./style.css";
+
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import { render } from "react-dom";
+import { FullscreenControl, GeolocateControl, NavigationControl } from "mapbox-gl";
+import ReactMapboxGl, { Layer, Source } from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import { styles } from "./style";
 import {
@@ -14,17 +13,18 @@ import {
   defaultCenter,
   defaultZoom,
   fillPaint,
-  lineColor,
   linePaint,
-  lineWidth,
-  polygonFillColor,
-  polygonFillOpacity,
+  showFieldDisplay,
+  showLineDisplay,
 } from "./config";
-import { FullscreenControl, GeolocateControl, NavigationControl } from "mapbox-gl";
+
+type LayerType = "streets-v11" | "satellite-v9" | "light-v10" | "dark-v10";
 
 const Mapbox = forwardRef((props, ref) => {
   let drawRef: any;
-  // let mapDidLoad;
+  const [visibleLayer, setVisibleLayer] = useState<LayerType>("satellite-v9");
+  const mapboxInstance = useRef(null);
+
   const fieldData = localStorage.getItem("fields");
   let JSONData = "";
   if (fieldData) JSONData = JSON.parse(fieldData);
@@ -37,17 +37,94 @@ const Mapbox = forwardRef((props, ref) => {
     accessToken: accessToken,
   });
 
-  const mapDidLoad = (mapbox: any) => {
-    mapbox.addControl(new GeolocateControl({
-      positionOptions: {
-          enableHighAccuracy: true
-      },
-      trackUserLocation: true,
-      showUserHeading: true
-    }), "bottom-right");
-    mapbox.addControl(new NavigationControl(), 'bottom-right')
-    mapbox.addControl(new FullscreenControl({container: document.querySelector('body')}), "bottom-right");
+  const handleChangeLayer = (e: any) => {
+    setVisibleLayer(e.target.id);
+  };
+
+  const menu = (
+    <div className="layers">
+      <div className="layer-option">
+        <input
+          id="satellite-v9"
+          type="radio"
+          name="rtoggle"
+          value="satellite"
+          onClick={handleChangeLayer}
+          checked={visibleLayer === "satellite-v9"}
+        ></input>
+        <label className="layer-label">satellite</label>
+      </div>
+      <div className="layer-option">
+        <input
+          id="light-v10"
+          type="radio"
+          name="rtoggle"
+          value="light"
+          onClick={handleChangeLayer}
+          checked={visibleLayer === "light-v10"}
+        ></input>
+        <label className="layer-label">light</label>
+      </div>
+      <div className="layer-option">
+        <input
+          id="dark-v10"
+          type="radio"
+          name="rtoggle"
+          value="dark"
+          onClick={handleChangeLayer}
+          checked={visibleLayer === "dark-v10"}
+        ></input>
+        <label className="layer-label">dark</label>
+      </div>
+      <div className="layer-option">
+        <input
+          id="streets-v11"
+          type="radio"
+          name="rtoggle"
+          value="streets"
+          onClick={handleChangeLayer}
+          checked={visibleLayer === "streets-v11"}
+        ></input>
+        <label className="layer-label">streets</label>
+      </div>
+    </div>
+  );
+  class LayerControl {
+    _map: any;
+    _container: any;
+    onAdd(map: any) {
+      this._map = map;
+      this._container = document.createElement("div");
+      this._container.className = "mapboxgl-ctrl";
+      render(menu, this._container);
+      return this._container;
+    }
+
+    onRemove() {
+      this._container.parentNode.removeChild(this._container);
+      this._map = undefined;
+    }
   }
+
+  const mapDidLoad = (mapbox: any) => {
+    mapboxInstance.current = mapbox;
+    mapbox.addControl(
+      new GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
+      }),
+      "bottom-right"
+    );
+    mapbox.addControl(new NavigationControl(), "bottom-right");
+    mapbox.addControl(
+      new FullscreenControl({ container: document.querySelector("body") }),
+      "bottom-right"
+    );
+    mapbox.addControl(new LayerControl(), "top-right");
+  };
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -75,23 +152,36 @@ const Mapbox = forwardRef((props, ref) => {
   return (
     <div>
       <Map
-        style="mapbox://styles/mapbox/satellite-v9"
+        style={`mapbox://styles/mapbox/${visibleLayer}`}
         containerStyle={{
-          height: "100vh",
-          width: "100vw",
+          height: "80vh",
+          width: "80vw",
         }}
         center={defaultCenter}
         zoom={defaultZoom}
         onStyleLoad={mapDidLoad}
       >
-        <Source id="source_id" geoJsonSource={dataSource} />
-        <Layer
-          type="fill"
-          id="polygon-fill"
-          sourceId="source_id"
-          paint={fillPaint}
-        />
-        <Layer type="line" id="lines" sourceId="source_id" paint={linePaint} />
+        <div className="data-display">
+          {(showFieldDisplay || showLineDisplay) && (
+            <Source id="source_id" geoJsonSource={dataSource} />
+          )}
+          {showFieldDisplay && (
+            <Layer
+              type="fill"
+              id="polygon-fill"
+              sourceId="source_id"
+              paint={fillPaint}
+            />
+          )}
+          {showLineDisplay && (
+            <Layer
+              type="line"
+              id="lines"
+              sourceId="source_id"
+              paint={linePaint}
+            />
+          )}
+        </div>
 
         <DrawControl
           ref={(drawControl) => (drawRef = drawControl)}
@@ -101,7 +191,7 @@ const Mapbox = forwardRef((props, ref) => {
           onDrawCreate={onDrawCreate}
           onDrawUpdate={onDrawUpdate}
           styles={styles}
-          position= "bottom-right"
+          position="bottom-right"
         />
       </Map>
     </div>

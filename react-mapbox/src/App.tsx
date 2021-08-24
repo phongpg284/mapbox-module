@@ -1,21 +1,22 @@
-import React, { useRef, useState } from "react";
-import logo from "./logo.svg";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
-import Mapbox from "./Mapbox";
+import FieldCreate from "./FieldCreate";
+import LocalSaveMapbox from "./LocalSaveMapbox";
 
 function App() {
-  const mapRef = useRef()
-  const [fieldData, setFieldData] = useState<any>();
-  const handleSubmit = () => {
-    (mapRef.current as any).saveData()
-  };
-
   return (
     <div className="App">
-      <div className="App-header">
-        <button onClick={handleSubmit}>Submit</button>
-        <Mapbox ref={mapRef}/>
-      </div>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/local">
+              <LocalSaveMapbox />
+            </Route>
+
+            <Route exact path="/create">
+              <FieldCreate />
+            </Route>
+          </Switch>
+        </BrowserRouter>
     </div>
   );
 }
