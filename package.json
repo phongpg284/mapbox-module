@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "antd": "^4.16.13",
     "express": "^4.17.1",
     "mongodb": "^4.1.0"
   },

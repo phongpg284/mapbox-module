@@ -12,7 +12,7 @@ function App() {
               <LocalSaveMapbox />
             </Route>
 
-            <Route exact path="/create">
+            <Route exact path="/">
               <FieldCreate />
             </Route>
           </Switch>

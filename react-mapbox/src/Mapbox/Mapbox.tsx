@@ -11,23 +11,27 @@ import {
 } from "mapbox-gl";
 import ReactMapboxGl, { Layer, Source } from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
-import { styles } from "./style";
+import { defaultDrawStyles } from "./style";
 import {
-  accessToken,
+  defaultAccessToken,
   defaultCenter,
+  defaultFillPaint,
+  defaultLinePaint,
+  defaultShowFieldDisplay,
+  defaultShowLineDisplay,
   defaultZoom,
-  fillPaint,
-  linePaint,
-  showFieldDisplay,
-  showLineDisplay,
 } from "./config";
 
 type LayerType = "streets-v11" | "satellite-v9" | "light-v10" | "dark-v10";
 interface IProps {
+  accessToken?: string;
   height?: string;
   width?: string;
   maxHeight?: string;
   maxWidth?: string;
+  data?: any;
+  drawStyles?: any;
+  displayStyles?: any;
 }
 
 const Mapbox: any = forwardRef<any, IProps>(({ ...props }, ref) => {
@@ -35,16 +39,13 @@ const Mapbox: any = forwardRef<any, IProps>(({ ...props }, ref) => {
   const [visibleLayer, setVisibleLayer] = useState<LayerType>("satellite-v9");
   const mapboxInstance = useRef(null);
 
-  const fieldData = localStorage.getItem("fields");
-  let JSONData = "";
-  if (fieldData) JSONData = JSON.parse(fieldData);
   const dataSource = {
     type: "geojson",
-    data: JSONData,
+    data: props.data? props.data : "",
   };
 
   const Map = ReactMapboxGl({
-    accessToken: accessToken,
+    accessToken: props.accessToken ? props.accessToken : defaultAccessToken,
   });
 
   const handleChangeLayer = (e: any) => {
@@ -139,17 +140,9 @@ const Mapbox: any = forwardRef<any, IProps>(({ ...props }, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    saveData() {
+    getDrawData() {
       const drawData = drawRef.draw.getAll();
-      let updateGeoJSONData;
-      const oldData = localStorage.getItem("fields");
-      if (oldData) {
-        updateGeoJSONData = {
-          type: "FeatureCollection",
-          features: [...JSON.parse(oldData).features, ...drawData.features],
-        };
-      } else updateGeoJSONData = drawData;
-      localStorage.setItem("fields", JSON.stringify(updateGeoJSONData));
+      return drawData
     },
   }));
 
@@ -176,23 +169,23 @@ const Mapbox: any = forwardRef<any, IProps>(({ ...props }, ref) => {
         onStyleLoad={mapDidLoad}
       >
         <div className="data-display">
-          {(showFieldDisplay || showLineDisplay) && (
+          {(defaultShowFieldDisplay || defaultShowLineDisplay) && (
             <Source id="source_id" geoJsonSource={dataSource} />
           )}
-          {showFieldDisplay && (
+          {defaultShowFieldDisplay && (
             <Layer
               type="fill"
               id="polygon-fill"
               sourceId="source_id"
-              paint={fillPaint}
+              paint={props.displayStyles?.fillPaint ? props.displayStyles?.fillPaint : defaultFillPaint}
             />
           )}
-          {showLineDisplay && (
+          {defaultShowLineDisplay && (
             <Layer
               type="line"
               id="lines"
               sourceId="source_id"
-              paint={linePaint}
+              paint={props.displayStyles?.linePaint ? props.displayStyles?.linePaint : defaultLinePaint}
             />
           )}
         </div>
@@ -205,7 +198,7 @@ const Mapbox: any = forwardRef<any, IProps>(({ ...props }, ref) => {
             default_mode="draw_polygon"
             onDrawCreate={onDrawCreate}
             onDrawUpdate={onDrawUpdate}
-            styles={styles}
+            styles={props.drawStyles? props.drawStyles : defaultDrawStyles}
             position="bottom-right"
           />
         )}

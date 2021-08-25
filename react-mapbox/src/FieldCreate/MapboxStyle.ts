@@ -1,6 +1,6 @@
-import { defaultLineColor, defaultLineWidth, defaultPolygonFillColor, defaultPolygonFillOpacity } from "./config"
+import { lineColor, lineWidth, polygonFillColor, polygonFillOpacity } from "./MapboxConfig"
 
-export const defaultDrawStyles = [
+export const drawStyles = [
   // ACTIVE (being drawn)
   // line stroke
   {
@@ -12,9 +12,9 @@ export const defaultDrawStyles = [
       "line-join": "round",
     },
     paint: {
-      "line-color": defaultLineColor,
+      "line-color": lineColor,
       // "line-dasharray": [0.2, 2],
-      "line-width": defaultLineWidth,
+      "line-width": lineWidth,
     },
   },
   // polygon fill
@@ -23,9 +23,9 @@ export const defaultDrawStyles = [
     type: "fill",
     filter: ["all", ["==", "$type", "Polygon"], ["!=", "mode", "static"]],
     paint: {
-      "fill-color": defaultPolygonFillColor,
-      "fill-outline-color": defaultPolygonFillColor,
-      "fill-opacity": defaultPolygonFillOpacity,
+      "fill-color": polygonFillColor,
+      "fill-outline-color": polygonFillColor,
+      "fill-opacity": polygonFillOpacity,
     },
   },
   // polygon mid points
@@ -49,9 +49,9 @@ export const defaultDrawStyles = [
       "line-join": "round",
     },
     paint: {
-      "line-color": defaultLineColor,
+      "line-color": lineColor,
       // "line-dasharray": [0.2, 2],
-      "line-width": defaultLineWidth,
+      "line-width": lineWidth,
     },
   },
   // vertex point halos
