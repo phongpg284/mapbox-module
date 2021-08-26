@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import FieldCreate from "./FieldCreate";
+import FieldPage from "./FieldPage";
 import LocalSaveMapbox from "./LocalSaveMapbox";
 
 function App() {
@@ -12,8 +13,12 @@ function App() {
               <LocalSaveMapbox />
             </Route>
 
-            <Route exact path="/">
+            <Route exact path="/create">
               <FieldCreate />
+            </Route>
+
+            <Route exact path="/">
+              <FieldPage />
             </Route>
           </Switch>
         </BrowserRouter>
