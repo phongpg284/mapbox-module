@@ -1,4 +1,4 @@
-import FieldList, { IFieldData } from "./FieldList/FieldList";
+import { FieldList, IFieldData } from "./FieldList";
 
 const FieldPage = () => {
 
@@ -13,7 +13,7 @@ const FieldPage = () => {
     console.log(fakeData)
     
   return (
-    <div>
+    <div className="bg-light" style={{height: "100vh",width: "100vw"}}>
       <div className="field-page">
         <FieldList data={fakeData} />
       </div>
