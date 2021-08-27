@@ -139,7 +139,7 @@ const FieldListItem = ({ data, deleteItem }: IFieldListItemProps) => {
 //   );
 // };
 
-export const FieldList = ({ data }: IFieldListProps) => {
+export const FieldList = ({ data }: Partial<IFieldListProps>) => {
   const history = useHistory();
 
   const [showConfirm, setShowConfirm] = useState(false);
@@ -148,7 +148,7 @@ export const FieldList = ({ data }: IFieldListProps) => {
 
   useEffect(() => {
     setTableData(
-      data.map((field) => {
+      data?.map((field) => {
         return {
           name: field.name,
           area: field.area,
@@ -158,12 +158,7 @@ export const FieldList = ({ data }: IFieldListProps) => {
       })
     );
   }, [data]);
-  // const tableData = data.map((field: IFieldData) => {
-  //   return {
-  //     name: field.name,
-  //     createdAt: new Date(field.createdAt).toDateString(),
-  //   };
-  // });
+
   const changeConfirmModal = () => {
     setShowConfirm(!showConfirm);
   };
@@ -244,11 +239,11 @@ export const FieldList = ({ data }: IFieldListProps) => {
     );
     setShowConfirm(false);
 
-    const newFieldData = data.filter((field: any) => {
+    const newFieldData = data?.filter((field: any) => {
       return field.name !== deleteItem.name;
     });
     setTableData(newFieldData);
-    deleteItem(data);
+    setDeleteItem(data);
   };
 
   return (
@@ -257,6 +252,9 @@ export const FieldList = ({ data }: IFieldListProps) => {
         <div>Field List</div>
         <div className="ms-4">
           <Button onClick={() => history.push("./create")}>Create Field</Button>
+        </div>
+        <div className="ms-4">
+          <Button onClick={() => history.push("./")}>Card View</Button>
         </div>
       </div>
       <div>

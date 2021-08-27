@@ -1,21 +1,25 @@
 import { FieldList, IFieldData } from "./FieldList";
 
-const FieldPage = () => {
-
-    // get fake data
-    let fakeData: IFieldData[] = [];
-    const fakeListField = JSON.parse(localStorage.getItem("fakeDB")!);
-    if(fakeListField)
+const FieldPage: React.FC = ({ children }: any) => {
+  // get fake data
+  let fakeData: IFieldData[] = [];
+  const fakeListField = JSON.parse(localStorage.getItem("fakeDB")!);
+  if (fakeListField)
     fakeListField.forEach((fakeDBInstance: string) => {
-        const fakeInstanceData = JSON.parse(localStorage.getItem(fakeDBInstance)!);
-        fakeData.push(fakeInstanceData)
-    })
-    console.log(fakeData)
-    
+      const fakeInstanceData = JSON.parse(
+        localStorage.getItem(fakeDBInstance)!
+      );
+      fakeData.push(fakeInstanceData);
+    });
+  console.log(fakeData);
   return (
-    <div className="bg-light" style={{height: "100vh",width: "100vw"}}>
-      <div className="field-page">
-        <FieldList data={fakeData} />
+    <div style={{ height: "100vh" }}>
+      <div
+        className="header"
+        style={{ height: "7%", backgroundColor: "#00a26a" }}
+      ></div>
+      <div className="bg-light" style={{ height: "100vh", width: "100vw" }}>
+        {children(fakeData)}
       </div>
     </div>
   );

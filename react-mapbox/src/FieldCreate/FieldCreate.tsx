@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 const FieldCreate = () => {
   const mapRef = useRef();
   const history = useHistory();
+  const accessToken ="pk.eyJ1IjoidHB3Mjg0IiwiYSI6ImNrc2VrYnk0bjExaWIybnJveGFtOGV0eDAifQ.pSJ4eAaCbdrjhzmqXMRK_A"
 
   // Get data from localstorage
   // const fieldData = localStorage.getItem("fields");
@@ -20,36 +21,47 @@ const FieldCreate = () => {
   const handleSubmit = (value: any) => {
     // TODO: CALL API SAVE TO DB
     // TODO: REDIRECT BACK TO MAIN
-    console.log(value);
+
+
     // get draw geoJson data
     const drawData = (mapRef.current as any).getDrawData();
+    console.log(drawData,"data")
+
     const areaField = Math.round(turf.area(drawData) * 100) / 100;
     
     const centerField = turf.center(drawData);
-    console.log(centerField, "ehe");
-
     const bbox = turf.bbox(drawData);
-    console.log(bbox, "bbox");
-
     const createDate = new Date()
 
-    // // update to local storage
-    // let updateGeoJSONData;
-    // const oldData = localStorage.getItem(value.fieldName);
-    // if (oldData) {
-    //   updateGeoJSONData = {
-    //     type: "FeatureCollection",
-    //     features: [...JSON.parse(oldData).features, ...drawData.features],
-    //   };
-    // } else updateGeoJSONData = drawData;
-    // localStorage.setItem(value.fieldName, JSON.stringify(updateGeoJSONData));
+    const style = {
+      "Name": "fdfd",
+      "fill": "#00A26A",
+      "fill-opacity": 0.9,
+      "stroke": "#de3529",
+      "stroke-width": 1
+    }
+    
+    const newDrawData = {
+      ...drawData,
+      features: [
+        {
+          ...drawData.features[0],
+          properties: style
+        }
+      ]
+    }
+    console.log(newDrawData)
+
+    const drawUrl = encodeURIComponent(JSON.stringify(newDrawData)); 
+    const imgField = `https://api.mapbox.com/v4/mapbox.satellite/geojson(${drawUrl})/auto/200x200.jpg?access_token=${accessToken}` 
 
     //save to localstorage
     const saveData = {
       name: value.fieldName,
       area: areaField,
       data: drawData,
-      createdAt: createDate
+      createdAt: createDate,
+      img: imgField,
     };
     localStorage.setItem(value.fieldName, JSON.stringify(saveData));
 
@@ -61,7 +73,7 @@ const FieldCreate = () => {
     } else updateFakeData = [value.fieldName];
     localStorage.setItem("fakeDB", JSON.stringify(updateFakeData));
 
-    history.push("/");
+    history.push("/list");
   };
   return (
     <div className="wrapper">
@@ -77,7 +89,7 @@ const FieldCreate = () => {
               </Form.Item>
             </div>
             <div className="submit-buttons">
-              <Button type="default" size="large" onClick={()=> history.push("/")}>
+              <Button type="default" size="large" onClick={()=> history.push("/list")}>
                 Cancel
               </Button>
               <Button
@@ -95,6 +107,7 @@ const FieldCreate = () => {
       <div className="mapbox-container">
         <Mapbox
           ref={mapRef}
+          accessToken={accessToken}
           // data={JSONData}
           drawStyles={drawStyles}
           displayStyles={displayStyles}
