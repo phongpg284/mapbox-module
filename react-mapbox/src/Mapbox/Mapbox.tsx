@@ -2,6 +2,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import "./style.css";
 
+
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { render } from "react-dom";
 import {
@@ -21,6 +22,15 @@ import {
   defaultShowLineDisplay,
   defaultZoom,
 } from "./config";
+
+
+import mapboxgl from 'mapbox-gl';
+// @ts-ignore
+mapboxgl.workerClass = require('mapbox-gl/dist/mapbox-gl-csp-worker').default;
+
+//@ts-ignore
+ReactMapboxGl.workerClass = require('mapbox-gl/dist/mapbox-gl-csp-worker').default;
+
 
 type LayerType = "streets-v11" | "satellite-v9" | "light-v10" | "dark-v10";
 interface IProps {
