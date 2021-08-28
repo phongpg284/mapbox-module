@@ -2,7 +2,6 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import "./style.css";
 
-
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { render } from "react-dom";
 import {
@@ -23,39 +22,41 @@ import {
   defaultZoom,
 } from "./config";
 
-
-import mapboxgl from 'mapbox-gl';
+import mapboxgl from "mapbox-gl";
 // @ts-ignore
-mapboxgl.workerClass = require('mapbox-gl/dist/mapbox-gl-csp-worker').default;
+mapboxgl.workerClass = require("mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 //@ts-ignore
-ReactMapboxGl.workerClass = require('mapbox-gl/dist/mapbox-gl-csp-worker').default;
-
+ReactMapboxGl.workerClass =
+  require("mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 type LayerType = "streets-v11" | "satellite-v9" | "light-v10" | "dark-v10";
 interface IProps {
-  accessToken?: string;
-  height?: string;
-  width?: string;
-  maxHeight?: string;
-  maxWidth?: string;
-  data?: any;
-  drawStyles?: any;
-  displayStyles?: any;
+  accessToken: string;
+  height: string;
+  width: string;
+  maxHeight: string;
+  maxWidth: string;
+  data: any;
+  drawStyles: any;
+  displayStyles: any;
+  center: [number, number];
+  zoom: number;
 }
 
-const Mapbox: any = forwardRef<any, IProps>(({ ...props }, ref) => {
+const Mapbox: any = forwardRef<any, Partial<IProps>>(({ ...props }, ref) => {
   let drawRef: any;
   const [visibleLayer, setVisibleLayer] = useState<LayerType>("satellite-v9");
   const mapboxInstance = useRef(null);
 
   const dataSource = {
     type: "geojson",
-    data: props.data? props.data : "",
+    data: props.data ? props.data : "",
   };
 
   const Map = ReactMapboxGl({
     accessToken: props.accessToken ? props.accessToken : defaultAccessToken,
+    maxZoom: 23,
   });
 
   const handleChangeLayer = (e: any) => {
@@ -152,7 +153,7 @@ const Mapbox: any = forwardRef<any, IProps>(({ ...props }, ref) => {
   useImperativeHandle(ref, () => ({
     getDrawData() {
       const drawData = drawRef.draw.getAll();
-      return drawData
+      return drawData;
     },
   }));
 
@@ -174,8 +175,8 @@ const Mapbox: any = forwardRef<any, IProps>(({ ...props }, ref) => {
           maxWidth: props.maxWidth ? props.maxWidth : "100%",
           maxHeight: props.maxHeight ? props.maxHeight : "100%",
         }}
-        center={defaultCenter}
-        zoom={defaultZoom}
+        center={props.center ? props.center : defaultCenter}
+        zoom={props.zoom ? [props.zoom] : defaultZoom}
         onStyleLoad={mapDidLoad}
       >
         <div className="data-display">
@@ -187,7 +188,11 @@ const Mapbox: any = forwardRef<any, IProps>(({ ...props }, ref) => {
               type="fill"
               id="polygon-fill"
               sourceId="source_id"
-              paint={props.displayStyles?.fillPaint ? props.displayStyles?.fillPaint : defaultFillPaint}
+              paint={
+                props.displayStyles?.fillPaint
+                  ? props.displayStyles?.fillPaint
+                  : defaultFillPaint
+              }
             />
           )}
           {defaultShowLineDisplay && (
@@ -195,7 +200,11 @@ const Mapbox: any = forwardRef<any, IProps>(({ ...props }, ref) => {
               type="line"
               id="lines"
               sourceId="source_id"
-              paint={props.displayStyles?.linePaint ? props.displayStyles?.linePaint : defaultLinePaint}
+              paint={
+                props.displayStyles?.linePaint
+                  ? props.displayStyles?.linePaint
+                  : defaultLinePaint
+              }
             />
           )}
         </div>
@@ -208,7 +217,7 @@ const Mapbox: any = forwardRef<any, IProps>(({ ...props }, ref) => {
             default_mode="draw_polygon"
             onDrawCreate={onDrawCreate}
             onDrawUpdate={onDrawUpdate}
-            styles={props.drawStyles? props.drawStyles : defaultDrawStyles}
+            styles={props.drawStyles ? props.drawStyles : defaultDrawStyles}
             position="bottom-right"
           />
         )}

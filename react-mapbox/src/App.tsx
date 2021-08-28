@@ -1,19 +1,19 @@
-import { BrowserRouter, HashRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import FieldCreate from "./FieldCreate";
 import FieldPage from "./FieldPage";
 import FieldCard from "./FieldPage/FieldCard/FieldCard";
 import { FieldList } from "./FieldPage/FieldList";
-import LocalSaveMapbox from "./LocalSaveMapbox";
+import TrackingMap from "./TrackingMap/TrackingMap";
 
 function App() {
   return (
     <div className="App">
       <HashRouter>
         <Switch>
-          <Route exact path="/local">
+          {/* <Route exact path="/local">
             <LocalSaveMapbox />
-          </Route>
+          </Route> */}
 
           <Route exact path="/create">
             <FieldCreate />
@@ -23,8 +23,12 @@ function App() {
             <FieldPage>{(props: any) => <FieldList data={props} />}</FieldPage>
           </Route>
 
-          <Route exact path="/">
+          <Route exact path="/card">
             <FieldPage>{(props: any) => <FieldCard data={props} />}</FieldPage>
+          </Route>
+
+          <Route exact path="/">
+            <TrackingMap />
           </Route>
         </Switch>
       </HashRouter>
