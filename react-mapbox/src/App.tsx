@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import FieldCreate from "./FieldCreate";
 import FieldPage from "./FieldPage";
@@ -9,7 +9,7 @@ import LocalSaveMapbox from "./LocalSaveMapbox";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <Route exact path="/local">
             <LocalSaveMapbox />
@@ -27,7 +27,7 @@ function App() {
             <FieldPage>{(props: any) => <FieldCard data={props} />}</FieldPage>
           </Route>
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
