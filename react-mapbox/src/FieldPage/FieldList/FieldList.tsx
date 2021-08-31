@@ -1,7 +1,7 @@
-import { Button, Table } from "antd";
-import Modal from "antd/lib/modal/Modal";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Button, Table } from "antd";
+import Modal from "antd/lib/modal/Modal";
 import { WarningFilled } from "@ant-design/icons";
 import "./style.css";
 export interface IFieldData {

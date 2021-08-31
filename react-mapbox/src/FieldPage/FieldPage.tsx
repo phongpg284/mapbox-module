@@ -1,4 +1,4 @@
-import { FieldList, IFieldData } from "./FieldList";
+import { IFieldData } from "./FieldList";
 
 const FieldPage: React.FC = ({ children }: any) => {
   // get fake data
@@ -11,14 +11,13 @@ const FieldPage: React.FC = ({ children }: any) => {
       );
       fakeData.push(fakeInstanceData);
     });
-  console.log(fakeData);
   return (
-    <div style={{ height: "100vh" }}>
-      <div
+    <div>
+      {/* <div
         className="header"
         style={{ height: "7%", backgroundColor: "#00a26a" }}
-      ></div>
-      <div className="bg-light" style={{ height: "100vh", width: "100vw" }}>
+      ></div> */}
+      <div className="bg-light" style={{width: "100vw" }}>
         {children(fakeData)}
       </div>
     </div>

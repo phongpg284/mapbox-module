@@ -1,9 +1,8 @@
-import { DeleteFilled, WarningFilled } from "@ant-design/icons";
-import { Button, Card } from "antd";
-import Meta from "antd/lib/card/Meta";
-import Modal from "antd/lib/modal/Modal";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Button, Card } from "antd";
+import Modal from "antd/lib/modal/Modal";
+import { DeleteFilled, WarningFilled } from "@ant-design/icons";
 
 const FieldCard = ({ data }: any) => {
   const history = useHistory();
@@ -24,7 +23,6 @@ const FieldCard = ({ data }: any) => {
         };
       })
     );
-    console.log(cardData);
   }, [data]);
   const changeConfirmModal = () => {
     setShowConfirm(!showConfirm);

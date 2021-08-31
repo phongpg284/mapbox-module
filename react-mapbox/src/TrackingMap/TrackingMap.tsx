@@ -16,7 +16,7 @@ const TrackingMap = ({ data }: any) => {
     <div className="wrapper">
       <div className="content">
         <div className="title fw-bold fs-3 mb-4 d-flex">
-          <div>Create Field on the Map</div>
+          <div>Tracking Map</div>
           <div className="ms-5">
             <Select defaultValue="9/3 track" onChange={(value: string) => setSelectMap(value)}>
               <Option value="0">9/3 track</Option>
@@ -36,7 +36,7 @@ const TrackingMap = ({ data }: any) => {
           center={mapData[Number(selectMap)].features[0].geometry.coordinates[0]}
           zoom={23}
           maxWidth="100%"
-          height="calc(100vh - 148px)"
+          height="calc(100vh - 175px)"
         />
       </div>
     </div>
