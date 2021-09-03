@@ -7,7 +7,6 @@ import Option2 from "./Option2.json";
 import Option3 from "./Option3.json";
 
 const accessToken = process.env.REACT_APP_MAPBOX_TOKEN_ACCESS;
-console.log(accessToken);
 
 const TrackingMap = ({ data }: any) => {
     const [selectMap, setSelectMap] = useState<string>("0");

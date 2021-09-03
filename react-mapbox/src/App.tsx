@@ -11,6 +11,7 @@ import TrackingMap from "./TrackingMap/TrackingMap";
 import { Dehaze } from "@material-ui/icons";
 import Dashboard from "./Dashboard/Dashboard";
 import ProfileDashboard from "./ProfileDashboard/ProfileDashboard";
+import RealtimeMap from "./RealtimeMap/RealtimeMap";
 
 function App() {
   const location = useLocation();
@@ -95,9 +96,13 @@ function App() {
                 </FieldPage>
               </Route>
 
-              <Route exact path="/">
+              <Route exact path="/tracking">
                 <TrackingMap />
               </Route>
+              <Route exact path="/">
+                <RealtimeMap />
+              </Route>
+
             </Switch>
           </div>
         </Content>
