@@ -21,7 +21,6 @@ import {
   defaultShowLineDisplay,
   defaultZoom,
 } from "./config";
-import { last } from "lodash";
 
 import mapboxgl from "mapbox-gl";
 import { Radio, Space } from "antd";
@@ -45,6 +44,24 @@ interface IProps {
   center: [number, number];
   zoom: number;
   dataTest: any;
+  boundingData: any;
+  interactive: boolean;
+  disableScrollZoom: boolean;
+  fitBounds: any;
+}
+
+interface IGeoFeature {
+  type: string;
+  properties: any;
+  geometry: {
+    type: string;
+    coordinates?: [[number, number]];
+  };
+}
+interface IGeoJSON {
+  type: string;
+  name: string;
+  features: IGeoFeature[];
 }
 
 const Mapbox: any = memo(
@@ -55,6 +72,7 @@ const Mapbox: any = memo(
     const Map = ReactMapboxGl({
       accessToken: props.accessToken ? props.accessToken : defaultAccessToken,
       maxZoom: 23,
+      scrollZoom: !props.disableScrollZoom
     });
 
     const handleChangeLayer = (e: any) => {
@@ -101,46 +119,75 @@ const Mapbox: any = memo(
     }
 
     const mapDidLoad = (mapbox: any) => {
+      console.log("map render");
       if (!mapbox) console.log("nomapbox");
-      mapbox.addSource("route", { type: "geojson", data: "" });
-      mapbox.addLayer({
-        id: "route",
-        type: "line",
-        source: "route",
-        paint: {
-          "line-color": "yellow",
-          "line-opacity": 0.75,
-          "line-width": 5,
-        },
-      });
+      // mapbox.addSource("route", { type: "geojson", data: "" });
+      // mapbox.addLayer({
+      //   id: "route",
+      //   type: "line",
+      //   source: "route",
+      //   paint: {
+      //     "line-color": "yellow",
+      //     "line-opacity": 0.75,
+      //     "line-width": 5,
+      //   },
+      // });
       const indexDataTest = props.dataTest;
-      console.log(indexDataTest);
-      let i = 0;
-      setInterval(() => {
-        fetch("http://localhost:4000/api/users", {
-          method: "GET",
-        })
-          .then((mapData) => mapData.json())
-          .then((jsonData) => {
-            if (jsonData && jsonData[indexDataTest]) {
-              const geoData = jsonData[indexDataTest].bounding;
-              console.log(geoData, "call");
-              // console.log(mapbox, "?")
-              if (geoData) {
-                mapbox.flyTo({
-                  center: last((last(geoData.features) as any).geometry.coordinates),
-                  speed: 0.5,
-                });
-                mapbox.getSource("route").setData(geoData);
-              } else mapbox.getSource("route").setData("");
-            }
-          })
-          .catch((err) => {
-            console.log("Error: ", err);
-          });
+      let i = -1;
+      let j = 0;
+      let data: IGeoJSON = {
+        type: "FeatureCollection",
+        name: "",
+        features: [],
+      };
+      // setInterval(() => {
+      //   fetch("http://localhost:4000/api/users", {
+      //     method: "GET",
+      //   })
+      //     .then((mapData) => mapData.json())
+      //     .then((jsonData) => {
+      //       if (jsonData && jsonData[indexDataTest]) {
+      //         const geoData = jsonData[indexDataTest].bounding;
+      //         if (geoData) {
+      //           console.log("call");
+      //           data.name = geoData.name;
+      //           if (i === 0) {
+      //             const newData = {
+      //               ...geoData.features[j],
+      //               geometry: {
+      //                 ...geoData.features[j].geometry,
+      //                 coordinates: [geoData.features[j].geometry.coordinates[0]],
+      //               },
+      //             }
+      //             data.features.push(newData);
+      //           } else {
+      //             data.features[j].geometry.coordinates?.push(
+      //               geoData.features[j].geometry.coordinates[i]
+      //             );
+      //           }
 
-        i++;
-      }, 10000);
+      //           // mapbox.flyTo({
+      //           //   center:
+      //           //     // last(
+      //           //     //   (last(geoData.features) as any).geometry.coordinates
+      //           //     // ),
+      //           //     geoData.features[j].geometry.coordinates[i],
+      //           //   speed: 0.8,
+      //           // });
+      //           mapbox.getSource("route").setData(data);
+      //           if (i === geoData.features[j].geometry.coordinates.length()) {
+      //             i = 0;
+      //             j++;
+      //           } else {
+      //             i++;
+      //           }
+      //         } else mapbox.getSource("route").setData("");
+      //       }
+      //     })
+      //     .catch((err) => {});
+
+      //   i++;
+      // }, 500);
 
       mapboxInstance.current = mapbox;
       mapbox.addControl(
@@ -170,14 +217,6 @@ const Mapbox: any = memo(
       },
     }));
 
-    // const onDrawCreate = ({ features }: any) => {
-    //   console.log(features);
-    // };
-
-    // const onDrawUpdate = ({ features }: any) => {
-    //   console.log(features, "ehe");
-    // };
-
     return (
       <div>
         <Map
@@ -191,36 +230,38 @@ const Mapbox: any = memo(
           center={props.center ? props.center : defaultCenter}
           zoom={props.zoom ? [props.zoom] : defaultZoom}
           onStyleLoad={mapDidLoad}
+          fitBounds={props.fitBounds}
         >
-          {/* <div className="data-display">
-          {(defaultShowFieldDisplay || defaultShowLineDisplay) && (
-            <Source id="source_id" geoJsonSource={dataSource.current} />
-          )}
-          {defaultShowFieldDisplay && (
-            <Layer
-              type="fill"
-              id="polygon-fill"
-              sourceId="source_id"
-              paint={
-                props.displayStyles?.fillPaint
-                  ? props.displayStyles?.fillPaint
-                  : defaultFillPaint
-              }
-            />
-          )}
-          {defaultShowLineDisplay && (
-            <Layer
-              type="line"
-              id="lines"
-              sourceId="source_id"
-              paint={
-                props.displayStyles?.linePaint
-                  ? props.displayStyles?.linePaint
-                  : defaultLinePaint
-              }
-            />
-          )}
-        </div> */}
+          <div className="data-display">
+            {props.boundingData &&
+              (defaultShowFieldDisplay || defaultShowLineDisplay) && (
+                <Source id="source_id" geoJsonSource={props.boundingData} />
+              )}
+            {props.boundingData && defaultShowFieldDisplay && (
+              <Layer
+                type="fill"
+                id="polygon-fill"
+                sourceId="source_id"
+                paint={
+                  props.displayStyles?.fillPaint
+                    ? props.displayStyles?.fillPaint
+                    : defaultFillPaint
+                }
+              />
+            )}
+            {props.boundingData && defaultShowLineDisplay && (
+              <Layer
+                type="line"
+                id="lines"
+                sourceId="source_id"
+                paint={
+                  props.displayStyles?.linePaint
+                    ? props.displayStyles?.linePaint
+                    : defaultLinePaint
+                }
+              />
+            )}
+          </div>
 
           {mapboxInstance && (
             <DrawControl
@@ -228,10 +269,8 @@ const Mapbox: any = memo(
               displayControlsDefault={false}
               controls={{ polygon: true, trash: true }}
               default_mode="draw_polygon"
-              // onDrawCreate={onDrawCreate}
-              // onDrawUpdate={onDrawUpdate}
-              styles={props.drawStyles ? props.drawStyles : defaultDrawStyles}
               position="bottom-right"
+              styles={props.drawStyles ? props.drawStyles : defaultDrawStyles}
             />
           )}
         </Map>

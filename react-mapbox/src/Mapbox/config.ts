@@ -15,7 +15,7 @@ export const defaultLineColor = "#ff5050";
 export const defaultLineWidth = 3.5;
 
 // default polygon color when display data on map
-export const defaultShowFieldDisplay = false
+export const defaultShowFieldDisplay = true
 export const defaultFillPaint = {
   "fill-color": defaultPolygonFillColor,
   "fill-opacity": defaultPolygonFillOpacity,

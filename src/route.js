@@ -1,31 +1,30 @@
 import express from "express";
 import mongoose from "mongoose";
-import userModel from "./modal";
+import boundModel from "./modal/bounding";
 
 const router = express.Router();
-const User = userModel;
+const Bound = boundModel;
 
-router.get("/users", (req, res) => {
-    User.find((err, users) => {
+router.get("/bounds", (req, res) => {
+    Bound.find((err, users) => {
         if (err) console.log(err)
         res.json(users)
     })
 })
 
-router.get("/users/:id", (req, res) => {
-    User.findById(mongoose.Types.ObjectId(req.params.id), (err, user) =>{
+router.get("/bounds/:id", (req, res) => {
+    Bound.findById(mongoose.Types.ObjectId(req.params.id), (err, user) =>{
         if(err) console.log(err)
         res.json(user)
     })
 })
 
-router.post("/users", (req, res) => {
-    console.log(req.body,"hehe")
-    const newUser = new User(req.body);
-    console.log(newUser);
-    newUser.save((err, user) => {
+router.post("/bounds", (req, res) => {
+    console.log(req.body)
+    const newBound = new Bound(req.body);
+    newBound.save((err, bound) => {
         if (err) console.log(err)
-        res.json(user)
+        res.json(bound)
     })
 })
 

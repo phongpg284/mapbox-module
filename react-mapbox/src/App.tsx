@@ -12,6 +12,7 @@ import { Dehaze } from "@material-ui/icons";
 import Dashboard from "./Dashboard/Dashboard";
 import ProfileDashboard from "./ProfileDashboard/ProfileDashboard";
 import RealtimeMap from "./RealtimeMap/RealtimeMap";
+import BoundingMap from "./BoundingMap/BoundingMap";
 
 function App() {
   const location = useLocation();
@@ -53,7 +54,7 @@ function App() {
           closable={false}
           onClose={() => setIsProfileCollapse(false)}
           visible={isProfileCollapse}
-          bodyStyle={{padding: "0"}}
+          bodyStyle={{ padding: "0" }}
         >
           <ProfileDashboard />
         </Drawer>
@@ -62,10 +63,7 @@ function App() {
           style={{ height: "70px", backgroundColor: "#00a26a" }}
         >
           <div className="float-start">
-            <Dehaze
-              onClick={handleClickMenu}
-              style={{ color: "white" }}
-            />
+            <Dehaze onClick={handleClickMenu} style={{ color: "white" }} />
           </div>
           <div className="float-end">
             <img
@@ -84,6 +82,10 @@ function App() {
                 <FieldCreate />
               </Route>
 
+              <Route path="/bounding/:id" component={BoundingMap}>
+                {/* <BoundingMap match={}/> */}
+              </Route>
+
               <Route exact path="/field/list">
                 <FieldPage>
                   {(props: any) => <FieldList data={props} />}
@@ -99,10 +101,13 @@ function App() {
               <Route exact path="/tracking">
                 <TrackingMap />
               </Route>
-              <Route exact path="/">
+              <Route exact path="/realtime">
                 <RealtimeMap />
               </Route>
 
+              <Route exact path="/">
+                <BoundingMap />
+              </Route>
             </Switch>
           </div>
         </Content>

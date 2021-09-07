@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { Button, Card } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import { DeleteFilled, WarningFilled } from "@ant-design/icons";
@@ -13,8 +13,9 @@ const FieldCard = ({ data }: any) => {
 
   useEffect(() => {
     setCardData(
-      data.map((field: any) => {
+      data?.map((field: any) => {
         return {
+          id: field._id,
           name: field.name,
           area: field.area,
           createdAt: new Date(field.createdAt).toDateString(),
@@ -53,49 +54,52 @@ const FieldCard = ({ data }: any) => {
       <div className="title text-start fw-bold fs-3 mb-3 d-flex ">
         <div>Field List(Card) </div>
         <div className="ms-4">
-          <Button onClick={() => history.push("./create")}>Create Field</Button>
+          <Button onClick={() => history.push("/field/create")}>
+            Create Field
+          </Button>
         </div>
         <div className="ms-4">
-          <Button onClick={() => history.push("./list")}>List View</Button>
+          <Button onClick={() => history.push("/field/list")}>List View</Button>
         </div>
       </div>
       <div className="">
         <div className="d-flex flex-wrap">
           {cardData &&
             cardData.map((item: any) => (
-              <>
-                <Card
-                  hoverable
-                  style={{ width: 200, margin: "5px" }}
-                  cover={
-                    <div
-                      style={{
-                        backgroundImage: `url("${item.img}")`,
-                        height: "200px",
-                      }}
-                    >
-                      <Button
-                        className="float-end m-1"
-                        danger
-                        type="primary"
-                        size="large"
-                        icon={<DeleteFilled />}
-                        onClick={changeConfirmModal}
-                      />
+              <Fragment key={item.name}>
+                <Link to={`/bounding/${item.id}`}>
+                  <Card
+                    hoverable
+                    style={{ width: 200, margin: "5px" }}
+                    cover={
+                      <div
+                        style={{
+                          backgroundImage: `url("${item.img}")`,
+                          height: "200px",
+                        }}
+                      >
+                        <Button
+                          className="float-end m-1"
+                          danger
+                          type="primary"
+                          size="large"
+                          icon={<DeleteFilled />}
+                          onClick={changeConfirmModal}
+                        />
+                      </div>
+                    }
+                    // <img alt="example" src={item.img} />}
+                  >
+                    <div className="d-flex justify-self-start fs-6">
+                      {item.name}
                     </div>
-                  }
-                  // <img alt="example" src={item.img} />}
-                >
-                  <div className="d-flex justify-self-start fs-6">
-                    {item.name}
-                  </div>
-                  <div className="d-flex justify-self-start fw-bold fs-6">
-                    {item.area} m2
-                  </div>
-                  {/* <Meta title={item.name} description={`${item.area} m2`} /> */}
-                </Card>
-                ,
-              </>
+                    <div className="d-flex justify-self-start fw-bold fs-6">
+                      {item.area} m2
+                    </div>
+                    {/* <Meta title={item.name} description={`${item.area} m2`} /> */}
+                  </Card>
+                </Link>
+              </Fragment>
             ))}
         </div>
       </div>
