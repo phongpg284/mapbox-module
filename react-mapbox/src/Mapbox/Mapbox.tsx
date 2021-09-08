@@ -4,26 +4,35 @@ import "./style.css";
 
 import { forwardRef, memo, useImperativeHandle, useRef, useState } from "react";
 import { render } from "react-dom";
+
+import { Radio, Space } from "antd";
+import * as turf from "@turf/turf";
+
+import mapboxgl from "mapbox-gl";
 import {
   FullscreenControl,
   GeolocateControl,
   NavigationControl,
+  ScaleControl,
 } from "mapbox-gl";
 import ReactMapboxGl, { Layer, Source } from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
+
 import { defaultDrawStyles } from "./style";
 import {
   defaultAccessToken,
   defaultCenter,
-  defaultFillPaint,
-  defaultLinePaint,
-  defaultShowFieldDisplay,
-  defaultShowLineDisplay,
   defaultZoom,
+  workAreaShowFieldDisplay,
+  workAreaShowLineDisplay,
+  workAreaFillPaint,
+  workAreaLinePaint,
+  cropsShowFieldDisplay,
+  cropsShowLineDisplay,
+  cropsFillPaint,
+  cropsLinePaint,
 } from "./config";
 
-import mapboxgl from "mapbox-gl";
-import { Radio, Space } from "antd";
 // @ts-ignore
 mapboxgl.workerClass = require("mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
@@ -38,15 +47,14 @@ interface IProps {
   width: string;
   maxHeight: string;
   maxWidth: string;
-  data: any;
   drawStyles: any;
   displayStyles: any;
   center: [number, number];
   zoom: number;
-  dataTest: any;
-  boundingData: any;
   interactive: boolean;
   disableScrollZoom: boolean;
+  workArea: any;
+  crops: any;
   fitBounds: any;
 }
 
@@ -64,6 +72,10 @@ interface IGeoJSON {
   features: IGeoFeature[];
 }
 
+function updateMarker(coordinates: [Number, Number], marker: any) {
+  marker.setLngLat(coordinates);
+}
+
 const Mapbox: any = memo(
   forwardRef<any, Partial<IProps>>(({ ...props }, ref) => {
     let drawRef: any;
@@ -72,7 +84,7 @@ const Mapbox: any = memo(
     const Map = ReactMapboxGl({
       accessToken: props.accessToken ? props.accessToken : defaultAccessToken,
       maxZoom: 23,
-      scrollZoom: !props.disableScrollZoom
+      scrollZoom: !props.disableScrollZoom,
     });
 
     const handleChangeLayer = (e: any) => {
@@ -117,29 +129,53 @@ const Mapbox: any = memo(
         this._map = undefined;
       }
     }
+    const marker = new mapboxgl.Marker();
+    const popup = new mapboxgl.Popup({
+      anchor: "top-left",
+    });
 
     const mapDidLoad = (mapbox: any) => {
       console.log("map render");
       if (!mapbox) console.log("nomapbox");
-      // mapbox.addSource("route", { type: "geojson", data: "" });
-      // mapbox.addLayer({
-      //   id: "route",
-      //   type: "line",
-      //   source: "route",
-      //   paint: {
-      //     "line-color": "yellow",
-      //     "line-opacity": 0.75,
-      //     "line-width": 5,
-      //   },
-      // });
-      const indexDataTest = props.dataTest;
-      let i = -1;
-      let j = 0;
-      let data: IGeoJSON = {
-        type: "FeatureCollection",
-        name: "",
-        features: [],
-      };
+      if (props.disableScrollZoom) mapbox.doubleClickZoom.disable();
+
+      if (props.workArea) {
+        marker
+          // @ts-ignore
+          .setLngLat(turf.center(props.workArea?.data).geometry.coordinates)
+          .addTo(mapbox);
+        popup
+          //@ts-ignore
+          .setLngLat(turf.center(props.workArea?.data).geometry.coordinates)
+          .setHTML(`<h5>${marker.getLngLat()}</h5>`)
+          .addTo(mapbox);
+        // function animateMarker(timestamp: any) {
+        //   const radius = 20;
+
+        //   marker.setLngLat([
+        //     Math.cos(timestamp / 1000) * radius,
+        //     Math.sin(timestamp / 1000) * radius,
+        //   ]);
+        //   popup.setLngLat([
+        //     Math.cos(timestamp / 1000) * radius,
+        //     Math.sin(timestamp / 1000) * radius,
+        //   ]);
+
+        //   marker.addTo(mapbox);
+
+        //   requestAnimationFrame(animateMarker);
+        // }
+
+        // requestAnimationFrame(animateMarker);
+      }
+      // const indexDataTest = props.dataTest;
+      // let i = -1;
+      // let j = 0;
+      // let data: IGeoJSON = {
+      //   type: "FeatureCollection",
+      //   name: "",
+      //   features: [],
+      // };
       // setInterval(() => {
       //   fetch("http://localhost:4000/api/users", {
       //     method: "GET",
@@ -147,7 +183,7 @@ const Mapbox: any = memo(
       //     .then((mapData) => mapData.json())
       //     .then((jsonData) => {
       //       if (jsonData && jsonData[indexDataTest]) {
-      //         const geoData = jsonData[indexDataTest].bounding;
+      //         const geoData = jsonData[indexDataTest].workArea;
       //         if (geoData) {
       //           console.log("call");
       //           data.name = geoData.name;
@@ -190,6 +226,7 @@ const Mapbox: any = memo(
       // }, 500);
 
       mapboxInstance.current = mapbox;
+      mapbox.addControl(new ScaleControl(), "bottom-left");
       mapbox.addControl(
         new GeolocateControl({
           positionOptions: {
@@ -233,34 +270,61 @@ const Mapbox: any = memo(
           fitBounds={props.fitBounds}
         >
           <div className="data-display">
-            {props.boundingData &&
-              (defaultShowFieldDisplay || defaultShowLineDisplay) && (
-                <Source id="source_id" geoJsonSource={props.boundingData} />
+            {props.workArea &&
+              (workAreaShowFieldDisplay || workAreaShowLineDisplay) && (
+                <Source id="work_area" geoJsonSource={props.workArea} />
               )}
-            {props.boundingData && defaultShowFieldDisplay && (
+            {props.workArea && workAreaShowFieldDisplay && (
               <Layer
                 type="fill"
                 id="polygon-fill"
-                sourceId="source_id"
-                paint={
-                  props.displayStyles?.fillPaint
-                    ? props.displayStyles?.fillPaint
-                    : defaultFillPaint
-                }
+                sourceId="work_area"
+                paint={workAreaFillPaint}
               />
             )}
-            {props.boundingData && defaultShowLineDisplay && (
+            {props.workArea && workAreaShowLineDisplay && (
               <Layer
                 type="line"
-                id="lines"
-                sourceId="source_id"
-                paint={
-                  props.displayStyles?.linePaint
-                    ? props.displayStyles?.linePaint
-                    : defaultLinePaint
-                }
+                id="lines_work_area"
+                sourceId="work_area"
+                paint={workAreaLinePaint}
               />
             )}
+
+            {props.crops && (cropsShowFieldDisplay || cropsShowLineDisplay) && (
+              <Source id="crops" geoJsonSource={props.crops} />
+            )}
+            {props.crops && cropsShowFieldDisplay && (
+              <Layer
+                type="fill"
+                id="polygon-fill"
+                sourceId="crops"
+                paint={cropsFillPaint}
+              />
+            )}
+            {props.crops && cropsShowLineDisplay && (
+              <Layer
+                type="line"
+                id="lines_crops"
+                sourceId="crops"
+                paint={cropsLinePaint}
+              />
+            )}
+
+            {/* {props.workArea && (
+              <Marker
+                coordinates={
+                  turf.center(props.workArea.data).geometry.coordinates
+                }
+                anchor="bottom"
+              >
+                <img
+                  style={{ height: "40px" }}
+                  alt="no?"
+                  src="https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png"
+                />
+              </Marker>
+            )} */}
           </div>
 
           {mapboxInstance && (

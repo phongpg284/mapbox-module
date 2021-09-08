@@ -1,4 +1,4 @@
-import { defaultLineColor, defaultLineWidth, defaultPolygonFillColor, defaultPolygonFillOpacity } from "./config"
+import { cropsLineColor, cropsLineWidth, cropsPolygonFillColor, cropsPolygonFillOpacity } from "./config"
 
 export const defaultDrawStyles = [
   // ACTIVE (being drawn)
@@ -12,9 +12,9 @@ export const defaultDrawStyles = [
       "line-join": "round",
     },
     paint: {
-      "line-color": defaultLineColor,
+      "line-color": cropsLineColor,
       // "line-dasharray": [0.2, 2],
-      "line-width": defaultLineWidth,
+      "line-width": cropsLineWidth,
     },
   },
   // polygon fill
@@ -23,9 +23,9 @@ export const defaultDrawStyles = [
     type: "fill",
     filter: ["all", ["==", "$type", "Polygon"], ["!=", "mode", "static"]],
     paint: {
-      "fill-color": defaultPolygonFillColor,
-      "fill-outline-color": defaultPolygonFillColor,
-      "fill-opacity": defaultPolygonFillOpacity,
+      "fill-color": cropsPolygonFillColor,
+      "fill-outline-color": cropsPolygonFillColor,
+      "fill-opacity": cropsPolygonFillOpacity,
     },
   },
   // polygon mid points
@@ -49,9 +49,9 @@ export const defaultDrawStyles = [
       "line-join": "round",
     },
     paint: {
-      "line-color": defaultLineColor,
+      "line-color": cropsLineColor,
       // "line-dasharray": [0.2, 2],
-      "line-width": defaultLineWidth,
+      "line-width": cropsLineWidth,
     },
   },
   // vertex point halos

@@ -98,16 +98,13 @@ function App() {
                 </FieldPage>
               </Route>
 
-              <Route exact path="/tracking">
+              <Route exact path="/">
                 <TrackingMap />
               </Route>
               <Route exact path="/realtime">
                 <RealtimeMap />
               </Route>
 
-              <Route exact path="/">
-                <BoundingMap />
-              </Route>
             </Switch>
           </div>
         </Content>

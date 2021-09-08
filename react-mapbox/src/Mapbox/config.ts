@@ -6,24 +6,49 @@ export const defaultAccessToken =
 export const defaultCenter: [number, number] = [105.75701933333332, 20.977847833333332];
 export const defaultZoom: [number] = [20];
 
-// default polygon fill color when drawing
-export const defaultPolygonFillColor = "#00fd90";
-export const defaultPolygonFillOpacity = 0.7;
+//WORK AREA
+// default polygon fill color when of work area
+export const workAreaPolygonFillColor = "#00fd90";
+export const workAreaPolygonFillOpacity = 0.7;
 
 // default line color when drawing
-export const defaultLineColor = "#ff5050";
-export const defaultLineWidth = 3.5;
+export const workAreaLineColor = "blue";
+export const workAreaLineWidth = 3.5;
 
 // default polygon color when display data on map
-export const defaultShowFieldDisplay = true
-export const defaultFillPaint = {
-  "fill-color": defaultPolygonFillColor,
-  "fill-opacity": defaultPolygonFillOpacity,
+export const workAreaShowFieldDisplay = false
+export const workAreaFillPaint = {
+  "fill-color": workAreaPolygonFillColor,
+  "fill-opacity": workAreaPolygonFillOpacity,
 };
 
 // default line color when display data on map
-export const defaultShowLineDisplay = true
-export const defaultLinePaint = {
-  "line-color": defaultLineColor,
-  "line-width": defaultLineWidth,
+export const workAreaShowLineDisplay = true
+export const workAreaLinePaint = {
+  "line-color": workAreaLineColor,
+  "line-width": workAreaLineWidth,
+};
+
+
+// CROPS
+// default polygon fill color when of crops
+export const cropsPolygonFillColor = "#00fd90";
+export const cropsPolygonFillOpacity = 0.7;
+
+// default line color when drawing
+export const cropsLineColor = "#ff5050";
+export const cropsLineWidth = 3.5;
+
+// default polygon color when display data on map
+export const cropsShowFieldDisplay = true
+export const cropsFillPaint = {
+  "fill-color": cropsPolygonFillColor,
+  "fill-opacity": cropsPolygonFillOpacity,
+};
+
+// default line color when display data on map
+export const cropsShowLineDisplay = true
+export const cropsLinePaint = {
+  "line-color": cropsLineColor,
+  "line-width": cropsLineWidth,
 };
