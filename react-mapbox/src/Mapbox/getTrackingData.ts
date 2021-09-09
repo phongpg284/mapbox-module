@@ -16,8 +16,7 @@ export async function getTrackingData(
     const pointsData = data.track[0].points;
     if (pointsData.length !== 0) {
       const nextIndex = pointsData[pointsData.length - 1].index + 1;
-      console.log(nextIndex);
-      drawData(pointsData);
+      drawData(data.track);
       getTrackingData(nextIndex, url, drawData);
     } else {
       setTimeout(() => {

@@ -29,12 +29,15 @@ const TrackingMap = () => {
         setCenter(turf.center(turf.bboxPolygon(bbox)).geometry.coordinates);
 
         const crops = data.project.devices.map((device: any) =>
-          turf.polygon([
-            device.crop.map((coordinate: any) => [
-              coordinate[1],
-              coordinate[0],
-            ]),
-          ])
+          turf.polygon(
+            [
+              device.crop.map((coordinate: any) => [
+                coordinate[1],
+                coordinate[0],
+              ]),
+            ],
+            { icon: device.icon }
+          )
         );
         const featureCollections = turf.featureCollection(crops);
         setCropsData({

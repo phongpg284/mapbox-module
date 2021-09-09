@@ -2,7 +2,13 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import "./style.css";
 
-import { forwardRef, memo, useImperativeHandle, useRef, useState } from "react";
+import {
+  forwardRef,
+  memo,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { render } from "react-dom";
 
 import { Radio, Space } from "antd";
@@ -113,7 +119,7 @@ const Mapbox: any = memo(
         this._map = undefined;
       }
     }
-    const marker = new mapboxgl.Marker();
+
     // const popup = new mapboxgl.Popup({
     //   anchor: "top-left",
     // });
@@ -124,10 +130,10 @@ const Mapbox: any = memo(
       if (props.disableScrollZoom) mapbox.doubleClickZoom.disable();
 
       if (props.workArea) {
-        marker
-          // @ts-ignore
-          .setLngLat(turf.center(props.workArea?.data).geometry.coordinates)
-          .addTo(mapbox);
+        // marker
+        //   // @ts-ignore
+        //   .setLngLat(turf.center(props.workArea?.data).geometry.coordinates)
+        //   .addTo(mapbox);
         // popup
         //   //@ts-ignore
         //   .setLngLat(turf.center(props.workArea?.data).geometry.coordinates)
@@ -135,7 +141,6 @@ const Mapbox: any = memo(
         //   .addTo(mapbox);
         // function animateMarker(timestamp: any) {
         //   const radius = 20;
-
         //   marker.setLngLat([
         //     Math.cos(timestamp / 1000) * radius,
         //     Math.sin(timestamp / 1000) * radius,
@@ -144,57 +149,60 @@ const Mapbox: any = memo(
         //     Math.cos(timestamp / 1000) * radius,
         //     Math.sin(timestamp / 1000) * radius,
         //   ]);
-
         //   marker.addTo(mapbox);
-
         //   requestAnimationFrame(animateMarker);
         // }
-
         // requestAnimationFrame(animateMarker);
       }
 
-      if (props.trackingApiEndpoint) {
-        mapbox.addSource("device", {
-          type: "geojson",
-          data: {
-            type: "Feature",
-            properties: {},
-            geometry: {
-              type: "Point",
-              coordinates: [],
+      if (props.trackingApiEndpoint && props.crops) {
+        let markers: any = [];
+        for (let i = 0; i < props.crops.data.features.length; i++) {
+          mapbox.addSource(`deviceNo${i}`, {
+            type: "geojson",
+            data: {
+              type: "Feature",
+              properties: {},
+              geometry: {
+                type: "Point",
+                coordinates: [],
+              },
             },
-          },
-        });
-        mapbox.addLayer({
-          id: "device",
-          type: "line",
-          source: "device",
-          paint: {
-            "line-color": "yellow",
-            "line-opacity": 0.75,
-            "line-width": 1,
-          },
-        });
+          });
+          mapbox.addLayer({
+            id: `deviceNo${i}`,
+            type: "line",
+            source: `deviceNo${i}`,
+            paint: {
+              "line-color": "yellow",
+              "line-opacity": 0.75,
+              "line-width": 1,
+            },
+          });
+
+          let el = document.createElement("img");
+          el.src = props.crops.data.features[i].properties.icon;
+          el.style.height = "20px";
+
+          markers.push(new mapboxgl.Marker(el));
+        }
 
         const drawData = (data: any) => {
-          const newData = data.map((coordinate: any) => [
-            coordinate.y,
-            coordinate.x,
-          ]);
-          console.log(newData, "hehe");
-          if (mapbox)
-            console.log(
-              mapbox?.getSource("device")._data.geometry.coordinates,
-              "lol"
+          for (let i = 0; i < data.length; i++) {
+            const newData = data[i].points.map((coordinate: any) => [
+              coordinate.y,
+              coordinate.x,
+            ]);
+
+            const existData = mapbox?.getSource(`deviceNo${i}`)._data;
+
+            markers[i].setLngLat(newData[newData.length - 1]).addTo(mapbox);
+
+            const convertData = turf.lineString(
+              existData.geometry.coordinates.concat(newData)
             );
-
-          const existData = mapbox?.getSource("device")._data;
-          marker.setLngLat(newData[newData.length-1])
-
-          const convertData = turf.lineString(
-            existData.geometry.coordinates.concat(newData)
-          );
-          if (mapbox) mapbox?.getSource("device")?.setData(convertData);
+            if (mapbox) mapbox?.getSource(`deviceNo${i}`)?.setData(convertData);
+          }
         };
         getTrackingData(0, props.trackingApiEndpoint, drawData);
       }
