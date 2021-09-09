@@ -1,5 +1,4 @@
 import { Divider, Menu, Switch } from "antd";
-import SubMenu from "antd/lib/menu/SubMenu";
 import PeopleIcon from "@material-ui/icons/People";
 import CreditCardIcon from "@material-ui/icons/CreditCard";
 import LockIcon from "@material-ui/icons/Lock";

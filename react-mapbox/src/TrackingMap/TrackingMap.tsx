@@ -12,7 +12,6 @@ const TrackingMap = () => {
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "/get_project", {
       method: "GET",
-      // headers: new Headers({    'Content-Type': 'text/plain' }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -42,41 +41,6 @@ const TrackingMap = () => {
           type: "geojson",
           data: featureCollections,
         });
-        // setWorkAreaData({
-        //   data: {
-        //     type: "FeatureCollection",
-        //     name: "tracks1",
-        //     features: [
-        //       {
-        //         type: "Feature",
-        //         geometry: {
-        //           type: "LineString",
-        //           coordinates:
-        //         },
-        //       },
-        //     ],
-        //   },
-        //   type: "geojson",
-        // })
-        // setCropsData({
-        //   data: {
-        //     type: "FeatureCollection",
-        //     name: "tracks1",
-        //     features: [
-        //       {
-        //         type: "Feature",
-        //         geometry: {
-        //           type: "LineString",
-        //           coordinates: data.project.devices[0].crop.map(
-        //             (coordinate: any) => [coordinate[1], coordinate[0]]
-        //           ),
-        //         },
-        //       },
-        //     ],
-        //   },
-        //   type: "geojson",
-        // });
-        // setFitBounds(turf.bbox(data.bounding))
       })
       .catch((err) => console.log(err));
   }, []);
@@ -91,10 +55,11 @@ const TrackingMap = () => {
       <div className="mapbox-container">
         <Mapbox
           accessToken={accessToken}
-          //   drawStyles={drawStyles}
-          //   displayStyles={displayStyles}
           workArea={workAreaData}
           crops={cropsData}
+          trackingApiEndpoint={
+            process.env.REACT_APP_API_URL + "/get_track?last_index"
+          }
           center={center}
           zoom={16}
           maxWidth="100%"

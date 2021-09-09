@@ -17,6 +17,7 @@ const BoundingMap = ({ boundingData, match }: any) => {
         });
         setFitBounds(turf.bbox(data.bounding))
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="wrapper">

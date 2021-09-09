@@ -12,11 +12,6 @@ export interface IFieldData {
   _id: string;
 }
 
-interface IFieldListItemProps {
-  data: IFieldData;
-  deleteItem: (data: IFieldData) => void;
-}
-
 interface IFieldListProps {
   data: IFieldData[];
 }

@@ -32,6 +32,7 @@ import {
   cropsFillPaint,
   cropsLinePaint,
 } from "./config";
+import { getTrackingData } from "./getTrackingData";
 
 // @ts-ignore
 mapboxgl.workerClass = require("mapbox-gl/dist/mapbox-gl-csp-worker").default;
@@ -53,27 +54,10 @@ interface IProps {
   zoom: number;
   interactive: boolean;
   disableScrollZoom: boolean;
+  fitBounds: any;
   workArea: any;
   crops: any;
-  fitBounds: any;
-}
-
-interface IGeoFeature {
-  type: string;
-  properties: any;
-  geometry: {
-    type: string;
-    coordinates?: [[number, number]];
-  };
-}
-interface IGeoJSON {
-  type: string;
-  name: string;
-  features: IGeoFeature[];
-}
-
-function updateMarker(coordinates: [Number, Number], marker: any) {
-  marker.setLngLat(coordinates);
+  trackingApiEndpoint: any;
 }
 
 const Mapbox: any = memo(
@@ -130,9 +114,9 @@ const Mapbox: any = memo(
       }
     }
     const marker = new mapboxgl.Marker();
-    const popup = new mapboxgl.Popup({
-      anchor: "top-left",
-    });
+    // const popup = new mapboxgl.Popup({
+    //   anchor: "top-left",
+    // });
 
     const mapDidLoad = (mapbox: any) => {
       console.log("map render");
@@ -144,11 +128,11 @@ const Mapbox: any = memo(
           // @ts-ignore
           .setLngLat(turf.center(props.workArea?.data).geometry.coordinates)
           .addTo(mapbox);
-        popup
-          //@ts-ignore
-          .setLngLat(turf.center(props.workArea?.data).geometry.coordinates)
-          .setHTML(`<h5>${marker.getLngLat()}</h5>`)
-          .addTo(mapbox);
+        // popup
+        //   //@ts-ignore
+        //   .setLngLat(turf.center(props.workArea?.data).geometry.coordinates)
+        //   .setHTML(`<h5>${marker.getLngLat()}</h5>`)
+        //   .addTo(mapbox);
         // function animateMarker(timestamp: any) {
         //   const radius = 20;
 
@@ -168,62 +152,52 @@ const Mapbox: any = memo(
 
         // requestAnimationFrame(animateMarker);
       }
-      // const indexDataTest = props.dataTest;
-      // let i = -1;
-      // let j = 0;
-      // let data: IGeoJSON = {
-      //   type: "FeatureCollection",
-      //   name: "",
-      //   features: [],
-      // };
-      // setInterval(() => {
-      //   fetch("http://localhost:4000/api/users", {
-      //     method: "GET",
-      //   })
-      //     .then((mapData) => mapData.json())
-      //     .then((jsonData) => {
-      //       if (jsonData && jsonData[indexDataTest]) {
-      //         const geoData = jsonData[indexDataTest].workArea;
-      //         if (geoData) {
-      //           console.log("call");
-      //           data.name = geoData.name;
-      //           if (i === 0) {
-      //             const newData = {
-      //               ...geoData.features[j],
-      //               geometry: {
-      //                 ...geoData.features[j].geometry,
-      //                 coordinates: [geoData.features[j].geometry.coordinates[0]],
-      //               },
-      //             }
-      //             data.features.push(newData);
-      //           } else {
-      //             data.features[j].geometry.coordinates?.push(
-      //               geoData.features[j].geometry.coordinates[i]
-      //             );
-      //           }
 
-      //           // mapbox.flyTo({
-      //           //   center:
-      //           //     // last(
-      //           //     //   (last(geoData.features) as any).geometry.coordinates
-      //           //     // ),
-      //           //     geoData.features[j].geometry.coordinates[i],
-      //           //   speed: 0.8,
-      //           // });
-      //           mapbox.getSource("route").setData(data);
-      //           if (i === geoData.features[j].geometry.coordinates.length()) {
-      //             i = 0;
-      //             j++;
-      //           } else {
-      //             i++;
-      //           }
-      //         } else mapbox.getSource("route").setData("");
-      //       }
-      //     })
-      //     .catch((err) => {});
+      if (props.trackingApiEndpoint) {
+        mapbox.addSource("device", {
+          type: "geojson",
+          data: {
+            type: "Feature",
+            properties: {},
+            geometry: {
+              type: "Point",
+              coordinates: [],
+            },
+          },
+        });
+        mapbox.addLayer({
+          id: "device",
+          type: "line",
+          source: "device",
+          paint: {
+            "line-color": "yellow",
+            "line-opacity": 0.75,
+            "line-width": 1,
+          },
+        });
 
-      //   i++;
-      // }, 500);
+        const drawData = (data: any) => {
+          const newData = data.map((coordinate: any) => [
+            coordinate.y,
+            coordinate.x,
+          ]);
+          console.log(newData, "hehe");
+          if (mapbox)
+            console.log(
+              mapbox?.getSource("device")._data.geometry.coordinates,
+              "lol"
+            );
+
+          const existData = mapbox?.getSource("device")._data;
+          marker.setLngLat(newData[newData.length-1])
+
+          const convertData = turf.lineString(
+            existData.geometry.coordinates.concat(newData)
+          );
+          if (mapbox) mapbox?.getSource("device")?.setData(convertData);
+        };
+        getTrackingData(0, props.trackingApiEndpoint, drawData);
+      }
 
       mapboxInstance.current = mapbox;
       mapbox.addControl(new ScaleControl(), "bottom-left");

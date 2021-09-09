@@ -27,9 +27,6 @@ const FieldCreate = () => {
     const drawData = (mapRef.current as any).getDrawData();
 
     const areaField = Math.round(turf.area(drawData) * 100) / 100;
-
-    const centerField = turf.center(drawData);
-    const bbox = turf.bbox(drawData);
     const createDate = new Date();
 
     const style = {

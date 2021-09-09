@@ -1,8 +1,6 @@
 import { useState } from "react";
 import Mapbox from "../Mapbox";
 import { Select } from "antd";
-import { Option } from "antd/lib/mentions";
-
 
 const accessToken = process.env.REACT_APP_MAPBOX_TOKEN_ACCESS;
 const RealtimeMap = () => {
