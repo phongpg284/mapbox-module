@@ -10,10 +10,11 @@ cd react-mapbox
 #install all dependencies
 npm install
 
-#run project 
-npm run start
-```
+#create env file
+cp .env.example .env
 
-### Routes
-- localhost:3000: Test module create field by drawing (currently test by save to local storage)
-- localhost:3000/local: Test save draw data to localStorage
+#add .env api and mapbox key
+
+#run project 
+npm run dev
+```
