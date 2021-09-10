@@ -21,7 +21,7 @@ export async function getTrackingData(
     } else {
       setTimeout(() => {
         getTrackingData(lastIndex, url, drawData);
-      }, 1000);
+      }, 500);
     }
   }
 }
