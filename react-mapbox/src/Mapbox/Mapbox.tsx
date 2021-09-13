@@ -2,13 +2,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import "./style.css";
 
-import {
-  forwardRef,
-  memo,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { forwardRef, memo, useImperativeHandle, useRef, useState } from "react";
 import { render } from "react-dom";
 
 import { Radio, Space } from "antd";
@@ -175,7 +169,7 @@ const Mapbox: any = memo(
             source: `deviceNo${i}`,
             paint: {
               "line-color": "yellow",
-              "line-opacity": 0.75,
+              "line-opacity": 0.4,
               "line-width": 1,
             },
           });
@@ -187,24 +181,25 @@ const Mapbox: any = memo(
           markers.push(new mapboxgl.Marker(el));
         }
 
-        const drawData = (data: any) => {
-          for (let i = 0; i < data.length; i++) {
-            const newData = data[i].points.map((coordinate: any) => [
-              coordinate.y,
-              coordinate.x,
-            ]);
+        const drawData = (data: any, id: number) => {
+          const newData = data.map((coordinate: any) => [
+            coordinate.y,
+            coordinate.x,
+          ]);
 
-            const existData = mapbox?.getSource(`deviceNo${i}`)._data;
+          const existData = mapbox?.getSource(`deviceNo${id}`)._data;
 
-            markers[i].setLngLat(newData[newData.length - 1]).addTo(mapbox);
+          markers[id].setLngLat(newData[newData.length - 1]).addTo(mapbox);
 
-            const convertData = turf.lineString(
-              existData.geometry.coordinates.concat(newData)
-            );
-            if (mapbox) mapbox?.getSource(`deviceNo${i}`)?.setData(convertData);
-          }
+          const convertData = turf.lineString(
+            existData.geometry.coordinates.concat(newData)
+          );
+          if (mapbox) mapbox?.getSource(`deviceNo${id}`)?.setData(convertData);
         };
-        getTrackingData(0, props.trackingApiEndpoint, drawData);
+
+        for (let i = 0; i < props.crops.data.features.length; i++) {
+          getTrackingData(0, props.trackingApiEndpoint, drawData, i);
+        }
       }
 
       mapboxInstance.current = mapbox;

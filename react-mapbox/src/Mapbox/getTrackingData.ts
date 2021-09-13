@@ -2,11 +2,12 @@
 export async function getTrackingData(
   lastIndex: number,
   url: string,
-  drawData: any
+  drawData: any,
+  deviceId: number,
 ) {
   let data;
   try {
-    data = await fetch(`${url}=${lastIndex}`, {
+    data = await fetch(`${url}=${lastIndex}&track_id=${deviceId}`, {
       method: "GET",
     }).then((res) => res.json());
   } catch (error) {
@@ -16,12 +17,12 @@ export async function getTrackingData(
     const pointsData = data.track[0].points;
     if (pointsData.length !== 0) {
       const nextIndex = pointsData[pointsData.length - 1].index;
-      drawData(data.track);
-      getTrackingData(nextIndex, url, drawData);
+      drawData(data.track[0].points, deviceId);
+      getTrackingData(nextIndex, url, drawData, deviceId);
     } else {
       setTimeout(() => {
-        getTrackingData(lastIndex, url, drawData);
-      }, 500);
+        getTrackingData(lastIndex, url, drawData, deviceId);
+      }, 700);
     }
   }
 }
