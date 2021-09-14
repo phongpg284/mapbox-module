@@ -117,9 +117,32 @@ const Mapbox: any = memo(
     // const popup = new mapboxgl.Popup({
     //   anchor: "top-left",
     // });
+    const drawData = (data: any, id: number, mapbox: any, markers: any) => {
+      if (!mapbox._fullyLoaded) return;
+      const newData = data.map((coordinate: any) => [
+        coordinate.y,
+        coordinate.x,
+      ]);
 
-    const mapDidLoad = (mapbox: any) => {
+      if (mapbox) {
+        console.log(mapbox)
+        const existData = mapbox?.getSource(`deviceNo${id}`)._data;
+
+        markers[id].setLngLat(newData[newData.length - 1]).addTo(mapbox);
+
+        const convertData = turf.lineString(
+          existData.geometry.coordinates.concat(newData)
+        );
+        mapbox?.getSource(`deviceNo${id}`)?.setData(convertData);
+      }
+      else 
+      return
+    };
+
+    const mapDidLoad = (mapbox: any, loadEvent: any) => {
       console.log("map render");
+      console.log(mapbox, loadEvent);
+      
       if (!mapbox) console.log("nomapbox");
       if (props.disableScrollZoom) mapbox.doubleClickZoom.disable();
 
@@ -152,6 +175,8 @@ const Mapbox: any = memo(
       if (props.trackingApiEndpoint && props.crops) {
         let markers: any = [];
         for (let i = 0; i < props.crops.data.features.length; i++) {
+          let baseWidth = props.crops.data.features[i].properties.width;
+          let baseZoom = 16;
           mapbox.addSource(`deviceNo${i}`, {
             type: "geojson",
             data: {
@@ -170,7 +195,14 @@ const Mapbox: any = memo(
             paint: {
               "line-color": "yellow",
               "line-opacity": 0.4,
-              "line-width": 1,
+              "line-width": {
+                type: "exponential",
+                base: 2,
+                stops: [
+                  [0, baseWidth * Math.pow(2, 0 - baseZoom)],
+                  [24, baseWidth * Math.pow(2, 24 - baseZoom)],
+                ],
+              },
             },
           });
 
@@ -181,24 +213,10 @@ const Mapbox: any = memo(
           markers.push(new mapboxgl.Marker(el));
         }
 
-        const drawData = (data: any, id: number) => {
-          const newData = data.map((coordinate: any) => [
-            coordinate.y,
-            coordinate.x,
-          ]);
-
-          const existData = mapbox?.getSource(`deviceNo${id}`)._data;
-
-          markers[id].setLngLat(newData[newData.length - 1]).addTo(mapbox);
-
-          const convertData = turf.lineString(
-            existData.geometry.coordinates.concat(newData)
-          );
-          if (mapbox) mapbox?.getSource(`deviceNo${id}`)?.setData(convertData);
-        };
+        
 
         for (let i = 0; i < props.crops.data.features.length; i++) {
-          getTrackingData(0, props.trackingApiEndpoint, drawData, i);
+          getTrackingData(0, props.trackingApiEndpoint, drawData, i, mapbox, markers);
         }
       }
 
@@ -234,7 +252,7 @@ const Mapbox: any = memo(
     return (
       <div>
         <Map
-          style={`mapbox://styles/mapbox/${visibleLayer}`}
+          style={`mapbox://styles/mapbox/satellite-v9`}
           containerStyle={{
             height: props.height ? props.height : "100vh",
             width: props.width ? props.width : "100vw",

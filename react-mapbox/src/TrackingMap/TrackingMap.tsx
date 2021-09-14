@@ -36,7 +36,7 @@ const TrackingMap = () => {
                 coordinate[0],
               ]),
             ],
-            { icon: device.icon }
+            { icon: device.icon, width: device.width }
           )
         );
         const featureCollections = turf.featureCollection(crops);

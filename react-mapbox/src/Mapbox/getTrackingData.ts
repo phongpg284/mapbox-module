@@ -4,6 +4,8 @@ export async function getTrackingData(
   url: string,
   drawData: any,
   deviceId: number,
+  mapbox: any,
+  markers: any
 ) {
   let data;
   try {
@@ -17,11 +19,11 @@ export async function getTrackingData(
     const pointsData = data.track[0].points;
     if (pointsData.length !== 0) {
       const nextIndex = pointsData[pointsData.length - 1].index;
-      drawData(data.track[0].points, deviceId);
-      getTrackingData(nextIndex, url, drawData, deviceId);
+      drawData(data.track[0].points, deviceId, mapbox, markers);
+      getTrackingData(nextIndex, url, drawData, deviceId, mapbox, markers);
     } else {
       setTimeout(() => {
-        getTrackingData(lastIndex, url, drawData, deviceId);
+        getTrackingData(lastIndex, url, drawData, deviceId, mapbox, markers);
       }, 700);
     }
   }
