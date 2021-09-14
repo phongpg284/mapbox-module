@@ -2,7 +2,14 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import "./style.css";
 
-import { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from "react";
+import {
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { render } from "react-dom";
 
 import { Radio, Space } from "antd";
@@ -32,7 +39,7 @@ import {
   cropsFillPaint,
   cropsLinePaint,
 } from "./config";
-import TrackingDrawWrapper from "./SourceWrapper";
+import TrackingDrawWrapper from "./TrackingDrawWrapper";
 
 // @ts-ignore
 mapboxgl.workerClass = require("mapbox-gl/dist/mapbox-gl-csp-worker").default;
@@ -57,15 +64,13 @@ interface IProps {
   fitBounds: any;
   workArea: any;
   crops: any;
-  trackingApiEndpoint: any;
+  trackingApiEndpoint: string;
 }
 
 const Mapbox: any = memo(
   forwardRef<any, Partial<IProps>>(({ ...props }, ref) => {
     let drawRef: any;
     const [visibleLayer, setVisibleLayer] = useState<LayerType>("satellite-v9");
-    // const deviceStyleLayer = useRef();
-    
     const mapboxInstance = useRef(null);
     const Map = ReactMapboxGl({
       accessToken: props.accessToken ? props.accessToken : defaultAccessToken,
@@ -139,38 +144,9 @@ const Mapbox: any = memo(
       } else return;
     };
 
-    const mapDidLoad = (mapbox: any, loadEvent: any) => {
+    const mapDidLoad = (mapbox: any) => {
       console.log("map render");
-      console.log(mapbox, loadEvent);
-
-      if (!mapbox) console.log("nomapbox");
       if (props.disableScrollZoom) mapbox.doubleClickZoom.disable();
-
-      if (props.workArea) {
-        // marker
-        //   // @ts-ignore
-        //   .setLngLat(turf.center(props.workArea?.data).geometry.coordinates)
-        //   .addTo(mapbox);
-        // popup
-        //   //@ts-ignore
-        //   .setLngLat(turf.center(props.workArea?.data).geometry.coordinates)
-        //   .setHTML(`<h5>${marker.getLngLat()}</h5>`)
-        //   .addTo(mapbox);
-        // function animateMarker(timestamp: any) {
-        //   const radius = 20;
-        //   marker.setLngLat([
-        //     Math.cos(timestamp / 1000) * radius,
-        //     Math.sin(timestamp / 1000) * radius,
-        //   ]);
-        //   popup.setLngLat([
-        //     Math.cos(timestamp / 1000) * radius,
-        //     Math.sin(timestamp / 1000) * radius,
-        //   ]);
-        //   marker.addTo(mapbox);
-        //   requestAnimationFrame(animateMarker);
-        // }
-        // requestAnimationFrame(animateMarker);
-      }
 
       if (props.trackingApiEndpoint && props.crops) {
         let markers: any = [];
@@ -257,7 +233,7 @@ const Mapbox: any = memo(
     return (
       <div>
         <Map
-          style={`mapbox://styles/mapbox/satellite-v9`}
+          style={`mapbox://styles/mapbox/${visibleLayer}`}
           containerStyle={{
             height: props.height ? props.height : "100vh",
             width: props.width ? props.width : "100vw",
@@ -317,7 +293,10 @@ const Mapbox: any = memo(
                 <Layer type="line" id="deviceHehe" sourceId="deviceHehe"/>
               </div>
             )} */}
-            <TrackingDrawWrapper endpoint={props.trackingApiEndpoint} />
+              <TrackingDrawWrapper
+                endpoint={props.trackingApiEndpoint}
+                crops={props.crops}
+              />
           </div>
 
           {mapboxInstance && (
