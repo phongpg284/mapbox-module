@@ -65,6 +65,7 @@ interface IProps {
   workArea: any;
   crops: any;
   trackingApiEndpoint: string;
+  lockZoom: boolean;
 }
 
 const Mapbox: any = memo(
@@ -124,82 +125,85 @@ const Mapbox: any = memo(
     // const popup = new mapboxgl.Popup({
     //   anchor: "top-left",
     // });
-    const drawData = (data: any, id: number, mapbox: any, markers: any) => {
-      if (!mapbox._fullyLoaded) return;
-      const newData = data.map((coordinate: any) => [
-        coordinate.y,
-        coordinate.x,
-      ]);
+    // const drawData = (data: any, id: number, mapbox: any, markers: any) => {
+    //   if (!mapbox._fullyLoaded) return;
+    //   const newData = data.map((coordinate: any) => [
+    //     coordinate.y,
+    //     coordinate.x,
+    //   ]);
 
-      if (mapbox) {
-        console.log(mapbox);
-        const existData = mapbox?.getSource(`deviceNo${id}`)._data;
+    //   if (mapbox) {
+    //     console.log(mapbox);
+    //     const existData = mapbox?.getSource(`deviceNo${id}`)._data;
 
-        markers[id].setLngLat(newData[newData.length - 1]).addTo(mapbox);
+    //     markers[id].setLngLat(newData[newData.length - 1]).addTo(mapbox);
 
-        const convertData = turf.lineString(
-          existData.geometry.coordinates.concat(newData)
-        );
-        mapbox?.getSource(`deviceNo${id}`)?.setData(convertData);
-      } else return;
-    };
+    //     const convertData = turf.lineString(
+    //       existData.geometry.coordinates.concat(newData)
+    //     );
+    //     mapbox?.getSource(`deviceNo${id}`)?.setData(convertData);
+    //   } else return;
+    // };
 
     const mapDidLoad = (mapbox: any) => {
       console.log("map render");
       if (props.disableScrollZoom) mapbox.doubleClickZoom.disable();
+      
+      if(props.lockZoom)
+      mapbox.setMinZoom(mapbox.getZoom())
+      console.log(mapbox.getZoom());
+      // if (props.trackingApiEndpoint && props.crops) {
+      //   let markers: any = [];
+      //   for (let i = 0; i < props.crops.data.features.length; i++) {
+      //     let baseWidth = props.crops.data.features[i].properties.width;
+      //     let baseZoom = 16;
+      //     mapbox.addSource(`deviceNo${i}`, {
+      //       type: "geojson",
+      //       data: {
+      //         type: "Feature",
+      //         properties: {},
+      //         geometry: {
+      //           type: "Point",
+      //           coordinates: [],
+      //         },
+      //       },
+      //     });
+      //     mapbox.addLayer({
+      //       id: `deviceNo${i}`,
+      //       type: "line",
+      //       source: `deviceNo${i}`,
+      //       paint: {
+      //         "line-color": "yellow",
+      //         "line-opacity": 0.4,
+      //         "line-width": {
+      //           type: "exponential",
+      //           base: 2,
+      //           stops: [
+      //             [0, baseWidth * Math.pow(2, 0 - baseZoom)],
+      //             [24, baseWidth * Math.pow(2, 24 - baseZoom)],
+      //           ],
+      //         },
+      //       },
+      //     });
 
-      if (props.trackingApiEndpoint && props.crops) {
-        let markers: any = [];
-        for (let i = 0; i < props.crops.data.features.length; i++) {
-          let baseWidth = props.crops.data.features[i].properties.width;
-          let baseZoom = 16;
-          mapbox.addSource(`deviceNo${i}`, {
-            type: "geojson",
-            data: {
-              type: "Feature",
-              properties: {},
-              geometry: {
-                type: "Point",
-                coordinates: [],
-              },
-            },
-          });
-          mapbox.addLayer({
-            id: `deviceNo${i}`,
-            type: "line",
-            source: `deviceNo${i}`,
-            paint: {
-              "line-color": "yellow",
-              "line-opacity": 0.4,
-              "line-width": {
-                type: "exponential",
-                base: 2,
-                stops: [
-                  [0, baseWidth * Math.pow(2, 0 - baseZoom)],
-                  [24, baseWidth * Math.pow(2, 24 - baseZoom)],
-                ],
-              },
-            },
-          });
+      //     let el = document.createElement("img");
+      //     el.src = props.crops.data.features[i].properties.icon;
+      //     el.style.height = "20px";
 
-          let el = document.createElement("img");
-          el.src = props.crops.data.features[i].properties.icon;
-          el.style.height = "20px";
+      //     markers.push(new mapboxgl.Marker(el));
+      //   }
 
-          markers.push(new mapboxgl.Marker(el));
-        }
-
-        // for (let i = 0; i < props.crops.data.features.length; i++) {
-        //   getTrackingData(
-        //     0,
-        //     props.trackingApiEndpoint,
-        //     drawData,
-        //     i,
-        //     mapbox,
-        //     markers
-        //   );
-        // }
-      }
+      //   // for (let i = 0; i < props.crops.data.features.length; i++) {
+      //   //   getTrackingData(
+      //   //     0,
+      //   //     props.trackingApiEndpoint,
+      //   //     drawData,
+      //   //     i,
+      //   //     mapbox,
+      //   //     markers
+      //   //   );
+      //   // }
+      // }
 
       mapboxInstance.current = mapbox;
       mapbox.addControl(new ScaleControl(), "bottom-left");
@@ -244,6 +248,9 @@ const Mapbox: any = memo(
           zoom={props.zoom ? [props.zoom] : defaultZoom}
           onStyleLoad={mapDidLoad}
           fitBounds={props.fitBounds}
+          fitBoundsOptions={{
+            padding: { top: 10, bottom: 25, left: 15, right: 5 },
+          }}
         >
           <div className="data-display">
             {props.workArea &&
@@ -287,16 +294,11 @@ const Mapbox: any = memo(
               />
             )}
 
-            {/* {trackingData.current && (
-              <div>
-                <Source id="deviceHehe" geoJsonSource={trackingData.current} />
-                <Layer type="line" id="deviceHehe" sourceId="deviceHehe"/>
-              </div>
-            )} */}
-              <TrackingDrawWrapper
-                endpoint={props.trackingApiEndpoint}
-                crops={props.crops}
-              />
+            <TrackingDrawWrapper
+              endpoint={props.trackingApiEndpoint}
+              crops={props.crops}
+              zoom={(mapboxInstance?.current as any)?.getZoom()}
+            />
           </div>
 
           {mapboxInstance && (

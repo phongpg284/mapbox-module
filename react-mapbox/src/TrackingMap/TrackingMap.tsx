@@ -56,17 +56,18 @@ const TrackingMap = () => {
         </div>
       </div>
       <div className="mapbox-container">
-        <Mapbox
+      <Mapbox
           accessToken={accessToken}
           workArea={workAreaData}
           crops={cropsData}
+          fitBounds={workAreaData?.data?.bbox}
           trackingApiEndpoint={
             process.env.REACT_APP_API_URL + "/get_track?last_index"
           }
-          center={center}
-          zoom={16}
+          // center={center}
           maxWidth="100%"
           height="calc(100vh - 175px)"
+          lockZoom
         />
       </div>
     </div>

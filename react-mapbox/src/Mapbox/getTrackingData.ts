@@ -42,7 +42,7 @@ export async function getTrackingData(
     } else {
       setTimeout(() => {
         getTrackingData(lastIndex, url, drawData, deviceId);
-      }, 1000);
+      }, 700);
     }
   }
 }
