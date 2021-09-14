@@ -2,7 +2,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import "./style.css";
 
-import { forwardRef, memo, useImperativeHandle, useRef, useState } from "react";
+import { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { render } from "react-dom";
 
 import { Radio, Space } from "antd";
@@ -32,7 +32,7 @@ import {
   cropsFillPaint,
   cropsLinePaint,
 } from "./config";
-import { getTrackingData } from "./getTrackingData";
+import TrackingDrawWrapper from "./SourceWrapper";
 
 // @ts-ignore
 mapboxgl.workerClass = require("mapbox-gl/dist/mapbox-gl-csp-worker").default;
@@ -64,6 +64,8 @@ const Mapbox: any = memo(
   forwardRef<any, Partial<IProps>>(({ ...props }, ref) => {
     let drawRef: any;
     const [visibleLayer, setVisibleLayer] = useState<LayerType>("satellite-v9");
+    // const deviceStyleLayer = useRef();
+    
     const mapboxInstance = useRef(null);
     const Map = ReactMapboxGl({
       accessToken: props.accessToken ? props.accessToken : defaultAccessToken,
@@ -125,7 +127,7 @@ const Mapbox: any = memo(
       ]);
 
       if (mapbox) {
-        console.log(mapbox)
+        console.log(mapbox);
         const existData = mapbox?.getSource(`deviceNo${id}`)._data;
 
         markers[id].setLngLat(newData[newData.length - 1]).addTo(mapbox);
@@ -134,15 +136,13 @@ const Mapbox: any = memo(
           existData.geometry.coordinates.concat(newData)
         );
         mapbox?.getSource(`deviceNo${id}`)?.setData(convertData);
-      }
-      else 
-      return
+      } else return;
     };
 
     const mapDidLoad = (mapbox: any, loadEvent: any) => {
       console.log("map render");
       console.log(mapbox, loadEvent);
-      
+
       if (!mapbox) console.log("nomapbox");
       if (props.disableScrollZoom) mapbox.doubleClickZoom.disable();
 
@@ -213,11 +213,16 @@ const Mapbox: any = memo(
           markers.push(new mapboxgl.Marker(el));
         }
 
-        
-
-        for (let i = 0; i < props.crops.data.features.length; i++) {
-          getTrackingData(0, props.trackingApiEndpoint, drawData, i, mapbox, markers);
-        }
+        // for (let i = 0; i < props.crops.data.features.length; i++) {
+        //   getTrackingData(
+        //     0,
+        //     props.trackingApiEndpoint,
+        //     drawData,
+        //     i,
+        //     mapbox,
+        //     markers
+        //   );
+        // }
       }
 
       mapboxInstance.current = mapbox;
@@ -306,20 +311,13 @@ const Mapbox: any = memo(
               />
             )}
 
-            {/* {props.workArea && (
-              <Marker
-                coordinates={
-                  turf.center(props.workArea.data).geometry.coordinates
-                }
-                anchor="bottom"
-              >
-                <img
-                  style={{ height: "40px" }}
-                  alt="no?"
-                  src="https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png"
-                />
-              </Marker>
+            {/* {trackingData.current && (
+              <div>
+                <Source id="deviceHehe" geoJsonSource={trackingData.current} />
+                <Layer type="line" id="deviceHehe" sourceId="deviceHehe"/>
+              </div>
             )} */}
+            <TrackingDrawWrapper endpoint={props.trackingApiEndpoint} />
           </div>
 
           {mapboxInstance && (
