@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Layer, Source } from "react-mapbox-gl";
 import { getTrackingData } from "./getTrackingData";
 interface ITrackingDrawWrapperProps {
@@ -6,10 +6,7 @@ interface ITrackingDrawWrapperProps {
   crops: any;
 }
 
-const TrackingDrawWrapper: React.FC<ITrackingDrawWrapperProps> = ({
-  endpoint,
-  crops,
-}) => {
+const TrackingDrawDevice = ({ endpoint, cropData, deviceId}: any) => {
   const paintStyles = (baseWidth: number) => {
     const baseZoom = 16;
     return {
@@ -36,33 +33,47 @@ const TrackingDrawWrapper: React.FC<ITrackingDrawWrapperProps> = ({
       },
     },
   });
+  // useEffect(() => {
+  //   return () => {
+  //     setTrackingData({});
+  //   };
+  // }, []);
 
   useEffect(() => {
-    return () => {
-      setTrackingData({});
-    };
-  }, []);
-
-  useEffect(() => {
-    console.log("start");
-    if (endpoint) getTrackingData(0, endpoint, setTrackingData, 3);
-  }, [endpoint]);
-
+    console.log("start",deviceId);
+    if (endpoint) getTrackingData(0, endpoint, setTrackingData, deviceId);
+  }, [endpoint,deviceId]);
   return (
     <div>
-      <Source id="devices" geoJsonSource={trackingData} />
+      <Source id={`device${deviceId}`} geoJsonSource={trackingData} />
+      <Layer
+        type="line"
+        id={`device${deviceId}`}
+        sourceId={`device${deviceId}`}
+        paint={paintStyles(cropData.properties.width)}
+      />
+    </div>
+  );
+};
+
+const TrackingDrawWrapper: React.FC<ITrackingDrawWrapperProps> = ({
+  endpoint,
+  crops,
+}) => {
+  useEffect(()=> {
+    console.log("track render")
+  })
+  return (
+    <div>
       {crops &&
-        crops.data.features.map((feature: any, index: number) => {
-          return (
-            <Layer
-              key={feature.properties.width}
-              type="line"
-              id={`device${index}`}
-              sourceId="devices"
-              paint={paintStyles(feature.properties.width)}
-            />
-          );
-        })}
+        crops.data.features.map((feature: any, index: number) => (
+          <TrackingDrawDevice
+            key={feature.properties.width}
+            endpoint={endpoint}
+            cropData={feature}
+            deviceId={index}
+          />
+        ))}
     </div>
   );
 };
