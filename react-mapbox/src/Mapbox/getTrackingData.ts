@@ -32,8 +32,6 @@ export async function getTrackingData(
         convertData.push(pair)
       }
 
-      console.log(convertData, "hehe")
-
       // const convertData = pointsData.for((coordinate: number, index: number) => [
       //   if(index%2===1)
       //   return
