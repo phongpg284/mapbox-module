@@ -9,7 +9,7 @@ export async function getTrackingData(
 ) {
   let data;
   try {
-    data = await fetch(`${url}=${lastIndex}&track_id=${deviceId}`, {
+    data = await fetch(`${url}=${lastIndex}&track_id=${deviceId}&short=true`, {
       method: "GET",
     }).then((res) => res.json());
   } catch (error) {
@@ -17,26 +17,43 @@ export async function getTrackingData(
   }
   if (data) {
     const pointsData = data.track[0].points;
+    const startPoint = data.track[0].start_point;
+    const multiplier = data.track[0].multiplier;
     if (pointsData.length !== 0) {
-      const nextIndex = pointsData[pointsData.length - 1].index;
-      
-      const convertData = pointsData.map((coordinate: any) => [
-        coordinate.y,
-        coordinate.x,
-      ]);
-      
+      const nextIndex = data.track[0].last_index;
+
+      let convertData: any[] = [];
+
+      for (let i = 0; i < pointsData.length; i+=2) {
+        const pair = [
+          pointsData[i + 1] * multiplier + startPoint[1],
+          pointsData[i] * multiplier + startPoint[0],
+        ];
+        convertData.push(pair)
+      }
+
+      console.log(convertData, "hehe")
+
+      // const convertData = pointsData.for((coordinate: number, index: number) => [
+      //   if(index%2===1)
+      //   return
+      //   coordinate.x * multiplier + startPoint[0],
+      //   coordinate.y * multiplier + startPoint[1],
+      // ]);
+
       drawData((prevState: any) => {
-        if(prevState) {
+        if (prevState) {
           return {
             type: "geojson",
-            data: turf.lineString(prevState?.data.geometry.coordinates.concat(convertData))
-          }
-        }
-        else 
-        return {
-          type: "geojson",
-          data: turf.lineString(convertData)
-        }
+            data: turf.lineString(
+              prevState?.data.geometry.coordinates.concat(convertData)
+            ),
+          };
+        } else
+          return {
+            type: "geojson",
+            data: turf.lineString(convertData),
+          };
       });
       getTrackingData(nextIndex, url, drawData, deviceId);
     } else {
