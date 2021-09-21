@@ -122,29 +122,6 @@ const Mapbox: any = memo(
       }
     }
 
-    // const popup = new mapboxgl.Popup({
-    //   anchor: "top-left",
-    // });
-    // const drawData = (data: any, id: number, mapbox: any, markers: any) => {
-    //   if (!mapbox._fullyLoaded) return;
-    //   const newData = data.map((coordinate: any) => [
-    //     coordinate.y,
-    //     coordinate.x,
-    //   ]);
-
-    //   if (mapbox) {
-    //     console.log(mapbox);
-    //     const existData = mapbox?.getSource(`deviceNo${id}`)._data;
-
-    //     markers[id].setLngLat(newData[newData.length - 1]).addTo(mapbox);
-
-    //     const convertData = turf.lineString(
-    //       existData.geometry.coordinates.concat(newData)
-    //     );
-    //     mapbox?.getSource(`deviceNo${id}`)?.setData(convertData);
-    //   } else return;
-    // };
-
     const mapDidLoad = (mapbox: any) => {
       console.log("map render");
       if (props.disableScrollZoom) mapbox.doubleClickZoom.disable();
@@ -152,58 +129,6 @@ const Mapbox: any = memo(
       if(props.lockZoom)
       mapbox.setMinZoom(mapbox.getZoom())
       console.log(mapbox.getZoom());
-      // if (props.trackingApiEndpoint && props.crops) {
-      //   let markers: any = [];
-      //   for (let i = 0; i < props.crops.data.features.length; i++) {
-      //     let baseWidth = props.crops.data.features[i].properties.width;
-      //     let baseZoom = 16;
-      //     mapbox.addSource(`deviceNo${i}`, {
-      //       type: "geojson",
-      //       data: {
-      //         type: "Feature",
-      //         properties: {},
-      //         geometry: {
-      //           type: "Point",
-      //           coordinates: [],
-      //         },
-      //       },
-      //     });
-      //     mapbox.addLayer({
-      //       id: `deviceNo${i}`,
-      //       type: "line",
-      //       source: `deviceNo${i}`,
-      //       paint: {
-      //         "line-color": "yellow",
-      //         "line-opacity": 0.4,
-      //         "line-width": {
-      //           type: "exponential",
-      //           base: 2,
-      //           stops: [
-      //             [0, baseWidth * Math.pow(2, 0 - baseZoom)],
-      //             [24, baseWidth * Math.pow(2, 24 - baseZoom)],
-      //           ],
-      //         },
-      //       },
-      //     });
-
-      //     let el = document.createElement("img");
-      //     el.src = props.crops.data.features[i].properties.icon;
-      //     el.style.height = "20px";
-
-      //     markers.push(new mapboxgl.Marker(el));
-      //   }
-
-      //   // for (let i = 0; i < props.crops.data.features.length; i++) {
-      //   //   getTrackingData(
-      //   //     0,
-      //   //     props.trackingApiEndpoint,
-      //   //     drawData,
-      //   //     i,
-      //   //     mapbox,
-      //   //     markers
-      //   //   );
-      //   // }
-      // }
 
       mapboxInstance.current = mapbox;
       mapbox.addControl(new ScaleControl(), "bottom-left");

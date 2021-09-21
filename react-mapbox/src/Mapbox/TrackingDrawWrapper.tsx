@@ -1,13 +1,22 @@
-import { memo, useEffect, useState } from "react";
-import { Feature, Image, Layer, Marker, Popup, Source } from "react-mapbox-gl";
+import { ThunderboltFilled } from "@ant-design/icons";
+import { useEffect, useRef, useState } from "react";
+import { Feature, Image, Layer, Popup, Source } from "react-mapbox-gl";
 import { getTrackingData } from "./getTrackingData";
+import TrackingInfo from "./TrackingInfo/TrackingInfo";
+import * as turf from "@turf/turf";
 interface ITrackingDrawWrapperProps {
   endpoint?: string;
   crops: any;
   zoom?: number;
 }
 
-const TrackingDrawDevice = ({ endpoint, cropData, deviceId, zoom }: any) => {
+const TrackingDrawDevice = ({
+  endpoint,
+  cropData,
+  deviceId,
+  zoom,
+  updateStatisticData,
+}: any) => {
   const paintStyles = (baseWidth: number) => {
     const baseZoom = zoom ? zoom : 16;
     return {
@@ -36,6 +45,12 @@ const TrackingDrawDevice = ({ endpoint, cropData, deviceId, zoom }: any) => {
   });
 
   const [showPopup, setShowPopup] = useState(false);
+  const prevTrackingData = useRef({
+    lastIndex: 0,
+    lastCoordinates: [],
+  });
+
+  const distance = useRef(0);
 
   useEffect(() => {
     return () => {
@@ -46,27 +61,71 @@ const TrackingDrawDevice = ({ endpoint, cropData, deviceId, zoom }: any) => {
   useEffect(() => {
     if (endpoint) getTrackingData(0, endpoint, setTrackingData, deviceId);
   }, [endpoint, deviceId]);
+
+  useEffect(() => {
+    if (trackingData) {
+      const newDataLength = trackingData.data?.geometry.coordinates.length;
+      if (newDataLength > 0) {
+        let from = trackingData.data?.geometry.coordinates[prevTrackingData.current.lastIndex];
+        let to = trackingData.data?.geometry.coordinates[prevTrackingData.current.lastIndex + 1];
+        for (let i = prevTrackingData.current.lastIndex; i < newDataLength; i++) {
+          distance.current += turf.distance(turf.point(from), turf.point(to));
+          from = to;
+          to = trackingData?.data?.geometry.coordinates[i + 1];
+        }
+        prevTrackingData.current = {
+          lastIndex: newDataLength - 1,
+          lastCoordinates:
+            trackingData?.data?.geometry.coordinates[newDataLength - 1],
+        };
+        updateStatisticData(deviceId, distance.current);
+      }
+    }
+  }, [trackingData]);
   return (
     <div>
-      <Source id={`device${deviceId}`} geoJsonSource={trackingData} />
+      <Source id={`device-${deviceId}`} geoJsonSource={trackingData} />
       <Layer
         type="line"
-        id={`device${deviceId}`}
-        sourceId={`device${deviceId}`}
+        id={`device-${deviceId}`}
+        sourceId={`device-${deviceId}`}
         paint={paintStyles(cropData.properties.width)}
       />
 
       <Image
-        id={`device${deviceId}-icon`}
+        id={`device-${deviceId}-icon`}
         url={cropData.properties.icon}
         options={{ pixelRatio: 6 }}
       />
+      {/* {deviceId === 0 && (
+        <Layer
+          type="symbol"
+          id={`marker?????`}
+          layout={{ "icon-image": `device${deviceId}-icon` }}
+        >
+          <Feature
+            coordinates={trackingData.data.geometry.coordinates[trackingData.data.geometry.coordinates.length -1]}
+            onClick={() => setShowPopup(!showPopup)}
+          />
+        </Layer>
+      )} */}
+
       {trackingData.data.geometry.coordinates.length > 0 && (
         <div>
           <Layer
             type="symbol"
-            id={`marker${deviceId}`}
-            layout={{ "icon-image": `device${deviceId}-icon` }}
+            id={`test_marker-${deviceId}`}
+            layout={{ "icon-image": `device-${deviceId}-icon` }}
+          >
+            <Feature
+              coordinates={[105.89424821470598, 20.59760787621294]}
+              onClick={() => setShowPopup(!showPopup)}
+            />
+          </Layer>
+          <Layer
+            type="symbol"
+            id={`marker-${deviceId}`}
+            layout={{ "icon-image": `device-${deviceId}-icon` }}
           >
             <Feature
               coordinates={
@@ -111,14 +170,45 @@ const TrackingDrawDevice = ({ endpoint, cropData, deviceId, zoom }: any) => {
   );
 };
 
+interface StatisticDevice {
+  name: number;
+  width: number;
+  distance: number;
+}
+
 const TrackingDrawWrapper: React.FC<ITrackingDrawWrapperProps> = ({
   endpoint,
   crops,
   zoom,
 }) => {
+  const [statistic, setStatistic] = useState<StatisticDevice[]>();
   useEffect(() => {
     console.log("track render");
-  });
+    const devices = crops?.data?.features.map((feature: any, index: number) => {
+      return {
+        icon: feature.properties.icon,
+        name: index,
+      };
+    });
+    setStatistic(devices);
+  }, []);
+
+  const updateStatisticData = (deviceId: number, data: any) => {
+    setStatistic((prevState: any) => {
+      const newState = prevState.map((device: StatisticDevice) => {
+        if (device.name === deviceId) {
+          return {
+            ...device,
+            distance: data,
+          };
+        }
+        else 
+        return device
+      });
+      return newState;
+    });
+  };
+
   return (
     <div>
       {crops &&
@@ -129,8 +219,10 @@ const TrackingDrawWrapper: React.FC<ITrackingDrawWrapperProps> = ({
             cropData={feature}
             deviceId={index}
             zoom={zoom}
+            updateStatisticData={updateStatisticData}
           />
         ))}
+      <TrackingInfo statisticData={statistic} />
     </div>
   );
 };

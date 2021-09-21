@@ -16,11 +16,11 @@ export async function getTrackingData(
     console.log(error);
   }
   if (data) {
-    const pointsData = data.track[0].points;
-    const startPoint = data.track[0].start_point;
-    const multiplier = data.track[0].multiplier;
-    if (pointsData.length !== 0) {
-      const nextIndex = data.track[0].last_index;
+    const pointsData = data.track[0]?.points;
+    const startPoint = data.track[0]?.start_point;
+    const multiplier = data.track[0]?.multiplier;
+    if (pointsData && pointsData?.length !== 0) {
+      const nextIndex = data.track[0]?.last_index;
 
       let convertData: any[] = [];
 
