@@ -33,7 +33,6 @@ const BoundingMap = ({ boundingData, match }: any) => {
           height="calc(100vh - 175px)"
           boundingData={drawData}
           fitBounds={fitBounds}
-          disableScrollZoom
         />
       </div>
     </div>

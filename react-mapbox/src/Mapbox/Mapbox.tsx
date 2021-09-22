@@ -5,7 +5,6 @@ import "./style.css";
 import {
   forwardRef,
   memo,
-  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -13,9 +12,8 @@ import {
 import { render } from "react-dom";
 
 import { Radio, Space } from "antd";
-import * as turf from "@turf/turf";
 
-import mapboxgl from "mapbox-gl";
+import mapboxgl, { GeoJSONSourceRaw } from "mapbox-gl";
 import {
   FullscreenControl,
   GeolocateControl,
@@ -39,7 +37,8 @@ import {
   cropsFillPaint,
   cropsLinePaint,
 } from "./config";
-import TrackingDrawWrapper from "./TrackingDrawWrapper";
+import TrackingDrawWrapper from "./TrackingDraw/TrackingDrawWrapper";
+import { FitBounds } from "react-mapbox-gl/lib/map";
 
 // @ts-ignore
 mapboxgl.workerClass = require("mapbox-gl/dist/mapbox-gl-csp-worker").default;
@@ -49,7 +48,7 @@ ReactMapboxGl.workerClass =
   require("mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 type LayerType = "streets-v11" | "satellite-v9" | "light-v10" | "dark-v10";
-interface IProps {
+interface IMapboxProps {
   accessToken: string;
   height: string;
   width: string;
@@ -59,9 +58,7 @@ interface IProps {
   displayStyles: any;
   center: [number, number];
   zoom: number;
-  interactive: boolean;
-  disableScrollZoom: boolean;
-  fitBounds: any;
+  fitBounds: FitBounds;
   workArea: any;
   crops: any;
   trackingApiEndpoint: string;
@@ -69,14 +66,13 @@ interface IProps {
 }
 
 const Mapbox: any = memo(
-  forwardRef<any, Partial<IProps>>(({ ...props }, ref) => {
+  forwardRef<any, Partial<IMapboxProps>>(({ ...props }, ref) => {
     let drawRef: any;
     const [visibleLayer, setVisibleLayer] = useState<LayerType>("satellite-v9");
     const mapboxInstance = useRef(null);
     const Map = ReactMapboxGl({
-      accessToken: props.accessToken ? props.accessToken : defaultAccessToken,
+      accessToken: props.accessToken || defaultAccessToken,
       maxZoom: 23,
-      scrollZoom: !props.disableScrollZoom,
     });
 
     const handleChangeLayer = (e: any) => {
@@ -124,11 +120,10 @@ const Mapbox: any = memo(
 
     const mapDidLoad = (mapbox: any) => {
       console.log("map render");
-      if (props.disableScrollZoom) mapbox.doubleClickZoom.disable();
-      
+
       if(props.lockZoom)
       mapbox.setMinZoom(mapbox.getZoom())
-      console.log(mapbox.getZoom());
+      console.log("zoom: ",mapbox.getZoom());
 
       mapboxInstance.current = mapbox;
       mapbox.addControl(new ScaleControl(), "bottom-left");
@@ -164,12 +159,12 @@ const Mapbox: any = memo(
         <Map
           style={`mapbox://styles/mapbox/${visibleLayer}`}
           containerStyle={{
-            height: props.height ? props.height : "100vh",
-            width: props.width ? props.width : "100vw",
-            maxWidth: props.maxWidth ? props.maxWidth : "100%",
-            maxHeight: props.maxHeight ? props.maxHeight : "100%",
+            height: props.height || "100vh",
+            width: props.width || "100vw",
+            maxWidth: props.maxWidth || "100%",
+            maxHeight: props.maxHeight || "100%",
           }}
-          center={props.center ? props.center : defaultCenter}
+          center={props.center || defaultCenter}
           zoom={props.zoom ? [props.zoom] : defaultZoom}
           onStyleLoad={mapDidLoad}
           fitBounds={props.fitBounds}

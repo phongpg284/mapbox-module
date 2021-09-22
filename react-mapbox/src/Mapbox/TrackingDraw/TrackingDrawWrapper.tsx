@@ -1,9 +1,9 @@
-import { ThunderboltFilled } from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
 import { Feature, Image, Layer, Popup, Source } from "react-mapbox-gl";
-import { getTrackingData } from "./getTrackingData";
-import TrackingInfo from "./TrackingInfo/TrackingInfo";
 import * as turf from "@turf/turf";
+import TrackingInfo from "../TrackingInfo/TrackingInfo";
+import { getTrackingData } from "../getTrackingData";
+
 interface ITrackingDrawWrapperProps {
   endpoint?: string;
   crops: any;

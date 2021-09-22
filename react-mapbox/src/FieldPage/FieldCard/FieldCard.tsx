@@ -31,7 +31,6 @@ const FieldCard = ({ data }: any) => {
 
   const handleDelete = () => {
     // TODO: CALL DELETE API
-    console.log(deleteItem, "hehe");
     localStorage.removeItem(deleteItem.name);
     localStorage.setItem(
       "fakeDB",
