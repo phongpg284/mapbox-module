@@ -1,3 +1,9 @@
+/**
+ * 
+ * @param baseWidth Base width of draw line (in meters)
+ * @param baseZoom Base zoom scale of map
+ * @returns Paint styles for Mapbox Layer
+ */
 const PaintScaleView = (baseWidth: number, baseZoom: number) => {
   return {
     "line-color": "yellow",

@@ -1,6 +1,12 @@
 // @ts-ignore
 import * as turf from "@turf/turf";
-
+/**
+ * 
+ * @param lastIndex Last index fetch from api
+ * @param url URL
+ * @param drawData update drawData state
+ * @param deviceId deviceID 
+ */
 async function GetTrackingData(
   lastIndex: number,
   url: string,
