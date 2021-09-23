@@ -1,24 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { Layer, Source } from "react-mapbox-gl";
-import { ViewIndexContext } from "./RecordMap";
 import * as turf from "@turf/turf";
-const paintStyles = (baseWidth: number, zoom: number | undefined) => {
-  const baseZoom = zoom || 16;
-  return {
-    "line-color": "yellow",
-    "line-opacity": 0.5,
-    "line-width": {
-      type: "exponential",
-      base: 2,
-      stops: [
-        [0, baseWidth * Math.pow(2, 0 - baseZoom)],
-        [24, baseWidth * Math.pow(2, 24 - baseZoom)],
-      ],
-    },
-  };
-};
 
-const ViewDrawingData = ({ data, zoom }: any) => {
+import { ViewIndexContext } from "../../RecordMap/RecordMap";
+
+import PaintScaleView from "../../utils/PaintScaleView";
+
+const RecordDraw = ({ data, zoom }: any) => {
   const [displayDrawData, setDisplayDrawData] = useState<any>({
     type: "geojson",
     data: {
@@ -30,8 +18,7 @@ const ViewDrawingData = ({ data, zoom }: any) => {
     },
   });
   const viewIndex = useContext(ViewIndexContext);
-  console.log(viewIndex, "hehe");
-
+  
   useEffect(() => {
     if (data)
       setDisplayDrawData({
@@ -65,10 +52,10 @@ const ViewDrawingData = ({ data, zoom }: any) => {
         type="line"
         id="view-device"
         sourceId="view-device"
-        paint={paintStyles(3, zoom)}
+        paint={PaintScaleView(3, zoom)}
       />
     </div>
   );
 };
 
-export default ViewDrawingData;
+export default RecordDraw;

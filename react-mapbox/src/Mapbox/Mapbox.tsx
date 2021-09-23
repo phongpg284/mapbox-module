@@ -7,7 +7,7 @@ import { render } from "react-dom";
 
 import { Radio, Space } from "antd";
 
-import mapboxgl, { GeoJSONSourceRaw } from "mapbox-gl";
+import mapboxgl from "mapbox-gl";
 import {
   FullscreenControl,
   GeolocateControl,
@@ -33,7 +33,7 @@ import {
 } from "./config";
 import TrackingDrawWrapper from "./TrackingDraw/TrackingDrawWrapper";
 import { FitBounds } from "react-mapbox-gl/lib/map";
-import ViewDrawingData from "../RecordMap/ViewDrawingData";
+import RecordDraw from "./RecordDraw";
 
 // @ts-ignore
 mapboxgl.workerClass = require("mapbox-gl/dist/mapbox-gl-csp-worker").default;
@@ -241,7 +241,7 @@ const Mapbox: any = memo(
             />
           )}
           {props.viewDrawData && (
-            <ViewDrawingData
+            <RecordDraw
               data={props.viewDrawData}
               zoom={(mapboxInstance?.current as any)?.getZoom()}
             />

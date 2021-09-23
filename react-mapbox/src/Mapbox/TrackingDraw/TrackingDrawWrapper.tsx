@@ -3,6 +3,7 @@ import { Feature, Image, Layer, Popup, Source } from "react-mapbox-gl";
 import * as turf from "@turf/turf";
 import TrackingInfo from "../TrackingInfo/TrackingInfo";
 import { getTrackingData } from "../getTrackingData";
+import PaintScaleView from "../../utils/PaintScaleView";
 
 interface ITrackingDrawWrapperProps {
   endpoint?: string;
@@ -17,22 +18,6 @@ const TrackingDrawDevice = ({
   zoom,
   updateStatisticData,
 }: any) => {
-  const paintStyles = (baseWidth: number) => {
-    const baseZoom = zoom ? zoom : 16;
-    return {
-      "line-color": "yellow",
-      "line-opacity": 0.5,
-      "line-width": {
-        type: "exponential",
-        base: 2,
-        stops: [
-          [0, baseWidth * Math.pow(2, 0 - baseZoom)],
-          [24, baseWidth * Math.pow(2, 24 - baseZoom)],
-        ],
-      },
-    };
-  };
-
   const [trackingData, setTrackingData] = useState<any>({
     type: "geojson",
     data: {
@@ -89,7 +74,7 @@ const TrackingDrawDevice = ({
         type="line"
         id={`device-${deviceId}`}
         sourceId={`device-${deviceId}`}
-        paint={paintStyles(cropData.properties.width)}
+        paint={PaintScaleView(cropData.properties.width, zoom)}
       />
 
       <Image

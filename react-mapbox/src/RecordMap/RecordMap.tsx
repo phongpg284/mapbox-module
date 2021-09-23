@@ -1,15 +1,8 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
-import Mapbox from "../Mapbox";
+import { createContext, useEffect, useState } from "react";
+import { Line, LineChart, Tooltip } from "recharts";
 import * as turf from "@turf/turf";
-import ViewDrawingData from "./ViewDrawingData";
+
+import Mapbox from "../Mapbox";
 
 export const ViewIndexContext = createContext<any>(null);
 
@@ -77,6 +70,7 @@ const RecordMap = () => {
   return (
     <div>
       <div className="record-info"></div>
+      
       <div className="record-map">
         <ViewIndexContext.Provider value={viewIndex}>
           <Mapbox
@@ -86,6 +80,7 @@ const RecordMap = () => {
           ></Mapbox>
         </ViewIndexContext.Provider>
       </div>
+
       <div className="record-chart">
         <LineChart width={2000} height={360} data={recordData}>
           <Line
