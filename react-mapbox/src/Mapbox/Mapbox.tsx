@@ -226,7 +226,7 @@ const Mapbox: any = memo(
               <TrackingDrawWrapper
                 endpoint={props.trackingApiEndpoint}
                 crops={props.crops}
-                zoom={(mapboxInstance?.current as any)?.getZoom()}
+                zoom={(mapboxInstance?.current as any)?.getZoom() || 16}
               />
             )}
           </div>
@@ -243,7 +243,7 @@ const Mapbox: any = memo(
           {props.viewDrawData && (
             <RecordDraw
               data={props.viewDrawData}
-              zoom={(mapboxInstance?.current as any)?.getZoom()}
+              zoom={(mapboxInstance?.current as any)?.getZoom() || 16}
             />
           )}
         </Map>
