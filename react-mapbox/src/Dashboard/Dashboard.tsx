@@ -67,9 +67,9 @@ const Dashboard = ({ selectItem, handleSelectMenuItem }: any) => {
       </SubMenu>
 
       <SubMenu key="sub6" icon={<RoomIcon className="me-4" />} title="Tracking">       
-        <Menu.Item key="/">
+        <Menu.Item key="/record">
           <ViewModuleIcon className="me-3" />
-          Display
+          Record
         </Menu.Item>
       </SubMenu>
     </Menu>

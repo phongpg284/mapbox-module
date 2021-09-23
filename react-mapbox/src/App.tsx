@@ -13,6 +13,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import ProfileDashboard from "./ProfileDashboard/ProfileDashboard";
 import RealtimeMap from "./RealtimeMap/RealtimeMap";
 import BoundingMap from "./BoundingMap/BoundingMap";
+import RecordMap from "./RecordMap";
 
 function App() {
   const location = useLocation();
@@ -103,6 +104,9 @@ function App() {
               </Route>
               <Route exact path="/realtime">
                 <RealtimeMap />
+              </Route>
+              <Route exact path="/record"> 
+                <RecordMap />
               </Route>
 
             </Switch>

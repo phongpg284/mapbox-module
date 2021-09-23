@@ -2,13 +2,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import "./style.css";
 
-import {
-  forwardRef,
-  memo,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { forwardRef, memo, useImperativeHandle, useRef, useState } from "react";
 import { render } from "react-dom";
 
 import { Radio, Space } from "antd";
@@ -39,6 +33,7 @@ import {
 } from "./config";
 import TrackingDrawWrapper from "./TrackingDraw/TrackingDrawWrapper";
 import { FitBounds } from "react-mapbox-gl/lib/map";
+import ViewDrawingData from "../RecordMap/ViewDrawingData";
 
 // @ts-ignore
 mapboxgl.workerClass = require("mapbox-gl/dist/mapbox-gl-csp-worker").default;
@@ -59,12 +54,24 @@ interface IMapboxProps {
   center: [number, number];
   zoom: number;
   fitBounds: FitBounds;
+  lockZoom: boolean;
+
   workArea: any;
   crops: any;
   trackingApiEndpoint: string;
-  lockZoom: boolean;
-}
 
+  worksApiEndpoint: string;
+  viewDrawData: any;
+}
+/**
+ * Mapbox module
+ *
+ * @param {string} workArea WorkArea with GeoJsonSource)
+ * @param {string} crops Crops with GeoJsonSource)
+ * @param {string} trackingApiEndpoint Endpoint for tracking devices
+ *
+ * @param {string} worksApiEndpoint Endpoint for viewing working track finished
+ */
 const Mapbox: any = memo(
   forwardRef<any, Partial<IMapboxProps>>(({ ...props }, ref) => {
     let drawRef: any;
@@ -121,9 +128,8 @@ const Mapbox: any = memo(
     const mapDidLoad = (mapbox: any) => {
       console.log("map render");
 
-      if(props.lockZoom)
-      mapbox.setMinZoom(mapbox.getZoom())
-      console.log("zoom: ",mapbox.getZoom());
+      if (props.lockZoom) mapbox.setMinZoom(mapbox.getZoom());
+      console.log("zoom: ", mapbox.getZoom());
 
       mapboxInstance.current = mapbox;
       mapbox.addControl(new ScaleControl(), "bottom-left");
@@ -172,7 +178,7 @@ const Mapbox: any = memo(
             padding: { top: 10, bottom: 25, left: 15, right: 5 },
           }}
         >
-          <div className="data-display">
+          <div className="work-area-display">
             {props.workArea &&
               (workAreaShowFieldDisplay || workAreaShowLineDisplay) && (
                 <Source id="work_area" geoJsonSource={props.workArea} />
@@ -193,7 +199,8 @@ const Mapbox: any = memo(
                 paint={workAreaLinePaint}
               />
             )}
-
+          </div>
+          <div className="crops-display">
             {props.crops && (cropsShowFieldDisplay || cropsShowLineDisplay) && (
               <Source id="crops" geoJsonSource={props.crops} />
             )}
@@ -213,14 +220,16 @@ const Mapbox: any = memo(
                 paint={cropsLinePaint}
               />
             )}
-
-            <TrackingDrawWrapper
-              endpoint={props.trackingApiEndpoint}
-              crops={props.crops}
-              zoom={(mapboxInstance?.current as any)?.getZoom()}
-            />
           </div>
-
+          <div className="tracking-devices-draw">
+            {props.trackingApiEndpoint && (
+              <TrackingDrawWrapper
+                endpoint={props.trackingApiEndpoint}
+                crops={props.crops}
+                zoom={(mapboxInstance?.current as any)?.getZoom()}
+              />
+            )}
+          </div>
           {mapboxInstance && (
             <DrawControl
               ref={(drawControl) => (drawRef = drawControl)}
@@ -229,6 +238,12 @@ const Mapbox: any = memo(
               default_mode="draw_polygon"
               position="bottom-right"
               styles={props.drawStyles ? props.drawStyles : defaultDrawStyles}
+            />
+          )}
+          {props.viewDrawData && (
+            <ViewDrawingData
+              data={props.viewDrawData}
+              zoom={(mapboxInstance?.current as any)?.getZoom()}
             />
           )}
         </Map>
