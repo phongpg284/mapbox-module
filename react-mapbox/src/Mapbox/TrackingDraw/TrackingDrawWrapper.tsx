@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Feature, Image, Layer, Popup, Source } from "react-mapbox-gl";
 import * as turf from "@turf/turf";
+
 import TrackingInfo from "../TrackingInfo/TrackingInfo";
-import { getTrackingData } from "../getTrackingData";
+
 import PaintScaleView from "../../utils/PaintScaleView";
+import GetTrackingData from "../../utils/GetTrackingData";
 
 interface ITrackingDrawWrapperProps {
   endpoint?: string;
@@ -44,7 +46,7 @@ const TrackingDrawDevice = ({
   }, []);
 
   useEffect(() => {
-    if (endpoint) getTrackingData(0, endpoint, setTrackingData, deviceId);
+    if (endpoint) GetTrackingData(0, endpoint, setTrackingData, deviceId);
   }, [endpoint, deviceId]);
 
   useEffect(() => {

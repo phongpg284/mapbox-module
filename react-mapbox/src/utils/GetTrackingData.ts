@@ -1,7 +1,7 @@
 // @ts-ignore
 import * as turf from "@turf/turf";
 
-export async function getTrackingData(
+async function GetTrackingData(
   lastIndex: number,
   url: string,
   drawData: any,
@@ -32,13 +32,6 @@ export async function getTrackingData(
         convertData.push(pair)
       }
 
-      // const convertData = pointsData.for((coordinate: number, index: number) => [
-      //   if(index%2===1)
-      //   return
-      //   coordinate.x * multiplier + startPoint[0],
-      //   coordinate.y * multiplier + startPoint[1],
-      // ]);
-
       drawData((prevState: any) => {
         if (prevState) {
           return {
@@ -53,11 +46,13 @@ export async function getTrackingData(
             data: turf.lineString(convertData),
           };
       });
-      getTrackingData(nextIndex, url, drawData, deviceId);
+      GetTrackingData(nextIndex, url, drawData, deviceId);
     } else {
       setTimeout(() => {
-        getTrackingData(lastIndex, url, drawData, deviceId);
+        GetTrackingData(lastIndex, url, drawData, deviceId);
       }, 700);
     }
   }
 }
+
+export default GetTrackingData
