@@ -16,7 +16,7 @@ interface IFieldListProps {
   data: IFieldData[];
 }
 
-export const FieldList = ({ data }: Partial<IFieldListProps>) => {
+const FieldList = ({ data }: Partial<IFieldListProps>) => {
   const history = useHistory();
 
   const [showConfirm, setShowConfirm] = useState(false);
@@ -161,3 +161,5 @@ export const FieldList = ({ data }: Partial<IFieldListProps>) => {
     </div>
   );
 };
+
+export default FieldList;

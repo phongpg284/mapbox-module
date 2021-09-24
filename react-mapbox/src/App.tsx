@@ -1,19 +1,24 @@
 import "./App.css";
 import { useState } from "react";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+
 import { Drawer } from "antd";
 import Layout, { Content, Header } from "antd/lib/layout/layout";
+import { Dehaze } from "@material-ui/icons";
+
+import Dashboard from "./Dashboard";
+import ProfileDashboard from "./ProfileDashboard";
+
 import FieldCreate from "./FieldCreate";
 import FieldPage from "./FieldPage";
-import FieldCard from "./FieldPage/FieldCard/FieldCard";
-import { FieldList } from "./FieldPage/FieldList";
-import TrackingMap from "./TrackingMap/TrackingMap";
-import { Dehaze } from "@material-ui/icons";
-import Dashboard from "./Dashboard/Dashboard";
-import ProfileDashboard from "./ProfileDashboard/ProfileDashboard";
-import RealtimeMap from "./RealtimeMap/RealtimeMap";
+import FieldList from "./FieldPage/FieldList";
+import FieldCard from "./FieldPage/FieldCard";
+
 import BoundingMap from "./BoundingMap/BoundingMap";
+import RealtimeMap from "./RealtimeMap/RealtimeMap";
+import TrackingMap from "./TrackingMap/TrackingMap";
 import RecordMap from "./RecordMap";
+
 
 function App() {
   const location = useLocation();
