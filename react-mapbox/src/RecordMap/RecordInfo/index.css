@@ -1,0 +1,31 @@
+.record-info {
+    width: 340px;
+    background-color: #e2e2e2;
+    padding: 50px 0 20px 0;
+    border-radius: 0 0 5px 5px;
+    margin-left: 20px;
+}
+
+.record-info-item-divider {
+    margin: 10px 0;
+}
+
+.record-info-item {
+    text-align: left;
+    padding: 0 20px;
+}
+
+.record-info-item-icon {
+    display: inline;
+    margin-right: 10px;
+}
+
+.record-info-item-title {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.record-info-item-content {
+    margin-left: 34px;
+    font-size: 1rem;
+}

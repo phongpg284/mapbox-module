@@ -36,7 +36,6 @@ const RecordDraw = ({ data, zoom }: any) => {
         type: "geojson",
         data: turf.lineString(showPoint),
       });
-      console.log(showPoint[viewIndex-1])
       setDeviceCoordinate(showPoint[viewIndex-1])
     }
     else {

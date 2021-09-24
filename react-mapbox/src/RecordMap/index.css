@@ -1,0 +1,20 @@
+.record-view{
+    display: flex;
+    justify-content: right;
+    width: 100vw;
+    max-width: 100%;
+}
+
+.record-control-container{
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.record-map {
+    width: 100%
+}
+
+.record-control-chart {
+    height: 30vh;
+    width: 100%;
+}

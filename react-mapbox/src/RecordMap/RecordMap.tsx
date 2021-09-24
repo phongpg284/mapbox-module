@@ -1,8 +1,10 @@
+import "./index.css"
 import { createContext, useEffect, useState } from "react";
-import { Legend, Line, LineChart, Tooltip } from "recharts";
+import { Legend, Line, LineChart, ResponsiveContainer, Tooltip } from "recharts";
 import * as turf from "@turf/turf";
 
 import Mapbox from "../Mapbox";
+import RecordInfo from "./RecordInfo";
 
 export const ViewIndexContext = createContext<any>(null);
 
@@ -68,40 +70,47 @@ const RecordMap = () => {
   };
 
   return (
-    <div>
-      <div className="record-info"></div>
+    <div className="record-view">
+      <div className="record-control-container">
+        <div className="record-map">
+          <ViewIndexContext.Provider value={viewIndex}>
+            <Mapbox
+              height="calc(70vh - 70px)"
+              width="100%"
+              viewDrawData={drawData}
+              center={drawData ? drawData[0] : undefined}
+            ></Mapbox>
+          </ViewIndexContext.Provider>
+        </div>
 
-      <div className="record-map">
-        <ViewIndexContext.Provider value={viewIndex}>
-          <Mapbox
-            height="calc(70vh - 125px)"
-            viewDrawData={drawData}
-            center={drawData ? drawData[0] : undefined}
-          ></Mapbox>
-        </ViewIndexContext.Provider>
+        <div className="record-control-chart">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              // width={2100}
+              // height={365}
+              margin={{ top: 20, bottom: 20, left: 20, right: 20 }}
+              data={recordData}
+            >
+              <Line
+                stroke="#8884d8"
+                strokeWidth={3}
+                dataKey="distance"
+                type="monotone"
+                dot={false}
+                activeDot={{ onClick: handleClick, r: 10 }}
+              />
+              {/* <CartesianGrid stroke="#ccc" /> */}
+              {/* <XAxis dataKey="name" /> */}
+              {/* <YAxis /> */}
+              <Legend verticalAlign="top" align="left" iconSize={30} height={36} />
+              <Tooltip />
+            </LineChart>        
+          </ResponsiveContainer>
+        </div>
       </div>
 
-      <div className="record-chart">
-        <LineChart
-          width={2100}
-          height={365}
-          margin={{ top: 10, bottom: 10, left: 10, right: 10 }}
-          data={recordData}
-        >
-          <Line
-            stroke="#8884d8"
-            strokeWidth={3}
-            dataKey="distance"
-            type="monotone"
-            dot={false}
-            activeDot={{ onClick: handleClick, r: 10 }}
-          />
-          {/* <CartesianGrid stroke="#ccc" /> */}
-          {/* <XAxis dataKey="name" /> */}
-          {/* <YAxis /> */}
-          <Legend verticalAlign="top" align="left" iconSize={30} height={36} />
-          <Tooltip />
-        </LineChart>
+      <div className="record-graph">
+        <RecordInfo />
       </div>
     </div>
   );
