@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { Line, LineChart, Tooltip } from "recharts";
+import { Legend, Line, LineChart, Tooltip } from "recharts";
 import * as turf from "@turf/turf";
 
 import Mapbox from "../Mapbox";
@@ -9,8 +9,8 @@ export const ViewIndexContext = createContext<any>(null);
 const RecordMap = () => {
   const [recordData, setRecordData] = useState<any>();
   const [drawData, setDrawData] = useState<any>();
-  const [viewIndex, setViewIndex]= useState(0);
-  
+  const [viewIndex, setViewIndex] = useState(0);
+
   useEffect(() => {
     const getRecordData = async () => {
       let data;
@@ -37,7 +37,7 @@ const RecordMap = () => {
         ];
         let from;
         let to = [0, 0];
-        for (let i = 0; i < points.length / 500; i += 2) {
+        for (let i = 0; i < points.length; i += 2) {
           const currentCoord = [
             startPoint[1] + points[i + 1] * multiplier,
             startPoint[0] + points[i] * multiplier,
@@ -55,7 +55,7 @@ const RecordMap = () => {
         }
         setRecordData(distance);
         setDrawData(convertData);
-        setViewIndex(convertData.length)
+        setViewIndex(convertData.length);
       }
     };
     getRecordData();
@@ -63,35 +63,43 @@ const RecordMap = () => {
 
   const handleClick = (e: any, payload: any) => {
     setViewIndex(payload.index);
-    console.log(viewIndex)
+    console.log(viewIndex);
     console.log("cloick");
   };
 
   return (
     <div>
       <div className="record-info"></div>
-      
+
       <div className="record-map">
         <ViewIndexContext.Provider value={viewIndex}>
           <Mapbox
             height="calc(70vh - 125px)"
             viewDrawData={drawData}
-            center={drawData? drawData[0] : undefined}
+            center={drawData ? drawData[0] : undefined}
           ></Mapbox>
         </ViewIndexContext.Provider>
       </div>
 
       <div className="record-chart">
-        <LineChart width={2000} height={360} data={recordData}>
+        <LineChart
+          width={2100}
+          height={365}
+          margin={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          data={recordData}
+        >
           <Line
             stroke="#8884d8"
+            strokeWidth={3}
             dataKey="distance"
             type="monotone"
-            activeDot={{ onClick: handleClick }}
+            dot={false}
+            activeDot={{ onClick: handleClick, r: 10 }}
           />
           {/* <CartesianGrid stroke="#ccc" /> */}
           {/* <XAxis dataKey="name" /> */}
           {/* <YAxis /> */}
+          <Legend verticalAlign="top" align="left" iconSize={30} height={36} />
           <Tooltip />
         </LineChart>
       </div>
