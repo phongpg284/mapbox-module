@@ -1,9 +1,9 @@
 import { Divider } from "antd";
 import "./index.css";
-import AgricultureIcon from '@mui/icons-material/Agriculture';
-import WindowIcon from '@mui/icons-material/Window';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import BorderAllIcon from '@material-ui/icons/BorderAll';
+import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 const RecordInfoItem = ({icon, title, content}: any) => {
   return (
@@ -22,9 +22,25 @@ const RecordInfoItem = ({icon, title, content}: any) => {
   )
 }
 
+
 const RecordInfo = () => {
+  const [isShowRecordInfo, setIsShowRecordInfo] = useState(true);
+  const handleClickControl = () => {
+    setIsShowRecordInfo(!isShowRecordInfo)
+  }
   return (
-      <div className="record-info">
+    <div className="record-info-container">
+      <div className="record-info-control" onClick={handleClickControl}>
+        <div className="record-info-control-button">
+          {isShowRecordInfo && (
+            <CaretRightOutlined />
+            )}
+          {!isShowRecordInfo && (
+            <CaretLeftOutlined />
+          )}
+        </div>
+      </div>
+      <div className={`record-info-content-${isShowRecordInfo ? "show" : "hide"}`}>
         <RecordInfoItem />
         <RecordInfoItem icon={<LocalShippingIcon />} title="Operation" content="Other"/>
         <RecordInfoItem icon={<BorderAllIcon />} title="Area" />
@@ -36,6 +52,7 @@ const RecordInfo = () => {
         <RecordInfoItem icon={<LocalShippingIcon />} title="GNSS Source" content="Internal"/>
         <RecordInfoItem icon={<LocalShippingIcon />} title="Description" />
       </div>
+    </div>
   )
 }
 
