@@ -1,6 +1,6 @@
 .record-view{
     display: flex;
-    justify-content: right;
+    justify-content: end;
     width: 100vw;
     max-width: 100%;
 }
@@ -8,10 +8,12 @@
 .record-control-container{
     box-sizing: border-box;
     width: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
 }
 
 .record-map {
-    width: 100%
+    width: 100%;
 }
 
 .record-control-chart {

@@ -22,21 +22,17 @@
     border-radius: 0 0 5px 5px;
     
     transition: width 0.1s linear;
-    overflow: hidden;
     
     box-shadow: 3   px 3px 3px rgba(68,68,68,0.6);
     background-color: #e2e2e2;
 }
 
-.record-info-content-hide {
-    display: block;
-    
+.record-info-content-hide {    
     width: 0px;
     padding: 50px 0 20px 0;
-    border-radius: 0 0 5px 5px;
-    
-    transition: width 0.1s linear;
+    border-radius: 0 0 5px 5px;    
     overflow: hidden;
+    transition: width 0.1s linear;
     
     box-shadow: 3   px 3px 3px rgba(68,68,68,0.6);
     background-color: #e2e2e2;

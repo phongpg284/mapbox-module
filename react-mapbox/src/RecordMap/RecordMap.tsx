@@ -32,14 +32,15 @@ const RecordMap = () => {
         const multiplier = data.track[0].multiplier;
         const startPoint = data.track[0].start_point;
         let convertData: any[] = [];
-        let distance = [
+        let graphData = [
           {
             distance: 0,
+            height: 0,
           },
         ];
         let from;
         let to = [0, 0];
-        for (let i = 0; i < points.length; i += 2) {
+        for (let i = 0; i < points.length/200; i += 2) {
           const currentCoord = [
             startPoint[1] + points[i + 1] * multiplier,
             startPoint[0] + points[i] * multiplier,
@@ -48,14 +49,13 @@ const RecordMap = () => {
           from = to;
           to = currentCoord;
           if (i > 0) {
-            distance.push({
-              distance:
-                distance[distance.length - 1].distance +
-                turf.distance(turf.point(from), turf.point(to)) * 1000,
+            graphData.push({
+              distance: graphData[graphData.length - 1].distance + turf.distance(turf.point(from), turf.point(to)) * 1000,
+              height: Math.random() *1000
             });
           }
         }
-        setRecordData(distance);
+        setRecordData(graphData);
         setDrawData(convertData);
         setViewIndex(convertData.length);
       }
@@ -92,9 +92,19 @@ const RecordMap = () => {
               data={recordData}
             >
               <Line
+                yAxisId="1"
                 stroke="#8884d8"
                 strokeWidth={3}
                 dataKey="distance"
+                type="monotone"
+                dot={false}
+                activeDot={{ onClick: handleClick, r: 10 }}
+              />
+              <Line
+                yAxisId="2"
+                stroke="#FFAD46"
+                strokeWidth={3}
+                dataKey="height"
                 type="monotone"
                 dot={false}
                 activeDot={{ onClick: handleClick, r: 10 }}
