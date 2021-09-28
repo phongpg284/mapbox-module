@@ -5,6 +5,7 @@ import * as turf from "@turf/turf";
 
 import Mapbox from "../Mapbox";
 import RecordInfo from "./RecordInfo";
+import CustomizeDot from "./CustomizeDot";
 
 export const ViewIndexContext = createContext<any>(null);
 
@@ -63,10 +64,10 @@ const RecordMap = () => {
     getRecordData();
   }, []);
 
-  const handleClick = (e: any, payload: any) => {
-    setViewIndex(payload.index);
+  const handleClick = (e: any) => {
+    setViewIndex(e.activeLabel);
     console.log(viewIndex);
-    console.log("cloick");
+    console.log("click");
   };
 
   return (
@@ -86,8 +87,7 @@ const RecordMap = () => {
         <div className="record-control-chart">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
-              // width={2100}
-              // height={365}
+            onClick={handleClick}
               margin={{ top: 20, bottom: 20, left: 20, right: 20 }}
               data={recordData}
             >
@@ -97,22 +97,23 @@ const RecordMap = () => {
                 strokeWidth={3}
                 dataKey="distance"
                 type="monotone"
-                dot={false}
-                activeDot={{ onClick: handleClick, r: 10 }}
+                dot={<CustomizeDot color="#8884d8"/>}
+                activeDot={{ r: 5 }}
               />
               <Line
-                yAxisId="2"
+                yAxisId="3"
                 stroke="#FFAD46"
                 strokeWidth={3}
                 dataKey="height"
                 type="monotone"
-                dot={false}
-                activeDot={{ onClick: handleClick, r: 10 }}
+                dot={<CustomizeDot color="#FFAD46"/>}
+                activeDot={{ r: 5 }}
               />
               {/* <CartesianGrid stroke="#ccc" /> */}
               {/* <XAxis dataKey="name" /> */}
               {/* <YAxis /> */}
-              <Legend verticalAlign="top" align="left" iconSize={30} height={36} />
+              {/* <Tooltip /> */}
+              <Legend verticalAlign="top" align="left" iconSize={30} height={45} />
               <Tooltip />
             </LineChart>        
           </ResponsiveContainer>
