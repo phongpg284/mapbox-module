@@ -4,8 +4,9 @@ import * as turf from "@turf/turf";
 
 import TrackingInfo from "../TrackingInfo/TrackingInfo";
 
-import PaintScaleView from "../../utils/PaintScaleView";
-import GetTrackingData from "../../utils/GetTrackingData";
+import PaintScaleView from "../../../../utils/PaintScaleView";
+import GetTrackingData from "../../../../utils/GetTrackingData";
+
 
 interface ITrackingDrawWrapperProps {
   endpoint?: string;

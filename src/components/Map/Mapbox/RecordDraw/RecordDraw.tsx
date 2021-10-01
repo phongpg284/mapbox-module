@@ -4,7 +4,7 @@ import * as turf from "@turf/turf";
 
 import { ViewIndexContext } from "../../RecordMap/RecordMap";
 
-import PaintScaleView from "../../utils/PaintScaleView";
+import PaintScaleView from "../../../../utils/PaintScaleView";
 
 const RecordDraw = ({ data, zoom }: any) => {
   const [displayDrawData, setDisplayDrawData] = useState<any>({

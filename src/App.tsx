@@ -6,18 +6,19 @@ import { Drawer } from "antd";
 import Layout, { Content, Header } from "antd/lib/layout/layout";
 import { Dehaze } from "@material-ui/icons";
 
-import Dashboard from "./Dashboard";
-import ProfileDashboard from "./ProfileDashboard";
+import Dashboard from "./components/Dashboard";
+import ProfileDashboard from "./components/ProfileDashboard";
 
-import FieldCreate from "./FieldCreate";
-import FieldPage from "./FieldPage";
-import FieldList from "./FieldPage/FieldList";
-import FieldCard from "./FieldPage/FieldCard";
+import FieldCreate from "./components/Map/FieldCreate";
+import FieldPage from "./components/Map/FieldPage";
+import FieldList from "./components/Map/FieldPage/FieldList";
+import FieldCard from "./components/Map/FieldPage/FieldCard";
 
-import BoundingMap from "./BoundingMap/BoundingMap";
-import RealtimeMap from "./RealtimeMap/RealtimeMap";
-import TrackingMap from "./TrackingMap/TrackingMap";
-import RecordMap from "./RecordMap";
+import RealtimeMap from "./components/Map/RealtimeMap";
+import RecordMap from "./components/Map/RecordMap";
+import TrackingMap from "./components/Map/TrackingMap";
+import BoundingMap from "./components/Map/BoundingMap";
+
 
 
 function App() {
