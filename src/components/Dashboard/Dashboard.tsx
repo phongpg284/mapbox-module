@@ -16,62 +16,62 @@ const Dashboard = ({ selectItem, handleSelectMenuItem }: any) => {
       selectedKeys={[selectItem]}
     >
       <SubMenu key="sub1" icon={<EcoIcon className="me-4" />} title="Crop">
-        <Menu.Item key="/crop/list">
+        <Menu.Item key="/map/crop/list">
           <ListIcon className="me-3" />
           List Display
         </Menu.Item>
       </SubMenu>
       
       <SubMenu key="sub2" icon={<RoomIcon className="me-4" />} title="Field">
-        <Menu.Item key="/field/create">
+        <Menu.Item key="/map/field/create">
           <AddIcon className="me-3" />
           New Registration
         </Menu.Item>
-        <Menu.Item key="/field/list">
+        <Menu.Item key="/map/field/list">
           <ListIcon className="me-3" />
           List Display
         </Menu.Item>
-        <Menu.Item key="/field/card">
+        <Menu.Item key="/map/field/card">
           <ViewModuleIcon className="me-3" />
           Card Display
         </Menu.Item>
       </SubMenu>
 
       <SubMenu key="sub3" icon={<RoomIcon className="me-4" />} title="Task Records">
-        <Menu.Item key="/task/list">
+        <Menu.Item key="/map/task/list">
           <ListIcon className="me-3" />
           List Display
         </Menu.Item>
-        <Menu.Item key="/task/card">
+        <Menu.Item key="/map/task/card">
           <ViewModuleIcon className="me-3" />
           Calendar Display
         </Menu.Item>
       </SubMenu>
 
       <SubMenu key="sub4" icon={<RoomIcon className="me-4" />} title="Guidance Line">
-        <Menu.Item key="/guidance/create">
+        <Menu.Item key="/map/guidance/create">
           <AddIcon className="me-3" />
           New Registration
         </Menu.Item>
-        <Menu.Item key="/guidance/list">
+        <Menu.Item key="/map/guidance/list">
           <ListIcon className="me-3" />
           List Display
         </Menu.Item>
       </SubMenu>
 
       <SubMenu key="sub5" icon={<RoomIcon className="me-4" />} title="Soil Moisture">
-        <Menu.Item key="/soil-moisture/list">
+        <Menu.Item key="/map/soil-moisture/list">
           <ListIcon className="me-3" />
           List Display
         </Menu.Item>
       </SubMenu>
 
       <SubMenu key="sub6" icon={<RoomIcon className="me-4" />} title="Tracking">       
-        <Menu.Item key="/">
+        <Menu.Item key="/map">
           <ViewModuleIcon className="me-3" />
           Tracking
         </Menu.Item>
-        <Menu.Item key="/record">
+        <Menu.Item key="/map/record">
           <ViewModuleIcon className="me-3" />
           Record
         </Menu.Item>
