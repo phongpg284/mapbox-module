@@ -1,5 +1,6 @@
 import { Route, Switch } from "react-router";
 import "./App.css";
+import HomePage from "./pages/HomePage/HomePage";
 import MapPage from "./pages/Map/Map";
 
 function App() {
@@ -9,7 +10,11 @@ function App() {
         <Route
           path="/map"
           render={({ match: { url } }) => <MapPage parentPath={url} />}
-        ></Route>
+        />
+        <Route
+          path="/"
+          render={({ match: { url } }) => <HomePage parentPath={url} />}
+        />
       </Switch>
     </div>
   );

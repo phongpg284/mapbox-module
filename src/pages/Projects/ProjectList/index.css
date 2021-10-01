@@ -1,0 +1,15 @@
+.projects-list-wrapper {
+    margin: 10px;
+    padding: 5px;
+    border: solid 1px;
+}
+
+.projects-list-control {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+}
+
+.projects-list-table {
+    margin: 5px;
+}

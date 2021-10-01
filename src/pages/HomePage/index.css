@@ -1,0 +1,15 @@
+.home-layout-header {
+    /* color: white; */
+    background-color: white;
+}
+
+.home-layout-sider-control {
+    text-align: left;
+}
+
+.home-layout-content-breadcrumb {
+    text-align: left;
+    margin-top: 2px;
+    padding: 8px;
+    background-color: white;
+}
