@@ -58,6 +58,11 @@ const HomeDashboard = ({ selectedMenuKey }: any) => {
             Người dùng
           </Menu.Item>
         </Menu.ItemGroup>
+        <Menu.ItemGroup>
+          <Menu.Item key="/map" icon={<VideoCameraOutlined />}>
+            Mapbox
+          </Menu.Item>
+        </Menu.ItemGroup>
       </Menu>
     </div>
   );
