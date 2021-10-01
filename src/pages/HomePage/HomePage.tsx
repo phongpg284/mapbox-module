@@ -4,18 +4,16 @@ import { useState } from "react";
 import { Route, Switch } from "react-router";
 
 import { Breadcrumb, Layout } from "antd";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-} from "@ant-design/icons";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
 import HomeDashboard from "./HomeDashboard";
 import ProjectList from "../Projects/ProjectList";
+import DeviceList from "../Devices/DevicesList";
 
 const { Header, Content, Sider } = Layout;
 
 const HomePage = ({ parentPath }: any) => {
-  console.log(parentPath)
+  console.log(parentPath);
   const [isSiderCollapse, setIsSiderCollapse] = useState(false);
   const [selectedMenuKey, setSelectedMenuKey] = useState("menu_1_1");
   return (
@@ -49,6 +47,9 @@ const HomePage = ({ parentPath }: any) => {
             </div>
             <div className="home-layout-content-container">
               <Switch>
+                <Route path={`${parentPath}devices`}>
+                  <DeviceList />
+                </Route>
                 <Route path={`${parentPath}projects`}>
                   <ProjectList />
                 </Route>
