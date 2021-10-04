@@ -115,7 +115,7 @@ const RecordMap = ({match}: any) => {
               {/* <XAxis dataKey="name" /> */}
               {/* <YAxis /> */}
               {/* <Tooltip /> */}
-              <Legend verticalAlign="top" align="left" iconSize={30} height={45} />
+              <Legend verticalAlign="top" align="left" iconSize={30} height={50} />
               <Tooltip />
             </LineChart>        
           </ResponsiveContainer>
