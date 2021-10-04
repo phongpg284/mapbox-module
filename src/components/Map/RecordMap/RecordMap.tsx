@@ -9,7 +9,7 @@ import CustomizeDot from "./CustomizeDot";
 
 export const ViewIndexContext = createContext<any>(null);
 
-const RecordMap = () => {
+const RecordMap = ({match}: any) => {
   const [recordData, setRecordData] = useState<any>();
   const [drawData, setDrawData] = useState<any>();
   const [viewIndex, setViewIndex] = useState(0);
@@ -19,8 +19,9 @@ const RecordMap = () => {
       let data;
       try {
         data = await fetch(
-          process.env.REACT_APP_API_URL +
-            "/get_track?last_index=0&track_id=0&short=true",
+          // process.env.REACT_APP_API_URL +
+          //   "/get_track?last_index=0&track_id=0&short=true",
+          "http://localhost:4000/api/bounds/" + match.params.id,
           {
             method: "GET",
           }
@@ -29,9 +30,10 @@ const RecordMap = () => {
         console.log(error);
       }
       if (data) {
-        const points = data.track[0].points;
-        const multiplier = data.track[0].multiplier;
-        const startPoint = data.track[0].start_point;
+        console.log(data)
+        const points = data.points;
+        const multiplier = data.multiplier;
+        const startPoint = data.start_point;
         let convertData: any[] = [];
         let graphData = [
           {
@@ -41,7 +43,7 @@ const RecordMap = () => {
         ];
         let from;
         let to = [0, 0];
-        for (let i = 0; i < points.length/200; i += 2) {
+        for (let i = 0; i < points.length/20; i += 2) {
           const currentCoord = [
             startPoint[1] + points[i + 1] * multiplier,
             startPoint[0] + points[i] * multiplier,

@@ -3,10 +3,11 @@ import Mapbox from "../Mapbox";
 import * as turf from "@turf/turf";
 
 const BoundingMap = ({ boundingData, match }: any) => {
+  console.log(match)
   const [drawData, setDrawData] = useState<any>();
   const [fitBounds, setFitBounds] = useState<any>();
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/" + match.params.id, {
+    fetch("http://localhost:4000/api/bounds/" + match.params.id, {
       method: "GET",
     })
       .then((res) => res.json())

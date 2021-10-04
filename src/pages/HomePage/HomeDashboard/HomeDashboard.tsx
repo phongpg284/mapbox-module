@@ -1,21 +1,20 @@
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { useLocation } from "react-router";
+
 import { Menu } from "antd";
-import { useHistory } from "react-router";
-const HomeDashboard = ({ selectedMenuKey }: any) => {
-  const history = useHistory();
+import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
+
+const HomeDashboard = ({ selectItem }: any) => {
+  const location = useLocation();
+
   const handleSelectMenuItem = (menu: any) => {
-    history.push(menu.key);
+    selectItem(menu);
+    // history.push(menu.key);
   };
   return (
     <div className="logo">
       <Menu
-        theme="dark"
         mode="inline"
-        defaultSelectedKeys={selectedMenuKey}
+        selectedKeys={[location.pathname]}
         onClick={handleSelectMenuItem}
       >
         <Menu.ItemGroup>
@@ -59,9 +58,14 @@ const HomeDashboard = ({ selectedMenuKey }: any) => {
           </Menu.Item>
         </Menu.ItemGroup>
         <Menu.ItemGroup>
-          <Menu.Item key="/map" icon={<VideoCameraOutlined />}>
-            Mapbox
-          </Menu.Item>
+          <Menu.SubMenu title="Lịch sử track">
+            <Menu.Item key="/fields/list" icon={<VideoCameraOutlined />}>
+              List
+            </Menu.Item>
+            <Menu.Item key="/fields/card" icon={<VideoCameraOutlined />}>
+              Cards
+            </Menu.Item>
+          </Menu.SubMenu>
         </Menu.ItemGroup>
       </Menu>
     </div>

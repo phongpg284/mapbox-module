@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const FieldPage: React.FC = ({ children }: any) => {
   const [data, setData] = useState();
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL!, {
+    fetch("http://localhost:4000/api/bounds", {
       method: "GET",
     })
       .then((res) => res.json())

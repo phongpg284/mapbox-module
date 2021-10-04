@@ -6,7 +6,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ListIcon from "@material-ui/icons/List";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 
-const Dashboard = ({ selectItem, handleSelectMenuItem }: any) => {
+const MapDashboard = ({ selectItem, handleSelectMenuItem }: any) => {
   return (
     <Menu
       style={{ width: "100%", height: "100%" }}
@@ -80,4 +80,4 @@ const Dashboard = ({ selectItem, handleSelectMenuItem }: any) => {
   );
 };
 
-export default Dashboard;
+export default MapDashboard;

@@ -1,62 +1,108 @@
 import "./index.css";
 
 import { useState } from "react";
-import { Route, Switch } from "react-router";
-
-import { Breadcrumb, Layout } from "antd";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Route, Switch, useHistory } from "react-router-dom";
 
 import HomeDashboard from "./HomeDashboard";
 import ProjectList from "../Projects/ProjectList";
 import DeviceList from "../Devices/DevicesList";
+import DeviceInfo from "../Devices/DeviceInfo";
 
-const { Header, Content, Sider } = Layout;
+import { Drawer, Layout } from "antd";
+import { Dehaze } from "@material-ui/icons";
+
+import ProfileDashboard from "../../components/ProfileDashboard";
+import FieldPage from "../../components/Map/FieldPage";
+import FieldList from "../../components/Map/FieldPage/FieldList";
+import FieldCard from "../../components/Map/FieldPage/FieldCard";
+import BoundingMap from "../../components/Map/BoundingMap";
+import RecordMap from "../../components/Map/RecordMap";
+
+const { Header, Content } = Layout;
 
 const HomePage = ({ parentPath }: any) => {
-  console.log(parentPath);
-  const [isSiderCollapse, setIsSiderCollapse] = useState(false);
-  const [selectedMenuKey, setSelectedMenuKey] = useState("menu_1_1");
+  const history = useHistory();
+
+  const [isSideboardCollapse, setIsSideboardCollapse] = useState(false);
+  const [isProfileCollapse, setIsProfileCollapse] = useState(false);
+  const handleClickMenu = () => {
+    setIsSideboardCollapse(!isSideboardCollapse);
+  };
+
+  const handleClickProfile = () => {
+    setIsProfileCollapse(!isProfileCollapse);
+  };
+
+  const handleSelectMenuItem = (menu: any) => {
+    history.push(menu.key);
+    setIsSideboardCollapse(false);
+  };
+
   return (
-    <div className="home-page">
-      <Header className="home-layout-header">
-        <div
-          className="home-layout-sider-control"
-          onClick={() => setIsSiderCollapse(!isSiderCollapse)}
+    <div>
+      <Layout style={{ maxHeight: "100vh" }}>
+        <Drawer
+          placement="left"
+          closable={false}
+          onClose={() => setIsSideboardCollapse(false)}
+          visible={isSideboardCollapse}
+          bodyStyle={{ padding: "0" }}
         >
-          {isSiderCollapse && <MenuUnfoldOutlined />}
-          {!isSiderCollapse && <MenuFoldOutlined />}
-        </div>
-      </Header>
-      <Layout style={{ height: "100vh" }}>
-        <Layout className="home-layout">
-          <Sider trigger={null} collapsible collapsed={isSiderCollapse}>
-            <HomeDashboard selectedMenuKey={selectedMenuKey} />
-          </Sider>
-          <Content className="home-layout-content">
-            <div className="home-layout-content-breadcrumb">
-              <Breadcrumb>
-                <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
-                <Breadcrumb.Item>
-                  <a href="">Application Center</a>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                  <a href="">Application List</a>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>An Application</Breadcrumb.Item>
-              </Breadcrumb>
-            </div>
-            <div className="home-layout-content-container">
-              <Switch>
-                <Route path={`${parentPath}devices`}>
-                  <DeviceList />
-                </Route>
-                <Route path={`${parentPath}projects`}>
-                  <ProjectList />
-                </Route>
-              </Switch>
-            </div>
-          </Content>
-        </Layout>
+          <HomeDashboard selectItem={handleSelectMenuItem} />
+        </Drawer>
+
+        <Drawer
+          placement="right"
+          closable={false}
+          onClose={() => setIsProfileCollapse(false)}
+          visible={isProfileCollapse}
+          bodyStyle={{ padding: "0" }}
+        >
+          <ProfileDashboard />
+        </Drawer>
+        <Header
+          className="header"
+          style={{ height: "70px", backgroundColor: "#00a26a" }}
+        >
+          <div className="float-start">
+            <Dehaze onClick={handleClickMenu} style={{ color: "white" }} />
+          </div>
+          <div className="float-end">
+            <img
+              alt="no?"
+              src="https://s3-ap-northeast-1.amazonaws.com/agri-info-design-public/icons/ic_person_black_48dp.png"
+              className=""
+              style={{ height: "40px" }}
+              onClick={handleClickProfile}
+            ></img>
+          </div>
+        </Header>
+        <Content>
+          <div>
+            <Switch>
+              <Route path={`${parentPath}devices`}>
+                <DeviceList />
+              </Route>
+              <Route path={`${parentPath}projects`}>
+                <ProjectList />
+              </Route>
+              <Route path={`${parentPath}fields/list`}>
+                <FieldPage>
+                  {(props: any) => <FieldList data={props} />}
+                </FieldPage>
+              </Route>
+              <Route path={`${parentPath}fields/card`}>
+                <FieldPage>
+                  {(props: any) => <FieldCard data={props} />}
+                </FieldPage>
+              </Route>
+              <Route path={`${parentPath}fields/:id`} render={({match}) => (
+                <RecordMap match={match}/>
+              )}>
+              </Route>
+            </Switch>
+          </div>
+        </Content>
       </Layout>
     </div>
   );

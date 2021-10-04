@@ -5,11 +5,11 @@ import Modal from "antd/lib/modal/Modal";
 import { WarningFilled } from "@ant-design/icons";
 import "./style.css";
 export interface IFieldData {
-  name: string;
-  area: number;
-  data: any;
-  createdAt: string;
-  _id: string;
+  id: number;
+  device_id: number;
+  machine_id: number;
+  create_time: string;
+  update_time: string;
 }
 
 interface IFieldListProps {
@@ -27,11 +27,11 @@ const FieldList = ({ data }: Partial<IFieldListProps>) => {
     setTableData(
       data?.map((field) => {
         return {
-          id: field._id,
-          name: field.name,
-          area: field.area,
-          createdAt: new Date(field.createdAt).toDateString(),
-          key: field.createdAt,
+          id: field?.id,
+          device: field?.device_id,
+          machine: field?.machine_id,
+          createdAt: new Date(field?.create_time).toDateString(),
+          key: field?.create_time,
         };
       })
     );
@@ -63,8 +63,8 @@ const FieldList = ({ data }: Partial<IFieldListProps>) => {
       width: 800,
       render: (text: any, record: any) => (
         <div>
-          <div className="fw-bold fs-6">{record.name}</div>
-          <div className="fw-bold fs-6">{record.area} m2</div>
+          <div className="fw-bold fs-6">{record.device}</div>
+          {/* <div className="fw-bold fs-6">{record.area} m2</div> */}
         </div>
       ),
     },
@@ -83,7 +83,7 @@ const FieldList = ({ data }: Partial<IFieldListProps>) => {
       key: "action",
       render: (record: any) => (
         <div className="control-buttons">
-          <Link to={`/bounding/${record.id}`}>
+          <Link to={`/fields/${record.id}`}>
             <Button type="primary" size="large">
               Detail
             </Button>
@@ -131,12 +131,12 @@ const FieldList = ({ data }: Partial<IFieldListProps>) => {
       <div className="title text-start fw-bold fs-3 mb-3 d-flex ">
         <div>Field List</div>
         <div className="ms-4">
-          <Button onClick={() => history.push("/field/create")}>
+          <Button onClick={() => history.push("/fields/create")}>
             Create Field
           </Button>
         </div>
         <div className="ms-4">
-          <Button onClick={() => history.push("/field/card")}>Card View</Button>
+          <Button onClick={() => history.push("/fields/card")}>Card View</Button>
         </div>
       </div>
       <div>
@@ -154,7 +154,7 @@ const FieldList = ({ data }: Partial<IFieldListProps>) => {
             <WarningFilled
               style={{ fontSize: "30px", margin: "0 10px", color: "gray" }}
             />
-            Are you sure want to delete Field "{deleteItem?.name}"
+            Are you sure want to delete Field "{deleteItem?.device}"
           </div>
         </Modal>
       </div>

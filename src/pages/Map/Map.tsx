@@ -5,7 +5,7 @@ import { Drawer } from "antd";
 import Layout, { Content, Header } from "antd/lib/layout/layout";
 import { Dehaze } from "@material-ui/icons";
 
-import Dashboard from "../../components/Dashboard";
+import MapDashboard from "../../components/MapDashboard";
 import ProfileDashboard from "../../components/ProfileDashboard";
 
 import FieldCreate from "../../components/Map/FieldCreate";
@@ -46,7 +46,7 @@ const MapPage = ({ parentPath }: any) => {
           visible={isSideboardCollapse}
           bodyStyle={{ padding: "0" }}
         >
-          <Dashboard
+          <MapDashboard
             selectItem={location.pathname}
             handleSelectMenuItem={handleSelectMenuItem}
           />
@@ -85,7 +85,7 @@ const MapPage = ({ parentPath }: any) => {
                 <FieldCreate />
               </Route>
 
-              <Route path={`${parentPath}/bounding/:id`}>
+              <Route path={`${parentPath}/fields/:id`}>
                 <BoundingMap />
               </Route>
 

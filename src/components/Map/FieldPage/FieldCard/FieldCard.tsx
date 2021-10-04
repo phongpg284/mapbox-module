@@ -15,12 +15,12 @@ const FieldCard = ({ data }: any) => {
     setCardData(
       data?.map((field: any) => {
         return {
-          id: field._id,
-          name: field.name,
-          area: field.area,
-          createdAt: new Date(field.createdAt).toDateString(),
-          key: field.createdAt,
-          img: field.img,
+          id: field?.id,
+          device: field?.device_id,
+          machine: field?.machine_id,
+          createdAt: new Date(field?.create_time).toDateString(),
+          key: field?.created_time,
+          img: field?.img,
         };
       })
     );
@@ -53,20 +53,20 @@ const FieldCard = ({ data }: any) => {
       <div className="title text-start fw-bold fs-3 mb-3 d-flex ">
         <div>Field List(Card) </div>
         <div className="ms-4">
-          <Button onClick={() => history.push("/field/create")}>
+          <Button onClick={() => history.push("/fields/create")}>
             Create Field
           </Button>
         </div>
         <div className="ms-4">
-          <Button onClick={() => history.push("/field/list")}>List View</Button>
+          <Button onClick={() => history.push("/fields/list")}>List View</Button>
         </div>
       </div>
       <div className="">
         <div className="d-flex flex-wrap">
           {cardData &&
             cardData.map((item: any) => (
-              <Fragment key={item.name}>
-                <Link to={`/bounding/${item.id}`}>
+              <Fragment key={item.id}>
+                <Link to={`/fields/${item.id}`}>
                   <Card
                     hoverable
                     style={{ width: 200, margin: "5px" }}
@@ -90,11 +90,11 @@ const FieldCard = ({ data }: any) => {
                     // <img alt="example" src={item.img} />}
                   >
                     <div className="d-flex justify-self-start fs-6">
-                      {item.name}
+                      {item.device}
                     </div>
-                    <div className="d-flex justify-self-start fw-bold fs-6">
+                    {/* <div className="d-flex justify-self-start fw-bold fs-6">
                       {item.area} m2
-                    </div>
+                    </div> */}
                     {/* <Meta title={item.name} description={`${item.area} m2`} /> */}
                   </Card>
                 </Link>
@@ -114,7 +114,7 @@ const FieldCard = ({ data }: any) => {
             <WarningFilled
               style={{ fontSize: "30px", margin: "0 10px", color: "gray" }}
             />
-            Are you sure want to delete Field "{deleteItem?.name}"
+            Are you sure want to delete Field "{deleteItem?.device}"
           </div>
         </Modal>
       </div>
