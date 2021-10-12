@@ -2,6 +2,7 @@ import './index.css'
 import { Menu } from 'antd'
 import { useState } from 'react'
 import ProjectSummary from '../ProjectSummary'
+import ProjectUser from './ProjectUser'
 
 const ProjectDetail = () => {
     const [currentTab, setCurrentTab] = useState('summary')
@@ -29,7 +30,7 @@ const ProjectDetail = () => {
                         <ProjectSummary />
                     )}
                     {currentTab === "user" && (
-                        <h1>hehe</h1>
+                        <ProjectUser />
                     )}
 
                 </div>

@@ -17,6 +17,8 @@ import FieldList from "../../components/Map/FieldPage/FieldList";
 import FieldCard from "../../components/Map/FieldPage/FieldCard";
 import BoundingMap from "../../components/Map/BoundingMap";
 import RecordMap from "../../components/Map/RecordMap";
+import ProjectSummary from "../../components/Project/ProjectSummary";
+import ProjectDetail from "../../components/Project/ProjectDetail";
 
 const { Header, Content } = Layout;
 
@@ -84,7 +86,11 @@ const HomePage = ({ parentPath }: any) => {
                 <DeviceList />
               </Route>
               <Route path={`${parentPath}projects`}>
-                <ProjectList />
+                {/* <ProjectList /> */}
+                <ProjectDetail />
+              </Route>
+              <Route path={`${parentPath}projects-summary`}>
+                <ProjectSummary />
               </Route>
               <Route path={`${parentPath}fields/list`}>
                 <FieldPage>

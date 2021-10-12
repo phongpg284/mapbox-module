@@ -1,0 +1,17 @@
+.project-users-container {
+    border: groove 1px;
+}
+
+.project-users-control{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.project-list-control-report {
+
+}
+
+.project-list-control-add {
+    margin-right: 30px;
+}
