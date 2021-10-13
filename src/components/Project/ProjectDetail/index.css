@@ -1,7 +1,6 @@
 .project-detail-container {
-    width: 1200px;
+    width: 100%;
     padding: 10px;
-    margin: auto;
     border: groove 1px;
     background-color: white;
 }

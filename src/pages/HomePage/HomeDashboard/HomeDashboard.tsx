@@ -27,7 +27,7 @@ const HomeDashboard = ({ selectItem }: any) => {
         </Menu.ItemGroup>
 
         <Menu.ItemGroup title="QUẢN LÍ DỰ ÁN">
-          <Menu.Item key="/projects" icon={<UserOutlined />}>
+          <Menu.Item key="/projects/list" icon={<UserOutlined />}>
             Dự án
           </Menu.Item>
           <Menu.Item key="/reports" icon={<VideoCameraOutlined />}>

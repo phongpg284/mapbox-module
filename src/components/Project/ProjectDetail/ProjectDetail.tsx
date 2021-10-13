@@ -3,16 +3,23 @@ import { Menu } from 'antd'
 import { useState } from 'react'
 import ProjectSummary from '../ProjectSummary'
 import ProjectUser from './ProjectUser'
+import ProjectDevice from './ProjectDevice'
 
 const ProjectDetail = () => {
     const [currentTab, setCurrentTab] = useState('summary')
     const handleClick = (e: any) => {
         setCurrentTab(e.key)
     }
+
+    const centerStyle = {
+        display: 'flex',
+        justifyContent: 'space-between'
+      };
     return (
         <div className="project-detail-container">
             <div className="project-detail-wrapper">
                 <Menu
+                    style={centerStyle}
                     onClick={handleClick}
                     selectedKeys={[currentTab]}
                     mode="horizontal"
@@ -32,7 +39,9 @@ const ProjectDetail = () => {
                     {currentTab === "user" && (
                         <ProjectUser />
                     )}
-
+                    {currentTab === "device" && (
+                        <ProjectDevice />
+                    )}
                 </div>
             </div>
         </div>
