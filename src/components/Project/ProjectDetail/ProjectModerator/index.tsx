@@ -4,6 +4,7 @@ import { Button, Modal, Space, Table } from 'antd'
 import faker from 'faker'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import ModeratorProjectModal from '../../../Moderator/Modal/ModeratorProjectModal'
 const ProjectModerator = () => {
     let data = []
     for (let i = 0; i < 50; i++) {
@@ -75,8 +76,9 @@ const ProjectModerator = () => {
                 visible={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
+                title="Thông tin quản trị viên"
             >
-                <div>user modal</div>
+                <ModeratorProjectModal />
             </Modal>
         </div>
     )

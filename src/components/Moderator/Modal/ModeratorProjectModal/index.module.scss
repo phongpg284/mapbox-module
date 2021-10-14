@@ -1,0 +1,22 @@
+.moderator_project_container {
+    max-width: 900px;
+    display: flex;
+    justify-content: center;
+    /* margin: auto; */
+    border: groove 1px;
+    background-color: white;
+    margin: 30px auto;
+}
+
+
+.moderator_project_content {
+    border: groove 1px;
+    margin: 20px;
+    padding: 5px;
+}
+
+.moderator_project_avatar {
+    height: 250px;
+    width: 250px
+}
+

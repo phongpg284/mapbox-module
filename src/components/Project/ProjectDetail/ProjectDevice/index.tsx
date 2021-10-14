@@ -4,6 +4,7 @@ import { Button, Modal, Space, Table } from 'antd'
 import faker from 'faker'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import DeviceProjectModal from '../../../Device/Modal/DeviceProjectModal'
 const ProjectDevice = () => {
     let data = []
     for (let i = 0; i < 50; i++) {
@@ -78,8 +79,9 @@ const ProjectDevice = () => {
                 visible={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
+                title="Chi tiết phân công thiết bị  "
             >
-                <div>Device modal</div>
+                <DeviceProjectModal />
             </Modal>
         </div>
     )
