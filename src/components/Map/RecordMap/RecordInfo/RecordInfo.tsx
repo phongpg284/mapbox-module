@@ -28,19 +28,16 @@ const RecordInfo = ({ data }: any) => {
     let total = {
         speed: 0,
         accuracy: 0,
-        distance: 0,
     }
 
     data.forEach((stat: any) => {
         total.speed += stat.speed
         total.accuracy += stat.accuracy
-        total.distance += stat.distance
     })
 
     const average = {
         speed: total.speed / data.length,
         accuray: total.accuracy / data.length,
-        distance: total.distance / data.length,
     }
 
     return (
@@ -81,7 +78,7 @@ const RecordInfo = ({ data }: any) => {
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
                     title="Distance"
-                    content={`${total.distance.toFixed(4)} m`}
+                    content={`${data[data.length-1]?.distance?.toFixed(4)} m`}
                 />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
