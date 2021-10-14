@@ -1,0 +1,17 @@
+.project-moderators-container {
+    border: groove 1px;
+}
+
+.project-moderators-control{
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+}
+
+.project-moderators-control-report {
+
+}
+
+.project-moderators-control-add {
+    margin-right: 30px;
+}

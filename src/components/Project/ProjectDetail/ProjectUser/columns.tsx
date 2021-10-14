@@ -7,11 +7,6 @@ const columns = [
     key: "index",
   },
   {
-    title: "Tên",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
     title: "Tên đăng nhập",
     dataIndex: "username",
     key: "username",

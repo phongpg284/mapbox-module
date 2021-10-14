@@ -87,14 +87,30 @@ const dataSource = [
 	},
 	{
 		key: "15",
-		ckey: "Phòng qlda",
-		value: "phòng qlda1",
+		ckey: "Đơn vị thi công",
+		value: "phòng hcns",
 	},
 	{
 		key: "16",
-		ckey: "Phòng qlda",
-		value: "phòng qlda1",
+		ckey: "Loại công trình",
+		value: 1,
 	},
+	{
+		key: "17",
+		ckey: "Cấp công trình",
+		value: 1,
+	},
+	{
+		key: "18",
+		ckey: "Giá trị thực hiện",
+		value: "100 Tỷ VNĐ",
+	},
+	{
+		key: "19",
+		ckey: "Tỉ lệ hoàn thiện",
+		value: '100%',
+	},
+
 ];
 
 

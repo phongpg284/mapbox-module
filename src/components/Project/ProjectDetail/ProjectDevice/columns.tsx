@@ -1,15 +1,8 @@
-import { Space } from "antd";
-
 const columns = [
   {
     title: "STT",
     dataIndex: "index",
     key: "index",
-  },
-  {
-    title: "Tên thiết bị",
-    dataIndex: "name",
-    key: "name",
   },
   {
     title: "Lái máy chính",
@@ -35,17 +28,7 @@ const columns = [
     title: "Khoảng hoạt động",
     dataIndex: "range",
     key: "range",
-  },
-  {
-    title: "Thao tác",
-    key: "action",
-    render: (text: any, record: any) => (
-      <Space size="middle">
-        <button>Info</button>
-        <button>Delete</button>
-      </Space>
-    ),
-  },
+  }
 ];
 
 export default columns;
