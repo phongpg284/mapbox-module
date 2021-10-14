@@ -10,7 +10,7 @@ import CustomizeDot from './CustomizeDot'
 export const ViewIndexContext = createContext<any>(null)
 
 const RecordMap = ({ match }: any) => {
-    const [recordData, setRecordData] = useState<any>()
+    const [recordData, setRecordData] = useState<any>([])
     const [drawData, setDrawData] = useState<any>()
     const [viewIndex, setViewIndex] = useState(0)
 
@@ -45,15 +45,31 @@ const RecordMap = ({ match }: any) => {
                 console.log(error)
             }
             if (data) {
-                console.log(data)
-                const points = data.positions;
+                let graphData = [
+                    {
+                        distance: 0,
+                        accuracy: 0,
+                        speed: 0
+                    },
+                ]
+                let from
+                let to = [0, 0]
+                const points = data.positions
                 let convertData: any[] = []
-                points.forEach((point: any) => {
-                  const currentCoord = [point.longitude, point.latitude];
-                  convertData.push(currentCoord)                  
+                points.forEach((point: any, index: number) => {
+                    const currentCoord = [point.longitude, point.latitude]
+                    convertData.push(currentCoord)
+                    from = to
+                    to = currentCoord
+                    if (index > 0) {
+                        graphData.push({
+                            distance: graphData[graphData.length - 1].distance + turf.distance(turf.point(from),turf.point(to)) *1000,
+                            speed: point.speed,
+                            accuracy: point.accuracy,
+                        })
+                    }
                 })
-                console.log(convertData);
-                
+                console.log(convertData)
 
                 // const multiplier = data.multiplier;
                 // const startPoint = data.start_point;
@@ -72,20 +88,20 @@ const RecordMap = ({ match }: any) => {
                 //     startPoint[0] + points[i] * multiplier,
                 //   ];
                 //   convertData.push(currentCoord);
-                //   from = to;
-                //   to = currentCoord;
-                //   if (i > 0) {
-                //     graphData.push({
-                //       distance: graphData[graphData.length - 1].distance + turf.distance(turf.point(from), turf.point(to)) * 1000,
-                //       height: Math.random() *1000
-                //     });
-                //   }
+                // from = to;
+                // to = currentCoord;
+                // if (i > 0) {
+                //   graphData.push({
+                //     distance: graphData[graphData.length - 1].distance + turf.distance(turf.point(from), turf.point(to)) * 1000,
+                //     height: Math.random() *1000
+                //   });
                 // }
-                
-                // setRecordData(graphData);
-                setDrawData(convertData);
-                setViewIndex(convertData.length);
-              }
+                // }
+
+                setRecordData(graphData)
+                setDrawData(convertData)
+                setViewIndex(convertData.length)
+            }
         }
         getRecordData()
     }, [])
@@ -116,7 +132,7 @@ const RecordMap = ({ match }: any) => {
                             onClick={handleClick}
                             margin={{
                                 top: 20,
-                                bottom: 20,
+                                bottom: 30,
                                 left: 20,
                                 right: 20,
                             }}
@@ -132,14 +148,24 @@ const RecordMap = ({ match }: any) => {
                                 activeDot={{ r: 5 }}
                             />
                             <Line
-                                yAxisId="3"
+                                yAxisId="2"
                                 stroke="#FFAD46"
                                 strokeWidth={3}
-                                dataKey="height"
+                                dataKey="speed"
                                 type="monotone"
                                 dot={<CustomizeDot color="#FFAD46" />}
                                 activeDot={{ r: 5 }}
                             />
+                            <Line
+                                yAxisId="3"
+                                stroke="#00ff08"
+                                strokeWidth={3}
+                                dataKey="accuracy"
+                                type="monotone"
+                                dot={<CustomizeDot color="#00ff08" />}
+                                activeDot={{ r: 5 }}
+                            />
+
                             {/* <CartesianGrid stroke="#ccc" /> */}
                             {/* <XAxis dataKey="name" /> */}
                             {/* <YAxis /> */}
@@ -157,7 +183,7 @@ const RecordMap = ({ match }: any) => {
             </div>
 
             <div className="record-graph">
-                <RecordInfo />
+                <RecordInfo data={recordData}/>
             </div>
         </div>
     )
