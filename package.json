@@ -40,6 +40,7 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "dev": "craco start",
     "build": "craco build",
+    "build-opt": "craco --max-old-space-size=8192 build",
     "test": "craco test",
     "eject": "craco eject"
   },
