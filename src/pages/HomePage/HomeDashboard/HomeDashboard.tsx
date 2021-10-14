@@ -50,10 +50,10 @@ const HomeDashboard = ({ selectItem }: any) => {
         </Menu.ItemGroup>
 
         <Menu.ItemGroup title="QUẢN LÍ NHÂN SỰ">
-          <Menu.Item key="/admin" icon={<UserOutlined />}>
+          <Menu.Item key="/admin/list" icon={<UserOutlined />}>
             Quản trị viên
           </Menu.Item>
-          <Menu.Item key="/users" icon={<VideoCameraOutlined />}>
+          <Menu.Item key="/users/list" icon={<VideoCameraOutlined />}>
             Người dùng
           </Menu.Item>
         </Menu.ItemGroup>

@@ -24,6 +24,8 @@ const FieldList = ({ data }: Partial<IFieldListProps>) => {
   const [tableData, setTableData] = useState<any>();
 
   useEffect(() => {
+    console.log(data, "hehe");
+    
     setTableData(
       data?.map((field) => {
         return {

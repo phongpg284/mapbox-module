@@ -19,6 +19,8 @@ import BoundingMap from '../../components/Map/BoundingMap'
 import RecordMap from '../../components/Map/RecordMap'
 import ProjectSummary from '../../components/Project/ProjectSummary'
 import ProjectDetail from '../../components/Project/ProjectDetail'
+import UserList from '../User/UserList'
+import UserDetail from '../../components/User/UserDetail'
 
 const { Header, Content } = Layout
 
@@ -94,6 +96,15 @@ const HomePage = ({ parentPath }: any) => {
                             <ProjectDetail />
                         </Route>
                         <Route path={`${parentPath}projects-summary`}>
+                            <ProjectSummary />
+                        </Route>
+                        <Route path={`${parentPath}users/list`}>
+                            <UserList />
+                        </Route>
+                        <Route path={`${parentPath}users/:id`}>
+                            <UserDetail />
+                        </Route>
+                        <Route path={`${parentPath}users-summary`}>
                             <ProjectSummary />
                         </Route>
                         <Route path={`${parentPath}fields/list`}>
