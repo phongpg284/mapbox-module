@@ -73,7 +73,7 @@ const RecordInfo = ({ data }: any) => {
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
                     title="Average accuracy"
-                    content={`${average.accuray.toFixed(4)}`}
+                    content={`${average.accuray.toFixed(4)} cm`}
                 />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}

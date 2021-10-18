@@ -69,7 +69,6 @@ const RecordMap = ({ match }: any) => {
                         })
                     }
                 })
-                console.log(convertData)
 
                 // const multiplier = data.multiplier;
                 // const startPoint = data.start_point;
@@ -107,9 +106,10 @@ const RecordMap = ({ match }: any) => {
     }, [])
 
     const handleClick = (e: any) => {
+        if (e.isTooltipActive)
         setViewIndex(e.activeLabel)
-        console.log(viewIndex)
-        console.log('click')
+        // console.log(e)
+        // console.log('click')
     }
 
     return (
@@ -129,7 +129,7 @@ const RecordMap = ({ match }: any) => {
                 <div className="record-control-chart">
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart
-                            onClick={handleClick}
+                            onMouseMove={handleClick}
                             margin={{
                                 top: 20,
                                 bottom: 30,
@@ -137,7 +137,7 @@ const RecordMap = ({ match }: any) => {
                                 right: 20,
                             }}
                             data={recordData}
-                        >
+                            >
                             <Line
                                 yAxisId="1"
                                 stroke="#8884d8"

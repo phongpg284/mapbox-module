@@ -47,10 +47,6 @@ const RecordDraw = ({ data, zoom }: any) => {
     }
   }, [viewIndex]);
 
-  useEffect(() => {
-    console.log("view render", data.length);
-  });
-
   return (
     <div>
       <Source id="view-device" geoJsonSource={displayDrawData} />

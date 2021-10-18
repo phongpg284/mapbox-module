@@ -23,16 +23,15 @@ const FieldList = ({ data }: Partial<IFieldListProps>) => {
   const [deleteItem, setDeleteItem] = useState<any>();
   const [tableData, setTableData] = useState<any>();
 
-  useEffect(() => {
-    console.log(data, "hehe");
-    
+  useEffect(() => {    
     setTableData(
       data?.map((field) => {
         return {
           id: field?.id,
           device: field?.device_id,
           machine: field?.machine_id,
-          createdAt: new Date(field?.create_time).toDateString(),
+          createdAt: new Date(field?.create_time).toLocaleString(),
+          updatedAt: new Date(field?.update_time).toLocaleString(),
           key: field?.create_time,
         };
       })
@@ -44,6 +43,15 @@ const FieldList = ({ data }: Partial<IFieldListProps>) => {
   };
 
   const columns: any = [
+    {
+      width: "4%",
+      title: "id",
+      key: "id",
+      dataIndex: "id",
+      render: (text: any, record: any) => (
+        <div>ID: {record.id}</div>
+      ),
+    },
     {
       title: "",
       key: "image",
@@ -65,7 +73,9 @@ const FieldList = ({ data }: Partial<IFieldListProps>) => {
       width: 800,
       render: (text: any, record: any) => (
         <div>
-          <div className="fw-bold fs-6">{record.device}</div>
+          <div className="fw-bold fs-6">Deivce: {record.device}</div>
+          <div className="fw-bold fs-6">Machine: {record.machine}</div>
+
           {/* <div className="fw-bold fs-6">{record.area} m2</div> */}
         </div>
       ),
@@ -77,7 +87,10 @@ const FieldList = ({ data }: Partial<IFieldListProps>) => {
       width: 1000,
       responsive: ["sm"],
       render: (text: any, record: any) => (
-        <div>Registered: {record.createdAt}</div>
+        <div>
+          <div>Created Time: {record.createdAt}</div>
+          <div>Updated Time: {record.updatedAt}</div>
+        </div>
       ),
     },
     {
