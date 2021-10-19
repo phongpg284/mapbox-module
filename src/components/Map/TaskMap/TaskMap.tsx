@@ -114,9 +114,7 @@ const TaskMap = ({ match }: any) => {
                 })
                 console.log(convertDataArr[0][0])
                 setTaskData(graphDataArr)
-                setDrawData(convertDataArr)
-                console.log(convertDataArr[0].length);
-                
+                setDrawData(convertDataArr)                
                 setViewIndex(convertDataArr[0].length)
             }
         }
@@ -153,7 +151,7 @@ const TaskMap = ({ match }: any) => {
                                 left: 20,
                                 right: 20,
                             }}
-                            data={taskData}
+                            data={taskData[selectedTask]}
                         >
                             <Line
                                 yAxisId="1"
@@ -199,7 +197,7 @@ const TaskMap = ({ match }: any) => {
                 </div>
             </div>
             <div className="task-graph">
-                <RecordInfo data={taskData?.[selectedTask] || []} options={taskIdOption}/>
+                <RecordInfo data={taskData?.[selectedTask] || []} options={taskIdOption} changeSelectTask={setSelectedTask}/>
             </div>
         </div>
     )

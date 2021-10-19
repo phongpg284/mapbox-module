@@ -21,22 +21,19 @@ const RecordInfoItem = ({ icon, title, content }: any) => {
     )
 }
 
-const RecordInfo = ({ data, options }: any) => {
+const RecordInfo = ({ data, options, changeSelectTask }: any) => {
     
     const [isShowRecordInfo, setIsShowRecordInfo] = useState(true)
     const handleClickControl = () => {
         setIsShowRecordInfo(!isShowRecordInfo)
     }
 
-    const [selectedTask, setSelectedTask] = useState()
+    const [selectedTask, setSelectedTask] = useState(0)
 
     function handleChange(value: any) {
-        console.log(`selected ${value}`)
+        changeSelectTask(value)
+        setSelectedTask(value)
     }
-
-    useEffect(() => {
-        setSelectedTask(options?.[0])
-    }, [options])
 
     let total = {
         speed: 0,
@@ -68,8 +65,8 @@ const RecordInfo = ({ data, options }: any) => {
             >
                 <Select value={selectedTask} style={{ width: 120 }} onChange={handleChange}>
                     {options &&
-                        options.map((id: any) => (
-                            <Option value={id} key={id}>
+                        options.map((id: any, index:any) => (
+                            <Option value={index} key={id}>
                                 {id}
                             </Option>
                         ))}

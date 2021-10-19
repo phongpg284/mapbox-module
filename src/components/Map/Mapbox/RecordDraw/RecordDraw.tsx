@@ -7,7 +7,7 @@ import * as turf from '@turf/turf'
 import PaintScaleView from '../../../../utils/PaintScaleView'
 import { ViewIndexContext } from '../../TaskMap/TaskMap'
 
-const RecordDraw = ({ data, zoom, multiple }: any) => {
+const RecordDraw = ({ data, zoom, multiple }: any) => {    
     const [displayDrawData, setDisplayDrawData] = useState<any>({
         type: 'geojson',
         data: {
@@ -22,16 +22,16 @@ const RecordDraw = ({ data, zoom, multiple }: any) => {
     const viewIndex = useContext(ViewIndexContext)
 
     useEffect(() => {
-        if (data)
+        if (data && data.length > 1)
             setDisplayDrawData({
                 type: 'geojson',
                 data: turf.lineString(data),
             })
+        if(data && data.length >= 1)
         setDeviceCoordinate(data[data.length - 1])
     }, [])
 
     useEffect(() => {
-        console.log(viewIndex,)
         const showPoint = data.slice(0, viewIndex + 1)
         if (showPoint.length >= 2) {
             setDisplayDrawData({
@@ -39,7 +39,7 @@ const RecordDraw = ({ data, zoom, multiple }: any) => {
                 data: turf.lineString(showPoint),
             })
             setDeviceCoordinate(showPoint[viewIndex - 1])
-        } else {
+        } else if (showPoint.length === 1) {
             setDisplayDrawData({
                 type: 'geojson',
                 data: turf.point(showPoint[0]),
@@ -48,11 +48,6 @@ const RecordDraw = ({ data, zoom, multiple }: any) => {
         }
     }, [viewIndex])
 
-
-    useEffect(() => {
-      console.log(displayDrawData,"ghdjfhg");
-      
-    })
     return (
         <div>
             <Source id="view-device" geoJsonSource={displayDrawData} />

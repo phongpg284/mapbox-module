@@ -76,7 +76,6 @@ interface IMapboxProps {
 const Mapbox: any = memo(
     forwardRef<any, Partial<IMapboxProps>>(({ ...props }, ref) => {
         let drawRef: any
-        console.log(props.viewDrawData)
         const [visibleLayer, setVisibleLayer] =
             useState<LayerType>('satellite-v9')
         const mapboxInstance = useRef(null)
@@ -274,7 +273,7 @@ const Mapbox: any = memo(
                             }
                         />
                     )}
-                    {props.viewDrawData && (
+                    {props.viewDrawData &&  (
                         <RecordDraw
                             data={props.viewDrawData}
                             zoom={
