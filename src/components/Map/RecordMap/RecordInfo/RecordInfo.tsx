@@ -3,8 +3,10 @@ import './index.css'
 import LocalShippingIcon from '@material-ui/icons/LocalShipping'
 import BorderAllIcon from '@material-ui/icons/BorderAll'
 import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
-import { useState } from 'react'
-import { Stats } from 'fs'
+import { useEffect, useState } from 'react'
+import { Select } from 'antd'
+
+const { Option } = Select
 
 const RecordInfoItem = ({ icon, title, content }: any) => {
     return (
@@ -19,11 +21,22 @@ const RecordInfoItem = ({ icon, title, content }: any) => {
     )
 }
 
-const RecordInfo = ({ data }: any) => {
+const RecordInfo = ({ data, options }: any) => {
+    
     const [isShowRecordInfo, setIsShowRecordInfo] = useState(true)
     const handleClickControl = () => {
         setIsShowRecordInfo(!isShowRecordInfo)
     }
+
+    const [selectedTask, setSelectedTask] = useState()
+
+    function handleChange(value: any) {
+        console.log(`selected ${value}`)
+    }
+
+    useEffect(() => {
+        setSelectedTask(options?.[0])
+    }, [options])
 
     let total = {
         speed: 0,
@@ -53,6 +66,14 @@ const RecordInfo = ({ data }: any) => {
                     isShowRecordInfo ? 'show' : 'hide'
                 }`}
             >
+                <Select value={selectedTask} style={{ width: 120 }} onChange={handleChange}>
+                    {options &&
+                        options.map((id: any) => (
+                            <Option value={id} key={id}>
+                                {id}
+                            </Option>
+                        ))}
+                </Select>
                 <RecordInfoItem />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
@@ -78,7 +99,7 @@ const RecordInfo = ({ data }: any) => {
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
                     title="Distance"
-                    content={`${data[data.length-1]?.distance?.toFixed(4)} m`}
+                    content={`${data[data.length - 1]?.distance?.toFixed(4)} m`}
                 />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}

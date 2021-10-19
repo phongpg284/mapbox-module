@@ -1,0 +1,22 @@
+.task-view{
+    display: flex;
+    justify-content: end;
+    width: 100vw;
+    max-width: 100%;
+}
+
+.task-control-container{
+    box-sizing: border-box;
+    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.task-map {
+    width: 100%;
+}
+
+.task-control-chart {
+    height: 30vh;
+    width: 100%;
+}

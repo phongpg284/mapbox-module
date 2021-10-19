@@ -2,7 +2,7 @@ const CustomizeDot = (props: any) => {
   const { cx, cy, payload, index, color } = props;
   return (
     <>
-      {index % 5 === 0 && (
+      {index % 10000 === 0 && (
         <circle
           cx={cx}
           cy={cy}

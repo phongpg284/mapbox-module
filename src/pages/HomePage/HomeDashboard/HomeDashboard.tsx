@@ -35,7 +35,7 @@ const HomeDashboard = ({ selectItem }: any) => {
           </Menu.Item>
         </Menu.ItemGroup>
         <Menu.ItemGroup title="QUẢN LÍ THIẾT BỊ">
-          <Menu.Item key="/devices" icon={<UserOutlined />}>
+          <Menu.Item key="/devices/list" icon={<UserOutlined />}>
             Danh sách máy móc
           </Menu.Item>
           <Menu.Item key="menu_3_2" icon={<VideoCameraOutlined />}>
