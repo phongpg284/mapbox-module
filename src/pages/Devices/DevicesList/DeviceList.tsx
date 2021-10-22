@@ -77,7 +77,7 @@ const DeviceList = () => {
                 </div>
             </div>
             <div className="projects-list-table">
-                <Table columns={tableColumns} dataSource={devices} bordered />;
+                <Table columns={tableColumns} dataSource={devices} bordered />
             </div>
             <Modal
                 centered
