@@ -1,14 +1,14 @@
 import { Form, Input, message, Button, Space } from 'antd'
 
-const DeviceAdd = () => {
+const ProjectAdd = () => {
     const [form] = Form.useForm()
 
-    const addNewDevice = async (value: any) => {
+    const addNewProject = async (value: any) => {
         const query = {
             ...value,
-            action: 'create',            
+            action: 'create',
         }
-        const res = await fetch('https://dinhvichinhxac.online/api/device/', {
+        const res = await fetch('https://dinhvichinhxac.online/api/project/', {
             method: 'POST',
             body: JSON.stringify(query),
             headers: {
@@ -16,13 +16,13 @@ const DeviceAdd = () => {
             },
         })
 
-        const result = await res.json();
+        const result = await res.json()
         return result
     }
 
     const onFinish = (value: any) => {
         console.log(value)
-        addNewDevice(value).then((data) => {
+        addNewProject(value).then((data) => {
             message.success(data.response)
         })
     }
@@ -32,7 +32,7 @@ const DeviceAdd = () => {
     }
 
     return (
-        <div className="device-add-container">
+        <div className="project-add-container">
             <Form
                 form={form}
                 layout="vertical"
@@ -42,8 +42,8 @@ const DeviceAdd = () => {
             >
                 <div style={{ overflow: 'hidden' }}>
                     <Form.Item
-                        name="sim_imei"
-                        label="IMEI"
+                        name="code"
+                        label="Mã dự án"
                         rules={[
                             { required: true },
                             //@ts-ignore
@@ -56,7 +56,7 @@ const DeviceAdd = () => {
                 <div style={{ overflow: 'hidden' }}>
                     <Form.Item
                         name="name"
-                        label="Name"
+                        label="Tên dự án"
                         rules={[
                             { required: true },
                             //@ts-ignore
@@ -67,12 +67,12 @@ const DeviceAdd = () => {
                     </Form.Item>
                 </div>
                 <div style={{ overflow: 'hidden' }}>
-                    <Form.Item name="caster_ip" label="Caster Ip">
+                    <Form.Item name="description" label="Mô tả tổng quan">
                         <Input placeholder="" />
                     </Form.Item>
                 </div>
                 <div style={{ overflow: 'hidden' }}>
-                    <Form.Item name="caster_port" label="Caster Port">
+                    <Form.Item name="manager" label="Quản lí">
                         <Input placeholder="" />
                     </Form.Item>
                 </div>
@@ -102,9 +102,9 @@ const DeviceAdd = () => {
                     </Space>
                 </Form.Item>
             </Form>
-            <div className="device-add-item"></div>
+            <div className="project-add-item"></div>
         </div>
     )
 }
 
-export default DeviceAdd
+export default ProjectAdd

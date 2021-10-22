@@ -9,10 +9,14 @@ import { SearchOutlined } from '@ant-design/icons'
 import columns from './columns'
 import ProjectSummary from '../ProjectSummary'
 import faker from 'faker'
+import ProjectAdd from '../ProjectAdd'
 
 const ProjectList = () => {
     const [isModalVisible, setIsModalVisible] = useState(false)
 
+    const handleAddProject = () => {
+        showModal();
+    }
     const showModal = () => {
         setIsModalVisible(true)
     }
@@ -75,7 +79,7 @@ const ProjectList = () => {
                     />
                 </div>
                 <div className="projects-list-control-actions">
-                    <Button>Thêm</Button>
+                    <Button onClick={handleAddProject}>Thêm</Button>
                 </div>
             </div>
             <div className="projects-list-table">
@@ -88,7 +92,7 @@ const ProjectList = () => {
                 onOk={handleOk}
                 onCancel={handleCancel}
             >
-                <ProjectSummary />
+                <ProjectAdd />
             </Modal>
         </div>
     )
