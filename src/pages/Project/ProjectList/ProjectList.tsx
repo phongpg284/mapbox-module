@@ -1,11 +1,14 @@
 import './index.css'
-import columns from './columns'
-import { Button, Input, Modal, Space, Table } from 'antd'
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
+
 import { useState } from 'react'
-import ProjectSummary from '../../../components/Project/ProjectSummary'
-import faker from 'faker'
 import { Link } from 'react-router-dom'
+
+import { Button, Input, Modal, Space, Table } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
+
+import columns from './columns'
+import ProjectSummary from '../ProjectSummary'
+import faker from 'faker'
 
 const ProjectList = () => {
     const [isModalVisible, setIsModalVisible] = useState(false)

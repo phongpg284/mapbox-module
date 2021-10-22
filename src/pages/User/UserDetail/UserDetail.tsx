@@ -1,7 +1,6 @@
 import style from './index.module.scss'
 import { Button, Table } from 'antd'
-import faker from "faker";
-
+import faker from 'faker'
 
 const column = [
     {
@@ -67,7 +66,7 @@ const dataSource = [
         key: '10',
         ckey: 'Chỉnh sửa lần cuối',
         value: faker.datatype.datetime().toISOString(),
-    }
+    },
 ]
 
 const UserDetail = () => {
@@ -79,10 +78,19 @@ const UserDetail = () => {
                 dataSource={dataSource}
                 showHeader={false}
                 pagination={false}
-                title={() => <h4 style={{textAlign:"left"}}>Chi tiết: name</h4>}
-                footer={() => <Button danger style={{float: "left"}}>Cập nhật thông tin</Button>}
+                title={() => (
+                    <h4 style={{ textAlign: 'left' }}>Chi tiết: name</h4>
+                )}
+                footer={() => (
+                    <Button danger style={{ float: 'left' }}>
+                        Cập nhật thông tin
+                    </Button>
+                )}
             />
-			<img alt="avatar" src="https://apsec.iafor.org/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg"></img>
+            <img
+                alt="avatar"
+                src="https://apsec.iafor.org/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg"
+            ></img>
         </div>
     )
 }

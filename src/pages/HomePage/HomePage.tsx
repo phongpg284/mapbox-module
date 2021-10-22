@@ -4,9 +4,8 @@ import { useState } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
 
 import HomeDashboard from './HomeDashboard'
-import ProjectList from '../Projects/ProjectList'
+import ProjectList from '../Project/ProjectList'
 import DeviceList from '../Devices/DevicesList'
-import DeviceInfo from '../Devices/DeviceInfo'
 
 import { Drawer, Layout } from 'antd'
 import { Dehaze } from '@material-ui/icons'
@@ -17,12 +16,12 @@ import FieldList from '../../components/Map/FieldPage/FieldList'
 import FieldCard from '../../components/Map/FieldPage/FieldCard'
 import BoundingMap from '../../components/Map/BoundingMap'
 import RecordMap from '../../components/Map/RecordMap'
-import ProjectSummary from '../../components/Project/ProjectSummary'
-import ProjectDetail from '../../components/Project/ProjectDetail'
-import UserList from '../User/UserList'
-import UserDetail from '../../components/User/UserDetail'
+import ProjectSummary from '../Project/ProjectSummary'
+import ProjectDetail from '../Project/ProjectDetail'
+import UserDetail from '../User/UserDetail'
 import DeviceDetail from '../Devices/DeviceInfo/DeviceDetail'
 import DeviceTask from '../Devices/DeviceInfo/DeviceTask'
+import UserList from '../User/UserList'
 
 const { Header, Content } = Layout
 

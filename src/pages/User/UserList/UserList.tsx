@@ -1,11 +1,12 @@
 import './index.css'
-import columns from './columns'
-import { Input, Modal, Space, Table } from 'antd'
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
-import { useState } from 'react'
-import faker from 'faker'
+
 import { Link } from 'react-router-dom'
-import UserDetail from '../../components/User/UserDetail/UserDetail'
+
+import { Input, Space, Table } from 'antd'
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
+
+import faker from 'faker'
+import columns from './columns'
 
 const UserList = () => {
     const tableColumns = [
