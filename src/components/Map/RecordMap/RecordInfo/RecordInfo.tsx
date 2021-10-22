@@ -3,8 +3,10 @@ import './index.css'
 import LocalShippingIcon from '@material-ui/icons/LocalShipping'
 import BorderAllIcon from '@material-ui/icons/BorderAll'
 import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
-import { useState } from 'react'
-import { Stats } from 'fs'
+import { useEffect, useState } from 'react'
+import { Select } from 'antd'
+
+const { Option } = Select
 
 const RecordInfoItem = ({ icon, title, content }: any) => {
     return (
@@ -19,10 +21,18 @@ const RecordInfoItem = ({ icon, title, content }: any) => {
     )
 }
 
-const RecordInfo = ({ data }: any) => {
+const RecordInfo = ({ data, options, changeSelectTask }: any) => {
+    
     const [isShowRecordInfo, setIsShowRecordInfo] = useState(true)
     const handleClickControl = () => {
         setIsShowRecordInfo(!isShowRecordInfo)
+    }
+
+    const [selectedTask, setSelectedTask] = useState(0)
+
+    function handleChange(value: any) {
+        changeSelectTask(value)
+        setSelectedTask(value)
     }
 
     let total = {
@@ -53,6 +63,14 @@ const RecordInfo = ({ data }: any) => {
                     isShowRecordInfo ? 'show' : 'hide'
                 }`}
             >
+                <Select value={selectedTask} style={{ width: 120 }} onChange={handleChange}>
+                    {options &&
+                        options.map((id: any, index:any) => (
+                            <Option value={index} key={id}>
+                                {id}
+                            </Option>
+                        ))}
+                </Select>
                 <RecordInfoItem />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
@@ -73,12 +91,12 @@ const RecordInfo = ({ data }: any) => {
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
                     title="Average accuracy"
-                    content={`${average.accuray.toFixed(4)}`}
+                    content={`${average.accuray.toFixed(4)} cm`}
                 />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
                     title="Distance"
-                    content={`${data[data.length-1]?.distance?.toFixed(4)} m`}
+                    content={`${data[data.length - 1]?.distance?.toFixed(4)} m`}
                 />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}

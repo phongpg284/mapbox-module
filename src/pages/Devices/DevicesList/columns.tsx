@@ -2,44 +2,36 @@ import { Space, Tag } from "antd";
 
 const columns = [
   {
-    title: "STT",
-    dataIndex: "index",
-    key: "index",
+    title: "ID",
+    dataIndex: "id",
   },
   {
-    title: "Tên máy",
-    dataIndex: "name",
-    key: "name",
+    title: "Sim Imei",
+    dataIndex: "sim_imei",
   },
   {
-    title: "Mã thiết bị vòng tua",
-    dataIndex: "code",
-    key: "code",
+    title: "Caster Ip",
+    dataIndex: "caster_ip",
   },
   {
-    title: "Lái máy chính",
-    dataIndex: "driver",
-    key: "driver",
+    title: "NTRIP Username",
+    dataIndex: "ntrip_username",
   },
   {
-    title: "Dự án phân công",
-    dataIndex: "project",
-    key: "project",
+    title: "NTRIP Passwword",
+    dataIndex: "ntrip_password",
   },
   {
-    title: "Khoảng hoạt động",
-    dataIndex: "range",
-    key: "range",
+    title: "Mount Point",
+    dataIndex: "mount_point",
   },
   {
-    title: "Thao tác",
-    key: "action",
-    render: (text: any, record: any) => (
-      <Space size="middle">
-        <button>Info</button>
-        <button>Delete</button>
-      </Space>
-    ),
+    title: "Create Time",
+    dataIndex: "create_time",
+  },
+  {
+    title: "Update Time",
+    dataIndex: "update_time",
   },
 ];
 

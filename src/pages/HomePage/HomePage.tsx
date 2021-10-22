@@ -21,6 +21,8 @@ import ProjectSummary from '../../components/Project/ProjectSummary'
 import ProjectDetail from '../../components/Project/ProjectDetail'
 import UserList from '../User/UserList'
 import UserDetail from '../../components/User/UserDetail'
+import DeviceDetail from '../Devices/DeviceInfo/DeviceDetail'
+import DeviceTask from '../Devices/DeviceInfo/DeviceTask'
 
 const { Header, Content } = Layout
 
@@ -86,9 +88,20 @@ const HomePage = ({ parentPath }: any) => {
                 </Header>
                 <Content style={{padding: "20px"}}>
                     <Switch>
-                        <Route path={`${parentPath}devices`}>
+                        <Route path={`${parentPath}devices/list`}>
                             <DeviceList />
                         </Route>
+                        <Route path={`${parentPath}devices/:id/tasks`}>
+                            <DeviceTask />
+                        </Route>
+
+                        <Route path={`${parentPath}devices/:id`}>
+                            <DeviceDetail />
+                        </Route>
+                        <Route path={`${parentPath}devices-summary`}>
+                            <DeviceDetail />
+                        </Route>
+
                         <Route path={`${parentPath}projects/list`}>
                             <ProjectList />
                         </Route>

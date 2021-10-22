@@ -1,6 +1,6 @@
 import './index.css'
 import columns from './columns'
-import { Input, Modal, Space, Table } from 'antd'
+import { Button, Input, Modal, Space, Table } from 'antd'
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import ProjectSummary from '../../../components/Project/ProjectSummary'
@@ -63,7 +63,7 @@ const ProjectList = () => {
     }
     return (
         <div className="projects-list-wrapper">
-            <div className="projects-list-control">
+            <div className="projects-list-control me-5">
                 <div className="projects-list-control-search">
                     <Input
                         prefix={
@@ -72,7 +72,7 @@ const ProjectList = () => {
                     />
                 </div>
                 <div className="projects-list-control-actions">
-                    <PlusOutlined />
+                    <Button>Thêm</Button>
                 </div>
             </div>
             <div className="projects-list-table">

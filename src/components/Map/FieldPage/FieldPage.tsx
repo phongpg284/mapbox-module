@@ -16,7 +16,7 @@ const FieldPage: React.FC = ({ children }: any) => {
   
   return (
     <div>
-      <div className="bg-light" style={{ width: "100vw" }}>
+      <div className="bg-light" style={{ width: "100%" }}>
         {children(data)}
       </div>
     </div>
