@@ -2,8 +2,11 @@ import './index.css'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { useAppDispatch } from '../../app/store'
 import { updateToken } from '../../app/authSlice'
+import { useHistory } from 'react-router'
 
 const Login = () => {
+    const history = useHistory()
+
     const dispatch = useAppDispatch()
 
     const onFinish = (values: any) => {
@@ -28,6 +31,7 @@ const Login = () => {
                         accessToken: token,
                     })
                 )
+                history.push('/')
             })
             .catch((err) => console.log(err))
     }
