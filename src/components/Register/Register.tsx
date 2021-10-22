@@ -1,19 +1,16 @@
 import './index.css'
 import { Form, Input, Button, Checkbox } from 'antd'
-import { useAppDispatch } from '../../app/store'
-import { updateToken } from '../../app/authSlice'
 
-const Login = () => {
-    const dispatch = useAppDispatch()
-
+const Register = () => {
     const onFinish = (values: any) => {
         console.log('Success:', values)
 
         const query = {
+            action: "create",
             username: values.username,
             password: values.password,
         }
-        fetch('https://dinhvichinhxac.online/api/login/', {
+        fetch('https://dinhvichinhxac.online/api/user/', {
             method: 'POST',
             body: JSON.stringify(query),
             headers: {
@@ -21,14 +18,7 @@ const Login = () => {
             },
         })
             .then((res) => res.json())
-            .then((data) => {
-                const token = data?.token
-                dispatch(
-                    updateToken({
-                        accessToken: token,
-                    })
-                )
-            })
+            .then((data) => console.log(data))
             .catch((err) => console.log(err))
     }
 
@@ -37,8 +27,8 @@ const Login = () => {
     }
 
     return (
-        <div className="login-wrapper">
-            <div className="login-container">
+        <div className="register-wrapper">
+            <div className="register-container">
                 <Form
                     name="basic"
                     layout="vertical"
@@ -76,16 +66,21 @@ const Login = () => {
                     </Form.Item>
 
                     <Form.Item
-                        name="remember"
-                        valuePropName="checked"
-                        wrapperCol={{ offset: 4, span: 16 }}
+                        label="Confirm Password"
+                        name="confirmPassword"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your password!',
+                            },
+                        ]}
                     >
-                        <Checkbox>Remember me</Checkbox>
+                        <Input.Password />
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
                         <Button type="primary" htmlType="submit">
-                            Log in
+                            Register
                         </Button>
                     </Form.Item>
                 </Form>
@@ -94,4 +89,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Register
