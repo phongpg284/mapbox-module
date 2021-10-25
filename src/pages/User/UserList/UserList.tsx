@@ -1,6 +1,6 @@
 import './index.css'
 
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { Input, Space, Table } from 'antd'
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
@@ -9,6 +9,7 @@ import faker from 'faker'
 import columns from './columns'
 
 const UserList = () => {
+    const history = useHistory();
     const tableColumns = [
         ...columns.slice(0, 1),
         {
@@ -26,8 +27,8 @@ const UserList = () => {
             render: (text: any, record: any) => (
                 <Space size="middle">
                     <button>SMS</button>
-                    <button>Chi tiết</button>
-                    <button>Cập nhật</button>
+                    <button onClick={() => history.push(`/users/${record.index}`)}>Chi tiết</button>
+                <button onClick={() => history.push(`/users/edit/${record.index}`)}>Cập nhật</button>
                     <button>Xoá</button>
                 </Space>
             ),

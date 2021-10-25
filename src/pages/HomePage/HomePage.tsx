@@ -22,6 +22,7 @@ import UserDetail from '../User/UserDetail'
 import DeviceDetail from '../Devices/DeviceInfo/DeviceDetail'
 import DeviceTask from '../Devices/DeviceInfo/DeviceTask'
 import UserList from '../User/UserList'
+import UserEdit from '../User/UserEdit'
 
 const { Header, Content } = Layout
 
@@ -112,6 +113,9 @@ const HomePage = ({ parentPath }: any) => {
                         </Route>
                         <Route path={`${parentPath}users/list`}>
                             <UserList />
+                        </Route>
+                        <Route path={`${parentPath}users/edit/:id`}>
+                            <UserEdit />
                         </Route>
                         <Route path={`${parentPath}users/:id`}>
                             <UserDetail />

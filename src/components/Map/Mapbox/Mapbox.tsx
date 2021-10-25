@@ -278,7 +278,7 @@ const Mapbox: any = memo(
                             data={props.viewDrawData}
                             zoom={
                                 (mapboxInstance?.current as any)?.getZoom() ||
-                                16
+                                20
                             }
                         />
                     )}

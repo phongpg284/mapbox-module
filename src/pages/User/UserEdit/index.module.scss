@@ -1,0 +1,28 @@
+.user_edit_container {
+    /* margin: auto; */
+    border: groove 1px;
+    // background-color: white;
+    margin: 30px auto;
+}
+
+.user_edit_title {
+    color: rgb(70, 70, 224);
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: left;
+    padding: 15px;
+    border-bottom: groove 1px;
+    align-self: center;
+}
+
+.user_edit_content {
+    border: groove 1px;
+    margin: 20px;
+    padding: 5px;
+}
+
+
+.user_update_button {
+    text-align: end;
+    padding-right: 20px;
+}
