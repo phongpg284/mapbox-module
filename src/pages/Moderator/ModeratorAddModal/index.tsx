@@ -64,6 +64,7 @@ const ModeratorAddModal = ({ ...props }) => {
     return (
         <Modal
             {...props}
+            title="Thêm quản trị viên"
             footer={<Button onClick={handleAddNewModerator}>Đăng ký</Button>}
         >
             <div className="moderator-add-container">

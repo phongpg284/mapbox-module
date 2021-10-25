@@ -9,7 +9,8 @@ import { SearchOutlined } from '@ant-design/icons'
 import columns from './columns'
 import ProjectSummary from '../ProjectSummary'
 import faker from 'faker'
-import ProjectAdd from '../ProjectAdd'
+import ProjectAdd from '../ProjectAddModal'
+import ProjectAddModal from '../ProjectAddModal'
 
 const ProjectList = () => {
     const [isModalVisible, setIsModalVisible] = useState(false)
@@ -85,15 +86,13 @@ const ProjectList = () => {
             <div className="projects-list-table">
                 <Table columns={tableColumns} dataSource={data} bordered />;
             </div>
-            <Modal
+            <ProjectAddModal
                 centered
                 width={1000}
                 visible={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
-            >
-                <ProjectAdd />
-            </Modal>
+            />
         </div>
     )
 }

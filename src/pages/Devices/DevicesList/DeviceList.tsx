@@ -3,7 +3,8 @@ import { Button, Input, Modal, Space, Table } from 'antd'
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import DeviceAdd from '../DeviceAdd'
+import DeviceAdd from '../DeviceAddModal'
+import DeviceAddModal from '../DeviceAddModal'
 const DeviceList = () => {
     const [devices, setDevices] = useState([])
     useEffect(() => {
@@ -79,15 +80,13 @@ const DeviceList = () => {
             <div className="projects-list-table">
                 <Table columns={tableColumns} dataSource={devices} bordered />
             </div>
-            <Modal
+            <DeviceAddModal
                 centered
                 width={1000}
                 visible={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
-            >
-                <DeviceAdd />
-            </Modal>
+            />
         </div>
     )
 }

@@ -8,7 +8,7 @@ import { SearchOutlined } from '@ant-design/icons'
 import faker from 'faker'
 import columns from './columns'
 import { useState } from 'react'
-import ModeratorAddModal from '../ModeratorAdd'
+import ModeratorAddModal from '../ModeratorAddModal'
 
 const ModeratorList = () => {
     const history = useHistory()
