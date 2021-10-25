@@ -5,7 +5,6 @@
 
 ### Setup 
 ```
-cd react-mapbox
 
 #install all dependencies
 npm install
