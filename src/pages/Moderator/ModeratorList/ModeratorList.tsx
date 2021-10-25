@@ -3,10 +3,12 @@ import './index.css'
 import { Link, useHistory } from 'react-router-dom'
 
 import { Button, Input, Space, Table } from 'antd'
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons'
 
 import faker from 'faker'
 import columns from './columns'
+import { useState } from 'react'
+import ModeratorAddModal from '../ModeratorAdd'
 
 const ModeratorList = () => {
     const history = useHistory()
@@ -26,7 +28,10 @@ const ModeratorList = () => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <Button danger onClick={() => handleClickDelete(record.index)}>
+                    <Button
+                        danger
+                        onClick={() => handleClickDelete(record.index)}
+                    >
                         Xoá
                     </Button>
                 </Space>
@@ -44,12 +49,14 @@ const ModeratorList = () => {
         })
     }
 
+    const [showModal, setShowModal] = useState(false)
+
     const handleClickDelete = (index: number) => {
         window.alert('delete mod id: ' + index)
     }
 
     const handleAddModerator = () => {
-      
+        setShowModal(true)
     }
 
     return (
@@ -63,12 +70,21 @@ const ModeratorList = () => {
                     />
                 </div>
                 <div className="moderators-list-control-actions">
-                    <Button onClick={handleAddModerator}>Thêm quản trị viên</Button>
+                    <Button onClick={handleAddModerator}>
+                        Thêm quản trị viên
+                    </Button>
                 </div>
             </div>
             <div className="moderators-list-table">
                 <Table columns={tableColumns} dataSource={data} bordered />;
             </div>
+
+            <ModeratorAddModal
+                visible={showModal}
+                footer={null}
+                title="Thêm quản trị viên"
+                onCancel={() => setShowModal(false)}
+            />
         </div>
     )
 }
