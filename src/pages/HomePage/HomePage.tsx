@@ -22,6 +22,10 @@ import UserDetail from '../User/UserDetail'
 import DeviceDetail from '../Devices/DeviceInfo/DeviceDetail'
 import DeviceTask from '../Devices/DeviceInfo/DeviceTask'
 import UserList from '../User/UserList'
+import UserEdit from '../User/UserEdit'
+import ModeratorList from '../Moderator/ModeratorList'
+import ModeratorEdit from '../Moderator/ModeratorEdit'
+import ModeratorDetail from '../Moderator/ModeratorDetail'
 
 const { Header, Content } = Layout
 
@@ -93,13 +97,13 @@ const HomePage = ({ parentPath }: any) => {
                         <Route path={`${parentPath}devices/:id/tasks`}>
                             <DeviceTask />
                         </Route>
-
                         <Route path={`${parentPath}devices/:id`}>
                             <DeviceDetail />
                         </Route>
                         <Route path={`${parentPath}devices-summary`}>
                             <DeviceDetail />
                         </Route>
+
 
                         <Route path={`${parentPath}projects/list`}>
                             <ProjectList />
@@ -110,8 +114,13 @@ const HomePage = ({ parentPath }: any) => {
                         <Route path={`${parentPath}projects-summary`}>
                             <ProjectSummary />
                         </Route>
+
+
                         <Route path={`${parentPath}users/list`}>
                             <UserList />
+                        </Route>
+                        <Route path={`${parentPath}users/edit/:id`}>
+                            <UserEdit />
                         </Route>
                         <Route path={`${parentPath}users/:id`}>
                             <UserDetail />
@@ -119,6 +128,22 @@ const HomePage = ({ parentPath }: any) => {
                         <Route path={`${parentPath}users-summary`}>
                             <ProjectSummary />
                         </Route>
+
+
+                        <Route path={`${parentPath}moderators/list`}>
+                            <ModeratorList />
+                        </Route>
+                        <Route path={`${parentPath}moderators/edit/:id`}>
+                            <ModeratorEdit />
+                        </Route>
+                        <Route path={`${parentPath}moderators/:id`}>
+                            <ModeratorDetail />
+                        </Route>
+                        <Route path={`${parentPath}moderators-summary`}>
+                            <ProjectSummary />
+                        </Route>
+
+
                         <Route path={`${parentPath}fields/list`}>
                             <FieldPage>
                                 {(props: any) => <FieldList data={props} />}

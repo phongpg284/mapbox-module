@@ -2,13 +2,15 @@ import './index.css'
 
 import { Link, useHistory } from 'react-router-dom'
 
-import { Input, Space, Table } from 'antd'
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
+import { Button, Input, Space, Table } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
 
 import faker from 'faker'
 import columns from './columns'
+import { useState } from 'react'
+import ModeratorAddModal from '../ModeratorAddModal'
 
-const UserList = () => {
+const ModeratorList = () => {
     const history = useHistory()
     const tableColumns = [
         ...columns.slice(0, 1),
@@ -17,7 +19,7 @@ const UserList = () => {
             dataIndex: 'name',
             key: 'name',
             render: (text: any, record: any) => (
-                <Link to={`/users/${record.index}`}>{text}</Link>
+                <Link to={`/moderators/${record.index}`}>{text}</Link>
             ),
         },
         ...columns.slice(1),
@@ -26,22 +28,12 @@ const UserList = () => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button>SMS</button>
-                    <button
-                        onClick={() => history.push(`/users/${record.index}`)}
+                    <Button
+                        danger
+                        onClick={() => handleClickDelete(record.index)}
                     >
-                        Chi tiết
-                    </button>
-                    <button
-                        onClick={() =>
-                            history.push(`/users/edit/${record.index}`)
-                        }
-                    >
-                        Cập nhật
-                    </button>
-                    <button onClick={() => handleClickDelete(record.index)}>
                         Xoá
-                    </button>
+                    </Button>
                 </Space>
             ),
         },
@@ -54,32 +46,47 @@ const UserList = () => {
             username: faker.internet.userName(),
             phone: faker.phone.phoneNumber(),
             role: faker.name.jobTitle(),
-            project: faker.address.state(),
         })
     }
 
+    const [showModal, setShowModal] = useState(false)
+
     const handleClickDelete = (index: number) => {
-        window.alert('delete user id: ' + index)
+        window.alert('delete mod id: ' + index)
     }
+
+    const handleAddModerator = () => {
+        setShowModal(true)
+    }
+
     return (
-        <div className="users-list-wrapper">
-            <div className="users-list-control">
-                <div className="users-list-control-search">
+        <div className="moderators-list-wrapper">
+            <div className="moderators-list-control">
+                <div className="moderators-list-control-search">
                     <Input
                         prefix={
                             <SearchOutlined className="site-form-item-icon" />
                         }
                     />
                 </div>
-                <div className="users-list-control-actions">
-                    <PlusOutlined />
+                <div className="moderators-list-control-actions">
+                    <Button onClick={handleAddModerator}>
+                        Thêm quản trị viên
+                    </Button>
                 </div>
             </div>
-            <div className="users-list-table">
+            <div className="moderators-list-table">
                 <Table columns={tableColumns} dataSource={data} bordered />;
             </div>
+
+            <ModeratorAddModal
+                visible={showModal}
+                footer={null}
+                title="Thêm quản trị viên"
+                onCancel={() => setShowModal(false)}
+            />
         </div>
     )
 }
 
-export default UserList
+export default ModeratorList
