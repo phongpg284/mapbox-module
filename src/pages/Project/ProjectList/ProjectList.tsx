@@ -1,6 +1,6 @@
 import './index.css'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, Input, Modal, Space, Table } from 'antd'
@@ -10,12 +10,13 @@ import columns from './columns'
 import ProjectSummary from '../ProjectSummary'
 import faker from 'faker'
 import ProjectAdd from '../ProjectAdd'
+import useFetch from '../../../hooks/useFetch'
 
 const ProjectList = () => {
     const [isModalVisible, setIsModalVisible] = useState(false)
 
     const handleAddProject = () => {
-        showModal();
+        showModal()
     }
     const showModal = () => {
         setIsModalVisible(true)
@@ -54,20 +55,34 @@ const ProjectList = () => {
             ),
         },
     ]
-    const data = []
-    for (let i = 0; i < 50; i++) {
-        data.push({
-            key: i,
-            code: faker.datatype.string(),
-            name: faker.name.findName(),
-            contractValuation: faker.datatype.number(),
-            valuation: faker.datatype.number(),
-            percentage: faker.datatype.number(),
-            contractTime: faker.datatype.number(),
-            time: faker.datatype.number(),
-            remainTime: faker.datatype.number(),
+    const [data, setData] = useState([])
+    const [response, isFetching, setRequest] = useFetch({} as any)
+    useEffect(() => {
+        setRequest({
+            endPoint: 'https://dinhvichinhxac.online/api/project/',
+            method: 'GET',
         })
-    }
+    }, [])
+
+    useEffect(() => {        
+        if (!isFetching && response && response.data) {
+            setData(response.data)
+        }
+    }, [response])
+    // const data = []
+    // for (let i = 0; i < 50; i++) {
+    //     data.push({
+    //         key: i,
+    //         code: faker.datatype.string(),
+    //         name: faker.name.findName(),
+    //         contractValuation: faker.datatype.number(),
+    //         valuation: faker.datatype.number(),
+    //         percentage: faker.datatype.number(),
+    //         contractTime: faker.datatype.number(),
+    //         time: faker.datatype.number(),
+    //         remainTime: faker.datatype.number(),
+    //     })
+    // }
     return (
         <div className="projects-list-wrapper">
             <div className="projects-list-control me-5">

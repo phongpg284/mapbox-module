@@ -1,30 +1,40 @@
 import { Form, Input, message, Button, Space } from 'antd'
+import { useEffect } from 'react'
+import useFetch from '../../../hooks/useFetch'
 
 const DeviceAdd = () => {
+    const [response, isFetching, setRequest] = useFetch({} as any)
     const [form] = Form.useForm()
 
-    const addNewDevice = async (value: any) => {
+    const addNewDevice = (value: any) => {
         const query = {
             ...value,
-            action: 'create',            
+            action: 'create',
         }
-        const res = await fetch('https://dinhvichinhxac.online/api/device/', {
+        setRequest({
+            endPoint: 'https://dinhvichinhxac.online/api/device/',
             method: 'POST',
-            body: JSON.stringify(query),
             headers: {
                 'Content-Type': 'application/json',
             },
-        })
-
-        const result = await res.json();
-        return result
+            requestBody: query,
+        })        
+        // const res = await fetch('https://dinhvichinhxac.online/api/device/', {
+            //     method: 'POST',
+        //     body: JSON.stringify(query),
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // })
     }
-
+    useEffect(() => {
+        if (isFetching === false && response && response.data) 
+            message.success(response.data)
+    }, [response])
+    
     const onFinish = (value: any) => {
         console.log(value)
-        addNewDevice(value).then((data) => {
-            message.success(data.response)
-        })
+        addNewDevice(value)
     }
 
     const onFinishFailed = () => {

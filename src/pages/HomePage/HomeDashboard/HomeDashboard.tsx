@@ -36,17 +36,17 @@ const HomeDashboard = ({ selectItem }: any) => {
         </Menu.ItemGroup>
         <Menu.ItemGroup title="QUẢN LÍ THIẾT BỊ">
           <Menu.Item key="/devices/list" icon={<UserOutlined />}>
+            Danh sách thiết bị
+          </Menu.Item>
+          <Menu.Item key="/machines/list" icon={<VideoCameraOutlined />}>
             Danh sách máy móc
           </Menu.Item>
-          <Menu.Item key="menu_3_2" icon={<VideoCameraOutlined />}>
-            Thiết bị vòng tua
-          </Menu.Item>
-          <Menu.Item key="menu_3_3" icon={<VideoCameraOutlined />}>
+          {/* <Menu.Item key="menu_3_3" icon={<VideoCameraOutlined />}>
             Dữ liệu vòng tua
           </Menu.Item>
           <Menu.Item key="menu_3_4" icon={<VideoCameraOutlined />}>
             Dữ liệu toàn đạc
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu.ItemGroup>
 
         <Menu.ItemGroup title="QUẢN LÍ NHÂN SỰ">
