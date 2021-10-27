@@ -1,6 +1,9 @@
 import style from './index.module.scss'
 import { Button, Table } from 'antd'
 import faker from 'faker'
+import { useEffect, useState } from 'react'
+import useFetch from '../../../hooks/useFetch'
+import { useHistory } from 'react-router'
 
 const column = [
     {
@@ -16,60 +19,85 @@ const column = [
     },
 ]
 
-const dataSource = [
-    {
-        key: '1',
-        ckey: 'Tên người dùng',
-        value: faker.internet.userName(),
-    },
-    {
-        key: '2',
-        ckey: 'Email',
-        value: faker.internet.email(),
-    },
-    {
-        key: '3',
-        ckey: 'Tên đăng nhập',
-        value: faker.internet.userName(),
-    },
-    {
-        key: '4',
-        ckey: 'Số điện thoại',
-        value: faker.phone.phoneNumber(),
-    },
-    {
-        key: '5',
-        ckey: 'Ngày sinh',
-        value: faker.datatype.datetime().toISOString(),
-    },
-    {
-        key: '6',
-        ckey: 'Địa chỉ',
-        value: faker.address.city(),
-    },
-    {
-        key: '7',
-        ckey: 'Chức vụ',
-        value: faker.name.jobTitle(),
-    },
-    {
-        key: '8',
-        ckey: 'Đơn vị công tác',
-        value: faker.address.country(),
-    },
-    {
-        key: '9',
-        ckey: 'Ngày đăng ký',
-        value: faker.datatype.datetime().toDateString(),
-    },
-    {
-        key: '10',
-        ckey: 'Chỉnh sửa lần cuối',
-        value: faker.datatype.datetime().toISOString(),
-    },
-]
+// const dataSource = [
+//     {
+//         key: '1',
+//         ckey: 'Tên người dùng',
+//         value: faker.internet.userName(),
+//     },
+//     {
+//         key: '2',
+//         ckey: 'Email',
+//         value: faker.internet.email(),
+//     },
+//     {
+//         key: '3',
+//         ckey: 'Tên đăng nhập',
+//         value: faker.internet.userName(),
+//     },
+//     {
+//         key: '4',
+//         ckey: 'Số điện thoại',
+//         value: faker.phone.phoneNumber(),
+//     },
+//     {
+//         key: '5',
+//         ckey: 'Ngày sinh',
+//         value: faker.datatype.datetime().toISOString(),
+//     },
+//     {
+//         key: '6',
+//         ckey: 'Địa chỉ',
+//         value: faker.address.city(),
+//     },
+//     {
+//         key: '7',
+//         ckey: 'Chức vụ',
+//         value: faker.name.jobTitle(),
+//     },
+//     {
+//         key: '8',
+//         ckey: 'Đơn vị công tác',
+//         value: faker.address.country(),
+//     },
+//     {
+//         key: '9',
+//         ckey: 'Ngày đăng ký',
+//         value: faker.datatype.datetime().toDateString(),
+//     },
+//     {
+//         key: '10',
+//         ckey: 'Chỉnh sửa lần cuối',
+//         value: faker.datatype.datetime().toISOString(),
+//     },
+// ]
 
-const ModeratorDetail = () => {
+const ModeratorDetail = ({ id }: any) => {
+    const history = useHistory()
+
+    const [dataSource, setDataSource] = useState([])
+    const [response, isFetching, setRequest] = useFetch({} as any)
+    useEffect(() => {
+        setRequest({
+            endPoint: 'https://dinhvichinhxac.online/api/user/',
+            method: 'POST',
+            requestBody: {
+                action: 'read',
+                pk: id,
+            },
+            headers: {
+                'Content-type': 'application/json',
+            },
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!isFetching && response && response.data && !response.hasError) {
+            setDataSource(response.data)
+            console.log(response.data)
+        }
+    }, [response])
+
     return (
         <div className={style.moderator_detail_container}>
             <Table
@@ -82,7 +110,11 @@ const ModeratorDetail = () => {
                     <h4 style={{ textAlign: 'left' }}>Chi tiết: name</h4>
                 )}
                 footer={() => (
-                    <Button danger style={{ float: 'left' }}>
+                    <Button
+                        danger
+                        style={{ float: 'left' }}
+                        onClick={() => history.push('/users/edit/' + id)}
+                    >
                         Cập nhật thông tin
                     </Button>
                 )}

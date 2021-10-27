@@ -7,8 +7,9 @@ import { SearchOutlined } from '@ant-design/icons'
 
 import faker from 'faker'
 import columns from './columns'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ModeratorAddModal from '../ModeratorAddModal'
+import useFetch from '../../../hooks/useFetch'
 
 const ModeratorList = () => {
     const history = useHistory()
@@ -19,7 +20,7 @@ const ModeratorList = () => {
             dataIndex: 'name',
             key: 'name',
             render: (text: any, record: any) => (
-                <Link to={`/moderators/${record.index}`}>{text}</Link>
+                <Link to={`/moderators/${record.id}`}>{text}</Link>
             ),
         },
         ...columns.slice(1),
@@ -38,16 +39,31 @@ const ModeratorList = () => {
             ),
         },
     ]
-    const data = []
-    for (let i = 0; i < 50; i++) {
-        data.push({
-            index: i,
-            name: faker.name.findName(),
-            username: faker.internet.userName(),
-            phone: faker.phone.phoneNumber(),
-            role: faker.name.jobTitle(),
+    // const data = []
+    // for (let i = 0; i < 50; i++) {
+    //     data.push({
+    //         index: i,
+    //         name: faker.name.findName(),
+    //         username: faker.internet.userName(),
+    //         phone: faker.phone.phoneNumber(),
+    //         role: faker.name.jobTitle(),
+    //     })
+    // }
+
+    const [data, setData] = useState([])
+    const [response, isFetching, setRequest] = useFetch({} as any)
+    useEffect(() => {
+        setRequest({
+            endPoint: 'https://dinhvichinhxac.online/api/user/',
+            method: 'GET',
         })
-    }
+    }, [])
+
+    useEffect(() => {        
+        if (!isFetching && response && response.data && !response.hasError) {
+            setData(response.data)
+        }
+    }, [response])
 
     const [showModal, setShowModal] = useState(false)
 

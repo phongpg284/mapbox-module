@@ -97,9 +97,9 @@ const HomePage = ({ parentPath }: any) => {
                         <Route path={`${parentPath}devices/:id/tasks`}>
                             <DeviceTask />
                         </Route>
-                        <Route path={`${parentPath}devices/:id`}>
-                            <DeviceDetail />
-                        </Route>
+                        <Route path={`${parentPath}devices/:id`} render={({match}) => (
+                            <DeviceDetail id={match.params.id}/>
+                        )} />
                         <Route path={`${parentPath}devices-summary`}>
                             <DeviceDetail />
                         </Route>
@@ -108,9 +108,9 @@ const HomePage = ({ parentPath }: any) => {
                         <Route path={`${parentPath}projects/list`}>
                             <ProjectList />
                         </Route>
-                        <Route path={`${parentPath}projects/:id`}>
-                            <ProjectDetail />
-                        </Route>
+                        <Route path={`${parentPath}projects/:id`} render={({match}) => (
+                            <ProjectDetail id={match.params.id}/>
+                        )} />
                         <Route path={`${parentPath}projects-summary`}>
                             <ProjectSummary />
                         </Route>
@@ -119,12 +119,12 @@ const HomePage = ({ parentPath }: any) => {
                         <Route path={`${parentPath}users/list`}>
                             <UserList />
                         </Route>
-                        <Route path={`${parentPath}users/edit/:id`}>
-                            <UserEdit />
-                        </Route>
-                        <Route path={`${parentPath}users/:id`}>
-                            <UserDetail />
-                        </Route>
+                        <Route path={`${parentPath}users/edit/:id`} render={({match}) => (
+                            <UserEdit id={match.params.id}/>
+                        )} />
+                        <Route path={`${parentPath}users/:id`} render={({match}) => (
+                            <UserDetail id={match.params.id}/>
+                        )} />
                         <Route path={`${parentPath}users-summary`}>
                             <ProjectSummary />
                         </Route>
@@ -133,11 +133,12 @@ const HomePage = ({ parentPath }: any) => {
                         <Route path={`${parentPath}moderators/list`}>
                             <ModeratorList />
                         </Route>
-                        <Route path={`${parentPath}moderators/edit/:id`}>
-                            <ModeratorEdit />
-                        </Route>
-                        <Route path={`${parentPath}moderators/:id`}>
-                            <ModeratorDetail />
+                        <Route path={`${parentPath}moderators/edit/:id`} render={({match}) => (
+                            <ModeratorEdit id={match.params.id}/>
+                        )} />
+                        <Route path={`${parentPath}moderators/:id`} render={({match}) => (
+                            <ModeratorDetail id={match.params.id}/>
+                        )}>
                         </Route>
                         <Route path={`${parentPath}moderators-summary`}>
                             <ProjectSummary />

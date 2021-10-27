@@ -1,4 +1,4 @@
-import "./index.css"
+import './index.css'
 import { useState } from 'react'
 import { useHistory, useLocation } from 'react-router'
 
@@ -6,9 +6,9 @@ import { Button, DatePicker, Input, Table } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
 import columns from './columns'
-const { RangePicker } = DatePicker;
+const { RangePicker } = DatePicker
 
-const DeviceDetail = () => {
+const DeviceDetail = ({ id }: any) => {
     const history = useHistory()
     const location = useLocation()
     const handleShowTracks = () => {
@@ -29,7 +29,7 @@ const DeviceDetail = () => {
                         />
                     </div>
                     <div className="device-tasks-list-calendar">
-                      <RangePicker />
+                        <RangePicker />
                     </div>
                     <div className="device-tasks-list-control-actions">
                         <Button onClick={handleShowTracks}>

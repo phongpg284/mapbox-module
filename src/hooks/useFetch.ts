@@ -29,7 +29,10 @@ const useFetch = (req: (IReqInfo)): [IResInfo, boolean, React.Dispatch<React.Set
             fetch(fetchUrl, fetchData)
                 .then((res) => res.json())
                 .then((data) => {
+                    if(data.success)
                     resolve(data.response)
+                    else  
+                    reject(data.response)
                 })
                 .catch((err) => reject(err))
 

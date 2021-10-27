@@ -1,6 +1,9 @@
 import style from './index.module.scss'
 import { Button, Table } from 'antd'
 import faker from 'faker'
+import { useEffect, useState } from 'react'
+import useFetch from '../../../hooks/useFetch'
+import { useHistory } from 'react-router'
 
 const column = [
     {
@@ -16,7 +19,7 @@ const column = [
     },
 ]
 
-const dataSource = [
+const data = [
     {
         key: '1',
         ckey: 'Tên người dùng',
@@ -69,7 +72,30 @@ const dataSource = [
     },
 ]
 
-const UserDetail = () => {
+const UserDetail = ({ id }: any) => {
+    const history = useHistory()
+
+    const [dataSource, setDataSource] = useState([])
+    const [response, isFetching, setRequest] = useFetch({} as any)
+    useEffect(() => {
+        setRequest({
+            endPoint: 'https://dinhvichinhxac.online/api/user/',
+            method: 'POST',
+            requestBody: {
+                action: 'read',
+                pk: id,
+            },
+            headers: {
+                'Content-type': 'application/json',
+            },
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!isFetching && response && response.data && !response.hasError) {
+            setDataSource(response.data)
+        }
+    }, [response])
     return (
         <div className={style.user_detail_container}>
             <Table
@@ -82,7 +108,11 @@ const UserDetail = () => {
                     <h4 style={{ textAlign: 'left' }}>Chi tiết: name</h4>
                 )}
                 footer={() => (
-                    <Button danger style={{ float: 'left' }}>
+                    <Button
+                        danger
+                        style={{ float: 'left' }}
+                        onClick={() => history.push('/users/edit/' + id )}
+                    >
                         Cập nhật thông tin
                     </Button>
                 )}

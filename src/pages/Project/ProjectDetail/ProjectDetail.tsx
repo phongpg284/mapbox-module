@@ -6,7 +6,7 @@ import ProjectUser from './ProjectUser'
 import ProjectDevice from './ProjectDevice'
 import ProjectModerator from './ProjectModerator'
 
-const ProjectDetail = () => {
+const ProjectDetail = ({ id }: any) => {
     const [currentTab, setCurrentTab] = useState('summary')
     const handleClick = (e: any) => {
         setCurrentTab(e.key)

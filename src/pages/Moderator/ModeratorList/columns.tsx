@@ -3,6 +3,7 @@ const columns = [
         title: 'STT',
         dataIndex: 'index',
         key: 'index',
+        render: (text: any, record: any, index: number) => <div>{index}</div>,
     },
     {
         title: 'Tên đăng nhập',

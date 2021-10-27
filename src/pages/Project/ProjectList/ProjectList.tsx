@@ -65,7 +65,7 @@ const ProjectList = () => {
     }, [])
 
     useEffect(() => {        
-        if (!isFetching && response && response.data) {
+        if (!isFetching && response && response.data && !response.hasError) {
             setData(response.data)
         }
     }, [response])

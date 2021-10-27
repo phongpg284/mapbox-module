@@ -7,6 +7,8 @@ import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 
 import faker from 'faker'
 import columns from './columns'
+import { useEffect, useState } from 'react'
+import useFetch from '../../../hooks/useFetch'
 
 const UserList = () => {
     const history = useHistory()
@@ -17,7 +19,7 @@ const UserList = () => {
             dataIndex: 'name',
             key: 'name',
             render: (text: any, record: any) => (
-                <Link to={`/users/${record.index}`}>{text}</Link>
+                <Link to={`/users/${record.id}`}>{text}</Link>
             ),
         },
         ...columns.slice(1),
@@ -28,35 +30,49 @@ const UserList = () => {
                 <Space size="middle">
                     <button>SMS</button>
                     <button
-                        onClick={() => history.push(`/users/${record.index}`)}
+                        onClick={() => history.push(`/users/${record.id}`)}
                     >
                         Chi tiết
                     </button>
                     <button
                         onClick={() =>
-                            history.push(`/users/edit/${record.index}`)
+                            history.push(`/users/edit/${record.id}`)
                         }
                     >
                         Cập nhật
                     </button>
-                    <button onClick={() => handleClickDelete(record.index)}>
+                    <button onClick={() => handleClickDelete(record.id)}>
                         Xoá
                     </button>
                 </Space>
             ),
         },
     ]
-    const data = []
-    for (let i = 0; i < 50; i++) {
-        data.push({
-            index: i,
-            name: faker.name.findName(),
-            username: faker.internet.userName(),
-            phone: faker.phone.phoneNumber(),
-            role: faker.name.jobTitle(),
-            project: faker.address.state(),
+    // const data = []
+    // for (let i = 0; i < 50; i++) {
+    //     data.push({
+    //         index: i,
+    //         name: faker.name.findName(),
+    //         username: faker.internet.userName(),
+    //         phone: faker.phone.phoneNumber(),
+    //         role: faker.name.jobTitle(),
+    //         project: faker.address.state(),
+    //     })
+    // }
+    const [data, setData] = useState([])
+    const [response, isFetching, setRequest] = useFetch({} as any)
+    useEffect(() => {
+        setRequest({
+            endPoint: 'https://dinhvichinhxac.online/api/user/',
+            method: 'GET',
         })
-    }
+    }, [])
+
+    useEffect(() => {
+        if (!isFetching && response && response.data && !response.hasError) {
+            setData(response.data)
+        }
+    }, [response])
 
     const handleClickDelete = (index: number) => {
         window.alert('delete user id: ' + index)

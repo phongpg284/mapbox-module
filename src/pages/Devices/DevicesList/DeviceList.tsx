@@ -17,7 +17,7 @@ const DeviceList = () => {
     }, [])
 
     useEffect(() => {
-        if (!isFetching && response && response.data) setDevices(response.data)
+        if (!isFetching && response && response.data && !response.hasError) setDevices(response.data)
     }, [response])
     // useEffect(() => {
     //     fetch('https://dinhvichinhxac.online/api/device/', {

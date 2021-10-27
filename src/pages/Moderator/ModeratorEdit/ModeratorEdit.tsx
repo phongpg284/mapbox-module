@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState, useRef } from 'react'
 import { Button, Input, Table, Form } from 'antd'
 import { FormInstance } from 'antd/lib/form'
 import faker from 'faker'
+import useFetch from '../../../hooks/useFetch'
 
 const column = [
     {
@@ -15,7 +16,7 @@ const column = [
     {
         key: 'value',
         dataIndex: 'value',
-        editable: true
+        editable: true,
     },
 ]
 
@@ -184,11 +185,33 @@ interface EditableTableState {
     count: number
 }
 
-const ModeratorEdit = () => {
+const ModeratorEdit = ({ id }: any) => {
+    // const [dataSource, setDataSource] = useState<any>([])
+    // useEffect(() => {
+    //     setDataSource(fakeDataSource)
+    // }, [])
     const [dataSource, setDataSource] = useState<any>([])
+    const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
-        setDataSource(fakeDataSource)
+        setRequest({
+            endPoint: 'https://dinhvichinhxac.online/api/user/',
+            method: 'POST',
+            requestBody: {
+                action: 'read',
+                pk: id,
+            },
+            headers: {
+                'Content-type': 'application/json',
+            },
+        })
     }, [])
+
+    useEffect(() => {
+        if (!isFetching && response && response.data && !response.hasError) {
+            setDataSource(response.data)
+            console.log(response.data)
+        }
+    }, [response])
 
     const components = {
         body: {
@@ -197,22 +220,21 @@ const ModeratorEdit = () => {
         },
     }
 
-    const columns = column.map(col => {
+    const columns = column.map((col) => {
         if (!col.editable) {
-          return col;
+            return col
         }
         return {
-          ...col,
-          onCell: (record: DataType) => ({
-            record,
-            editable: col.editable,
-            dataIndex: col.dataIndex,
-            title: col.dataIndex,
-            handleSave: handleSave,
-          }),
-        };
-      });
-  
+            ...col,
+            onCell: (record: DataType) => ({
+                record,
+                editable: col.editable,
+                dataIndex: col.dataIndex,
+                title: col.dataIndex,
+                handleSave: handleSave,
+            }),
+        }
+    })
 
     const handleSave = (row: DataType) => {
         const newData = [...dataSource]
@@ -226,8 +248,8 @@ const ModeratorEdit = () => {
     }
 
     const handleSubmitEdit = () => {
-      console.log(dataSource)
-      // TODO: call update api 
+        console.log(dataSource)
+        // TODO: call update api
     }
 
     return (
@@ -244,7 +266,11 @@ const ModeratorEdit = () => {
                     <h4 style={{ textAlign: 'left' }}>Chỉnh sửa: name</h4>
                 )}
                 footer={() => (
-                    <Button danger style={{ float: 'left' }} onClick={handleSubmitEdit}>
+                    <Button
+                        danger
+                        style={{ float: 'left' }}
+                        onClick={handleSubmitEdit}
+                    >
                         Cập nhật thông tin
                     </Button>
                 )}
