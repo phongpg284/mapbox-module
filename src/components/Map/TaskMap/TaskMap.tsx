@@ -7,6 +7,7 @@ import Mapbox from '../Mapbox'
 import RecordInfo from '../RecordMap/RecordInfo'
 import { useLocation } from 'react-router'
 import CustomizeDot from '../RecordMap/CustomizeDot'
+import useFetch from '../../../hooks/useFetch'
 
 export const ViewIndexContext = createContext<any>(null)
 
@@ -16,110 +17,152 @@ const TaskMap = ({ match }: any) => {
     const id = arr[arr.length - 2]
 
     const [taskData, setTaskData] = useState<any>([])
-    const [taskIdOption, setTaskIdOption] = useState<any[]>([]);
+    const [taskIdOption, setTaskIdOption] = useState<any[]>([])
     const [drawData, setDrawData] = useState<any>([])
     const [viewIndex, setViewIndex] = useState(0)
 
-    const [selectedTask, setSelectedTask] = useState(0);
+    const [selectedTask, setSelectedTask] = useState(-1)
 
+    const [tasksResponse, isFetchingAllTask, setRequestAllTask] = useFetch(
+        {} as any
+    )
+    const [singleTaskResponse, isFetchingSingleTask, setRequestSingleTask] =
+        useFetch({} as any)
 
     useEffect(() => {
-        const getTasks = async () => {
-            let data
-            try {
-                const res = await fetch(
-                    'https://dinhvichinhxac.online/api/task/',
-                    {
-                        method: 'GET',
-                    }
-                )
-                data = await res.json()
-            } catch (error) {
-                console.log(error)
-            }
-            return data.response
-        }
-
-        const getTaskData = async () => {
-            const tasks = await getTasks()
-            let tasksId: any[] = []
-            tasks.forEach((task: any) => {
-                if (task.device_id.toString() === id) {
-                    tasksId.push(task.id)
-                }
-            })
-
-            let asyncJob: any[] = []
-            try {
-                tasksId.forEach((id: number) => {
-                    const query = {
-                        action: 'read',
-                        pk: id,
-                    }
-                    const job = fetch(
-                        'https://dinhvichinhxac.online/api/task/',
-                        {
-                            method: 'POST',
-                            body: JSON.stringify(query),
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                        }
-                    ).then((res) => res.json())
-                    asyncJob.push(job)
-                })
-            } catch (error) {
-                console.log(error)
-            }
-            const result = await Promise.all(asyncJob)
-            setTaskIdOption(tasksId);
-
-            if (result) {
-                let graphDataArr: any[] = []
-                let convertDataArr: any[] = []
-                result.forEach((data: any) => {
-                    let graphData = [
-                        {
-                            distance: 0,
-                            accuracy: 0,
-                            speed: 0,
-                        },
-                    ]
-                    let from
-                    let to = [0, 0]
-                    const points = data.positions
-                    let convertData: any[] = []
-                    points.forEach((point: any, index: number) => {
-                        const currentCoord = [point.longitude, point.latitude]
-                        convertData.push(currentCoord)
-                        from = to
-                        to = currentCoord
-                        if (index > 0) {
-                            graphData.push({
-                                distance:
-                                    graphData[graphData.length - 1].distance +
-                                    turf.distance(
-                                        turf.point(from),
-                                        turf.point(to)
-                                    ) *
-                                        1000,
-                                speed: point.speed,
-                                accuracy: point.accuracy,
-                            })
-                        }
-                    })
-
-                    graphDataArr.push(graphData)
-                    convertDataArr.push(convertData)
-                })
-                console.log(convertDataArr[0][0])
-                setTaskData(graphDataArr)
-                setDrawData(convertDataArr)                
-                setViewIndex(convertDataArr[0].length)
-            }
-        }
-        getTaskData()
+        setRequestAllTask({
+            endPoint: 'https://dinhvichinhxac.online/api/task/',
+            method: 'GET',
+        })
     }, [])
+
+    useEffect(() => {
+        if (
+            !isFetchingAllTask &&
+            tasksResponse &&
+            tasksResponse.data &&
+            !tasksResponse.hasError
+        )
+            setTaskIdOption(
+                tasksResponse.data
+                    .map((task: any) => ({
+                        id: task.id,
+                        deviceId: task.device_id,
+                    }))
+                    .filter((taskId: any) => taskId.deviceId.toString() === id)
+                    .map((task: any) => task.id)
+            )
+    }, [tasksResponse])
+
+    useEffect(() => {
+        const query = {
+            action: 'read',
+            pk: selectedTask,
+        }
+        if (selectedTask >= 0)
+            setRequestSingleTask({
+                endPoint: 'https://dinhvichinhxac.online/api/task/',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                requestBody: query,
+            })
+    }, [selectedTask])
+
+    useEffect(() => {
+        if (
+            !isFetchingSingleTask &&
+            singleTaskResponse &&
+            singleTaskResponse.data &&
+            !singleTaskResponse.hasError
+        ) {
+            let graphData = [
+                {
+                    distance: 0,
+                    accuracy: 0,
+                    speed: 0,
+                },
+            ]
+            let from
+            let to = [0, 0]
+            const points = singleTaskResponse.data?.positions || [];
+            let convertData: any[] = []
+            points.forEach((point: any, index: number) => {
+                const currentCoord = [point.longitude, point.latitude]
+                convertData.push(currentCoord)
+                from = to
+                to = currentCoord
+                if (index > 0) {
+                    graphData.push({
+                        distance:
+                            graphData[graphData.length - 1].distance +
+                            turf.distance(turf.point(from), turf.point(to)) *
+                                1000,
+                        speed: point.speed,
+                        accuracy: point.accuracy,
+                    })
+                }
+            })            
+            setTaskData(graphData)
+            setDrawData(convertData)
+            setViewIndex(convertData.length)
+        }
+    }, [singleTaskResponse])
+
+    // useEffect(() => {
+    //     const getTasks = async () => {
+    //         let data
+    //         try {
+    //             const res = await fetch(
+    //                 'https://dinhvichinhxac.online/api/task/',
+    //                 {
+    //                     method: 'GET',
+    //                 }
+    //             )
+    //             data = await res.json()
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //         return data.response
+    //     }
+
+    //     const tasks = await getTasks()
+    //     let tasksId: any[] = []
+    //     tasks.forEach((task: any) => {
+    //         if (task.device_id.toString() === id) {
+    //             tasksId.push(task.id)
+    //         }
+    //     })
+
+    //     const getTaskData = async () => {
+    //         // let asyncJob: any[] = []
+    //         // try {
+    //         //     tasksId.forEach((id: number) => {
+    //         //         const query = {
+    //         //             action: 'read',
+    //         //             pk: id,
+    //         //         }
+    //         //         const job = fetch(
+    //         //             'https://dinhvichinhxac.online/api/task/',
+    //         //             {
+    //         //                 method: 'POST',
+    //         //                 body: JSON.stringify(query),
+    //         //                 headers: {
+    //         //                     'Content-Type': 'application/json',
+    //         //                 },
+    //         //             }
+    //         //         ).then((res) => res.json())
+    //         //         asyncJob.push(job)
+    //         //     })
+    //         // } catch (error) {
+    //         //     console.log(error)
+    //         // }
+    //         // const result = await Promise.all(asyncJob)
+    //         setTaskIdOption(tasksId)
+    //     }
+    //     getTaskData()
+    // }, [])
 
     const handleClick = (e: any) => {
         if (e.isTooltipActive) setViewIndex(e.activeLabel)
@@ -135,9 +178,9 @@ const TaskMap = ({ match }: any) => {
                         <Mapbox
                             height="calc(70vh - 70px)"
                             width="100%"
-                            viewDrawData={drawData[selectedTask]}
+                            viewDrawData={drawData}
                             multiple
-                            center={drawData[selectedTask]?.[0] || undefined}
+                            center={drawData?.[0]}
                         ></Mapbox>
                     </ViewIndexContext.Provider>
                 </div>
@@ -151,7 +194,7 @@ const TaskMap = ({ match }: any) => {
                                 left: 20,
                                 right: 20,
                             }}
-                            data={taskData[selectedTask]}
+                            data={taskData}
                         >
                             <Line
                                 yAxisId="1"
@@ -197,7 +240,11 @@ const TaskMap = ({ match }: any) => {
                 </div>
             </div>
             <div className="task-graph">
-                <RecordInfo data={taskData?.[selectedTask] || []} options={taskIdOption} changeSelectTask={setSelectedTask}/>
+                <RecordInfo
+                    data={taskData}
+                    options={taskIdOption}
+                    changeSelectTask={setSelectedTask}
+                />
             </div>
         </div>
     )

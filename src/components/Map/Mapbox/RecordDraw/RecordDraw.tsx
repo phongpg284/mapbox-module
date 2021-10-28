@@ -7,7 +7,7 @@ import * as turf from '@turf/turf'
 import PaintScaleView from '../../../../utils/PaintScaleView'
 import { ViewIndexContext } from '../../TaskMap/TaskMap'
 
-const RecordDraw = ({ data, zoom, multiple }: any) => {    
+const RecordDraw = ({ data, zoom, multiple }: any) => {   
     const [displayDrawData, setDisplayDrawData] = useState<any>({
         type: 'geojson',
         data: {

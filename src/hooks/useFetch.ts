@@ -29,10 +29,10 @@ const useFetch = (req: (IReqInfo)): [IResInfo, boolean, React.Dispatch<React.Set
             fetch(fetchUrl, fetchData)
                 .then((res) => res.json())
                 .then((data) => {
-                    if(data.success)
+                    if(data.response)
                     resolve(data.response)
                     else  
-                    reject(data.response)
+                    resolve(data)
                 })
                 .catch((err) => reject(err))
 
@@ -57,10 +57,10 @@ const useFetch = (req: (IReqInfo)): [IResInfo, boolean, React.Dispatch<React.Set
     }, [reqInfo])
 
 
-    useEffect(() => {
-        console.log(isFetching, resInfo);
+    // useEffect(() => {
+    //     console.log(isFetching, resInfo);
 
-    })
+    // })
     return [resInfo, isFetching, setReqInfo]
 }
 

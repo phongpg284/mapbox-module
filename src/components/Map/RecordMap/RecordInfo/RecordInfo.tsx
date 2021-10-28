@@ -28,7 +28,7 @@ const RecordInfo = ({ data, options, changeSelectTask }: any) => {
         setIsShowRecordInfo(!isShowRecordInfo)
     }
 
-    const [selectedTask, setSelectedTask] = useState(0)
+    const [selectedTask, setSelectedTask] = useState()
 
     function handleChange(value: any) {
         changeSelectTask(value)
@@ -65,8 +65,8 @@ const RecordInfo = ({ data, options, changeSelectTask }: any) => {
             >
                 <Select value={selectedTask} style={{ width: 120 }} onChange={handleChange}>
                     {options &&
-                        options.map((id: any, index:any) => (
-                            <Option value={index} key={id}>
+                        options.map((id: any) => (
+                            <Option value={id} key={id}>
                                 {id}
                             </Option>
                         ))}
