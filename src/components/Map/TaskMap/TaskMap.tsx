@@ -244,6 +244,7 @@ const TaskMap = ({ match }: any) => {
                     data={taskData}
                     options={taskIdOption}
                     changeSelectTask={setSelectedTask}
+                    isFetching={isFetchingSingleTask}
                 />
             </div>
         </div>

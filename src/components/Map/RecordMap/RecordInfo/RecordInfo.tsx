@@ -1,8 +1,8 @@
-import { Divider } from 'antd'
+import { Divider, Spin } from 'antd'
 import './index.css'
 import LocalShippingIcon from '@material-ui/icons/LocalShipping'
 import BorderAllIcon from '@material-ui/icons/BorderAll'
-import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
+import { CaretLeftOutlined, CaretRightOutlined, LoadingOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { Select } from 'antd'
 
@@ -21,7 +21,7 @@ const RecordInfoItem = ({ icon, title, content }: any) => {
     )
 }
 
-const RecordInfo = ({ data, options, changeSelectTask }: any) => {
+const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
     
     const [isShowRecordInfo, setIsShowRecordInfo] = useState(true)
     const handleClickControl = () => {
@@ -49,7 +49,7 @@ const RecordInfo = ({ data, options, changeSelectTask }: any) => {
         speed: total.speed / data.length,
         accuray: total.accuracy / data.length,
     }
-
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
     return (
         <div className="record-info-container">
             <div className="record-info-control" onClick={handleClickControl}>
@@ -71,6 +71,9 @@ const RecordInfo = ({ data, options, changeSelectTask }: any) => {
                             </Option>
                         ))}
                 </Select>
+                {isFetching && selectedTask && (
+                    <Spin indicator={antIcon} />
+                )}
                 <RecordInfoItem />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
