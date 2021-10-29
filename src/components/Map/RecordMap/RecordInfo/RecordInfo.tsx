@@ -2,7 +2,11 @@ import { Divider, Spin } from 'antd'
 import './index.css'
 import LocalShippingIcon from '@material-ui/icons/LocalShipping'
 import BorderAllIcon from '@material-ui/icons/BorderAll'
-import { CaretLeftOutlined, CaretRightOutlined, LoadingOutlined } from '@ant-design/icons'
+import {
+    CaretLeftOutlined,
+    CaretRightOutlined,
+    LoadingOutlined,
+} from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { Select } from 'antd'
 
@@ -22,7 +26,6 @@ const RecordInfoItem = ({ icon, title, content }: any) => {
 }
 
 const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
-    
     const [isShowRecordInfo, setIsShowRecordInfo] = useState(true)
     const handleClickControl = () => {
         setIsShowRecordInfo(!isShowRecordInfo)
@@ -40,16 +43,19 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
         accuracy: 0,
     }
 
-    data.forEach((stat: any) => {
-        total.speed += stat.speed
-        total.accuracy += stat.accuracy
+    data?.speed?.forEach((stat: any) => {
+        total.speed += stat
+    })
+    data?.accuracy?.forEach((stat: any) => {
+        total.accuracy += stat
     })
 
+
     const average = {
-        speed: total.speed / data.length,
-        accuray: total.accuracy / data.length,
+        speed: total.speed / data?.speed?.length,
+        accuray: total.accuracy / data?.accuracy?.length,
     }
-    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
     return (
         <div className="record-info-container">
             <div className="record-info-control" onClick={handleClickControl}>
@@ -63,7 +69,11 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
                     isShowRecordInfo ? 'show' : 'hide'
                 }`}
             >
-                <Select value={selectedTask} style={{ width: 120 }} onChange={handleChange}>
+                <Select
+                    value={selectedTask}
+                    style={{ width: 120 }}
+                    onChange={handleChange}
+                >
                     {options &&
                         options.map((id: any) => (
                             <Option value={id} key={id}>
@@ -71,9 +81,7 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
                             </Option>
                         ))}
                 </Select>
-                {isFetching && selectedTask && (
-                    <Spin indicator={antIcon} />
-                )}
+                {isFetching && selectedTask && <Spin indicator={antIcon} />}
                 <RecordInfoItem />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
@@ -99,7 +107,7 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
                     title="Distance"
-                    content={`${data[data.length - 1]?.distance?.toFixed(4)} m`}
+                    content={`${data.distance?.[data.distance?.length - 1]?.toFixed(4)} m`}
                 />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}

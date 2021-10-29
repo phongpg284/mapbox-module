@@ -1,15 +1,27 @@
 import './index.css'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useEffect, useState } from 'react'
 import { Legend, Line, LineChart, ResponsiveContainer, Tooltip } from 'recharts'
 import * as turf from '@turf/turf'
 
 import Mapbox from '../Mapbox'
 import RecordInfo from '../RecordMap/RecordInfo'
 import { useLocation } from 'react-router'
-import CustomizeDot from '../RecordMap/CustomizeDot'
 import useFetch from '../../../hooks/useFetch'
+import Chart from '../RecordMap/Chart'
 
 export const ViewIndexContext = createContext<any>(null)
+
+const fakeData = []
+const fakeData1 = []
+const fakeData2 = []
+const fakeAxis = []
+
+for (let i = 0; i < 700; i++) {
+    fakeData.push(i)
+    fakeData1.push(1000 * Math.random())
+    fakeData2.push(2)
+    fakeAxis.push('')
+}
 
 const TaskMap = ({ match }: any) => {
     const location = useLocation()
@@ -20,6 +32,8 @@ const TaskMap = ({ match }: any) => {
     const [taskIdOption, setTaskIdOption] = useState<any[]>([])
     const [drawData, setDrawData] = useState<any>([])
     const [viewIndex, setViewIndex] = useState(0)
+
+    
 
     const [selectedTask, setSelectedTask] = useState(-1)
 
@@ -77,16 +91,15 @@ const TaskMap = ({ match }: any) => {
             singleTaskResponse.data &&
             !singleTaskResponse.hasError
         ) {
-            let graphData = [
-                {
-                    distance: 0,
-                    accuracy: 0,
-                    speed: 0,
-                },
-            ]
+            let graphData = {
+                distance: [0],
+                accuracy: [0],
+                speed: [0],
+                xAxis: [0],
+            }
             let from
             let to = [0, 0]
-            const points = singleTaskResponse.data?.positions || [];
+            const points = singleTaskResponse.data?.positions || []
             let convertData: any[] = []
             points.forEach((point: any, index: number) => {
                 const currentCoord = [point.longitude, point.latitude]
@@ -94,81 +107,21 @@ const TaskMap = ({ match }: any) => {
                 from = to
                 to = currentCoord
                 if (index > 0) {
-                    graphData.push({
-                        distance:
-                            graphData[graphData.length - 1].distance +
+                    graphData.speed.push(point.speed)
+                    graphData.accuracy.push(point.accuracy)
+                    graphData.distance.push(
+                        graphData.distance[graphData.distance.length - 1] +
                             turf.distance(turf.point(from), turf.point(to)) *
-                                1000,
-                        speed: point.speed,
-                        accuracy: point.accuracy,
-                    })
+                                1000
+                    )
+                    graphData.xAxis.push(index)
                 }
-            })            
+            })
             setTaskData(graphData)
             setDrawData(convertData)
             setViewIndex(convertData.length)
         }
     }, [singleTaskResponse])
-
-    // useEffect(() => {
-    //     const getTasks = async () => {
-    //         let data
-    //         try {
-    //             const res = await fetch(
-    //                 'https://dinhvichinhxac.online/api/task/',
-    //                 {
-    //                     method: 'GET',
-    //                 }
-    //             )
-    //             data = await res.json()
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //         return data.response
-    //     }
-
-    //     const tasks = await getTasks()
-    //     let tasksId: any[] = []
-    //     tasks.forEach((task: any) => {
-    //         if (task.device_id.toString() === id) {
-    //             tasksId.push(task.id)
-    //         }
-    //     })
-
-    //     const getTaskData = async () => {
-    //         // let asyncJob: any[] = []
-    //         // try {
-    //         //     tasksId.forEach((id: number) => {
-    //         //         const query = {
-    //         //             action: 'read',
-    //         //             pk: id,
-    //         //         }
-    //         //         const job = fetch(
-    //         //             'https://dinhvichinhxac.online/api/task/',
-    //         //             {
-    //         //                 method: 'POST',
-    //         //                 body: JSON.stringify(query),
-    //         //                 headers: {
-    //         //                     'Content-Type': 'application/json',
-    //         //                 },
-    //         //             }
-    //         //         ).then((res) => res.json())
-    //         //         asyncJob.push(job)
-    //         //     })
-    //         // } catch (error) {
-    //         //     console.log(error)
-    //         // }
-    //         // const result = await Promise.all(asyncJob)
-    //         setTaskIdOption(tasksId)
-    //     }
-    //     getTaskData()
-    // }, [])
-
-    const handleClick = (e: any) => {
-        if (e.isTooltipActive) setViewIndex(e.activeLabel)
-        // console.log(e)
-        // console.log('click')
-    }
 
     return (
         <div className="task-view">
@@ -176,7 +129,7 @@ const TaskMap = ({ match }: any) => {
                 <div className="task-map">
                     <ViewIndexContext.Provider value={viewIndex}>
                         <Mapbox
-                            height="calc(70vh - 70px)"
+                            height="calc(70vh - 85px)"
                             width="100%"
                             viewDrawData={drawData}
                             multiple
@@ -185,7 +138,7 @@ const TaskMap = ({ match }: any) => {
                     </ViewIndexContext.Provider>
                 </div>
                 <div className="task-control-chart">
-                    <ResponsiveContainer width="100%" height="100%">
+                    {/* <ResponsiveContainer width="100%" height="100%">
                         <LineChart
                             onMouseMove={handleClick}
                             margin={{
@@ -223,11 +176,10 @@ const TaskMap = ({ match }: any) => {
                                 dot={<CustomizeDot color="#00ff08" />}
                                 activeDot={{ r: 5 }}
                             />
-
-                            {/* <CartesianGrid stroke="#ccc" /> */}
-                            {/* <XAxis dataKey="name" /> */}
-                            {/* <YAxis /> */}
-                            {/* <Tooltip /> */}
+                            <CartesianGrid stroke="#ccc" /> 
+                            <XAxis dataKey="name" /> 
+                            <YAxis /> 
+                            <Tooltip /> 
                             <Legend
                                 verticalAlign="top"
                                 align="left"
@@ -236,7 +188,8 @@ const TaskMap = ({ match }: any) => {
                             />
                             <Tooltip />
                         </LineChart>
-                    </ResponsiveContainer>
+                    </ResponsiveContainer> */}
+                    <Chart taskData ={taskData} setViewIndex={setViewIndex} />
                 </div>
             </div>
             <div className="task-graph">
