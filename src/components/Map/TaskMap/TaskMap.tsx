@@ -102,13 +102,19 @@ const TaskMap = ({ match }: any) => {
             const points = singleTaskResponse.data?.positions || []
             let convertData: any[] = []
             points.forEach((point: any, index: number) => {
-                const currentCoord = [point.longitude, point.latitude]
+                const latitude = point[0];
+                const longitude = point[1];
+                const speed = point[2];
+                const accuracy = point[3];
+                const timestamp = point[4];
+
+                const currentCoord = [longitude, latitude]
                 convertData.push(currentCoord)
                 from = to
                 to = currentCoord
                 if (index > 0) {
-                    graphData.speed.push(point.speed)
-                    graphData.accuracy.push(point.accuracy)
+                    graphData.speed.push(speed)
+                    graphData.accuracy.push(accuracy)
                     graphData.distance.push(
                         graphData.distance[graphData.distance.length - 1] +
                             turf.distance(turf.point(from), turf.point(to)) *
@@ -134,6 +140,7 @@ const TaskMap = ({ match }: any) => {
                             viewDrawData={drawData}
                             multiple
                             center={drawData?.[0]}
+                            viewIndexContextKey={"task"}
                         ></Mapbox>
                     </ViewIndexContext.Provider>
                 </div>

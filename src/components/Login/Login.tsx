@@ -25,10 +25,12 @@ const Login = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                const token = data?.token
+                const { token, id, role } = data
                 dispatch(
                     updateToken({
                         accessToken: token,
+                        id: id,
+                        role: role
                     })
                 )
                 history.push('/')

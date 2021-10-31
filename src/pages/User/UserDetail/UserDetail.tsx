@@ -75,7 +75,7 @@ const data = [
 const UserDetail = ({ id }: any) => {
     const history = useHistory()
 
-    const [dataSource, setDataSource] = useState([])
+    const [dataSource, setDataSource] = useState<any[]>([])
     const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
         setRequest({
@@ -93,7 +93,14 @@ const UserDetail = ({ id }: any) => {
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
-            setDataSource(response.data)
+            const convertDataSource = [];
+            for (const [key, value] of Object.entries(response.data[0])) {
+                convertDataSource.push({
+                    ckey: key,
+                    value: value
+                })    
+            }
+            setDataSource(convertDataSource)
         }
     }, [response])
     return (

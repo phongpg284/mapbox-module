@@ -4,32 +4,20 @@ const columns = [
         dataIndex: 'id',
     },
     {
-        title: 'Sim Imei',
-        dataIndex: 'sim_imei',
+        title: 'Date',
+        dataIndex: 'date',
     },
     {
-        title: 'Caster Ip',
-        dataIndex: 'caster_ip',
+        title: 'Average Speed',
+        dataIndex: 'avg_speed',
     },
     {
-        title: 'NTRIP Username',
-        dataIndex: 'ntrip_username',
+        title: 'Avergae Accuracy',
+        dataIndex: 'avg_accuracy',
     },
     {
-        title: 'NTRIP Passwword',
-        dataIndex: 'ntrip_password',
-    },
-    {
-        title: 'Mount Point',
-        dataIndex: 'mount_point',
-    },
-    {
-        title: 'Create Time',
-        dataIndex: 'create_time',
-    },
-    {
-        title: 'Update Time',
-        dataIndex: 'update_time',
+        title: 'Total time',
+        dataIndex: 'total_time',
     },
 ]
 

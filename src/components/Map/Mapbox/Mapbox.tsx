@@ -62,6 +62,7 @@ interface IMapboxProps {
 
     worksApiEndpoint: string
     viewDrawData: any
+    viewIndexContextKey: string
     multiple: boolean
 }
 /**
@@ -280,6 +281,7 @@ const Mapbox: any = memo(
                                 (mapboxInstance?.current as any)?.getZoom() ||
                                 20
                             }
+                            viewIndexContextKey={props.viewIndexContextKey}
                         />
                     )}
                     {/* {props.viewDrawData &&

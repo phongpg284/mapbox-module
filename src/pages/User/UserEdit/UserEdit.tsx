@@ -127,14 +127,17 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
     const toggleEdit = () => {
         setEditing(!editing)
+        console.log(dataIndex, record)
         form.setFieldsValue({ [dataIndex]: record[dataIndex] })
     }
 
     const save = async () => {
         try {
             const values = await form.validateFields()
-
+            console.log("save", values)
+            
             toggleEdit()
+            console.log({ ...record, ...values });
             handleSave({ ...record, ...values })
         } catch (errInfo) {
             console.log('Save failed:', errInfo)
@@ -208,8 +211,18 @@ const UserEdit = ({ id }: any) => {
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
-            setDataSource(response.data)
-            console.log(response.data);
+            // setDataSource(response.data)
+            const convertDataSource = [];
+            let i = 0;
+            for (const [key, value] of Object.entries(response.data[0])) {
+                convertDataSource.push({
+                    key: i,
+                    ckey: key,
+                    value: value
+                })    
+                i++;
+            }
+            setDataSource(convertDataSource)
             
         }
     }, [response])
@@ -240,6 +253,7 @@ const UserEdit = ({ id }: any) => {
     })
 
     const handleSave = (row: DataType) => {
+        console.log(row, "hoho")
         const newData = [...dataSource]
         const index = newData.findIndex((item: any) => row.key === item.key)
         const item = newData[index];
@@ -251,9 +265,30 @@ const UserEdit = ({ id }: any) => {
         setDataSource(newData)
     }
 
+
+    const [updateResponse, isFetchingUpdate, setRequestUpdate] = useFetch({} as any); 
     const handleSubmitEdit = () => {
         console.log(dataSource)
-        // TODO: call update api
+        const body = dataSource.reduce((prev: any, curr: any) => {
+            if(curr.value)
+          prev[curr.ckey] = curr.value;
+          return prev
+        },{})
+        body.pk = body.id;
+        delete body.id;
+        delete body.username;
+        delete body.role;
+        setRequestUpdate({
+            endPoint: "https://dinhvichinhxac.online/api/user/",
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            requestBody: {
+                ...body,
+                action: "update",
+            }
+        })
     }
 
     return (

@@ -2,12 +2,11 @@ import { useContext, useEffect, useState } from 'react'
 import { Layer, Marker, Source } from 'react-mapbox-gl'
 import * as turf from '@turf/turf'
 
-// import { ViewIndexContext } from '../../RecordMap/RecordMap'
-
 import PaintScaleView from '../../../../utils/PaintScaleView'
-import { ViewIndexContext } from '../../TaskMap/TaskMap'
+import { ViewIndexContext as TaskViewIndex } from '../../TaskMap/TaskMap'
+import { ViewIndexContext as RecordViewIndex } from '../../RecordMap/RecordMap'
 
-const RecordDraw = ({ data, zoom, multiple }: any) => {   
+const RecordDraw = ({ data, zoom, multiple, viewIndexContextKey }: any) => {
     const [displayDrawData, setDisplayDrawData] = useState<any>({
         type: 'geojson',
         data: {
@@ -19,7 +18,9 @@ const RecordDraw = ({ data, zoom, multiple }: any) => {
         },
     })
     const [deviceCoordinate, setDeviceCoordinate] = useState([100, 20])
-    const viewIndex = useContext(ViewIndexContext)
+    const viewIndex = useContext(
+        viewIndexContextKey === 'record' ? RecordViewIndex : TaskViewIndex
+    )
 
     useEffect(() => {
         if (data && data.length > 1)
@@ -27,8 +28,7 @@ const RecordDraw = ({ data, zoom, multiple }: any) => {
                 type: 'geojson',
                 data: turf.lineString(data),
             })
-        if(data && data.length >= 1)
-        setDeviceCoordinate(data[data.length - 1])
+        if (data && data.length >= 1) setDeviceCoordinate(data[data.length - 1])
     }, [])
 
     useEffect(() => {

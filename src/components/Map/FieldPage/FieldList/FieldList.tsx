@@ -23,7 +23,7 @@ const FieldList = ({ data }: Partial<IFieldListProps>) => {
   const [deleteItem, setDeleteItem] = useState<any>();
   const [tableData, setTableData] = useState<any>();
 
-  useEffect(() => {    
+  useEffect(() => {  
     setTableData(
       data?.map((field) => {
         return {
