@@ -1,7 +1,6 @@
 const customTooltip = (params: any[]) => {
     let renderString = ""
     params.forEach((line) => {
-      console.log(line)
         const newRenderString = `<div style="text-align: start"> <span style="font-weight: bold"> ${line?.seriesName} </span>: ${line?.value} ${getUnit(line?.seriesName) || ""} </div> `
       renderString = renderString.concat(newRenderString)
     })

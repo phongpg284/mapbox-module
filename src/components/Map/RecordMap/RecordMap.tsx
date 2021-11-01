@@ -53,9 +53,9 @@ const RecordMap = ({ match }: any) => {
             points.forEach((point: any, index: number) => {
                 const latitude = point[0];
                 const longitude = point[1];
-                const speed = point[2];
                 const accuracy = point[3];
-                const timestamp = point[4];
+                const speed = point[4];
+                const timestamp = point[5];
 
                 const currentCoord = [longitude, latitude]
                 convertData.push(currentCoord)

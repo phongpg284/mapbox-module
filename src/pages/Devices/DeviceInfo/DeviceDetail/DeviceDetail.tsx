@@ -49,11 +49,14 @@ const DeviceDetail = ({ id }: any) => {
                 'Content-type': 'application/json',
             },
             requestBody: {
+                device_id: id,
                 start: start,
                 end: end,
             },
         })
     }
+
+    
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
