@@ -10,6 +10,7 @@ import columns from './columns'
 import useFetch from '../../../hooks/useFetch'
 import ProjectAddModal from '../ProjectAddModal'
 import ProjectSummaryModal from '../ProjectSummaryModal'
+import ProjectEditModal from '../ProjectEditModal'
 
 const ProjectList = () => {
     const [isAddModalVisible, setIsAddModalVisible] = useState(false)
@@ -122,6 +123,13 @@ const ProjectList = () => {
                 visible={isSummaryModalVisible}
                 onClose={handleHideSummary} 
                 id={viewId}          
+            />
+            <ProjectEditModal 
+                centered
+                width={800}
+                visible={isEditModalVisible}
+                onClose={handleHideEditProject} 
+                id={viewId}                      
             />
         </div>
     )

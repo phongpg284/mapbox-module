@@ -1,0 +1,17 @@
+.project_edit_container {
+    background-color: white;
+    margin: auto;
+}
+
+.project_edit_content {
+    border: groove 1px;
+    padding: 5px;
+}
+
+.project_table_content {
+    :global {
+        .ant-table-tbody > tr > td {
+            border: none;
+        }
+    }
+}

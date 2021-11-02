@@ -124,6 +124,10 @@ const IKeyCode = {
         brand: 'Tên dự án',
         type: 'string',
     },
+	description: {
+        brand: 'Mô tả tổng quan',
+        type: 'string',
+    },
     manager: {
         brand: 'Quản lí',
         type: 'string',
@@ -160,7 +164,6 @@ const ProjectSummaryModal: React.FC<ISummaryProjectModal> = ({
     visible,
     ...props
 }) => {
-    console.log(id, 'hehe')
     const [data, setData] = useState<any>()
     const [dataSource, setDataSource] = useState<any>()
     const [response, iseFetching, setRequest] = useFetch({} as any)
