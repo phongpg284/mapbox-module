@@ -5,6 +5,7 @@ import ProjectUser from './ProjectUser'
 import ProjectDevice from './ProjectDevice'
 import ProjectModerator from './ProjectModerator'
 import ProjectSummaryModal from '../ProjectSummaryModal'
+import ProjectSummary from './ProjectSummary'
 
 const ProjectDetail = ({ id }: any) => {
     const [currentTab, setCurrentTab] = useState('summary')
@@ -36,7 +37,7 @@ const ProjectDetail = ({ id }: any) => {
                 </Menu>
 
                 <div className="project-detail-content">
-                    {/* {currentTab === 'summary' && <ProjectSummaryModal />} */}
+                    {currentTab === 'summary' && <ProjectSummary id={id}/>}
                     {currentTab === 'user' && <ProjectUser id={id} />}
                     {currentTab === 'device' && <ProjectDevice id={id} />}
                     {/* {currentTab === 'moderator' && <ProjectModerator id={id} />} */}
