@@ -3,8 +3,8 @@ import { Space, Tag } from "antd";
 const columns = [
   {
     title: "Mã",
-    dataIndex: "index",
-    key: "index",
+    dataIndex: "id",
+    key: "id",
   },
   {
     title: "Tên đăng nhập",

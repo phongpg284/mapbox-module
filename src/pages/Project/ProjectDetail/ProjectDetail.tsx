@@ -37,9 +37,9 @@ const ProjectDetail = ({ id }: any) => {
 
                 <div className="project-detail-content">
                     {/* {currentTab === 'summary' && <ProjectSummaryModal />} */}
-                    {currentTab === 'user' && <ProjectUser />}
-                    {currentTab === 'device' && <ProjectDevice />}
-                    {currentTab === 'moderator' && <ProjectModerator />}
+                    {currentTab === 'user' && <ProjectUser id={id} />}
+                    {/* {currentTab === 'device' && <ProjectDevice id={id} />}
+                    {currentTab === 'moderator' && <ProjectModerator id={id} />} */}
                 </div>
             </div>
         </div>

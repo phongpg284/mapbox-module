@@ -51,7 +51,7 @@ const ProjectList = () => {
             dataIndex: 'name',
             key: 'name',
             render: (text: any, record: any) => (
-                <Link to={`/projects/${record.key}`}>{text}</Link>
+                <Link to={`/projects/${record.id}`}>{text}</Link>
             ),
         },
         ...columns.slice(1),
