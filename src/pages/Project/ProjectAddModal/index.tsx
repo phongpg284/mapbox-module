@@ -1,6 +1,13 @@
 import { Form, Input, message, Button, Space, Modal } from 'antd'
 
-const ProjectAddModal = ({ ...props }) => {
+interface IModal {
+    centered?: boolean;
+    width?: number;
+    visible: boolean;
+    onClose: () => void;
+}
+
+const ProjectAddModal: React.FC<IModal> = ({ onClose, ...props }) => {
     const [form] = Form.useForm()
 
     const addNewProject = async (value: any) => {
@@ -25,6 +32,7 @@ const ProjectAddModal = ({ ...props }) => {
         addNewProject(value).then((data) => {
             message.success(data.response)
         })
+        onClose();
     }
 
     const onFinishFailed = () => {
@@ -38,6 +46,7 @@ const ProjectAddModal = ({ ...props }) => {
     return (
         <Modal
             {...props}
+            onCancel={onClose}
             title="Thêm dự án"
             footer={<Button onClick={handleAddNewProject}>Đăng ký</Button>}
         >
@@ -82,23 +91,6 @@ const ProjectAddModal = ({ ...props }) => {
                     </div>
                     <div style={{ overflow: 'hidden' }}>
                         <Form.Item name="manager" label="Quản lí">
-                            <Input placeholder="" />
-                        </Form.Item>
-                    </div>
-
-                    <div style={{ overflow: 'hidden' }}>
-                        <Form.Item name="ntrip_username" label="Ntrip Username">
-                            <Input placeholder="" />
-                        </Form.Item>
-                    </div>
-
-                    <div style={{ overflow: 'hidden' }}>
-                        <Form.Item name="ntrip_pass" label="Ntrip Pass">
-                            <Input placeholder="" />
-                        </Form.Item>
-                    </div>
-                    <div style={{ overflow: 'hidden' }}>
-                        <Form.Item name="mount_point" label="Mount Point">
                             <Input placeholder="" />
                         </Form.Item>
                     </div>

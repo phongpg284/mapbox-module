@@ -7,30 +7,40 @@ import { Button, Input, Modal, Space, Table } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
 import columns from './columns'
-import ProjectSummary from '../ProjectSummary'
-import faker from 'faker'
 import useFetch from '../../../hooks/useFetch'
 import ProjectAddModal from '../ProjectAddModal'
+import ProjectSummaryModal from '../ProjectSummaryModal'
 
 const ProjectList = () => {
-    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [isAddModalVisible, setIsAddModalVisible] = useState(false)
+    const [isSummaryModalVisible, setIsSummaryModalVisible] = useState(false)
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false)
+    const [viewId, setViewId] = useState(0);
 
-    const handleAddProject = () => {
-        showModal()
+    const handleShowAddProject = () => {
+        setIsAddModalVisible(true)
     }
-    const showModal = () => {
-        setIsModalVisible(true)
+    
+    const handleShowEditProject = (id: number) => {
+        setViewId(id)
+        setIsEditModalVisible(true)
+    }
+    
+    const handleShowSummary = (id: number) => {
+        setViewId(id)
+        setIsSummaryModalVisible(true)
     }
 
-    const handleOk = () => {
-        setIsModalVisible(false)
+    const handleHideSummary = () => {
+        setIsSummaryModalVisible(false)
     }
 
-    const handleCancel = () => {
-        setIsModalVisible(false)
+    const handleHideAddProject = () => {
+        setIsAddModalVisible(false)
     }
-    const handleClick = () => {
-        showModal()
+
+    const handleHideEditProject = () => {
+        setIsEditModalVisible(false)
     }
 
     const tableColumns = [
@@ -49,8 +59,8 @@ const ProjectList = () => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button onClick={handleClick}>Info</button>
-                    <button>Delete</button>
+                    <button onClick={() => handleShowSummary(record.id)}>Tổng quan</button>
+                    <button onClick={() => handleShowEditProject(record.id)}>Cập nhật</button>
                 </Space>
             ),
         },
@@ -94,18 +104,24 @@ const ProjectList = () => {
                     />
                 </div>
                 <div className="projects-list-control-actions">
-                    <Button onClick={handleAddProject}>Thêm</Button>
+                    <Button onClick={handleShowAddProject}>Thêm</Button>
                 </div>
             </div>
             <div className="projects-list-table">
-                <Table columns={tableColumns} dataSource={data} bordered />;
+                <Table columns={tableColumns} dataSource={data} bordered />
             </div>
             <ProjectAddModal
                 centered
                 width={1000}
-                visible={isModalVisible}
-                onOk={handleOk}
-                onCancel={handleCancel}
+                visible={isAddModalVisible}
+                onClose={handleHideAddProject}
+            />
+            <ProjectSummaryModal 
+                centered
+                width={800}
+                visible={isSummaryModalVisible}
+                onClose={handleHideSummary} 
+                id={viewId}          
             />
         </div>
     )

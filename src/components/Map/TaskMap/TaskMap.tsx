@@ -1,6 +1,5 @@
 import './index.css'
-import { createContext, useCallback, useEffect, useState } from 'react'
-import { Legend, Line, LineChart, ResponsiveContainer, Tooltip } from 'recharts'
+import { createContext, useEffect, useState } from 'react'
 import * as turf from '@turf/turf'
 
 import Mapbox from '../Mapbox'
