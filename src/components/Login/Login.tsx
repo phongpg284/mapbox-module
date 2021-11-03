@@ -30,7 +30,7 @@ const Login = () => {
                     updateToken({
                         accessToken: token,
                         id: id,
-                        role: role
+                        role: role,
                     })
                 )
                 history.push('/')
@@ -56,7 +56,6 @@ const Login = () => {
                     autoComplete="off"
                 >
                     <Form.Item
-                        label="Username"
                         name="username"
                         rules={[
                             {
@@ -65,11 +64,10 @@ const Login = () => {
                             },
                         ]}
                     >
-                        <Input />
+                        <Input placeholder="Username" />
                     </Form.Item>
 
                     <Form.Item
-                        label="Password"
                         name="password"
                         rules={[
                             {
@@ -78,7 +76,7 @@ const Login = () => {
                             },
                         ]}
                     >
-                        <Input.Password />
+                        <Input.Password placeholder="Password" />
                     </Form.Item>
 
                     <Form.Item

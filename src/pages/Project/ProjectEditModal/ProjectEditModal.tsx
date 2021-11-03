@@ -156,10 +156,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
 }
 
 interface DataType {
-    key: React.Key
-    code: string
-    name: string
-    description: string
+    ckey: string
+    value: string
 }
 
 
@@ -177,7 +175,6 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
     visible,
     ...props
 }) => {
-    console.log(id, 'hehe')
     const [data, setData] = useState<any>()
     const [dataSource, setDataSource] = useState<any>()
     const [response, iseFetching, setRequest] = useFetch({} as any)
@@ -252,7 +249,7 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
     const handleSave = (row: DataType) => {
         console.log(row, "hoho")
         const newData = [...dataSource]
-        const index = newData.findIndex((item: any) => row.key === item.key)
+        const index = newData.findIndex((item: any) => row.ckey === item.ckey)
         const item = newData[index];
 
         newData.splice(index, 1, {

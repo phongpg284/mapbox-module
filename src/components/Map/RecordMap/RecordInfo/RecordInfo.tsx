@@ -92,12 +92,12 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
                     title="Worked Area"
-                    content="0.00 ha"
+                    content=""
                 />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
                     title="Work Width"
-                    content="10.0 m"
+                    content=""
                 />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}

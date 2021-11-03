@@ -26,6 +26,8 @@ import UserEdit from '../User/UserEdit'
 import ModeratorList from '../Moderator/ModeratorList'
 import ModeratorEdit from '../Moderator/ModeratorEdit'
 import ModeratorDetail from '../Moderator/ModeratorDetail'
+import MachinesList from '../Machine/MachinesList'
+import MachineInfo from '../Machine/MachineInfo'
 
 const { Header, Content } = Layout
 
@@ -104,6 +106,12 @@ const HomePage = ({ parentPath }: any) => {
                             <DeviceDetail />
                         </Route>
 
+                        <Route path={`${parentPath}machines/list`}>
+                            <MachinesList />
+                        </Route>
+                        <Route path={`${parentPath}machines/:id`} render={({match}) => (
+                            <MachineInfo id={match.params.id}/>
+                        )} />
 
                         <Route path={`${parentPath}projects/list`}>
                             <ProjectList />

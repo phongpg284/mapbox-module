@@ -1,0 +1,17 @@
+.machine-users-container {
+    border: groove 1px;
+}
+
+.machine-users-control{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.machine-list-control-report {
+
+}
+
+.machine-list-control-add {
+    margin-right: 30px;
+}

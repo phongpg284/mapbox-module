@@ -4,37 +4,21 @@ import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useFetch from '../../../hooks/useFetch'
-import DeviceAddModal from '../DeviceAddModal'
-const DeviceList = () => {
-    const [devices, setDevices] = useState([])
+import MachineAddModal from '../MachineAddModal'
+const MachineList = () => {
+    const [machines, setMachines] = useState([])
     const [response, isFetching, setRequest] = useFetch({} as any)
 
     useEffect(() => {
         setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/device/',
+            endPoint: 'https://dinhvichinhxac.online/api/machine/',
             method: 'GET',
         })
     }, [])
 
     useEffect(() => {
-        if (!isFetching && response && response.data && !response.hasError) setDevices(response.data)
+        if (!isFetching && response && response.data && !response.hasError) setMachines(response.data)
     }, [response])
-    // useEffect(() => {
-    //     fetch('https://dinhvichinhxac.online/api/device/', {
-    //         method: 'GET',
-    //     })
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             const convertData = data.response.map((device: any) => {
-    //                 return {
-    //                     ...device,
-    //                     create_time: new Date(device.create_time).toLocaleString(),
-    //                     update_time: new Date(device.update_time).toLocaleString(),
-    //                 }
-    //             })
-    //             setDevices(convertData)
-    //         })
-    // }, [])
 
     const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -59,7 +43,7 @@ const DeviceList = () => {
             dataIndex: 'name',
             key: 'name',
             render: (text: any, record: any) => (
-                <Link to={`/devices/${record.id}`}>{text}</Link>
+                <Link to={`/machines/${record.id}`}>{text}</Link>
             ),
         },
         ...columns.slice(1),
@@ -90,9 +74,9 @@ const DeviceList = () => {
                 </div>
             </div>
             <div className="projects-list-table">
-                <Table columns={tableColumns} dataSource={devices} bordered />
+                <Table columns={tableColumns} dataSource={machines} bordered />
             </div>
-            <DeviceAddModal
+            <MachineAddModal
                 centered
                 width={1000}
                 visible={isModalVisible}
@@ -103,4 +87,4 @@ const DeviceList = () => {
     )
 }
 
-export default DeviceList
+export default MachineList

@@ -10,18 +10,6 @@ import Chart from '../RecordMap/Chart'
 
 export const ViewIndexContext = createContext<any>(null)
 
-const fakeData = []
-const fakeData1 = []
-const fakeData2 = []
-const fakeAxis = []
-
-for (let i = 0; i < 700; i++) {
-    fakeData.push(i)
-    fakeData1.push(1000 * Math.random())
-    fakeData2.push(2)
-    fakeAxis.push('')
-}
-
 const TaskMap = ({ match }: any) => {
     const location = useLocation()
     const arr = location.pathname.split('/')
@@ -103,9 +91,9 @@ const TaskMap = ({ match }: any) => {
             points.forEach((point: any, index: number) => {
                 const latitude = point[0];
                 const longitude = point[1];
-                const speed = point[2];
                 const accuracy = point[3];
-                const timestamp = point[4];
+                const speed = point[4];
+                const timestamp = point[5];
 
                 const currentCoord = [longitude, latitude]
                 convertData.push(currentCoord)
@@ -144,57 +132,6 @@ const TaskMap = ({ match }: any) => {
                     </ViewIndexContext.Provider>
                 </div>
                 <div className="task-control-chart">
-                    {/* <ResponsiveContainer width="100%" height="100%">
-                        <LineChart
-                            onMouseMove={handleClick}
-                            margin={{
-                                top: 20,
-                                bottom: 30,
-                                left: 20,
-                                right: 20,
-                            }}
-                            data={taskData}
-                        >
-                            <Line
-                                yAxisId="1"
-                                stroke="#8884d8"
-                                strokeWidth={3}
-                                dataKey="distance"
-                                type="monotone"
-                                dot={<CustomizeDot color="#8884d8" />}
-                                activeDot={{ r: 5 }}
-                            />
-                            <Line
-                                yAxisId="2"
-                                stroke="#FFAD46"
-                                strokeWidth={3}
-                                dataKey="speed"
-                                type="monotone"
-                                dot={<CustomizeDot color="#FFAD46" />}
-                                activeDot={{ r: 5 }}
-                            />
-                            <Line
-                                yAxisId="3"
-                                stroke="#00ff08"
-                                strokeWidth={3}
-                                dataKey="accuracy"
-                                type="monotone"
-                                dot={<CustomizeDot color="#00ff08" />}
-                                activeDot={{ r: 5 }}
-                            />
-                            <CartesianGrid stroke="#ccc" /> 
-                            <XAxis dataKey="name" /> 
-                            <YAxis /> 
-                            <Tooltip /> 
-                            <Legend
-                                verticalAlign="top"
-                                align="left"
-                                iconSize={30}
-                                height={50}
-                            />
-                            <Tooltip />
-                        </LineChart>
-                    </ResponsiveContainer> */}
                     <Chart taskData ={taskData} setViewIndex={setViewIndex} />
                 </div>
             </div>
