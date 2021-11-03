@@ -24,13 +24,26 @@ const columns = [
         dataIndex: 'mount_point',
     },
     {
-        title: 'Create Time',
-        dataIndex: 'create_time',
+        title: 'Status',
+        dataIndex: 'status',
+        render: (text: any) => {
+            return <div>{text ? 'Có' : 'Không'}</div>
+        },
     },
     {
-        title: 'Update Time',
-        dataIndex: 'update_time',
+        title: 'Create Time',
+        dataIndex: 'create_time',
+        render: (text: any) => {
+            if (text) return <div>{new Date(text).toLocaleString()}</div>
+        },
     },
+    // {
+    //     title: 'Update Time',
+    //     dataIndex: 'update_time',
+    //     render: (text: any) => {
+    //         return <div>{new Date(text).toLocaleString()}</div>
+    //     },
+    // },
 ]
 
 export default columns

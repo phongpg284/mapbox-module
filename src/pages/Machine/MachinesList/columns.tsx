@@ -7,10 +7,10 @@ const columns = [
         title: 'Model',
         dataIndex: 'model',
     },
-    // {
-    //     title: 'Caster Ip',
-    //     dataIndex: 'caster_ip',
-    // },
+    {
+        title: 'Description',
+        dataIndex: 'description',
+    },
     // {
     //     title: 'NTRIP Username',
     //     dataIndex: 'ntrip_username',
@@ -26,10 +26,16 @@ const columns = [
     {
         title: 'Create Time',
         dataIndex: 'create_time',
+        render: (text: any, record: any) => {
+            if (text) return <div>{new Date(text).toLocaleString()}</div>
+        },
     },
     {
         title: 'Update Time',
         dataIndex: 'update_time',
+        render: (text: any) => {
+            if (text) return <div>{new Date(text).toLocaleString()}</div>
+        },
     },
 ]
 

@@ -38,7 +38,7 @@ const MachineAddModal = ({ ...props }) => {
     return (
         <Modal
             {...props}
-            title="Thêm thiết bị"
+            title="Thêm máy mới"
             footer={<Button onClick={handleAddNewMachine}>Đăng ký</Button>}
         >
             <div className="machine-add-container">
@@ -49,7 +49,7 @@ const MachineAddModal = ({ ...props }) => {
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
                 >
-                    <div style={{ overflow: 'hidden' }}>
+                    {/* <div style={{ overflow: 'hidden' }}>
                         <Form.Item
                             name="sim_imei"
                             label="IMEI"
@@ -61,7 +61,7 @@ const MachineAddModal = ({ ...props }) => {
                         >
                             <Input placeholder="" />
                         </Form.Item>
-                    </div>
+                    </div> */}
                     <div style={{ overflow: 'hidden' }}>
                         <Form.Item
                             name="name"
@@ -76,17 +76,17 @@ const MachineAddModal = ({ ...props }) => {
                         </Form.Item>
                     </div>
                     <div style={{ overflow: 'hidden' }}>
-                        <Form.Item name="caster_ip" label="Caster Ip">
+                        <Form.Item name="model" label="Model">
                             <Input placeholder="" />
                         </Form.Item>
                     </div>
                     <div style={{ overflow: 'hidden' }}>
-                        <Form.Item name="caster_port" label="Caster Port">
+                        <Form.Item name="description" label="Description">
                             <Input placeholder="" />
                         </Form.Item>
                     </div>
 
-                    <div style={{ overflow: 'hidden' }}>
+                    {/* <div style={{ overflow: 'hidden' }}>
                         <Form.Item name="ntrip_username" label="Ntrip Username">
                             <Input placeholder="" />
                         </Form.Item>
@@ -101,7 +101,7 @@ const MachineAddModal = ({ ...props }) => {
                         <Form.Item name="mount_point" label="Mount Point">
                             <Input placeholder="" />
                         </Form.Item>
-                    </div>
+                    </div> */}
                 </Form>
                 <div className="machine-add-item"></div>
             </div>
