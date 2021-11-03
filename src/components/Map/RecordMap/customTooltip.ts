@@ -10,7 +10,7 @@ const customTooltip = (params: any[]) => {
 const getUnit = (key: string) => {
   switch (key) {
     case "distance":
-      return "km"
+      return "m"
     case "speed":
       return "km/h"
     case "accuracy":

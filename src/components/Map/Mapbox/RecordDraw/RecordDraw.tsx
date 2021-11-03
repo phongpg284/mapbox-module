@@ -55,7 +55,7 @@ const RecordDraw = ({ data, zoom, multiple, viewIndexContextKey }: any) => {
                 type="line"
                 id="view-device"
                 sourceId="view-device"
-                paint={PaintScaleView(1, zoom)}
+                paint={PaintScaleView(2, zoom)}
             />
             <Marker coordinates={deviceCoordinate} anchor="center">
                 <img
