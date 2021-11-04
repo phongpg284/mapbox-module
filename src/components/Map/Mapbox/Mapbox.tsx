@@ -76,6 +76,7 @@ interface IMapboxProps {
  */
 const Mapbox: any = memo(
     forwardRef<any, Partial<IMapboxProps>>(({ ...props }, ref) => {
+        console.log(props)
         let drawRef: any
         const [visibleLayer, setVisibleLayer] =
             useState<LayerType>('satellite-v9')
@@ -84,6 +85,8 @@ const Mapbox: any = memo(
             accessToken: props.accessToken || defaultAccessToken,
             maxZoom: 23,
         })
+
+        const [currentZoom, setCurrentZoom] = useState(props.zoom);
 
         const handleChangeLayer = (e: any) => {
             setVisibleLayer(e.target.value)
@@ -148,6 +151,8 @@ const Mapbox: any = memo(
 
             if (props.lockZoom) mapbox.setMinZoom(mapbox.getZoom())
             console.log('zoom: ', mapbox.getZoom())
+            setCurrentZoom(mapbox.getZoom());
+
 
             mapboxInstance.current = mapbox
             mapbox.addControl(new ScaleControl(), 'bottom-left')
@@ -189,7 +194,7 @@ const Mapbox: any = memo(
                         maxHeight: props.maxHeight || '100%',
                     }}
                     center={props.center || defaultCenter}
-                    zoom={props.zoom ? [props.zoom] : defaultZoom}
+                    zoom={[props.zoom || currentZoom || defaultZoom]}
                     onStyleLoad={mapDidLoad}
                     fitBounds={props.fitBounds}
                     fitBoundsOptions={{
@@ -274,16 +279,19 @@ const Mapbox: any = memo(
                             }
                         />
                     )}
-                    {props.viewDrawData &&  (
-                        <RecordDraw
-                            data={props.viewDrawData}
-                            zoom={
-                                (mapboxInstance?.current as any)?.getZoom() ||
-                                20
-                            }
-                            viewIndexContextKey={props.viewIndexContextKey}
-                        />
-                    )}
+                    {props.viewDrawData &&
+                        (mapboxInstance?.current as any)?.getZoom() && (
+                            <RecordDraw
+                                data={props.viewDrawData}
+                                zoom={
+                                    // (
+                                    //     mapboxInstance?.current as any
+                                    // )?.getZoom()
+                                    currentZoom || 20
+                                }
+                                viewIndexContextKey={props.viewIndexContextKey}
+                            />
+                        )}
                     {/* {props.viewDrawData &&
                         props.multiple &&
                         props.viewDrawData.map((drawData: any) => (

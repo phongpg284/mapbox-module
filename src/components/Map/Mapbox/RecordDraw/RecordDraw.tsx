@@ -7,6 +7,8 @@ import { ViewIndexContext as TaskViewIndex } from '../../TaskMap/TaskMap'
 import { ViewIndexContext as RecordViewIndex } from '../../RecordMap/RecordMap'
 
 const RecordDraw = ({ data, zoom, multiple, viewIndexContextKey }: any) => {
+    console.log("zoom", zoom);
+    
     const [displayDrawData, setDisplayDrawData] = useState<any>({
         type: 'geojson',
         data: {

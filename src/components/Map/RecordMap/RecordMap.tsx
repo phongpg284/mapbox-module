@@ -39,7 +39,6 @@ const RecordMap = ({ match }: any) => {
             singleTaskResponse.data &&
             !singleTaskResponse.hasError
         ) {
-            console.log(singleTaskResponse.data)
             let graphData = {
                 distance: [0],
                 accuracy: [0],

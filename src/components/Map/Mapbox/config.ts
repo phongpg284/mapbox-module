@@ -4,7 +4,7 @@ export const defaultAccessToken =
 
 // default zoom and center
 export const defaultCenter: [number, number] = [105.75701933333332, 20.977847833333332];
-export const defaultZoom: [number] = [16];
+export const defaultZoom: number = 16;
 
 //WORK AREA
 // default polygon fill color when of work area

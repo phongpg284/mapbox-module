@@ -3,10 +3,6 @@ import { memo, useEffect } from 'react'
 import customTooltip from './customTooltip'
 
 const Chart = memo(({ taskData, setViewIndex, onEvents }: any) => {
-    useEffect(() => {
-        console.log(options, onEvents)
-    })
-
     const fakeData = []
     const fakeData1 = []
     const fakeData2 = []
