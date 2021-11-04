@@ -7,8 +7,6 @@ import { ViewIndexContext as TaskViewIndex } from '../../TaskMap/TaskMap'
 import { ViewIndexContext as RecordViewIndex } from '../../RecordMap/RecordMap'
 
 const RecordDraw = ({ data, zoom, multiple, viewIndexContextKey }: any) => {
-    console.log("zoom", zoom);
-    
     const [displayDrawData, setDisplayDrawData] = useState<any>({
         type: 'geojson',
         data: {
@@ -20,7 +18,7 @@ const RecordDraw = ({ data, zoom, multiple, viewIndexContextKey }: any) => {
         },
     })
     const [deviceCoordinate, setDeviceCoordinate] = useState([100, 20])
-    const viewIndex = useContext(
+    const { viewIndex, viewWidth } = useContext(
         viewIndexContextKey === 'record' ? RecordViewIndex : TaskViewIndex
     )
 
@@ -57,7 +55,7 @@ const RecordDraw = ({ data, zoom, multiple, viewIndexContextKey }: any) => {
                 type="line"
                 id="view-device"
                 sourceId="view-device"
-                paint={PaintScaleView(2, zoom)}
+                paint={PaintScaleView(viewWidth, zoom)}
             />
             <Marker coordinates={deviceCoordinate} anchor="center">
                 <img

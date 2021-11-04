@@ -13,6 +13,7 @@ const RecordMap = ({ match }: any) => {
     const [recordData, setRecordData] = useState<any>([])
     const [drawData, setDrawData] = useState<any>()
     const [viewIndex, setViewIndex] = useState(0)
+    const [viewWidth, setViewWidth] = useState(1)
 
     const [singleTaskResponse, isFetchingSingleTask, setRequestSingleTask] =
         useFetch({} as any)
@@ -50,11 +51,11 @@ const RecordMap = ({ match }: any) => {
             const points = singleTaskResponse.data?.positions || []
             let convertData: any[] = []
             points.forEach((point: any, index: number) => {
-                const latitude = point[0];
-                const longitude = point[1];
-                const accuracy = point[3];
-                const speed = point[4];
-                const timestamp = point[5];
+                const latitude = point[0]
+                const longitude = point[1]
+                const accuracy = point[3]
+                const speed = point[4]
+                const timestamp = point[5]
 
                 const currentCoord = [longitude, latitude]
                 convertData.push(currentCoord)
@@ -81,24 +82,33 @@ const RecordMap = ({ match }: any) => {
         <div className="record-view">
             <div className="record-control-container">
                 <div className="record-map">
-                    <ViewIndexContext.Provider value={viewIndex}>
+                    <ViewIndexContext.Provider
+                        value={{ viewIndex: viewIndex, viewWidth: viewWidth }}
+                    >
                         <Mapbox
                             height="calc(70vh - 70px)"
                             width="100%"
                             viewDrawData={drawData}
                             center={drawData ? drawData[0] : undefined}
-                            viewIndexContextKey={"record"}
+                            viewIndexContextKey={'record'}
                         ></Mapbox>
                     </ViewIndexContext.Provider>
                 </div>
 
                 <div className="record-control-chart">
-                    <Chart taskData ={recordData} setViewIndex={setViewIndex} />
+                    <Chart taskData={recordData} setViewIndex={setViewIndex} />
                 </div>
             </div>
 
             <div className="record-graph">
-                <RecordInfo data={recordData} />
+                <ViewIndexContext.Provider
+                    value={{ viewWidth: viewWidth, setViewWidth: setViewWidth }}
+                >
+                    <RecordInfo
+                        data={recordData}
+                        viewWidthContextKey="record"
+                    />
+                </ViewIndexContext.Provider>
             </div>
         </div>
     )

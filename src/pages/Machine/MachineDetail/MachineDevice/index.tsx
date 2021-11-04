@@ -52,8 +52,6 @@ const MachineDevice = ({ id }: any) => {
                 }
                 convertDeviceList.push(newDevice)
             }
-            console.log(convertDeviceList)
-
             setDeviceList(convertDeviceList)
         }
     }, [response])

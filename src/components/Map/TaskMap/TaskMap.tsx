@@ -19,8 +19,7 @@ const TaskMap = ({ match }: any) => {
     const [taskIdOption, setTaskIdOption] = useState<any[]>([])
     const [drawData, setDrawData] = useState<any>([])
     const [viewIndex, setViewIndex] = useState(0)
-
-    
+    const [viewWidth, setViewWidth] = useState(1)
 
     const [selectedTask, setSelectedTask] = useState(-1)
 
@@ -89,11 +88,11 @@ const TaskMap = ({ match }: any) => {
             const points = singleTaskResponse.data?.positions || []
             let convertData: any[] = []
             points.forEach((point: any, index: number) => {
-                const latitude = point[0];
-                const longitude = point[1];
-                const accuracy = point[3];
-                const speed = point[4];
-                const timestamp = point[5];
+                const latitude = point[0]
+                const longitude = point[1]
+                const accuracy = point[3]
+                const speed = point[4]
+                const timestamp = point[5]
 
                 const currentCoord = [longitude, latitude]
                 convertData.push(currentCoord)
@@ -120,28 +119,35 @@ const TaskMap = ({ match }: any) => {
         <div className="task-view">
             <div className="task-control-container">
                 <div className="task-map">
-                    <ViewIndexContext.Provider value={viewIndex}>
+                    <ViewIndexContext.Provider
+                        value={{ viewIndex: viewIndex, viewWidth: viewWidth }}
+                    >
                         <Mapbox
                             height="calc(70vh - 85px)"
                             width="100%"
                             viewDrawData={drawData}
                             multiple
                             center={drawData?.[0]}
-                            viewIndexContextKey={"task"}
+                            viewIndexContextKey={'task'}
                         ></Mapbox>
                     </ViewIndexContext.Provider>
                 </div>
                 <div className="task-control-chart">
-                    <Chart taskData ={taskData} setViewIndex={setViewIndex} />
+                    <Chart taskData={taskData} setViewIndex={setViewIndex} />
                 </div>
             </div>
             <div className="task-graph">
-                <RecordInfo
-                    data={taskData}
-                    options={taskIdOption}
-                    changeSelectTask={setSelectedTask}
-                    isFetching={isFetchingSingleTask}
-                />
+                <ViewIndexContext.Provider
+                    value={{ viewWidth: viewWidth, setViewWidth: setViewWidth }}
+                >
+                    <RecordInfo
+                        data={taskData}
+                        options={taskIdOption}
+                        changeSelectTask={setSelectedTask}
+                        isFetching={isFetchingSingleTask}
+                        viewWidthContextKey="task"
+                    />
+                </ViewIndexContext.Provider>
             </div>
         </div>
     )

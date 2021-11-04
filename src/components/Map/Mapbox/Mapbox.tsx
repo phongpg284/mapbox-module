@@ -76,7 +76,6 @@ interface IMapboxProps {
  */
 const Mapbox: any = memo(
     forwardRef<any, Partial<IMapboxProps>>(({ ...props }, ref) => {
-        console.log(props)
         let drawRef: any
         const [visibleLayer, setVisibleLayer] =
             useState<LayerType>('satellite-v9')

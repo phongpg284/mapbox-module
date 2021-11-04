@@ -11,7 +11,6 @@ import TaskList from './TaskList'
 const { RangePicker } = DatePicker
 
 const DeviceDetailItem = ({ data }: any) => {
-    console.log(data)
     const {task} = data;
     return (
         <div className="device-detail-item-wrapper">

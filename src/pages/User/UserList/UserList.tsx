@@ -5,7 +5,6 @@ import { Link, useHistory } from 'react-router-dom'
 import { Input, Space, Table } from 'antd'
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 
-import faker from 'faker'
 import columns from './columns'
 import { useEffect, useState } from 'react'
 import useFetch from '../../../hooks/useFetch'

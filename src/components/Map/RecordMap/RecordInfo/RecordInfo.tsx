@@ -1,4 +1,4 @@
-import { Divider, Spin } from 'antd'
+import { Divider, InputNumber, Spin } from 'antd'
 import './index.css'
 import LocalShippingIcon from '@material-ui/icons/LocalShipping'
 import BorderAllIcon from '@material-ui/icons/BorderAll'
@@ -7,8 +7,10 @@ import {
     CaretRightOutlined,
     LoadingOutlined,
 } from '@ant-design/icons'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Select } from 'antd'
+import { ViewIndexContext as RecordViewIndex } from '../../RecordMap/RecordMap'
+import { ViewIndexContext as TaskViewIndex } from '../../TaskMap/TaskMap'
 
 const { Option } = Select
 
@@ -25,7 +27,13 @@ const RecordInfoItem = ({ icon, title, content }: any) => {
     )
 }
 
-const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
+const RecordInfo = ({
+    data,
+    options,
+    changeSelectTask,
+    isFetching,
+    viewWidthContextKey,
+}: any) => {
     const [isShowRecordInfo, setIsShowRecordInfo] = useState(true)
     const handleClickControl = () => {
         setIsShowRecordInfo(!isShowRecordInfo)
@@ -36,6 +44,14 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
     function handleChange(value: any) {
         changeSelectTask(value)
         setSelectedTask(value)
+    }
+
+    const { viewWidth, setViewWidth } = useContext(
+        viewWidthContextKey === 'record' ? RecordViewIndex : TaskViewIndex
+    )
+
+    const handleChangeWidth = (value: number) => {
+        setViewWidth(value)
     }
 
     let total = {
@@ -49,7 +65,6 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
     data?.accuracy?.forEach((stat: any) => {
         total.accuracy += stat
     })
-
 
     const average = {
         speed: total.speed / data?.speed?.length,
@@ -69,18 +84,30 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
                     isShowRecordInfo ? 'show' : 'hide'
                 }`}
             >
-                <Select
-                    value={selectedTask}
-                    style={{ width: 120 }}
-                    onChange={handleChange}
-                >
-                    {options &&
-                        options.map((id: any) => (
-                            <Option value={id} key={id}>
-                                {id}
-                            </Option>
-                        ))}
-                </Select>
+                <div style={{ marginBottom: '20px' }}>
+                    <span>Select task:</span>
+                    <Select
+                        value={selectedTask}
+                        style={{ width: 120 }}
+                        onChange={handleChange}
+                    >
+                        {options &&
+                            options.map((id: any) => (
+                                <Option value={id} key={id}>
+                                    {id}
+                                </Option>
+                            ))}
+                    </Select>
+                </div>
+
+                <div>
+                    <span>Select width: </span>
+                    <InputNumber
+                        value={viewWidth}
+                        style={{ width: 100 }}
+                        onChange={handleChangeWidth}
+                    />
+                </div>
                 {isFetching && selectedTask && <Spin indicator={antIcon} />}
                 <RecordInfoItem />
                 <RecordInfoItem
@@ -107,7 +134,9 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
                     title="Distance"
-                    content={`${data.distance?.[data.distance?.length - 1]?.toFixed(4)} m`}
+                    content={`${data.distance?.[
+                        data.distance?.length - 1
+                    ]?.toFixed(4)} m`}
                 />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
