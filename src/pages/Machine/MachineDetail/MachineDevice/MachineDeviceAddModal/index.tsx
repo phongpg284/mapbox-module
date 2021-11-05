@@ -24,12 +24,14 @@ interface IProjectDeviceAddModal {
     width?: number
     visible: boolean
     onClose: () => void
+    update: () => void
     id: number
 }
 
 const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
     id,
     onClose,
+    update,
     visible,
     ...props
 }) => {
@@ -55,25 +57,6 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
         }
     }, [response])
 
-    useEffect(() => {
-        //TODO: call api
-        let fakeDevices = []
-        let fakeRoles = []
-        for (let i = 0; i < 5; i++)
-            fakeRoles.push({
-                id: i,
-                name: faker.name.jobTitle(),
-            })
-
-        for (let i = 0; i < 15; i++)
-            fakeDevices.push({
-                id: i,
-                name: faker.name.findName(),
-            })
-
-        setRoles(fakeRoles)
-    }, [])
-
     function onChangeDevice(value: any) {
         console.log(`selected device ${value}`)
         setSelectDevice(value)
@@ -98,8 +81,8 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
             device_id: selectDevice,
             machine_id: id,
         }
-        console.log(query);
-        
+        console.log(query)
+
         setRequestUpdate({
             endPoint: 'https://dinhvichinhxac.online/api/machine-device/',
             method: 'POST',
@@ -116,11 +99,13 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
             responseUpdate &&
             responseUpdate.data &&
             !responseUpdate.hasError
-        )
+        ) {
+            update()
             message.success(responseUpdate.data)
-        else if (!iseFetching && response.hasError) {
+        } else if (!iseFetching && response.hasError) {
             message.error(response.hasError)
         }
+        onClose()
     }, [responseUpdate])
 
     return (
@@ -130,9 +115,7 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
                 visible={visible}
                 onCancel={onClose}
                 title="Thêm thiết bị kết nối với máy móc"
-                footer={
-                    <Button onClick={handleAddNewDevice}>Thêm</Button>
-                }
+                footer={<Button onClick={handleAddNewDevice}>Thêm</Button>}
             >
                 <div className="project-device-add-container">
                     {/* <div className="project-device-add-select">

@@ -24,12 +24,14 @@ interface IMachineUserAddModal {
     width?: number
     visible: boolean
     onClose: () => void
+    update: () => void
     id: number
 }
 
 const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
     id,
     onClose,
+    update,
     visible,
     ...props
 }) => {
@@ -51,7 +53,6 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
     useEffect(() => {
         if (!iseFetching && response && response.data && !response.hasError) {
             setUsers(response.data)
-            console.log(response.data)
         }
     }, [response])
 
@@ -114,11 +115,14 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
             responseUpdate &&
             responseUpdate.data &&
             !responseUpdate.hasError
-        )
+        ) {
+            update()
             message.success(responseUpdate.data)
+        }
         else if (!iseFetching && response.hasError) {
             message.error(response.hasError)
         }
+        onClose()
     }, [responseUpdate])
 
     return (
