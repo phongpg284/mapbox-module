@@ -159,7 +159,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         ) : (
             <div
                 className="editable-cell-value-wrap"
-                style={{ paddingRight: 24 }}
+                style={{ paddingRight: 24, height: "30px" }}
                 onClick={toggleEdit}
             >
                 {children}

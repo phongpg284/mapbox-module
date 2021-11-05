@@ -2,17 +2,28 @@ import './index.css'
 
 import { Link, useHistory } from 'react-router-dom'
 
-import { Input, Space, Table } from 'antd'
+import { Button, Input, Space, Table } from 'antd'
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 
 import columns from './columns'
 import { useEffect, useState } from 'react'
 import useFetch from '../../../hooks/useFetch'
 import useFilter from '../../../hooks/useFilter'
+import UserAddModal from '../UserAddModal'
 
 const UserList = () => {
-    const [isUpdate, setIsUpdate] = useState(true)
     const history = useHistory()
+    const [isUpdate, setIsUpdate] = useState(true)
+    const [isAddModalVisible, setIsAddModalVisible] = useState(false)
+    const handleShowAddProject = () => {
+        setIsAddModalVisible(true)
+    }
+
+    const handleHideAddProject = () => {
+        setIsAddModalVisible(false)
+    }
+
+
     const tableColumns = [
         ...columns.slice(0, 1),
         {
@@ -49,17 +60,6 @@ const UserList = () => {
             ),
         },
     ]
-    // const data = []
-    // for (let i = 0; i < 50; i++) {
-    //     data.push({
-    //         index: i,
-    //         name: faker.name.findName(),
-    //         username: faker.internet.userName(),
-    //         phone: faker.phone.phoneNumber(),
-    //         role: faker.name.jobTitle(),
-    //         project: faker.address.state(),
-    //     })
-    // }
     const [data, setData] = useState([])
     const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
@@ -100,12 +100,20 @@ const UserList = () => {
                     />
                 </div>
                 <div className="users-list-control-actions">
-                    <PlusOutlined />
+                    <Button onClick={handleShowAddProject}>Thêm người dùng</Button>
                 </div>
             </div>
             <div className="users-list-table">
                 <Table columns={tableColumns} dataSource={filterData} bordered />;
             </div>
+            <UserAddModal
+                update={reFetchAfterUpdate}
+                centered
+                width={800}
+                visible={isAddModalVisible}
+                onClose={handleHideAddProject}
+            />
+
         </div>
     )
 }
