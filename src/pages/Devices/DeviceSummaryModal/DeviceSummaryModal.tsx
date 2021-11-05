@@ -150,7 +150,7 @@ const IKeyCode = {
     },
 }
 
-interface ISummaryProjectModal {
+interface ISummaryDeviceModal {
     centered?: boolean
     width?: number
     visible: boolean
@@ -158,7 +158,7 @@ interface ISummaryProjectModal {
     id: number
 }
 
-const ProjectSummaryModal: React.FC<ISummaryProjectModal> = ({
+const DeviceSummaryModal: React.FC<ISummaryDeviceModal> = ({
     id,
     onClose,
     visible,
@@ -171,7 +171,7 @@ const ProjectSummaryModal: React.FC<ISummaryProjectModal> = ({
     useEffect(() => {
         if (visible)
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/project/',
+                endPoint: 'https://dinhvichinhxac.online/api/device/',
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
@@ -209,7 +209,7 @@ const ProjectSummaryModal: React.FC<ISummaryProjectModal> = ({
     }, [data])
 
     return (
-        <div className={style.project_summary_container}>
+        <div className={style.device_summary_container}>
             <Modal
                 {...props}
                 visible={visible}
@@ -217,9 +217,9 @@ const ProjectSummaryModal: React.FC<ISummaryProjectModal> = ({
                 title={`Dự án ${data?.name}`}
                 footer={<Button onClick={onClose}>Đóng</Button>}
             >
-                <div className={style.project_summary_content}>
+                <div className={style.device_summary_content}>
                     <Table
-                        className={style.project_table_content}
+                        className={style.device_table_content}
                         columns={column}
                         dataSource={dataSource}
                         showHeader={false}
@@ -231,4 +231,4 @@ const ProjectSummaryModal: React.FC<ISummaryProjectModal> = ({
     )
 }
 
-export default ProjectSummaryModal
+export default DeviceSummaryModal

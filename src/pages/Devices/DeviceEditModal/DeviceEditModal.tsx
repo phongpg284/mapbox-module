@@ -1,0 +1,167 @@
+import style from './index.module.scss'
+import { Button, Modal, Table, Form, Input, FormInstance, message } from 'antd'
+import useFetch from '../../../hooks/useFetch'
+import { useEffect, useState } from 'react'
+
+interface IDeviceEditModal {
+    centered?: boolean
+    width?: number
+    visible: boolean
+    onClose: () => void
+    update: () => void
+    id: number
+}
+
+const DeviceEditModal: React.FC<IDeviceEditModal> = ({
+    id,
+    onClose,
+    visible,
+    update,
+    ...props
+}) => {
+    const [form] = Form.useForm()
+
+    const [data, setData] = useState<any>()
+    const [response, iseFetching, setRequest] = useFetch({} as any)
+
+    useEffect(() => {
+        if (visible)
+            setRequest({
+                endPoint: 'https://dinhvichinhxac.online/api/device/',
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                requestBody: {
+                    action: 'read',
+                    pk: id,
+                },
+            })
+    }, [visible])
+
+    useEffect(() => {
+        if (!iseFetching && response && response.data && !response.hasError) {
+            setData(response.data)
+        }
+    }, [response])
+
+    const [updateResponse, isFetchingUpdate, setRequestUpdate] = useFetch(
+        {} as any
+    )
+
+    useEffect(() => {
+        if (
+            !isFetchingUpdate &&
+            updateResponse?.data &&
+            !updateResponse.hasError
+        ) {
+            update()
+            message.success(updateResponse.data)
+            onClose()
+        }
+    }, [updateResponse])
+
+    const onFinish = (value: any) => {
+        setRequestUpdate({
+            endPoint: 'https://dinhvichinhxac.online/api/device/',
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            requestBody: {
+                ...value,
+                pk: id,
+                action: 'update',
+            },
+        })
+    }
+
+    const onFinishFailed = () => {
+        message.error('Submit failed!')
+    }
+
+    const handleSubmitEdit = () => {
+        form.submit()
+    }
+
+    return (
+        <div className={style.device_edit_container}>
+            <Modal
+                {...props}
+                visible={visible}
+                onCancel={onClose}
+                title={`Cập nhật thiết bị ${data?.name}`}
+                footer={<Button onClick={handleSubmitEdit}>Cập nhật</Button>}
+            >
+                <div className={style.device_edit_content}>
+                    <Form
+                        form={form}
+                        layout="vertical"
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                        autoComplete="off"
+                    >
+                        <div style={{ overflow: 'hidden' }}>
+                            <Form.Item
+                                name="sim_imei"
+                                label="IMEI"
+                                rules={[
+                                    { required: true },
+                                    //@ts-ignore
+                                    { type: 'string', warningOnly: true },
+                                ]}
+                            >
+                                <Input placeholder="" />
+                            </Form.Item>
+                        </div>
+                        <div style={{ overflow: 'hidden' }}>
+                            <Form.Item
+                                name="name"
+                                label="Name"
+                                rules={[
+                                    { required: true },
+                                    //@ts-ignore
+                                    { type: 'string', warningOnly: true },
+                                ]}
+                            >
+                                <Input placeholder="" />
+                            </Form.Item>
+                        </div>
+                        <div style={{ overflow: 'hidden' }}>
+                            <Form.Item name="caster_ip" label="Caster Ip">
+                                <Input placeholder="" />
+                            </Form.Item>
+                        </div>
+                        <div style={{ overflow: 'hidden' }}>
+                            <Form.Item name="caster_port" label="Caster Port">
+                                <Input placeholder="" />
+                            </Form.Item>
+                        </div>
+
+                        <div style={{ overflow: 'hidden' }}>
+                            <Form.Item
+                                name="ntrip_username"
+                                label="Ntrip Username"
+                            >
+                                <Input placeholder="" />
+                            </Form.Item>
+                        </div>
+
+                        <div style={{ overflow: 'hidden' }}>
+                            <Form.Item name="ntrip_pass" label="Ntrip Pass">
+                                <Input placeholder="" />
+                            </Form.Item>
+                        </div>
+                        <div style={{ overflow: 'hidden' }}>
+                            <Form.Item name="mount_point" label="Mount Point">
+                                <Input placeholder="" />
+                            </Form.Item>
+                        </div>
+                    </Form>
+                </div>
+            </Modal>
+        </div>
+    )
+}
+
+export default DeviceEditModal

@@ -1,17 +1,17 @@
 import { Space, Tag } from 'antd'
 
+export const fixedData = {
+    code: "",
+    name: "",
+    description: "",
+}
+
 const columns = [
     {
         title: 'Mã dự án',
         dataIndex: 'code',
         key: 'code',
     },
-    {
-        title: 'Mã dự án',
-        dataIndex: 'code',
-        key: 'code',
-    },
-
     {
         title: 'Mô tả tổng quan',
         dataIndex: 'description',

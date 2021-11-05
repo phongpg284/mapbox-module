@@ -3,6 +3,7 @@ import { Button, Modal, Table, Form, Input, FormInstance, message } from 'antd'
 import useFetch from '../../../hooks/useFetch'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { keyBy } from 'lodash'
+import { fixedData } from '../ProjectList/columns'
 
 const column = [
     {
@@ -57,10 +58,9 @@ const IKeyCode = {
 const EditableContext = createContext<FormInstance<any> | null>(null)
 
 interface Item {
-    key: string
+    code: string
+    description: string
     name: string
-    age: string
-    address: string
 }
 
 interface EditableRowProps {
@@ -140,7 +140,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         ) : (
             <div
                 className="editable-cell-value-wrap"
-                style={{ paddingRight: 24 }}
+                style={{ paddingRight: 24, height: '30px' }}
                 onClick={toggleEdit}
             >
                 {children}
@@ -155,7 +155,6 @@ interface DataType {
     ckey: string
     value: string
 }
-
 
 interface IProjectEditModal {
     centered?: boolean
@@ -201,7 +200,9 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
     useEffect(() => {
         const convertDataSource = []
         if (data) {
-            for (const [key, value] of Object.entries(data)) {
+            const initData = fixedData
+            const modifyData = Object.assign(initData, data)
+            for (const [key, value] of Object.entries(modifyData)) {
                 if ((IKeyCode as any)[key]) {
                     const { brand, type } = (IKeyCode as any)[key]
                     const pushData = {
@@ -214,10 +215,9 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
                 }
             }
         }
+        console.log(convertDataSource)
         setDataSource(convertDataSource)
     }, [data])
-
-
 
     const components = {
         body: {
@@ -232,20 +232,32 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
         }
         return {
             ...col,
-            onCell: (record: DataType) => ({
-                record,
-                editable: col.editable,
-                dataIndex: col.dataIndex,
-                title: col.dataIndex,
-                handleSave: handleSave,
-            }),
+            onCell: (record: DataType) => {
+                if (record.ckey === "Thời gian tạo" || record.ckey === "Thời gian cập nhật") {
+                    return {
+                        record,
+                        editable: false,
+                        dataIndex: col.dataIndex,
+                        title: col.dataIndex,
+                        handleSave: handleSave,
+                    }
+                        
+                }
+                return {
+                    record,
+                    editable: col.editable,
+                    dataIndex: col.dataIndex,
+                    title: col.dataIndex,
+                    handleSave: handleSave,
+                }
+            },
         }
     })
 
     const handleSave = (row: DataType) => {
         const newData = [...dataSource]
         const index = newData.findIndex((item: any) => row.ckey === item.ckey)
-        const item = newData[index];
+        const item = newData[index]
 
         newData.splice(index, 1, {
             ...item,
@@ -254,24 +266,25 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
         setDataSource(newData)
     }
 
-    const [updateResponse, isFetchingUpdate, setRequestUpdate] = useFetch({} as any); 
+    const [updateResponse, isFetchingUpdate, setRequestUpdate] = useFetch(
+        {} as any
+    )
     const handleSubmitEdit = () => {
         let convertDataSource: any = {}
         if (dataSource) {
             for (const item of dataSource) {
                 for (const [key, value] of Object.entries(IKeyCode)) {
-                    if(item.ckey === value.brand) {
-                        
-                        (convertDataSource as any)[key] = item.value;
+                    if (item.ckey === value.brand) {
+                        ;(convertDataSource as any)[key] = item.value
                     }
                 }
             }
         }
 
-        delete convertDataSource.start_time;
-        delete convertDataSource.end_time;
-        delete convertDataSource.create_time;
-        delete convertDataSource.update_time;
+        delete convertDataSource.start_time
+        delete convertDataSource.end_time
+        delete convertDataSource.create_time
+        delete convertDataSource.update_time
 
         // const body = convertDataSource.reduce((prev: any, curr: any) => {
         //     if(curr.value)
@@ -282,26 +295,30 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
         // delete body.id;
         // console.log(body, "hoho")
         setRequestUpdate({
-            endPoint: "https://dinhvichinhxac.online/api/project/",
-            method: "POST",
+            endPoint: 'https://dinhvichinhxac.online/api/project/',
+            method: 'POST',
             headers: {
-                "Content-type": "application/json",
+                'Content-type': 'application/json',
             },
             requestBody: {
                 ...convertDataSource,
                 pk: id,
-                action: "update",
-            }
+                action: 'update',
+            },
         })
     }
 
     useEffect(() => {
-        if(!isFetchingUpdate && updateResponse?.data && !updateResponse.hasError ) {
+        if (
+            !isFetchingUpdate &&
+            updateResponse?.data &&
+            !updateResponse.hasError
+        ) {
             message.success(updateResponse.data)
             update()
         }
         onClose()
-    },[updateResponse])
+    }, [updateResponse])
 
     return (
         <div className={style.project_edit_container}>
