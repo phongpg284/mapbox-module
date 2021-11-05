@@ -7,15 +7,19 @@ import useFetch from '../../../hooks/useFetch'
 import DeviceAddModal from '../DeviceAddModal'
 import useFilter from '../../../hooks/useFilter'
 const DeviceList = () => {
+    const [isUpdate, setIsUpdate] = useState(true)
     const [devices, setDevices] = useState([])
     const [response, isFetching, setRequest] = useFetch({} as any)
 
     useEffect(() => {
-        setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/device/',
-            method: 'GET',
-        })
-    }, [])
+        if (isUpdate) {
+            setRequest({
+                endPoint: 'https://dinhvichinhxac.online/api/device/',
+                method: 'GET',
+            })
+            setIsUpdate(false);
+        }
+    }, [isUpdate])
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) setDevices(response.data)
@@ -78,6 +82,10 @@ const DeviceList = () => {
 
     const [search, onChangeSearch, filterData] = useFilter(devices, "name");
 
+    const reFetchAfterUpdate = () => {
+        setIsUpdate(true)
+    }
+
     return (
         <div className="projects-list-wrapper">
             <div className="projects-list-control">
@@ -101,8 +109,8 @@ const DeviceList = () => {
                 centered
                 width={1000}
                 visible={isModalVisible}
-                onOk={handleOk}
-                onCancel={handleCancel}
+                onClose={handleCancel}
+                update={reFetchAfterUpdate}
             />
         </div>
     )

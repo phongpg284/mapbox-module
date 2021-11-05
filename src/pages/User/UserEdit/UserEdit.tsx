@@ -1,6 +1,6 @@
 import style from './index.module.scss'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import { Button, Input, Table, Form } from 'antd'
+import { Button, Input, Table, Form, message } from 'antd'
 import { FormInstance } from 'antd/lib/form'
 import faker from 'faker'
 import useFetch from '../../../hooks/useFetch'
@@ -127,17 +127,13 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
     const toggleEdit = () => {
         setEditing(!editing)
-        console.log(dataIndex, record)
         form.setFieldsValue({ [dataIndex]: record[dataIndex] })
     }
 
     const save = async () => {
         try {
             const values = await form.validateFields()
-            console.log("save", values)
-            
             toggleEdit()
-            console.log({ ...record, ...values });
             handleSave({ ...record, ...values })
         } catch (errInfo) {
             console.log('Save failed:', errInfo)
@@ -253,7 +249,6 @@ const UserEdit = ({ id }: any) => {
     })
 
     const handleSave = (row: DataType) => {
-        console.log(row, "hoho")
         const newData = [...dataSource]
         const index = newData.findIndex((item: any) => row.key === item.key)
         const item = newData[index];
@@ -268,7 +263,6 @@ const UserEdit = ({ id }: any) => {
 
     const [updateResponse, isFetchingUpdate, setRequestUpdate] = useFetch({} as any); 
     const handleSubmitEdit = () => {
-        console.log(dataSource)
         const body = dataSource.reduce((prev: any, curr: any) => {
             if(curr.value)
           prev[curr.ckey] = curr.value;
@@ -290,6 +284,11 @@ const UserEdit = ({ id }: any) => {
             }
         })
     }
+
+    useEffect(() => {
+        if (!isFetchingUpdate && updateResponse && updateResponse.data && !updateResponse.hasError)
+        message.info(updateResponse.data)
+    },[updateResponse])
 
     return (
         <div className={style.user_edit_container}>

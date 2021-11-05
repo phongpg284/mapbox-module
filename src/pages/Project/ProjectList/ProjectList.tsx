@@ -14,20 +14,21 @@ import ProjectEditModal from '../ProjectEditModal'
 import useFilter from '../../../hooks/useFilter'
 
 const ProjectList = () => {
+    const [isUpdate, setIsUpdate] = useState(true)
     const [isAddModalVisible, setIsAddModalVisible] = useState(false)
     const [isSummaryModalVisible, setIsSummaryModalVisible] = useState(false)
     const [isEditModalVisible, setIsEditModalVisible] = useState(false)
-    const [viewId, setViewId] = useState(0);
+    const [viewId, setViewId] = useState(0)
 
     const handleShowAddProject = () => {
         setIsAddModalVisible(true)
     }
-    
+
     const handleShowEditProject = (id: number) => {
         setViewId(id)
         setIsEditModalVisible(true)
     }
-    
+
     const handleShowSummary = (id: number) => {
         setViewId(id)
         setIsSummaryModalVisible(true)
@@ -61,8 +62,12 @@ const ProjectList = () => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button onClick={() => handleShowSummary(record.id)}>Tổng quan</button>
-                    <button onClick={() => handleShowEditProject(record.id)}>Cập nhật</button>
+                    <button onClick={() => handleShowSummary(record.id)}>
+                        Tổng quan
+                    </button>
+                    <button onClick={() => handleShowEditProject(record.id)}>
+                        Cập nhật
+                    </button>
                 </Space>
             ),
         },
@@ -70,19 +75,26 @@ const ProjectList = () => {
     const [data, setData] = useState([])
     const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
-        setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/project/',
-            method: 'GET',
-        })
-    }, [])
+        if (isUpdate) {
+            setRequest({
+                endPoint: 'https://dinhvichinhxac.online/api/project/',
+                method: 'GET',
+            })
+            setIsUpdate(false)
+        }
+    }, [isUpdate])
 
-    useEffect(() => {        
+    useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
             setData(response.data)
         }
     }, [response])
 
-    const [search, onChangeSearch, filterData] = useFilter(data, "name");
+    const [search, onChangeSearch, filterData] = useFilter(data, 'name')
+
+    const reFetchAfterUpdate = () => {
+        setIsUpdate(true)
+    }
 
     return (
         <div className="projects-list-wrapper">
@@ -101,27 +113,33 @@ const ProjectList = () => {
                 </div>
             </div>
             <div className="projects-list-table">
-                <Table columns={tableColumns} dataSource={filterData} bordered />
+                <Table
+                    columns={tableColumns}
+                    dataSource={filterData}
+                    bordered
+                />
             </div>
             <ProjectAddModal
+                update={reFetchAfterUpdate}
                 centered
                 width={1000}
                 visible={isAddModalVisible}
                 onClose={handleHideAddProject}
             />
-            <ProjectSummaryModal 
+            <ProjectSummaryModal
                 centered
                 width={800}
                 visible={isSummaryModalVisible}
-                onClose={handleHideSummary} 
-                id={viewId}          
+                onClose={handleHideSummary}
+                id={viewId}
             />
-            <ProjectEditModal 
+            <ProjectEditModal
+                update={reFetchAfterUpdate}
                 centered
                 width={800}
                 visible={isEditModalVisible}
-                onClose={handleHideEditProject} 
-                id={viewId}                      
+                onClose={handleHideEditProject}
+                id={viewId}
             />
         </div>
     )

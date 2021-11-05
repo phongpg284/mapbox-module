@@ -185,8 +185,6 @@ const ProjectSummaryModal: React.FC<ISummaryProjectModal> = ({
 
     useEffect(() => {
         if (!iseFetching && response && response.data && !response.hasError) {
-            console.log(response)
-
             setData(response.data)
         }
     }, [response])

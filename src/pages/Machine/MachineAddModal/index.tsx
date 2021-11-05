@@ -1,6 +1,13 @@
 import { Button, Form, Input, message, Modal } from 'antd'
+interface IModal {
+    centered?: boolean;
+    width?: number;
+    visible: boolean;
+    onClose: () => void;
+    update: () => void
+}
 
-const MachineAddModal = ({ ...props }) => {
+const MachineAddModal: React.FC<IModal> = ({onClose, update, ...props }) => {
     const [form] = Form.useForm()
 
     const addNewMachine = async (value: any) => {
@@ -21,9 +28,10 @@ const MachineAddModal = ({ ...props }) => {
     }
 
     const onFinish = (value: any) => {
-        console.log(value)
         addNewMachine(value).then((data) => {
+            update()
             message.success(data.response)
+            onClose()
         })
     }
 
@@ -39,6 +47,7 @@ const MachineAddModal = ({ ...props }) => {
         <Modal
             {...props}
             title="Thêm máy mới"
+            onCancel={onClose}
             footer={<Button onClick={handleAddNewMachine}>Đăng ký</Button>}
         >
             <div className="machine-add-container">

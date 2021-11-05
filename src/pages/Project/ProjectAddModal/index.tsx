@@ -5,9 +5,10 @@ interface IModal {
     width?: number;
     visible: boolean;
     onClose: () => void;
+    update: () => void
 }
 
-const ProjectAddModal: React.FC<IModal> = ({ onClose, ...props }) => {
+const ProjectAddModal: React.FC<IModal> = ({ onClose, update, ...props }) => {
     const [form] = Form.useForm()
 
     const addNewProject = async (value: any) => {
@@ -30,6 +31,7 @@ const ProjectAddModal: React.FC<IModal> = ({ onClose, ...props }) => {
     const onFinish = (value: any) => {
         console.log(value)
         addNewProject(value).then((data) => {
+            update();
             message.success(data.response)
         })
         onClose();

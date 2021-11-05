@@ -7,15 +7,19 @@ import useFetch from '../../../hooks/useFetch'
 import MachineAddModal from '../MachineAddModal'
 import useFilter from '../../../hooks/useFilter'
 const MachineList = () => {
+    const [isUpdate, setIsUpdate] = useState(true)
     const [machines, setMachines] = useState([])
     const [response, isFetching, setRequest] = useFetch({} as any)
 
     useEffect(() => {
-        setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/machine/',
-            method: 'GET',
-        })
-    }, [])
+        if (isUpdate) {
+            setRequest({
+                endPoint: 'https://dinhvichinhxac.online/api/machine/',
+                method: 'GET',
+            })
+            setIsUpdate(false)
+        }
+    }, [isUpdate])
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) setMachines(response.data)
@@ -62,6 +66,10 @@ const MachineList = () => {
 
     const [search, onChangeSearch, filterData] = useFilter(machines, "name");
 
+    const reFetchAfterUpdate = () => {
+        setIsUpdate(true);
+    }
+
     return (
         <div className="projects-list-wrapper">
             <div className="projects-list-control">
@@ -85,8 +93,8 @@ const MachineList = () => {
                 centered
                 width={1000}
                 visible={isModalVisible}
-                onOk={handleOk}
-                onCancel={handleCancel}
+                onClose={handleCancel}
+                update={reFetchAfterUpdate}
             />
         </div>
     )

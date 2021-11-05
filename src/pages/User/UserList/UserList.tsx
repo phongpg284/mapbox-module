@@ -11,6 +11,7 @@ import useFetch from '../../../hooks/useFetch'
 import useFilter from '../../../hooks/useFilter'
 
 const UserList = () => {
+    const [isUpdate, setIsUpdate] = useState(true)
     const history = useHistory()
     const tableColumns = [
         ...columns.slice(0, 1),
@@ -62,11 +63,14 @@ const UserList = () => {
     const [data, setData] = useState([])
     const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
-        setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/user/',
-            method: 'GET',
-        })
-    }, [])
+        if (isUpdate) {
+            setRequest({
+                endPoint: 'https://dinhvichinhxac.online/api/user/',
+                method: 'GET',
+            })
+            setIsUpdate(false)
+        }
+    }, [isUpdate])
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
@@ -80,6 +84,9 @@ const UserList = () => {
 
     const [search, onChangeSearch, filterData] = useFilter(data, "name");
 
+    const reFetchAfterUpdate = () => {
+        setIsUpdate(true);
+    }
     return (
         <div className="users-list-wrapper">
             <div className="users-list-control">

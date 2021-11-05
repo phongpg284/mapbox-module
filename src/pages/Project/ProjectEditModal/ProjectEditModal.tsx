@@ -108,17 +108,13 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
     const toggleEdit = () => {
         setEditing(!editing)
-        console.log(dataIndex, record)
         form.setFieldsValue({ [dataIndex]: record[dataIndex] })
     }
 
     const save = async () => {
         try {
             const values = await form.validateFields()
-            console.log('save', values)
-
             toggleEdit()
-            console.log({ ...record, ...values })
             handleSave({ ...record, ...values })
         } catch (errInfo) {
             console.log('Save failed:', errInfo)
@@ -166,6 +162,7 @@ interface IProjectEditModal {
     width?: number
     visible: boolean
     onClose: () => void
+    update: () => void
     id: number
 }
 
@@ -173,6 +170,7 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
     id,
     onClose,
     visible,
+    update,
     ...props
 }) => {
     const [data, setData] = useState<any>()
@@ -196,8 +194,6 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
 
     useEffect(() => {
         if (!iseFetching && response && response.data && !response.hasError) {
-            console.log(response)
-
             setData(response.data)
         }
     }, [response])
@@ -247,7 +243,6 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
     })
 
     const handleSave = (row: DataType) => {
-        console.log(row, "hoho")
         const newData = [...dataSource]
         const index = newData.findIndex((item: any) => row.ckey === item.ckey)
         const item = newData[index];
@@ -261,7 +256,6 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
 
     const [updateResponse, isFetchingUpdate, setRequestUpdate] = useFetch({} as any); 
     const handleSubmitEdit = () => {
-        console.log(dataSource)
         let convertDataSource: any = {}
         if (dataSource) {
             for (const item of dataSource) {
@@ -278,8 +272,6 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
         delete convertDataSource.end_time;
         delete convertDataSource.create_time;
         delete convertDataSource.update_time;
-
-        console.log(convertDataSource)
 
         // const body = convertDataSource.reduce((prev: any, curr: any) => {
         //     if(curr.value)
@@ -304,9 +296,11 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
     }
 
     useEffect(() => {
-      if(!isFetchingUpdate && updateResponse?.data && !updateResponse.hasError )
-      message.success(updateResponse.data)
-      onClose()
+        if(!isFetchingUpdate && updateResponse?.data && !updateResponse.hasError ) {
+            message.success(updateResponse.data)
+            update()
+        }
+        onClose()
     },[updateResponse])
 
     return (
