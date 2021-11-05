@@ -24,12 +24,14 @@ interface IProjectDeviceAddModal {
     width?: number
     visible: boolean
     onClose: () => void
+    update: () => void
     id: number
 }
 
 const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
     id,
     onClose,
+    update,
     visible,
     ...props
 }) => {
@@ -43,7 +45,7 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
     useEffect(() => {
         if (visible)
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/device/',
+                endPoint: 'https://dinhvichinhxac.online/api/machine/',
                 method: 'GET',
             })
     }, [visible])
@@ -95,17 +97,17 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
     const handleAddNewDevice = () => {
         const query = {
             action: 'update',
-            device_id: selectDevice,
+            machine_id: selectDevice,
             project_id: id,
         }
-        // setRequestUpdate({
-        //     endPoint: 'https://dinhvichinhxac.online/api/project-device/',
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-type': 'application/json',
-        //     },
-        //     requestBody: query,
-        // })
+        setRequestUpdate({
+            endPoint: 'https://dinhvichinhxac.online/api/project-machine/',
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            requestBody: query,
+        })
     }
 
     useEffect(() => {
@@ -114,11 +116,14 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
             responseUpdate &&
             responseUpdate.data &&
             !responseUpdate.hasError
-        )
+        ) {
+            update()
             message.success(responseUpdate.data)
+        }
         else if (!iseFetching && response.hasError) {
             message.error(response.hasError)
         }
+        onClose()
     }, [responseUpdate])
 
     return (

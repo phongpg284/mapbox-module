@@ -24,11 +24,13 @@ interface IProjectUserAddModal {
     width?: number
     visible: boolean
     onClose: () => void
+    update: () => void
     id: number
 }
 
 const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({
     id,
+    update,
     onClose,
     visible,
     ...props
@@ -115,10 +117,14 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({
             responseUpdate.data &&
             !responseUpdate.hasError
         )
-            message.success(responseUpdate.data)
+            {
+                update()
+                message.success(responseUpdate.data)
+            }
         else if (!iseFetching && response.hasError) {
             message.error(response.hasError)
         }
+        onClose()
     }, [responseUpdate])
 
     return (

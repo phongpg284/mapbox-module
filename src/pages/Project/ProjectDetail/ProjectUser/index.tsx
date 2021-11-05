@@ -7,6 +7,8 @@ import useFetch from '../../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
 import ProjectUserAddModal from './ProjectUserAddModal'
 const ProjectUser = ({ id }: any) => {
+    const [isUpdate, setIsUpdate] = useState(true)
+
     const tableColumns = [
         ...columns.slice(0, 1),
         {
@@ -30,17 +32,24 @@ const ProjectUser = ({ id }: any) => {
         },
     ]
 
-    const [response, isFetching, setRequest] = useFetch({
-        endPoint: 'https://dinhvichinhxac.online/api/project-user/',
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json',
-        },
-        requestBody: {
-            action: 'read',
-            project_id: id,
-        },
-    })
+    const [response, isFetching, setRequest] = useFetch({} as any)
+
+    useEffect(() => {
+        if (isUpdate) {
+            setRequest({
+                endPoint: 'https://dinhvichinhxac.online/api/project-user/',
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                requestBody: {
+                    action: 'read',
+                    project_id: id,
+                },
+            })
+            setIsUpdate(false)
+        }
+    }, [isUpdate])
 
     const [userList, setUserList] = useState<any>([])
     useEffect(() => {
@@ -73,6 +82,10 @@ const ProjectUser = ({ id }: any) => {
         setIsShowProjectUserAddModal(false)
     }
 
+    const reFetchAfterUpdate = () => {
+        setIsUpdate(true)
+    }
+
     return (
         <div className="project-users-container">
             <div className="project-users-control">
@@ -89,6 +102,7 @@ const ProjectUser = ({ id }: any) => {
                 <Table columns={tableColumns} dataSource={userList} bordered />
             </div>
             <ProjectUserAddModal
+                update={reFetchAfterUpdate}
                 id={id}
                 centered
                 width={800}

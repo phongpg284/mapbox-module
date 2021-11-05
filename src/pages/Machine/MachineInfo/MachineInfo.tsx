@@ -5,6 +5,7 @@ import MachineDevice from '../MachineDetail/MachineDevice'
 import MachineUser from '../MachineDetail/MachineUser'
 
 const MachineDetail = ({ id }: any) => {
+    console.log(typeof(id))
     const [currentTab, setCurrentTab] = useState('summary')
     const handleClick = (e: any) => {
         setCurrentTab(e.key)

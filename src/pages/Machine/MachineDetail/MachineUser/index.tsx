@@ -6,6 +6,7 @@ import useFetch from '../../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
 import MachineUserAddModal from './MachineUserAddModal'
 const MachineUser = ({ id }: any) => {
+    console.log(typeof(id))
     const [isUpdate, setIsUpdate] = useState(true)
 
     const tableColumns = [

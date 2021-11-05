@@ -8,6 +8,7 @@ import ProjectSummaryModal from '../ProjectSummaryModal'
 import ProjectSummary from './ProjectSummary'
 
 const ProjectDetail = ({ id }: any) => {
+    console.log(typeof(id), "hehe")
     const [currentTab, setCurrentTab] = useState('summary')
     const handleClick = (e: any) => {
         setCurrentTab(e.key)

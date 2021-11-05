@@ -7,6 +7,8 @@ import useFetch from '../../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
 import ProjectDeviceAddModal from './ProjectDeviceAddModal'
 const ProjectDevice = ({ id }: any) => {
+    const [isUpdate, setIsUpdate] = useState(true)
+
     const tableColumns = [
         ...columns.slice(0, 1),
         {
@@ -30,17 +32,24 @@ const ProjectDevice = ({ id }: any) => {
         },
     ]
 
-    const [response, isFetching, setRequest] = useFetch({
-        endPoint: 'https://dinhvichinhxac.online/api/project-machine/',
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json',
-        },
-        requestBody: {
-            action: 'read',
-            project_id: id,
-        },
-    })
+    const [response, isFetching, setRequest] = useFetch({} as any)
+
+    useEffect(() => {
+        if (isUpdate) {
+            setRequest({
+                endPoint: 'https://dinhvichinhxac.online/api/project-machine/',
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                requestBody: {
+                    action: 'read',
+                    project_id: id,
+                },
+            })
+            setIsUpdate(false)
+        }
+    }, [isUpdate])
 
     const [deviceList, setDeviceList] = useState<any>([])
     useEffect(() => {
@@ -72,6 +81,10 @@ const ProjectDevice = ({ id }: any) => {
         setIsShowProjectDeviceAddModal(false)
     }
 
+    const reFetchAfterUpdate = () => {
+        setIsUpdate(true)
+    }
+
     return (
         <div className="project-devices-container">
             <div className="project-devices-control">
@@ -85,9 +98,14 @@ const ProjectDevice = ({ id }: any) => {
                 </div>
             </div>
             <div className="project-list-table">
-                <Table columns={tableColumns} dataSource={deviceList} bordered />
+                <Table
+                    columns={tableColumns}
+                    dataSource={deviceList}
+                    bordered
+                />
             </div>
             <ProjectDeviceAddModal
+                update={reFetchAfterUpdate}
                 id={id}
                 centered
                 width={800}
