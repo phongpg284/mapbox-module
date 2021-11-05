@@ -11,6 +11,7 @@ import useFetch from '../../../hooks/useFetch'
 import ProjectAddModal from '../ProjectAddModal'
 import ProjectSummaryModal from '../ProjectSummaryModal'
 import ProjectEditModal from '../ProjectEditModal'
+import useFilter from '../../../hooks/useFilter'
 
 const ProjectList = () => {
     const [isAddModalVisible, setIsAddModalVisible] = useState(false)
@@ -80,20 +81,9 @@ const ProjectList = () => {
             setData(response.data)
         }
     }, [response])
-    // const data = []
-    // for (let i = 0; i < 50; i++) {
-    //     data.push({
-    //         key: i,
-    //         code: faker.datatype.string(),
-    //         name: faker.name.findName(),
-    //         contractValuation: faker.datatype.number(),
-    //         valuation: faker.datatype.number(),
-    //         percentage: faker.datatype.number(),
-    //         contractTime: faker.datatype.number(),
-    //         time: faker.datatype.number(),
-    //         remainTime: faker.datatype.number(),
-    //     })
-    // }
+
+    const [search, onChangeSearch, filterData] = useFilter(data, "name");
+
     return (
         <div className="projects-list-wrapper">
             <div className="projects-list-control me-5">
@@ -102,6 +92,8 @@ const ProjectList = () => {
                         prefix={
                             <SearchOutlined className="site-form-item-icon" />
                         }
+                        value={search}
+                        onChange={onChangeSearch}
                     />
                 </div>
                 <div className="projects-list-control-actions">
@@ -109,7 +101,7 @@ const ProjectList = () => {
                 </div>
             </div>
             <div className="projects-list-table">
-                <Table columns={tableColumns} dataSource={data} bordered />
+                <Table columns={tableColumns} dataSource={filterData} bordered />
             </div>
             <ProjectAddModal
                 centered

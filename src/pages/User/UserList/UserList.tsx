@@ -8,6 +8,7 @@ import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import columns from './columns'
 import { useEffect, useState } from 'react'
 import useFetch from '../../../hooks/useFetch'
+import useFilter from '../../../hooks/useFilter'
 
 const UserList = () => {
     const history = useHistory()
@@ -76,6 +77,9 @@ const UserList = () => {
     const handleClickDelete = (index: number) => {
         window.alert('delete user id: ' + index)
     }
+
+    const [search, onChangeSearch, filterData] = useFilter(data, "name");
+
     return (
         <div className="users-list-wrapper">
             <div className="users-list-control">
@@ -84,6 +88,8 @@ const UserList = () => {
                         prefix={
                             <SearchOutlined className="site-form-item-icon" />
                         }
+                        value={search}
+                        onChange={onChangeSearch}
                     />
                 </div>
                 <div className="users-list-control-actions">
@@ -91,7 +97,7 @@ const UserList = () => {
                 </div>
             </div>
             <div className="users-list-table">
-                <Table columns={tableColumns} dataSource={data} bordered />;
+                <Table columns={tableColumns} dataSource={filterData} bordered />;
             </div>
         </div>
     )

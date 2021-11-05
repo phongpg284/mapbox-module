@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useFetch from '../../../hooks/useFetch'
 import DeviceAddModal from '../DeviceAddModal'
+import useFilter from '../../../hooks/useFilter'
 const DeviceList = () => {
     const [devices, setDevices] = useState([])
     const [response, isFetching, setRequest] = useFetch({} as any)
@@ -75,6 +76,8 @@ const DeviceList = () => {
         },
     ]
 
+    const [search, onChangeSearch, filterData] = useFilter(devices, "name");
+
     return (
         <div className="projects-list-wrapper">
             <div className="projects-list-control">
@@ -83,6 +86,8 @@ const DeviceList = () => {
                         prefix={
                             <SearchOutlined className="site-form-item-icon" />
                         }
+                        value={search}
+                        onChange={onChangeSearch}
                     />
                 </div>
                 <div className="projects-list-control-actions">
@@ -90,7 +95,7 @@ const DeviceList = () => {
                 </div>
             </div>
             <div className="projects-list-table">
-                <Table columns={tableColumns} dataSource={devices} bordered />
+                <Table columns={tableColumns} dataSource={filterData} bordered />
             </div>
             <DeviceAddModal
                 centered

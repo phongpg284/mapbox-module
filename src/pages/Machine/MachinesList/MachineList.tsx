@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useFetch from '../../../hooks/useFetch'
 import MachineAddModal from '../MachineAddModal'
+import useFilter from '../../../hooks/useFilter'
 const MachineList = () => {
     const [machines, setMachines] = useState([])
     const [response, isFetching, setRequest] = useFetch({} as any)
@@ -59,6 +60,8 @@ const MachineList = () => {
         },
     ]
 
+    const [search, onChangeSearch, filterData] = useFilter(machines, "name");
+
     return (
         <div className="projects-list-wrapper">
             <div className="projects-list-control">
@@ -67,6 +70,8 @@ const MachineList = () => {
                         prefix={
                             <SearchOutlined className="site-form-item-icon" />
                         }
+                        value={search}
+                        onChange={onChangeSearch}
                     />
                 </div>
                 <div className="projects-list-control-actions">
@@ -74,7 +79,7 @@ const MachineList = () => {
                 </div>
             </div>
             <div className="projects-list-table">
-                <Table columns={tableColumns} dataSource={machines} bordered />
+                <Table columns={tableColumns} dataSource={filterData} bordered />
             </div>
             <MachineAddModal
                 centered
