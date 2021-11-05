@@ -1,5 +1,14 @@
 import style from './index.module.scss'
-import { Button, Modal, Table, Form, Input, FormInstance, message } from 'antd'
+import {
+    Button,
+    Modal,
+    Table,
+    Form,
+    Input,
+    FormInstance,
+    message,
+    Spin,
+} from 'antd'
 import useFetch from '../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
 
@@ -62,6 +71,7 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
     }, [updateResponse])
 
     const onFinish = (value: any) => {
+        console.log(value)
         setRequestUpdate({
             endPoint: 'https://dinhvichinhxac.online/api/device/',
             method: 'POST',
@@ -94,70 +104,103 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
                 footer={<Button onClick={handleSubmitEdit}>Cập nhật</Button>}
             >
                 <div className={style.device_edit_content}>
-                    <Form
-                        form={form}
-                        layout="vertical"
-                        onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
-                        autoComplete="off"
-                    >
-                        <div style={{ overflow: 'hidden' }}>
-                            <Form.Item
-                                name="sim_imei"
-                                label="IMEI"
-                                rules={[
-                                    { required: true },
-                                    //@ts-ignore
-                                    { type: 'string', warningOnly: true },
-                                ]}
-                            >
-                                <Input placeholder="" />
-                            </Form.Item>
-                        </div>
-                        <div style={{ overflow: 'hidden' }}>
-                            <Form.Item
-                                name="name"
-                                label="Name"
-                                rules={[
-                                    { required: true },
-                                    //@ts-ignore
-                                    { type: 'string', warningOnly: true },
-                                ]}
-                            >
-                                <Input placeholder="" />
-                            </Form.Item>
-                        </div>
-                        <div style={{ overflow: 'hidden' }}>
-                            <Form.Item name="caster_ip" label="Caster Ip">
-                                <Input placeholder="" />
-                            </Form.Item>
-                        </div>
-                        <div style={{ overflow: 'hidden' }}>
-                            <Form.Item name="caster_port" label="Caster Port">
-                                <Input placeholder="" />
-                            </Form.Item>
-                        </div>
+                    {!data && <Spin />}
+                    {data && (
+                        <Form
+                            form={form}
+                            layout="vertical"
+                            onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
+                            autoComplete="off"
+                        >
+                            <div style={{ overflow: 'hidden' }}>
+                                <Form.Item
+                                    name="sim_imei"
+                                    label="IMEI"
+                                    rules={[
+                                        { required: true },
+                                        //@ts-ignore
+                                        { type: 'string', warningOnly: true },
+                                    ]}
+                                >
+                                    <Input
+                                        placeholder=""
+                                        defaultValue={data.sim_imei}
+                                    />
+                                </Form.Item>
+                            </div>
+                            <div style={{ overflow: 'hidden' }}>
+                                <Form.Item
+                                    name="name"
+                                    label="Name"
+                                    rules={[
+                                        { required: true },
+                                        //@ts-ignore
+                                        { type: 'string', warningOnly: true },
+                                    ]}
+                                >
+                                    <Input
+                                        placeholder=""
+                                        defaultValue={data.name}
+                                    />
+                                </Form.Item>
+                            </div>
+                            <div style={{ overflow: 'hidden' }}>
+                                <Form.Item name="caster_ip" label="Caster Ip">
+                                    <Input
+                                        placeholder=""
+                                        defaultValue={data.caster_ip}
+                                    />
+                                </Form.Item>
+                            </div>
+                            <div style={{ overflow: 'hidden' }}>
+                                <Form.Item
+                                    name="caster_port"
+                                    label="Caster Port"
+                                >
+                                    <Input
+                                        placeholder=""
+                                        defaultValue={data.caster_port}
+                                    />
+                                </Form.Item>
+                            </div>
 
-                        <div style={{ overflow: 'hidden' }}>
-                            <Form.Item
-                                name="ntrip_username"
-                                label="Ntrip Username"
-                            >
-                                <Input placeholder="" />
-                            </Form.Item>
-                        </div>
+                            <div style={{ overflow: 'hidden' }}>
+                                <Form.Item
+                                    name="ntrip_username"
+                                    label="Ntrip Username"
+                                >
+                                    <Input
+                                        placeholder=""
+                                        defaultValue={data.ntrip_username}
+                                    />
+                                </Form.Item>
+                            </div>
 
-                        <div style={{ overflow: 'hidden' }}>
-                            <Form.Item name="ntrip_pass" label="Ntrip Pass">
-                                <Input placeholder="" />
-                            </Form.Item>
-                        </div>
-                        <div style={{ overflow: 'hidden' }}>
-                            <Form.Item name="mount_point" label="Mount Point">
-                                <Input placeholder="" />
-                            </Form.Item>
-                        </div>
-                    </Form>
+                            <div style={{ overflow: 'hidden' }}>
+                                <Form.Item
+                                    name="ntrip_password"
+                                    label="Ntrip Password"
+                                >
+                                    <Input
+                                        placeholder=""
+                                        defaultValue={data.ntrip_password}
+                                    />
+                                </Form.Item>
+                            </div>
+                            <div style={{ overflow: 'hidden' }}>
+                                <Form.Item
+                                    name="mount_point"
+                                    label="Mount Point"
+                                >
+                                    <Input
+                                        placeholder=""
+                                        defaultValue={data.mount_point}
+                                    />
+                                </Form.Item>
+                            </div>
+                        </Form>
+                    )}
                 </div>
             </Modal>
         </div>

@@ -1,13 +1,20 @@
-import columns from './columns'
-import { Button, Input, Modal, Space, Table } from 'antd'
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
+import './index.scss'
+
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import useFetch from '../../../hooks/useFetch'
+
+import { Button, Input, Space, Table } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
+
+import columns from './columns'
+
 import DeviceAddModal from '../DeviceAddModal'
 import useFilter from '../../../hooks/useFilter'
 import DeviceEditModal from '../DeviceEditModal'
 import DeviceSummaryModal from '../DeviceSummaryModal'
+
+import useFetch from '../../../hooks/useFetch'
+
 const DeviceList = () => {
     const [isUpdate, setIsUpdate] = useState(true)
     const [devices, setDevices] = useState([])
@@ -75,8 +82,12 @@ const DeviceList = () => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button onClick={() => handleShowSummary(record.id)}>Tổng quan</button>
-                    <button onClick={() => handleShowEditDevice(record.id)}>Cập nhật</button>
+                    <button onClick={() => handleShowSummary(record.id)}>
+                        Tổng quan
+                    </button>
+                    <button onClick={() => handleShowEditDevice(record.id)}>
+                        Cập nhật
+                    </button>
                 </Space>
             ),
         },
@@ -114,25 +125,25 @@ const DeviceList = () => {
             <DeviceAddModal
                 update={reFetchAfterUpdate}
                 centered
-                width={1000}
+                width={800}
                 visible={isAddModalVisible}
                 onClose={handleHideAddDevice}
             />
             <DeviceSummaryModal
                 centered
-                width={1000}
-                visible={isEditModalVisible}
+                width={800}
+                visible={isSummaryModalVisible}
                 onClose={handleHideSummary}
                 id={viewId}
             />
             <DeviceEditModal
                 update={reFetchAfterUpdate}
                 centered
-                width={1000}
-                visible={isSummaryModalVisible}
+                width={800}
+                visible={isEditModalVisible}
                 onClose={handleHideEditDevice}
                 id={viewId}
-           />
+            />
         </div>
     )
 }
