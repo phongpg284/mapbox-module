@@ -3,6 +3,8 @@ import { Form, Input, Button, Checkbox } from 'antd'
 import { useAppDispatch } from '../../app/store'
 import { updateToken } from '../../app/authSlice'
 import { useHistory } from 'react-router'
+import imetLogo from '../../assets/imet-logo.png'
+
 
 const Login = () => {
     const history = useHistory()
@@ -42,8 +44,20 @@ const Login = () => {
 
     return (
         <div className="login-wrapper">
+            <div className="login-intro">
+                <div className="login-theme"></div>
+                <div className="intro-info">
+                    <img src={imetLogo} alt="" className="intro-logo" />
+                    <div className="intro-title">WELCOME TO iMET</div>
+                    <div className="intro-description">The best construction vehicles tracking-app</div>
+                    <div className="intro-description">you can find!</div>
+                </div>
+            </div>
             <div className="login-container">
+                <div className="login-title">LOG IN TO iMET</div>
+                
                 <Form
+                    className="login-form"
                     name="basic"
                     layout="vertical"
                     labelCol={{ span: 16 }}
@@ -54,7 +68,6 @@ const Login = () => {
                     autoComplete="off"
                 >
                     <Form.Item
-                        label="Username"
                         name="username"
                         rules={[
                             {
@@ -63,11 +76,10 @@ const Login = () => {
                             },
                         ]}
                     >
-                        <Input />
+                        <Input className="login-form-input" placeholder="Username"/>
                     </Form.Item>
 
                     <Form.Item
-                        label="Password"
                         name="password"
                         rules={[
                             {
@@ -76,10 +88,11 @@ const Login = () => {
                             },
                         ]}
                     >
-                        <Input.Password />
+                        <Input.Password className="login-form-input" placeholder="Password" />
                     </Form.Item>
 
                     <Form.Item
+                        className="login-form-checkbox"
                         name="remember"
                         valuePropName="checked"
                         wrapperCol={{ offset: 4, span: 16 }}
@@ -87,12 +100,16 @@ const Login = () => {
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+                    <Form.Item 
+                        className="login-form-button"
+                        wrapperCol={{ offset: 4, span: 16 }}
+                    >
                         <Button type="primary" htmlType="submit">
                             Log in
                         </Button>
                     </Form.Item>
                 </Form>
+  
             </div>
         </div>
     )
