@@ -17,7 +17,7 @@ const ProfileDashboard = () => {
         fetch('https://dinhvichinhxac.online/api/logout/', {
             method: 'GET',
             headers: {
-                'Authentication': `Token ${account.accessToken}`,
+                'Authorization': `Token ${account.accessToken}`,
                 'Content-Type': 'application/json',
             },
         })

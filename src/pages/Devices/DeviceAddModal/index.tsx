@@ -1,6 +1,14 @@
 import { Button, Form, Input, message, Modal } from 'antd'
 
-const DeviceAddModal = ({ ...props }) => {
+interface IModal {
+    centered?: boolean;
+    width?: number;
+    visible: boolean;
+    onClose: () => void;
+    update: () => void
+}
+
+const DeviceAddModal: React.FC<IModal> = ({update, onClose, ...props }) => {
     const [form] = Form.useForm()
 
     const addNewDevice = async (value: any) => {
@@ -21,9 +29,10 @@ const DeviceAddModal = ({ ...props }) => {
     }
 
     const onFinish = (value: any) => {
-        console.log(value)
         addNewDevice(value).then((data) => {
+            update()
             message.success(data.response)
+            onClose()
         })
     }
 
@@ -38,6 +47,7 @@ const DeviceAddModal = ({ ...props }) => {
     return (
         <Modal
             {...props}
+            onCancel={onClose}
             title="Thêm thiết bị"
             footer={<Button onClick={handleAddNewDevice}>Đăng ký</Button>}
         >

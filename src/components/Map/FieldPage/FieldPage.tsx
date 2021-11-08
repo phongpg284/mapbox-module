@@ -7,11 +7,12 @@ const FieldPage: React.FC = ({ children }: any) => {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((data) => setData(data.response));
+      .then((data) => setData(data));
   },[]);
 
   useEffect(() => {
     console.log("render page")
+    console.log(data)
   });
   
   return (

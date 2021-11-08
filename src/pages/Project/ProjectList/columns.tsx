@@ -1,42 +1,55 @@
-import { Space, Tag } from "antd";
+import { Space, Tag } from 'antd'
+
+export const fixedData = {
+    code: "",
+    name: "",
+    description: "",
+}
 
 const columns = [
-  {
-    title: "Mã dự án",
-    dataIndex: "code",
-    key: "code",
-  },
-  {
-    title: "Giá trị hợp đồng (Tỷ VNĐ)",
-    dataIndex: "contractValuation",
-    key: "contractValuation",
-  },
-  {
-    title: "Giá trị thực hiện (Tỷ VNĐ)",
-    dataIndex: "valuation",
-    key: "valuation",
-  },
-  {
-    title: "Hoàn thành (%)",
-    dataIndex: "percentage",
-    key: "percentage",
-  },
+    {
+        title: 'Mã dự án',
+        dataIndex: 'code',
+        key: 'code',
+    },
+    {
+        title: 'Mô tả tổng quan',
+        dataIndex: 'description',
+        key: 'description',
+    },
 
-  {
-    title: "Thời gian hợp đồng (Ngày)",
-    dataIndex: "contractTime",
-    key: "contractTime",
-  },
-  {
-    title: "Thời gian hiện thực (Ngày)",
-    dataIndex: "time",
-    key: "time",
-  },
-  {
-    title: "Thời gian còn lại (ngày)",
-    dataIndex: "remainTime",
-    key: "remainTime",
-  },
-];
+    {
+        title: 'Thời gian bắt đầu',
+        dataIndex: 'start_time',
+        key: 'start_time',
+        render: (text: any) => {
+            if (text) return <div>{new Date(text).toLocaleString()}</div>
+        },
+    },
+    {
+        title: 'Thời gian kết thúc',
+        dataIndex: 'end_time',
+        key: 'end_time',
+        render: (text: any) => {
+            if (text) return <div>{new Date(text).toLocaleString()}</div>
+        },
+    },
+    {
+        title: 'Thời gian tạo',
+        dataIndex: 'create_time',
+        key: 'create_time',
+        render: (text: any) => {
+            if (text) return <div>{new Date(text).toLocaleString()}</div>
+        },
+    },
+    {
+        title: 'Thời gian cập nhật',
+        dataIndex: 'update_time',
+        key: 'update_time',
+        render: (text: any) => {
+            if (text) return <div>{new Date(text).toLocaleString()}</div>
+        },
+    },
+]
 
-export default columns;
+export default columns

@@ -1,0 +1,17 @@
+.machine-devices-container {
+    border: groove 1px;
+}
+
+.machine-devices-control{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.machine-devices-control-report {
+
+}
+
+.machine-devices-control-add {
+    margin-right: 30px;
+}

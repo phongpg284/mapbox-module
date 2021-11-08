@@ -7,30 +7,43 @@ import { Button, Input, Modal, Space, Table } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
 import columns from './columns'
-import ProjectSummary from '../ProjectSummary'
-import faker from 'faker'
 import useFetch from '../../../hooks/useFetch'
 import ProjectAddModal from '../ProjectAddModal'
+import ProjectSummaryModal from '../ProjectSummaryModal'
+import ProjectEditModal from '../ProjectEditModal'
+import useFilter from '../../../hooks/useFilter'
 
 const ProjectList = () => {
-    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [isUpdate, setIsUpdate] = useState(true)
+    const [isAddModalVisible, setIsAddModalVisible] = useState(false)
+    const [isSummaryModalVisible, setIsSummaryModalVisible] = useState(false)
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false)
+    const [viewId, setViewId] = useState(0)
 
-    const handleAddProject = () => {
-        showModal()
-    }
-    const showModal = () => {
-        setIsModalVisible(true)
-    }
-
-    const handleOk = () => {
-        setIsModalVisible(false)
+    const handleShowAddProject = () => {
+        setIsAddModalVisible(true)
     }
 
-    const handleCancel = () => {
-        setIsModalVisible(false)
+    const handleShowEditProject = (id: number) => {
+        setViewId(id)
+        setIsEditModalVisible(true)
     }
-    const handleClick = () => {
-        showModal()
+
+    const handleShowSummary = (id: number) => {
+        setViewId(id)
+        setIsSummaryModalVisible(true)
+    }
+
+    const handleHideSummary = () => {
+        setIsSummaryModalVisible(false)
+    }
+
+    const handleHideAddProject = () => {
+        setIsAddModalVisible(false)
+    }
+
+    const handleHideEditProject = () => {
+        setIsEditModalVisible(false)
     }
 
     const tableColumns = [
@@ -40,7 +53,7 @@ const ProjectList = () => {
             dataIndex: 'name',
             key: 'name',
             render: (text: any, record: any) => (
-                <Link to={`/projects/${record.key}`}>{text}</Link>
+                <Link to={`/projects/${record.id}`}>{text}</Link>
             ),
         },
         ...columns.slice(1),
@@ -49,8 +62,12 @@ const ProjectList = () => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button onClick={handleClick}>Info</button>
-                    <button>Delete</button>
+                    <button onClick={() => handleShowSummary(record.id)}>
+                        Tổng quan
+                    </button>
+                    <button onClick={() => handleShowEditProject(record.id)}>
+                        Cập nhật
+                    </button>
                 </Space>
             ),
         },
@@ -58,31 +75,27 @@ const ProjectList = () => {
     const [data, setData] = useState([])
     const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
-        setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/project/',
-            method: 'GET',
-        })
-    }, [])
+        if (isUpdate) {
+            setRequest({
+                endPoint: 'https://dinhvichinhxac.online/api/project/',
+                method: 'GET',
+            })
+            setIsUpdate(false)
+        }
+    }, [isUpdate])
 
-    useEffect(() => {        
+    useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
             setData(response.data)
         }
     }, [response])
-    // const data = []
-    // for (let i = 0; i < 50; i++) {
-    //     data.push({
-    //         key: i,
-    //         code: faker.datatype.string(),
-    //         name: faker.name.findName(),
-    //         contractValuation: faker.datatype.number(),
-    //         valuation: faker.datatype.number(),
-    //         percentage: faker.datatype.number(),
-    //         contractTime: faker.datatype.number(),
-    //         time: faker.datatype.number(),
-    //         remainTime: faker.datatype.number(),
-    //     })
-    // }
+
+    const [search, onChangeSearch, filterData] = useFilter(data, 'name')
+
+    const reFetchAfterUpdate = () => {
+        setIsUpdate(true)
+    }
+
     return (
         <div className="projects-list-wrapper">
             <div className="projects-list-control me-5">
@@ -91,21 +104,42 @@ const ProjectList = () => {
                         prefix={
                             <SearchOutlined className="site-form-item-icon" />
                         }
+                        value={search}
+                        onChange={onChangeSearch}
                     />
                 </div>
                 <div className="projects-list-control-actions">
-                    <Button onClick={handleAddProject}>Thêm</Button>
+                    <Button onClick={handleShowAddProject}>Thêm</Button>
                 </div>
             </div>
             <div className="projects-list-table">
-                <Table columns={tableColumns} dataSource={data} bordered />;
+                <Table
+                    columns={tableColumns}
+                    dataSource={filterData}
+                    bordered
+                />
             </div>
             <ProjectAddModal
+                update={reFetchAfterUpdate}
                 centered
                 width={1000}
-                visible={isModalVisible}
-                onOk={handleOk}
-                onCancel={handleCancel}
+                visible={isAddModalVisible}
+                onClose={handleHideAddProject}
+            />
+            <ProjectSummaryModal
+                centered
+                width={800}
+                visible={isSummaryModalVisible}
+                onClose={handleHideSummary}
+                id={viewId}
+            />
+            <ProjectEditModal
+                update={reFetchAfterUpdate}
+                centered
+                width={800}
+                visible={isEditModalVisible}
+                onClose={handleHideEditProject}
+                id={viewId}
             />
         </div>
     )

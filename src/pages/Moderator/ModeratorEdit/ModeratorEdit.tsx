@@ -190,7 +190,7 @@ const ModeratorEdit = ({ id }: any) => {
     // useEffect(() => {
     //     setDataSource(fakeDataSource)
     // }, [])
-    const [dataSource, setDataSource] = useState<any>([])
+    const [dataSource, setDataSource] = useState<any[]>([])
     const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
         setRequest({
@@ -208,10 +208,21 @@ const ModeratorEdit = ({ id }: any) => {
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
-            setDataSource(response.data)
-            console.log(response.data)
+            const convertDataSource = [];
+            for (const [key, value] of Object.entries(response.data[0])) {
+                convertDataSource.push({
+                    ckey: key,
+                    value: value
+                })    
+            }
+            setDataSource(convertDataSource)
         }
     }, [response])
+
+    useEffect(() => {
+      console.log(dataSource);
+      
+    })
 
     const components = {
         body: {
@@ -237,6 +248,7 @@ const ModeratorEdit = ({ id }: any) => {
     })
 
     const handleSave = (row: DataType) => {
+        console.log("edit")
         const newData = [...dataSource]
         const index = newData.findIndex((item: any) => row.key === item.key)
         const item = newData[index]

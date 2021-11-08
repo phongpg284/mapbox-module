@@ -1,61 +1,75 @@
-import columns from './columns'
-import { Button, Input, Modal, Space, Table } from 'antd'
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
+import './index.scss'
+
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import useFetch from '../../../hooks/useFetch'
+
+import { Button, Input, Space, Table } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
+
+import columns from './columns'
+
 import DeviceAddModal from '../DeviceAddModal'
+import useFilter from '../../../hooks/useFilter'
+import DeviceEditModal from '../DeviceEditModal'
+import DeviceSummaryModal from '../DeviceSummaryModal'
+
+import useFetch from '../../../hooks/useFetch'
+
 const DeviceList = () => {
+    const [isUpdate, setIsUpdate] = useState(true)
     const [devices, setDevices] = useState([])
+
+    const [isAddModalVisible, setIsAddModalVisible] = useState(false)
+    const [isSummaryModalVisible, setIsSummaryModalVisible] = useState(false)
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false)
+    const [viewId, setViewId] = useState(0)
     const [response, isFetching, setRequest] = useFetch({} as any)
 
     useEffect(() => {
-        setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/device/',
-            method: 'GET',
-        })
-    }, [])
+        if (isUpdate) {
+            setRequest({
+                endPoint: 'https://dinhvichinhxac.online/api/device/',
+                method: 'GET',
+            })
+            setIsUpdate(false)
+        }
+    }, [isUpdate])
 
     useEffect(() => {
-        if (!isFetching && response && response.data && !response.hasError) setDevices(response.data)
+        if (!isFetching && response && response.data && !response.hasError)
+            setDevices(response.data)
     }, [response])
-    // useEffect(() => {
-    //     fetch('https://dinhvichinhxac.online/api/device/', {
-    //         method: 'GET',
-    //     })
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             const convertData = data.response.map((device: any) => {
-    //                 return {
-    //                     ...device,
-    //                     create_time: new Date(device.create_time).toLocaleString(),
-    //                     update_time: new Date(device.update_time).toLocaleString(),
-    //                 }
-    //             })
-    //             setDevices(convertData)
-    //         })
-    // }, [])
 
-    const [isModalVisible, setIsModalVisible] = useState(false)
-
-    const showModal = () => {
-        setIsModalVisible(true)
+    const handleShowAddDevice = () => {
+        setIsAddModalVisible(true)
     }
 
-    const handleOk = () => {
-        setIsModalVisible(false)
+    const handleShowEditDevice = (id: number) => {
+        setViewId(id)
+        setIsEditModalVisible(true)
     }
 
-    const handleCancel = () => {
-        setIsModalVisible(false)
+    const handleShowSummary = (id: number) => {
+        setViewId(id)
+        setIsSummaryModalVisible(true)
     }
-    const handleClickInfo = () => {
-        showModal()
+
+    const handleHideSummary = () => {
+        setIsSummaryModalVisible(false)
     }
+
+    const handleHideAddDevice = () => {
+        setIsAddModalVisible(false)
+    }
+
+    const handleHideEditDevice = () => {
+        setIsEditModalVisible(false)
+    }
+
     const tableColumns = [
-        ...columns.slice(0, 2),
+        ...columns.slice(0, 1),
         {
-            title: 'Tên dự án',
+            title: 'Tên thiết bị',
             dataIndex: 'name',
             key: 'name',
             render: (text: any, record: any) => (
@@ -68,36 +82,67 @@ const DeviceList = () => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button>Info</button>
-                    <button>Delete</button>
+                    <button onClick={() => handleShowSummary(record.id)}>
+                        Tổng quan
+                    </button>
+                    <button onClick={() => handleShowEditDevice(record.id)}>
+                        Cập nhật
+                    </button>
                 </Space>
             ),
         },
     ]
 
+    const [search, onChangeSearch, filterData] = useFilter(devices, 'name')
+
+    const reFetchAfterUpdate = () => {
+        setIsUpdate(true)
+    }
+
     return (
-        <div className="projects-list-wrapper">
-            <div className="projects-list-control">
-                <div className="projects-list-control-search">
+        <div className="devices-list-wrapper">
+            <div className="devices-list-control">
+                <div className="devices-list-control-search">
                     <Input
                         prefix={
                             <SearchOutlined className="site-form-item-icon" />
                         }
+                        value={search}
+                        onChange={onChangeSearch}
                     />
                 </div>
-                <div className="projects-list-control-actions">
-                    <Button onClick={handleClickInfo}>Thêm thiết bị</Button>
+                <div className="devices-list-control-actions">
+                    <Button onClick={handleShowAddDevice}>Thêm thiết bị</Button>
                 </div>
             </div>
-            <div className="projects-list-table">
-                <Table columns={tableColumns} dataSource={devices} bordered />
+            <div className="devices-list-table">
+                <Table
+                    columns={tableColumns}
+                    dataSource={filterData}
+                    bordered
+                />
             </div>
             <DeviceAddModal
+                update={reFetchAfterUpdate}
                 centered
-                width={1000}
-                visible={isModalVisible}
-                onOk={handleOk}
-                onCancel={handleCancel}
+                width={800}
+                visible={isAddModalVisible}
+                onClose={handleHideAddDevice}
+            />
+            <DeviceSummaryModal
+                centered
+                width={800}
+                visible={isSummaryModalVisible}
+                onClose={handleHideSummary}
+                id={viewId}
+            />
+            <DeviceEditModal
+                update={reFetchAfterUpdate}
+                centered
+                width={800}
+                visible={isEditModalVisible}
+                onClose={handleHideEditDevice}
+                id={viewId}
             />
         </div>
     )

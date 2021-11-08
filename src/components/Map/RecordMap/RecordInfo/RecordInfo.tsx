@@ -1,10 +1,16 @@
-import { Divider, Spin } from 'antd'
+import { Divider, InputNumber, Spin } from 'antd'
 import './index.css'
 import LocalShippingIcon from '@material-ui/icons/LocalShipping'
 import BorderAllIcon from '@material-ui/icons/BorderAll'
-import { CaretLeftOutlined, CaretRightOutlined, LoadingOutlined } from '@ant-design/icons'
-import { useEffect, useState } from 'react'
+import {
+    CaretLeftOutlined,
+    CaretRightOutlined,
+    LoadingOutlined,
+} from '@ant-design/icons'
+import { useContext, useEffect, useState } from 'react'
 import { Select } from 'antd'
+import { ViewIndexContext as RecordViewIndex } from '../../RecordMap/RecordMap'
+import { ViewIndexContext as TaskViewIndex } from '../../TaskMap/TaskMap'
 
 const { Option } = Select
 
@@ -21,8 +27,13 @@ const RecordInfoItem = ({ icon, title, content }: any) => {
     )
 }
 
-const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
-    
+const RecordInfo = ({
+    data,
+    options,
+    changeSelectTask,
+    isFetching,
+    viewWidthContextKey,
+}: any) => {
     const [isShowRecordInfo, setIsShowRecordInfo] = useState(true)
     const handleClickControl = () => {
         setIsShowRecordInfo(!isShowRecordInfo)
@@ -35,21 +46,31 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
         setSelectedTask(value)
     }
 
+    const { viewWidth, setViewWidth } = useContext(
+        viewWidthContextKey === 'record' ? RecordViewIndex : TaskViewIndex
+    )
+
+    const handleChangeWidth = (value: number) => {
+        setViewWidth(value)
+    }
+
     let total = {
         speed: 0,
         accuracy: 0,
     }
 
-    data.forEach((stat: any) => {
-        total.speed += stat.speed
-        total.accuracy += stat.accuracy
+    data?.speed?.forEach((stat: any) => {
+        total.speed += stat
+    })
+    data?.accuracy?.forEach((stat: any) => {
+        total.accuracy += stat
     })
 
     const average = {
-        speed: total.speed / data.length,
-        accuray: total.accuracy / data.length,
+        speed: total.speed / data?.speed?.length,
+        accuray: total.accuracy / data?.accuracy?.length,
     }
-    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
     return (
         <div className="record-info-container">
             <div className="record-info-control" onClick={handleClickControl}>
@@ -63,17 +84,31 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
                     isShowRecordInfo ? 'show' : 'hide'
                 }`}
             >
-                <Select value={selectedTask} style={{ width: 120 }} onChange={handleChange}>
-                    {options &&
-                        options.map((id: any) => (
-                            <Option value={id} key={id}>
-                                {id}
-                            </Option>
-                        ))}
-                </Select>
-                {isFetching && selectedTask && (
-                    <Spin indicator={antIcon} />
-                )}
+                <div style={{ marginBottom: '20px' }}>
+                    <span>Select task:</span>
+                    <Select
+                        value={selectedTask}
+                        style={{ width: 120 }}
+                        onChange={handleChange}
+                    >
+                        {options &&
+                            options.map((id: any) => (
+                                <Option value={id} key={id}>
+                                    {id}
+                                </Option>
+                            ))}
+                    </Select>
+                </div>
+
+                <div>
+                    <span>Select width: </span>
+                    <InputNumber
+                        value={viewWidth}
+                        style={{ width: 100 }}
+                        onChange={handleChangeWidth}
+                    />
+                </div>
+                {isFetching && selectedTask && <Spin indicator={antIcon} />}
                 <RecordInfoItem />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
@@ -84,12 +119,12 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
                     title="Worked Area"
-                    content="0.00 ha"
+                    content=""
                 />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
                     title="Work Width"
-                    content="10.0 m"
+                    content=""
                 />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
@@ -99,7 +134,9 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching }: any) => {
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}
                     title="Distance"
-                    content={`${data[data.length - 1]?.distance?.toFixed(4)} m`}
+                    content={`${data.distance?.[
+                        data.distance?.length - 1
+                    ]?.toFixed(4)} m`}
                 />
                 <RecordInfoItem
                     icon={<LocalShippingIcon />}

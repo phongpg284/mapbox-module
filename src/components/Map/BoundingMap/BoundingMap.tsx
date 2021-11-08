@@ -3,7 +3,6 @@ import Mapbox from "../Mapbox";
 import * as turf from "@turf/turf";
 
 const BoundingMap = ({ boundingData, match }: any) => {
-  console.log(match)
   const [drawData, setDrawData] = useState<any>();
   const [fitBounds, setFitBounds] = useState<any>();
   useEffect(() => {

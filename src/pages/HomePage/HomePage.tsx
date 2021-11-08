@@ -1,4 +1,4 @@
-import './index.css'
+import './index.scss'
 
 import { useState } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
@@ -16,7 +16,7 @@ import FieldList from '../../components/Map/FieldPage/FieldList'
 import FieldCard from '../../components/Map/FieldPage/FieldCard'
 import BoundingMap from '../../components/Map/BoundingMap'
 import RecordMap from '../../components/Map/RecordMap'
-import ProjectSummary from '../Project/ProjectSummary'
+import ProjectSummaryModal from '../Project/ProjectSummaryModal'
 import ProjectDetail from '../Project/ProjectDetail'
 import UserDetail from '../User/UserDetail'
 import DeviceDetail from '../Devices/DeviceInfo/DeviceDetail'
@@ -26,6 +26,8 @@ import UserEdit from '../User/UserEdit'
 import ModeratorList from '../Moderator/ModeratorList'
 import ModeratorEdit from '../Moderator/ModeratorEdit'
 import ModeratorDetail from '../Moderator/ModeratorDetail'
+import MachinesList from '../Machine/MachinesList'
+import MachineInfo from '../Machine/MachineInfo'
 
 const { Header, Content } = Layout
 
@@ -104,6 +106,12 @@ const HomePage = ({ parentPath }: any) => {
                             <DeviceDetail />
                         </Route>
 
+                        <Route path={`${parentPath}machines/list`}>
+                            <MachinesList />
+                        </Route>
+                        <Route path={`${parentPath}machines/:id`} render={({match}) => (
+                            <MachineInfo id={match.params.id}/>
+                        )} />
 
                         <Route path={`${parentPath}projects/list`}>
                             <ProjectList />
@@ -111,9 +119,9 @@ const HomePage = ({ parentPath }: any) => {
                         <Route path={`${parentPath}projects/:id`} render={({match}) => (
                             <ProjectDetail id={match.params.id}/>
                         )} />
-                        <Route path={`${parentPath}projects-summary`}>
+                        {/* <Route path={`${parentPath}projects-summary`}>
                             <ProjectSummary />
-                        </Route>
+                        </Route> */}
 
 
                         <Route path={`${parentPath}users/list`}>
@@ -125,9 +133,9 @@ const HomePage = ({ parentPath }: any) => {
                         <Route path={`${parentPath}users/:id`} render={({match}) => (
                             <UserDetail id={match.params.id}/>
                         )} />
-                        <Route path={`${parentPath}users-summary`}>
+                        {/* <Route path={`${parentPath}users-summary`}>
                             <ProjectSummary />
-                        </Route>
+                        </Route> */}
 
 
                         <Route path={`${parentPath}moderators/list`}>
@@ -140,9 +148,9 @@ const HomePage = ({ parentPath }: any) => {
                             <ModeratorDetail id={match.params.id}/>
                         )}>
                         </Route>
-                        <Route path={`${parentPath}moderators-summary`}>
+                        {/* <Route path={`${parentPath}moderators-summary`}>
                             <ProjectSummary />
-                        </Route>
+                        </Route> */}
 
 
                         <Route path={`${parentPath}fields/list`}>

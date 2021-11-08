@@ -1,12 +1,14 @@
 import './index.css'
 import { Menu } from 'antd'
 import { useState } from 'react'
-import ProjectSummary from '../ProjectSummary'
 import ProjectUser from './ProjectUser'
 import ProjectDevice from './ProjectDevice'
 import ProjectModerator from './ProjectModerator'
+import ProjectSummaryModal from '../ProjectSummaryModal'
+import ProjectSummary from './ProjectSummary'
 
 const ProjectDetail = ({ id }: any) => {
+    console.log(typeof(id), "hehe")
     const [currentTab, setCurrentTab] = useState('summary')
     const handleClick = (e: any) => {
         setCurrentTab(e.key)
@@ -36,10 +38,10 @@ const ProjectDetail = ({ id }: any) => {
                 </Menu>
 
                 <div className="project-detail-content">
-                    {currentTab === 'summary' && <ProjectSummary />}
-                    {currentTab === 'user' && <ProjectUser />}
-                    {currentTab === 'device' && <ProjectDevice />}
-                    {currentTab === 'moderator' && <ProjectModerator />}
+                    {currentTab === 'summary' && <ProjectSummary id={id}/>}
+                    {currentTab === 'user' && <ProjectUser id={id} />}
+                    {currentTab === 'device' && <ProjectDevice id={id} />}
+                    {/* {currentTab === 'moderator' && <ProjectModerator id={id} />} */}
                 </div>
             </div>
         </div>

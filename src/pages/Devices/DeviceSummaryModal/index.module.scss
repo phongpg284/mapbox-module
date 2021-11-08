@@ -1,0 +1,17 @@
+.device_summary_container {
+    background-color: white;
+    margin: auto;
+}
+
+.device_summary_content {
+    border: groove 1px;
+    padding: 5px;
+}
+
+.device_table_content {
+    :global {
+        .ant-table-tbody > tr > td {
+            border: none;
+        }
+    }
+}

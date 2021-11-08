@@ -1,8 +1,8 @@
 const columns = [
     {
         title: 'STT',
-        dataIndex: 'index',
-        key: 'index',
+        dataIndex: 'id',
+        key: 'id',
     },
     {
         title: 'Tên đăng nhập',
@@ -14,6 +14,17 @@ const columns = [
         dataIndex: 'phone',
         key: 'phone',
     },
+    {
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
+    },
+    {
+        title: 'Địa chỉ',
+        dataIndex: 'address',
+        key: 'address',
+    },
+
     {
         title: 'Chức vụ',
         dataIndex: 'role',

@@ -1,6 +1,6 @@
 import style from './index.module.scss'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import { Button, Input, Table, Form } from 'antd'
+import { Button, Input, Table, Form, message } from 'antd'
 import { FormInstance } from 'antd/lib/form'
 import faker from 'faker'
 import useFetch from '../../../hooks/useFetch'
@@ -133,7 +133,6 @@ const EditableCell: React.FC<EditableCellProps> = ({
     const save = async () => {
         try {
             const values = await form.validateFields()
-
             toggleEdit()
             handleSave({ ...record, ...values })
         } catch (errInfo) {
@@ -160,7 +159,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         ) : (
             <div
                 className="editable-cell-value-wrap"
-                style={{ paddingRight: 24 }}
+                style={{ paddingRight: 24, height: "30px" }}
                 onClick={toggleEdit}
             >
                 {children}
@@ -208,8 +207,18 @@ const UserEdit = ({ id }: any) => {
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
-            setDataSource(response.data)
-            console.log(response.data);
+            // setDataSource(response.data)
+            const convertDataSource = [];
+            let i = 0;
+            for (const [key, value] of Object.entries(response.data[0])) {
+                convertDataSource.push({
+                    key: i,
+                    ckey: key,
+                    value: value
+                })    
+                i++;
+            }
+            setDataSource(convertDataSource)
             
         }
     }, [response])
@@ -251,10 +260,35 @@ const UserEdit = ({ id }: any) => {
         setDataSource(newData)
     }
 
+
+    const [updateResponse, isFetchingUpdate, setRequestUpdate] = useFetch({} as any); 
     const handleSubmitEdit = () => {
-        console.log(dataSource)
-        // TODO: call update api
+        const body = dataSource.reduce((prev: any, curr: any) => {
+            if(curr.value)
+          prev[curr.ckey] = curr.value;
+          return prev
+        },{})
+        body.pk = body.id;
+        delete body.id;
+        delete body.username;
+        delete body.role;
+        setRequestUpdate({
+            endPoint: "https://dinhvichinhxac.online/api/user/",
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            requestBody: {
+                ...body,
+                action: "update",
+            }
+        })
     }
+
+    useEffect(() => {
+        if (!isFetchingUpdate && updateResponse && updateResponse.data && !updateResponse.hasError)
+        message.info(updateResponse.data)
+    },[updateResponse])
 
     return (
         <div className={style.user_edit_container}>

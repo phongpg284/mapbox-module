@@ -75,7 +75,7 @@ const column = [
 const ModeratorDetail = ({ id }: any) => {
     const history = useHistory()
 
-    const [dataSource, setDataSource] = useState([])
+    const [dataSource, setDataSource] = useState<any[]>([])
     const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
         setRequest({
@@ -93,8 +93,14 @@ const ModeratorDetail = ({ id }: any) => {
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
-            setDataSource(response.data)
-            console.log(response.data)
+            const convertDataSource = [];
+            for (const [key, value] of Object.entries(response.data[0])) {
+                convertDataSource.push({
+                    ckey: key,
+                    value: value
+                })    
+            }
+            setDataSource(convertDataSource)
         }
     }, [response])
 
