@@ -1,18 +1,54 @@
 import './index.css'
-import { Menu } from 'antd'
 import { useState } from 'react'
+import { Menu } from 'antd'
+
 import ProjectUser from './ProjectUser'
 import ProjectDevice from './ProjectDevice'
-import ProjectModerator from './ProjectModerator'
-import ProjectSummaryModal from '../ProjectSummaryModal'
 import ProjectSummary from './ProjectSummary'
 
+import useData from '../../../hooks/useData'
+
 const ProjectDetail = ({ id }: any) => {
-    console.log(typeof(id), "hehe")
     const [currentTab, setCurrentTab] = useState('summary')
     const handleClick = (e: any) => {
         setCurrentTab(e.key)
     }
+
+    const [data] = useData({
+        endPoint: 'https://dinhvichinhxac.online/api/project/',
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        requestBody: {
+            action: 'read',
+            pk: id,
+        },
+    })
+
+    const [projectUserData, refetchProjectUser] = useData({
+        endPoint: 'https://dinhvichinhxac.online/api/project-user/',
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        requestBody: {
+            action: 'read',
+            project_id: id,
+        },
+    })
+
+    const [projectDeviceData, refetchProjectDevice] = useData({
+        endPoint: 'https://dinhvichinhxac.online/api/project-machine/',
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        requestBody: {
+            action: 'read',
+            project_id: id,
+        },
+    })
 
     const centerStyle = {
         display: 'flex',
@@ -38,9 +74,21 @@ const ProjectDetail = ({ id }: any) => {
                 </Menu>
 
                 <div className="project-detail-content">
-                    {currentTab === 'summary' && <ProjectSummary id={id}/>}
-                    {currentTab === 'user' && <ProjectUser id={id} />}
-                    {currentTab === 'device' && <ProjectDevice id={id} />}
+                    {currentTab === 'summary' && <ProjectSummary data={data} />}
+                    {currentTab === 'user' && (
+                        <ProjectUser
+                            id={id}
+                            data={projectUserData}
+                            refetch={refetchProjectUser}
+                        />
+                    )}
+                    {currentTab === 'device' && (
+                        <ProjectDevice
+                            id={id}
+                            data={projectDeviceData}
+                            refetch={refetchProjectDevice}
+                        />
+                    )}
                     {/* {currentTab === 'moderator' && <ProjectModerator id={id} />} */}
                 </div>
             </div>

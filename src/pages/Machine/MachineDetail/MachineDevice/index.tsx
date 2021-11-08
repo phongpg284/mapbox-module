@@ -1,14 +1,14 @@
 import './style.css'
-import columns from './columns'
-import { Button, Space, Table } from 'antd'
-import faker from 'faker'
-import { Link } from 'react-router-dom'
-import useFetch from '../../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
-import MachineDeviceAddModal from './MachineDeviceAddModal'
-const MachineDevice = ({ id }: any) => {
-    const [isUpdate, setIsUpdate] = useState(true)
+import { Link } from 'react-router-dom'
 
+import { Button, Space, Table } from 'antd'
+
+import MachineDeviceAddModal from './MachineDeviceAddModal'
+
+import columns from './columns'
+
+const MachineDevice = ({ id, data, refetch }: any) => {
     const tableColumns = [
         ...columns.slice(0, 1),
         {
@@ -31,30 +31,11 @@ const MachineDevice = ({ id }: any) => {
         },
     ]
 
-    const [response, isFetching, setRequest] = useFetch({} as any)
-
-    useEffect(() => {
-        if (isUpdate) {
-            setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/machine-device/',
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-                requestBody: {
-                    action: 'read',
-                    machine_id: id,
-                },
-            })
-            setIsUpdate(false)
-        }
-    }, [isUpdate])
-
     const [deviceList, setDeviceList] = useState<any>([])
     useEffect(() => {
-        if (!isFetching && response?.data && !response?.hasError) {
+        if (data) {
             const convertDeviceList = []
-            for (const { device } of response.data) {
+            for (const { device } of data) {
                 const newDevice = {
                     ...device,
                     status:
@@ -66,7 +47,7 @@ const MachineDevice = ({ id }: any) => {
             }
             setDeviceList(convertDeviceList)
         }
-    }, [response])
+    }, [data])
 
     const [isShowMachineDeviceAddModal, setIsShowMachineDeviceAddModal] =
         useState(false)
@@ -77,10 +58,6 @@ const MachineDevice = ({ id }: any) => {
 
     const handleHideMachineDeviceAddModal = () => {
         setIsShowMachineDeviceAddModal(false)
-    }
-
-    const reFetchAfterUpdate = () => {
-        setIsUpdate(true)
     }
 
     return (
@@ -103,7 +80,7 @@ const MachineDevice = ({ id }: any) => {
                 />
             </div>
             <MachineDeviceAddModal
-                update={reFetchAfterUpdate}
+                update={refetch}
                 id={id}
                 centered
                 width={800}

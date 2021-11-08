@@ -1,11 +1,15 @@
-import columns from './columns'
-import { Button, Input, Modal, Space, Table } from 'antd'
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import useFetch from '../../../hooks/useFetch'
+
+import { Button, Input, Space, Table } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
+
 import MachineAddModal from '../MachineAddModal'
+
+import columns from './columns'
+import useFetch from '../../../hooks/useFetch'
 import useFilter from '../../../hooks/useFilter'
+
 const MachineList = () => {
     const [isUpdate, setIsUpdate] = useState(true)
     const [machines, setMachines] = useState([])

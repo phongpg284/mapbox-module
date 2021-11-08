@@ -1,7 +1,6 @@
 import style from './index.module.scss'
-import { Button, Modal, Table } from 'antd'
+import { Table } from 'antd'
 import { useEffect, useState } from 'react'
-import useFetch from '../../../../hooks/useFetch'
 
 const column = [
     {
@@ -18,20 +17,24 @@ const column = [
 ]
 
 const IKeyCode = {
-    code: {
-        brand: 'Mã dự án',
-        type: 'string',
-    },
     name: {
         brand: 'Tên dự án',
         type: 'string',
     },
-    description: {
-        brand: 'Mô tả tổng quan',
+    model: {
+        brand: 'Kiểu xe',
         type: 'string',
     },
-    manager: {
-        brand: 'Quản lí',
+    description: {
+        brand: 'Mô tả',
+        type: 'string',
+    },
+    project: {
+        brand: 'Dự án',
+        type: 'string',
+    },
+    driver: {
+        brand: 'Lái máy',
         type: 'string',
     },
     create_time: {
@@ -42,44 +45,14 @@ const IKeyCode = {
         brand: 'Thời gian cập nhật',
         type: 'date',
     },
-    start_time: {
-        brand: 'Thời gian bắt đầu',
-        type: 'date',
-    },
-    end_time: {
-        brand: 'Thời gian kết thúc',
-        type: 'date',
-    },
 }
 
-interface ISummaryProject {
-    id: number
+interface ISummaryMachine {
+    data: any
 }
 
-const ProjectSummary: React.FC<ISummaryProject> = ({ id }) => {
-    const [data, setData] = useState<any>()
+const MachineSummary: React.FC<ISummaryMachine> = ({ data }) => {
     const [dataSource, setDataSource] = useState<any>()
-    const [response, iseFetching, setRequest] = useFetch({} as any)
-
-    useEffect(() => {
-        setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/project/',
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-            },
-            requestBody: {
-                action: 'read',
-                pk: id,
-            },
-        })
-    },[])
-
-    useEffect(() => {
-        if (!iseFetching && response && response.data && !response.hasError) {
-            setData(response.data)
-        }
-    }, [response])
 
     useEffect(() => {
         const convertDataSource = []
@@ -101,10 +74,10 @@ const ProjectSummary: React.FC<ISummaryProject> = ({ id }) => {
     }, [data])
 
     return (
-        <div className={style.project_summary_container}>
-            <div className={style.project_summary_content}>
+        <div className={style.machine_summary_container}>
+            <div className={style.machine_summary_content}>
                 <Table
-                    className={style.project_table_content}
+                    className={style.machine_table_content}
                     columns={column}
                     dataSource={dataSource}
                     showHeader={false}
@@ -115,4 +88,4 @@ const ProjectSummary: React.FC<ISummaryProject> = ({ id }) => {
     )
 }
 
-export default ProjectSummary
+export default MachineSummary

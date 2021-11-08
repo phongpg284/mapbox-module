@@ -49,7 +49,7 @@ const ProjectAddModal: React.FC<IModal> = ({ onClose, update, ...props }) => {
         <Modal
             {...props}
             onCancel={onClose}
-            title="Thêm dự án"
+            title="Thêm dự án mới"
             footer={<Button onClick={handleAddNewProject}>Đăng ký</Button>}
         >
             <div className="project-add-container">
