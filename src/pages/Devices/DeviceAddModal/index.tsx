@@ -48,7 +48,7 @@ const DeviceAddModal: React.FC<IModal> = ({update, onClose, ...props }) => {
         <Modal
             {...props}
             onCancel={onClose}
-            title="Thêm thiết bị"
+            title="Thêm thiết bị mới"
             footer={<Button onClick={handleAddNewDevice}>Đăng ký</Button>}
         >
             <div className="device-add-container">

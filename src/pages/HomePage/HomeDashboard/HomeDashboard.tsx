@@ -23,9 +23,6 @@ const HomeDashboard = ({ selectItem }: any) => {
                     <Menu.Item key="/" icon={<UserOutlined />}>
                         Trang chủ
                     </Menu.Item>
-                    <Menu.Item key="/settings" icon={<VideoCameraOutlined />}>
-                        Cài đặt
-                    </Menu.Item>
                 </Menu.ItemGroup>
 
                 <Menu.ItemGroup title="QUẢN LÍ DỰ ÁN">

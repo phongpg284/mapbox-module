@@ -1,14 +1,14 @@
 import './style.css'
-import columns from './columns'
-import { Button, Space, Table } from 'antd'
-import { Link } from 'react-router-dom'
-import useFetch from '../../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
-import MachineUserAddModal from './MachineUserAddModal'
-const MachineUser = ({ id }: any) => {
-    console.log(typeof(id))
-    const [isUpdate, setIsUpdate] = useState(true)
+import { Link } from 'react-router-dom'
 
+import { Button, Space, Table } from 'antd'
+
+import MachineUserAddModal from './MachineUserAddModal'
+
+import columns from './columns'
+
+const MachineUser = ({ id, data, refetch }: any) => {
     const tableColumns = [
         ...columns.slice(0, 1),
         {
@@ -31,30 +31,12 @@ const MachineUser = ({ id }: any) => {
         },
     ]
 
-    const [response, isFetching, setRequest] = useFetch({} as any)
-
-    useEffect(() => {
-        if (isUpdate) {
-            setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/machine-user/',
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-                requestBody: {
-                    action: 'read',
-                    machine_id: id,
-                },
-            })
-            setIsUpdate(false)
-        }
-    }, [isUpdate])
 
     const [userList, setUserList] = useState<any>([])
     useEffect(() => {
-        if (!isFetching && response?.data && !response?.hasError) {
+        if (data) {
             const convertUserList = []
-            for (const { user } of response.data) {
+            for (const { user } of data) {
                 const newUser = {
                     ...user,
                 }
@@ -62,7 +44,7 @@ const MachineUser = ({ id }: any) => {
             }
             setUserList(convertUserList)
         }
-    }, [response])
+    }, [data])
 
     const [isShowMachineUserAddModal, setIsShowMachineUserAddModal] =
         useState(false)
@@ -75,11 +57,6 @@ const MachineUser = ({ id }: any) => {
         setIsShowMachineUserAddModal(false)
     }
 
-    const reFetchAfterUpdate = () => {
-        setIsUpdate(true);
-    }
-
-
     return (
         <div className="machine-users-container">
             <div className="machine-users-control">
@@ -88,7 +65,7 @@ const MachineUser = ({ id }: any) => {
                 </div>
                 <div className="machine-list-control-add">
                     <Button onClick={handleShowMachineUserAddModal}>
-                        Thêm người dùng
+                        Thêm lái máy
                     </Button>
                 </div>
             </div>
@@ -96,7 +73,7 @@ const MachineUser = ({ id }: any) => {
                 <Table columns={tableColumns} dataSource={userList} bordered />
             </div>
             <MachineUserAddModal
-                update={reFetchAfterUpdate}
+                update={refetch}
                 id={id}
                 centered
                 width={800}

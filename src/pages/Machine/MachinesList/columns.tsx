@@ -4,34 +4,22 @@ const columns = [
         dataIndex: 'id',
     },
     {
-        title: 'Model',
+        title: 'Kiểu xe',
         dataIndex: 'model',
     },
     {
-        title: 'Description',
+        title: 'Mô tả',
         dataIndex: 'description',
     },
-    // {
-    //     title: 'NTRIP Username',
-    //     dataIndex: 'ntrip_username',
-    // },
-    // {
-    //     title: 'NTRIP Passwword',
-    //     dataIndex: 'ntrip_password',
-    // },
-    // {
-    //     title: 'Mount Point',
-    //     dataIndex: 'mount_point',
-    // },
     {
-        title: 'Create Time',
+        title: 'Thời gian tạo',
         dataIndex: 'create_time',
-        render: (text: any, record: any) => {
+        render: (text: any) => {
             if (text) return <div>{new Date(text).toLocaleString()}</div>
         },
     },
     {
-        title: 'Update Time',
+        title: 'Thời gian cập nhật',
         dataIndex: 'update_time',
         render: (text: any) => {
             if (text) return <div>{new Date(text).toLocaleString()}</div>

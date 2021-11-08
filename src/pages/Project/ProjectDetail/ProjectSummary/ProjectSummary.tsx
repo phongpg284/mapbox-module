@@ -70,29 +70,7 @@ interface ISummaryProject {
 }
 
 const ProjectSummary: React.FC<ISummaryProject> = ({ data }) => {
-    // const [data, setData] = useState<any>()
     const [dataSource, setDataSource] = useState<any>()
-    const [response, iseFetching, setRequest] = useFetch({} as any)
-
-    // useEffect(() => {
-    //     setRequest({
-    //         endPoint: 'https://dinhvichinhxac.online/api/project/',
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-type': 'application/json',
-    //         },
-    //         requestBody: {
-    //             action: 'read',
-    //             pk: id,
-    //         },
-    //     })
-    // },[])
-
-    // useEffect(() => {
-    //     if (!iseFetching && response && response.data && !response.hasError) {
-    //         setData(response.data)
-    //     }
-    // }, [response])
 
     useEffect(() => {
         const convertDataSource = []

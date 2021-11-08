@@ -131,9 +131,9 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
                 {...props}
                 visible={visible}
                 onCancel={onClose}
-                title="Thêm người dùng vào dự án"
+                title="Thêm lái máy"
                 footer={
-                    <Button onClick={handleAddNewUser}>Thêm vào dự án</Button>
+                    <Button onClick={handleAddNewUser}>Thêm</Button>
                 }
             >
                 <div className="machine-user-add-container">

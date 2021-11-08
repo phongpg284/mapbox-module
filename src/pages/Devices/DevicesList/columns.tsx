@@ -24,14 +24,14 @@ const columns = [
         dataIndex: 'mount_point',
     },
     {
-        title: 'Status',
+        title: 'Trạng thái hoạt động',
         dataIndex: 'status',
         render: (text: any) => {
             return <div>{text ? 'Có' : 'Không'}</div>
         },
     },
     {
-        title: 'Create Time',
+        title: 'Thời gian tạo',
         dataIndex: 'create_time',
         render: (text: any) => {
             if (text) return <div>{new Date(text).toLocaleString()}</div>
