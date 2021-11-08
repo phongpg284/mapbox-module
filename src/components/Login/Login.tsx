@@ -78,7 +78,7 @@ const Login = () => {
                             },
                         ]}
                     >
-                        <input placeholder="Username" />
+                        <input  className="login-form-input input-username" placeholder="Username" />
                     </Form.Item>
 
                     <Form.Item
@@ -90,7 +90,7 @@ const Login = () => {
                             },
                         ]}
                     >
-                        <input placeholder="Password" />
+                        <input  className="login-form-input input-password" placeholder="Password" />
                     </Form.Item>
 
                     <Form.Item
@@ -103,11 +103,10 @@ const Login = () => {
                     </Form.Item>
 
                     <Form.Item 
-                        className="login-form-button"
-                        wrapperCol={{ offset: 4, span: 16 }}
+                        // wrapperCol={{ offset: 4, span: 16 }}
                     >
-                        <Button type="primary" htmlType="submit">
-                            Log in
+                        <Button className="login-form-button" type="primary" htmlType="submit">
+                            LOG IN
                         </Button>
                     </Form.Item>
                 </Form>
