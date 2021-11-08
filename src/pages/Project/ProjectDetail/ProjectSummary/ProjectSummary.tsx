@@ -52,34 +52,47 @@ const IKeyCode = {
     },
 }
 
-interface ISummaryProject {
+interface IProjectResponse {
     id: number
+    name: string
+    longitude?: number
+    latitude?: number
+    description?: string
+    start_time: string
+    end_time: string
+    create_time: string
+    update_time: string
+    is_deleted: boolean
 }
 
-const ProjectSummary: React.FC<ISummaryProject> = ({ id }) => {
-    const [data, setData] = useState<any>()
+interface ISummaryProject {
+    data: IProjectResponse
+}
+
+const ProjectSummary: React.FC<ISummaryProject> = ({ data }) => {
+    // const [data, setData] = useState<any>()
     const [dataSource, setDataSource] = useState<any>()
     const [response, iseFetching, setRequest] = useFetch({} as any)
 
-    useEffect(() => {
-        setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/project/',
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-            },
-            requestBody: {
-                action: 'read',
-                pk: id,
-            },
-        })
-    },[])
+    // useEffect(() => {
+    //     setRequest({
+    //         endPoint: 'https://dinhvichinhxac.online/api/project/',
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-type': 'application/json',
+    //         },
+    //         requestBody: {
+    //             action: 'read',
+    //             pk: id,
+    //         },
+    //     })
+    // },[])
 
-    useEffect(() => {
-        if (!iseFetching && response && response.data && !response.hasError) {
-            setData(response.data)
-        }
-    }, [response])
+    // useEffect(() => {
+    //     if (!iseFetching && response && response.data && !response.hasError) {
+    //         setData(response.data)
+    //     }
+    // }, [response])
 
     useEffect(() => {
         const convertDataSource = []

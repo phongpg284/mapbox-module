@@ -1,13 +1,12 @@
 import './style.css'
 import columns from './columns'
 import { Button, Space, Table } from 'antd'
-import faker from 'faker'
 import { Link } from 'react-router-dom'
-import useFetch from '../../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
 import ProjectDeviceAddModal from './ProjectDeviceAddModal'
-const ProjectDevice = ({ id }: any) => {
-    const [isUpdate, setIsUpdate] = useState(true)
+
+const ProjectDevice = ({id, data, refetch }: any) => {
+    // const [isUpdate, setIsUpdate] = useState(true)
 
     const tableColumns = [
         ...columns.slice(0, 1),
@@ -32,30 +31,30 @@ const ProjectDevice = ({ id }: any) => {
         },
     ]
 
-    const [response, isFetching, setRequest] = useFetch({} as any)
+    // const [response, isFetching, setRequest] = useFetch({} as any)
 
-    useEffect(() => {
-        if (isUpdate) {
-            setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/project-machine/',
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-                requestBody: {
-                    action: 'read',
-                    project_id: id,
-                },
-            })
-            setIsUpdate(false)
-        }
-    }, [isUpdate])
+    // useEffect(() => {
+    //     if (isUpdate) {
+    //         setRequest({
+    //             endPoint: 'https://dinhvichinhxac.online/api/project-machine/',
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-type': 'application/json',
+    //             },
+    //             requestBody: {
+    //                 action: 'read',
+    //                 project_id: id,
+    //             },
+    //         })
+    //         setIsUpdate(false)
+    //     }
+    // }, [isUpdate])
 
     const [deviceList, setDeviceList] = useState<any>([])
     useEffect(() => {
-        if (!isFetching && response?.data && !response?.hasError) {
+        if (data) {
             const convertDeviceList = []
-            for (const { machine } of response.data) {
+            for (const { machine } of data) {
                 const newDevice = {
                     id: machine.id,
                     name: machine.name,
@@ -64,11 +63,14 @@ const ProjectDevice = ({ id }: any) => {
                 }
                 convertDeviceList.push(newDevice)
             }
-            console.log(convertDeviceList)
-
             setDeviceList(convertDeviceList)
         }
-    }, [response])
+    }, [data])
+
+    useEffect(() => {
+      console.log("data",data);
+      
+    })
 
     const [isShowProjectDeviceAddModal, setIsShowProjectDeviceAddModal] =
         useState(false)
@@ -82,7 +84,7 @@ const ProjectDevice = ({ id }: any) => {
     }
 
     const reFetchAfterUpdate = () => {
-        setIsUpdate(true)
+        refetch(true)
     }
 
     return (
