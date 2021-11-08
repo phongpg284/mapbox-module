@@ -1,12 +1,12 @@
 import './index.css'
+import { useState } from 'react'
 import { Menu } from 'antd'
-import { useEffect, useState } from 'react'
+
 import ProjectUser from './ProjectUser'
 import ProjectDevice from './ProjectDevice'
-import ProjectModerator from './ProjectModerator'
-import ProjectSummaryModal from '../ProjectSummaryModal'
 import ProjectSummary from './ProjectSummary'
-import useFetch from '../../../hooks/useFetch'
+
+import useData from '../../../hooks/useData'
 
 const ProjectDetail = ({ id }: any) => {
     const [currentTab, setCurrentTab] = useState('summary')
@@ -14,95 +14,41 @@ const ProjectDetail = ({ id }: any) => {
         setCurrentTab(e.key)
     }
 
-    const [data, setData] = useState<any>()
-    const [projectUserData, setProjectUserData] = useState<any>()
-    const [projectDeviceData, setProjectDeviceData] = useState<any>()
+    const [data] = useData({
+        endPoint: 'https://dinhvichinhxac.online/api/project/',
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        requestBody: {
+            action: 'read',
+            pk: id,
+        },
+    })
 
-    const [response, isFetching, setRequest] = useFetch({} as any)
-    const [responseProjectUser, isFetchingProjectUser, setRequestProjectUser] = useFetch({} as any)
-    const [isUpdateProjectUser, setIsUpdateProjectUser] = useState(true)
-    const [responseProjectDevice,isFetchingProjectDevice,setRequestProjectDevice] = useFetch({} as any)
-    const [isUpdateProjectDevice, setIsUpdateProjectDevice] = useState(true)
+    const [projectUserData, refetchProjectUser] = useData({
+        endPoint: 'https://dinhvichinhxac.online/api/project-user/',
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        requestBody: {
+            action: 'read',
+            project_id: id,
+        },
+    })
 
-    useEffect(() => {
-        setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/project/',
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-            },
-            requestBody: {
-                action: 'read',
-                pk: id,
-            },
-        })
-    }, [])
-
-    useEffect(() => {
-        if (isUpdateProjectUser) {
-            setRequestProjectUser({
-                endPoint: 'https://dinhvichinhxac.online/api/project-user/',
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-                requestBody: {
-                    action: 'read',
-                    project_id: id,
-                },
-            })
-            setIsUpdateProjectUser(false)
-        }
-    }, [isUpdateProjectUser])
-
-    useEffect(() => {
-        if (isUpdateProjectDevice) {
-            setRequestProjectDevice({
-                endPoint: 'https://dinhvichinhxac.online/api/project-machine/',
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-                requestBody: {
-                    action: 'read',
-                    project_id: id,
-                },
-            })
-            setIsUpdateProjectDevice(false)
-        }
-    }, [isUpdateProjectDevice])
-
-    useEffect(() => {
-        if (!isFetching && response && response.data && !response.hasError) {
-            setData(response.data)
-        }
-    }, [response])
-
-    useEffect(() => {
-        if (
-            !isFetchingProjectUser &&
-            responseProjectUser &&
-            responseProjectUser.data &&
-            !responseProjectUser.hasError
-        ) {
-            console.log(responseProjectUser.data)
-
-            setProjectUserData(responseProjectUser.data)
-        }
-    }, [responseProjectUser])
-
-    useEffect(() => {
-        if (
-            !isFetchingProjectDevice &&
-            responseProjectDevice &&
-            responseProjectDevice.data &&
-            !responseProjectDevice.hasError
-        ) {
-            console.log(responseProjectDevice.data);
-            
-            setProjectDeviceData(responseProjectDevice.data)
-        }
-    }, [responseProjectDevice])
+    const [projectDeviceData, refetchProjectDevice] = useData({
+        endPoint: 'https://dinhvichinhxac.online/api/project-machine/',
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        requestBody: {
+            action: 'read',
+            project_id: id,
+        },
+    })
 
     const centerStyle = {
         display: 'flex',
@@ -128,21 +74,19 @@ const ProjectDetail = ({ id }: any) => {
                 </Menu>
 
                 <div className="project-detail-content">
-                    {currentTab === 'summary' && (
-                        <ProjectSummary data={data} />
-                    )}
+                    {currentTab === 'summary' && <ProjectSummary data={data} />}
                     {currentTab === 'user' && (
                         <ProjectUser
                             id={id}
                             data={projectUserData}
-                            refetch={setIsUpdateProjectUser}
+                            refetch={refetchProjectUser}
                         />
                     )}
                     {currentTab === 'device' && (
                         <ProjectDevice
                             id={id}
                             data={projectDeviceData}
-                            refetch={setIsUpdateProjectDevice}
+                            refetch={refetchProjectDevice}
                         />
                     )}
                     {/* {currentTab === 'moderator' && <ProjectModerator id={id} />} */}

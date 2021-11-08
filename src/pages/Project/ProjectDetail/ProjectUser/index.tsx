@@ -78,10 +78,6 @@ const ProjectUser = ({ id, data, refetch }: any) => {
         setIsShowProjectUserAddModal(false)
     }
 
-    const reFetchAfterUpdate = () => {
-        refetch(true)
-    }
-
     return (
         <div className="project-users-container">
             <div className="project-users-control">
@@ -98,7 +94,7 @@ const ProjectUser = ({ id, data, refetch }: any) => {
                 <Table columns={tableColumns} dataSource={userList} bordered />
             </div>
             <ProjectUserAddModal
-                update={reFetchAfterUpdate}
+                update={refetch}
                 id={id}
                 centered
                 width={800}
