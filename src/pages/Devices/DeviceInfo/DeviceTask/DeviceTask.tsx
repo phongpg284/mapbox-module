@@ -1,9 +1,9 @@
 import TaskMap from '../../../../components/Map/TaskMap'
 
-const DeviceTask = () => {
+const DeviceTask = ({ id }: any) => {
     return (
         <div className="device-task">
-            <TaskMap />
+            <TaskMap id={id} />
         </div>
     )
 }

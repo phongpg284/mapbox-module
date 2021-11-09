@@ -104,6 +104,7 @@ const ProjectList = () => {
                         prefix={
                             <SearchOutlined className="site-form-item-icon" />
                         }
+                        placeholder="Tên dự án"
                         value={search}
                         onChange={onChangeSearch}
                     />

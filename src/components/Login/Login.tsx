@@ -93,14 +93,14 @@ const Login = () => {
                         <input type="password" className="login-form-input input-password" placeholder="Password" />
                     </Form.Item>
 
-                    <Form.Item
+                    {/* <Form.Item
                         className="login-form-checkbox"
                         name="remember"
                         valuePropName="checked"
                         wrapperCol={{ offset: 4, span: 16 }}
                     >
                         <Checkbox>Remember me</Checkbox>
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item 
                         // wrapperCol={{ offset: 4, span: 16 }}

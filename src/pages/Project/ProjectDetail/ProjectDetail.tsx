@@ -61,16 +61,26 @@ const ProjectDetail = ({ id }: any) => {
                     style={centerStyle}
                     onClick={handleClick}
                     selectedKeys={[currentTab]}
-                    mode="horizontal"
+                    mode="inline"
                 >
-                    <Menu.Item key="summary">Thông tin chung</Menu.Item>
-                    <Menu.Item key="user">Danh sách người dùng</Menu.Item>
-                    <Menu.Item key="device">Danh sách thiết bị</Menu.Item>
-                    <Menu.Item key="category">Danh sách hạng mục</Menu.Item>
-                    <Menu.Item key="fuel">Nhiên liệu</Menu.Item>
-                    <Menu.Item key="moderator">
-                        Danh sách quản trị viên
+                    <Menu.Item key="summary" style={{ fontWeight: 'bold' }}>
+                        Thông tin chung
                     </Menu.Item>
+                    <Menu.Item key="user" style={{ fontWeight: 'bold' }}>
+                        Danh sách người dùng
+                    </Menu.Item>
+                    <Menu.Item key="device" style={{ fontWeight: 'bold' }}>
+                        Danh sách thiết bị
+                    </Menu.Item>
+                    <Menu.Item key="category" style={{ fontWeight: 'bold' }}>
+                        Danh sách hạng mục
+                    </Menu.Item>
+                    <Menu.Item key="fuel" style={{ fontWeight: 'bold' }}>
+                        Nhiên liệu
+                    </Menu.Item>
+                    {/* <Menu.Item key="moderator" style={{ fontWeight: 'bold' }}>
+                        Danh sách quản trị viên
+                    </Menu.Item> */}
                 </Menu>
 
                 <div className="project-detail-content">

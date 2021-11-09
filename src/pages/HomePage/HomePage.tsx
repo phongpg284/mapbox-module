@@ -28,6 +28,7 @@ import ModeratorEdit from '../Moderator/ModeratorEdit'
 import ModeratorDetail from '../Moderator/ModeratorDetail'
 import MachinesList from '../Machine/MachinesList'
 import MachineInfo from '../Machine/MachineInfo'
+import DeviceInfo from '../Devices/DeviceInfo'
 
 const { Header, Content } = Layout
 
@@ -91,7 +92,7 @@ const HomePage = ({ parentPath }: any) => {
                         ></img>
                     </div>
                 </Header>
-                <Content style={{padding: "20px"}}>
+                <Content style={{padding: "20px", height: "100vh", overflow: "auto"}}>
                     <Switch>
                         <Route path={`${parentPath}devices/list`}>
                             <DeviceList />
@@ -100,7 +101,7 @@ const HomePage = ({ parentPath }: any) => {
                             <DeviceTask />
                         </Route>
                         <Route path={`${parentPath}devices/:id`} render={({match}) => (
-                            <DeviceDetail id={match.params.id}/>
+                            <DeviceInfo id={match.params.id}/>
                         )} />
                         <Route path={`${parentPath}devices-summary`}>
                             <DeviceDetail />

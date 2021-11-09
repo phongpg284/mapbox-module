@@ -60,13 +60,23 @@ const MachineDetail = ({ id }: any) => {
                     style={centerStyle}
                     onClick={handleClick}
                     selectedKeys={[currentTab]}
-                    mode="horizontal"
+                    mode="inline"
                 >
-                    <Menu.Item key="summary">Thông tin chung</Menu.Item>
-                    <Menu.Item key="user">Danh sách lái máy</Menu.Item>
-                    <Menu.Item key="device">Danh sách thiết bị</Menu.Item>
-                    <Menu.Item key="category">Danh sách hạng mục</Menu.Item>
-                    <Menu.Item key="fuel">Nhiên liệu</Menu.Item>
+                    <Menu.Item key="summary" style={{ fontWeight: 'bold' }}>
+                        Thông tin chung
+                    </Menu.Item>
+                    <Menu.Item key="user" style={{ fontWeight: 'bold' }}>
+                        Danh sách lái máy
+                    </Menu.Item>
+                    <Menu.Item key="device" style={{ fontWeight: 'bold' }}>
+                        Danh sách thiết bị
+                    </Menu.Item>
+                    <Menu.Item key="category" style={{ fontWeight: 'bold' }}>
+                        Danh sách hạng mục
+                    </Menu.Item>
+                    <Menu.Item key="fuel" style={{ fontWeight: 'bold' }}>
+                        Nhiên liệu
+                    </Menu.Item>
                 </Menu>
 
                 <div className="machine-detail-content">

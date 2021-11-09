@@ -10,10 +10,10 @@ import Chart from '../RecordMap/Chart'
 
 export const ViewIndexContext = createContext<any>(null)
 
-const TaskMap = ({ match }: any) => {
-    const location = useLocation()
-    const arr = location.pathname.split('/')
-    const id = arr[arr.length - 2]
+const TaskMap = ({ id }: any) => {
+    // const location = useLocation()
+    // const arr = location.pathname.split('/')
+    // const id = arr[arr.length - 2]
 
     const [taskData, setTaskData] = useState<any>([])
     const [taskIdOption, setTaskIdOption] = useState<any[]>([])
