@@ -70,7 +70,7 @@ const ProjectDetail = ({ id }: any) => {
                         Danh sách người dùng
                     </Menu.Item>
                     <Menu.Item key="device" style={{ fontWeight: 'bold' }}>
-                        Danh sách thiết bị
+                        Danh sách máy móc
                     </Menu.Item>
                     <Menu.Item key="category" style={{ fontWeight: 'bold' }}>
                         Danh sách hạng mục

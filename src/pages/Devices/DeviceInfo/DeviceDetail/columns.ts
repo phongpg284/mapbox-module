@@ -1,8 +1,8 @@
 const columns = [
-    {
-        title: 'ID',
-        dataIndex: 'id',
-    },
+    // {
+    //     title: 'ID',
+    //     dataIndex: 'id',
+    // },
     {
         title: 'Date',
         dataIndex: 'date',
@@ -12,7 +12,7 @@ const columns = [
         dataIndex: 'avg_speed',
     },
     {
-        title: 'Avergae Accuracy',
+        title: 'Average Accuracy',
         dataIndex: 'avg_accuracy',
     },
     {

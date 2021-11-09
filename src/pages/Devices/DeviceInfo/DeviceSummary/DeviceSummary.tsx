@@ -107,7 +107,14 @@ const DeviceSummary: React.FC<ISummaryDevice> = ({ data }) => {
                 <Table
                     className={style.device_table_content}
                     columns={column}
-                    dataSource={dataSource}
+                    dataSource={dataSource?.slice(0,7)}
+                    showHeader={false}
+                    pagination={false}
+                />
+                <Table
+                    className={style.device_table_content}
+                    columns={column}
+                    dataSource={dataSource?.slice(7)}
                     showHeader={false}
                     pagination={false}
                 />

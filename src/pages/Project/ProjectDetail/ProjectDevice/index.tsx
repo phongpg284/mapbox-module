@@ -95,7 +95,7 @@ const ProjectDevice = ({id, data, refetch }: any) => {
                 </div>
                 <div className="project-list-control-add">
                     <Button onClick={handleShowProjectDeviceAddModal}>
-                        Thêm thiết bị vào dự án
+                        Thêm máy móc vào dự án
                     </Button>
                 </div>
             </div>

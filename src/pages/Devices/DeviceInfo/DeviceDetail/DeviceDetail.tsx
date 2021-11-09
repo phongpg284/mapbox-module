@@ -2,7 +2,7 @@ import './index.css'
 import { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router'
 
-import { Button, DatePicker, Input, Spin, Table } from 'antd'
+import { Button, DatePicker, Empty, Input, Spin, Table } from 'antd'
 import { LoadingOutlined, SearchOutlined } from '@ant-design/icons'
 
 import columns from './columns'
@@ -11,22 +11,27 @@ import TaskList from './TaskList'
 const { RangePicker } = DatePicker
 
 const DeviceDetailItem = ({ data }: any) => {
-    const {task} = data;
+    const { task } = data
     return (
         <div className="device-detail-item-wrapper">
+            <div className="device-detail-item-title">Ngày {data.date}</div>
             <div className="device-tasks-list-table">
-                <Table columns={columns} dataSource={[data]} bordered pagination={false}/>
+                <div className="text-start fw-bold fs-5 mb-3">
+                    Thông số trong ngày
+                </div>
+                <Table
+                    columns={columns}
+                    dataSource={[data]}
+                    bordered
+                    pagination={false}
+                />
             </div>
-            <div>
-                {task && (
-                    <TaskList data={task}/>
-                )}
-            </div>
+            <div>{task && <TaskList data={task} />}</div>
         </div>
     )
 }
 
-const DeviceDetail = ({ id }: any) => {
+const DeviceDetail = ({ id, currentDateData }: any) => {
     const history = useHistory()
     const location = useLocation()
 
@@ -55,7 +60,16 @@ const DeviceDetail = ({ id }: any) => {
         })
     }
 
-    
+    useEffect(() => {
+        const convertData = []
+        for (const [key, value] of Object.entries(currentDateData)) {
+            convertData.push({
+                ...(value as any),
+                date: key,
+            })
+        }
+        setData(convertData)
+    }, [currentDateData])
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
@@ -100,9 +114,11 @@ const DeviceDetail = ({ id }: any) => {
                             data={deviceData}
                         />
                     ))}
-                {/* <div className="device-tasks-list-table">
-                    <Table columns={columns} dataSource={tasks} bordered />
-                </div> */}
+                {data.length === 0 && (
+                    <div>
+                        <Empty />
+                    </div>
+                )}
             </div>
         </div>
     )

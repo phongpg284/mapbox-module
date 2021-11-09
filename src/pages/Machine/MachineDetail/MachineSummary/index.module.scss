@@ -6,9 +6,12 @@
 .machine_summary_content {
     border: groove 1px;
     padding: 5px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .machine_table_content {
+    flex-grow: 1;
     :global {
         .ant-table-tbody > tr > td {
             border: none;

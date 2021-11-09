@@ -10,6 +10,14 @@
     margin: 5px;
 }
 
+
+.device-detail-item-title {
+    text-align: left;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
 .device-tasks-list-table {
     margin: 5px;
 }

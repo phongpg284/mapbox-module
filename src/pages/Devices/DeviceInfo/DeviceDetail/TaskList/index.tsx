@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { Button, Table } from 'antd'
+import { Button, Collapse, Table } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import { WarningFilled } from '@ant-design/icons'
 import './style.css'
+const { Panel } = Collapse;
+
 export interface ITaskData {
     id: number
     device_id: number
@@ -119,21 +121,7 @@ const TaskList = ({ data }: Partial<ITaskListProps>) => {
     ]
 
     const handleDelete = () => {
-        // TODO: CALL DELETE API
-        console.log(deleteItem, 'hehe')
-        localStorage.removeItem(deleteItem.name)
-        localStorage.setItem(
-            'fakeDB',
-            JSON.stringify(
-                JSON.parse(localStorage.getItem('fakeDB')!).filter(
-                    (item: any) => {
-                        return item !== deleteItem.name
-                    }
-                )
-            )
-        )
         setShowConfirm(false)
-
         const newTaskData = data?.filter((task: any) => {
             return task.name !== deleteItem.name
         })
@@ -142,16 +130,21 @@ const TaskList = ({ data }: Partial<ITaskListProps>) => {
     }
 
     return (
-        <div className="p-3">
-            <div className="title text-start fw-bold fs-3 mb-3 d-flex ">
-                <div>Task List</div>
-            </div>
+        <div>
+            {/* <div className="title text-start fw-bold fs-5 mb-3 d-flex ">
+                <div>Lịch trình hoạt động trong ngày</div>
+            </div> */}
             <div>
-                <Table
-                    dataSource={tableData}
-                    columns={columns}
-                    showHeader={false}
-                />
+                <Collapse defaultActiveKey={['1']}>
+                    <Panel header="Lịch trình hoạt động trong ngày " key="1">
+                        <Table
+                            dataSource={tableData}
+                            columns={columns}
+                            showHeader={false}
+                            pagination={false}
+                        />
+                    </Panel>
+                </Collapse>
             </div>
             <div>
                 <Modal

@@ -132,7 +132,7 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
                 {...props}
                 visible={visible}
                 onCancel={onClose}
-                title="Thêm người dùng vào dự án"
+                title="Thêm máy móc vào dự án"
                 footer={
                     <Button onClick={handleAddNewDevice}>Thêm vào dự án</Button>
                 }
