@@ -2,7 +2,6 @@ import './style.css'
 import columns from './columns'
 import { Button, Modal, Space, Table } from 'antd'
 import faker from 'faker'
-import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import ModeratorProjectModal from '../../../../components/Modal/ModeratorProjectModal'
 const ProjectModerator = () => {

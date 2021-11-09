@@ -48,7 +48,7 @@ const MachineList = () => {
     const tableColumns = [
         ...columns.slice(0, 1),
         {
-            title: 'Tên dự án',
+            title: 'Tên máy móc',
             dataIndex: 'name',
             key: 'name',
             render: (text: any, record: any) => (
@@ -84,14 +84,15 @@ const MachineList = () => {
                         }
                         value={search}
                         onChange={onChangeSearch}
+                        placeholder="Tên máy móc"
                     />
                 </div>
                 <div className="projects-list-control-actions">
-                    <Button onClick={handleClickInfo}>Thêm thiết bị</Button>
+                    <Button onClick={handleClickInfo}>Thêm máy móc</Button>
                 </div>
             </div>
             <div className="projects-list-table">
-                <Table columns={tableColumns} dataSource={filterData} bordered />
+                <Table columns={tableColumns} dataSource={filterData} bordered loading={isFetching} />
             </div>
             <MachineAddModal
                 centered

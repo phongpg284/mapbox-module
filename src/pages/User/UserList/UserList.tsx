@@ -40,7 +40,7 @@ const UserList = () => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button>SMS</button>
+                    {/* <button>SMS</button> */}
                     <button
                         onClick={() => history.push(`/users/${record.id}`)}
                     >
@@ -97,6 +97,7 @@ const UserList = () => {
                         }
                         value={search}
                         onChange={onChangeSearch}
+                        placeholder="Tên người dùng"
                     />
                 </div>
                 <div className="users-list-control-actions">
@@ -104,7 +105,7 @@ const UserList = () => {
                 </div>
             </div>
             <div className="users-list-table">
-                <Table columns={tableColumns} dataSource={filterData} bordered />;
+                <Table columns={tableColumns} dataSource={filterData} bordered loading={isFetching} />;
             </div>
             <UserAddModal
                 update={reFetchAfterUpdate}

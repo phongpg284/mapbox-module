@@ -112,6 +112,7 @@ const ModeratorDetail = ({ id }: any) => {
                 dataSource={dataSource}
                 showHeader={false}
                 pagination={false}
+                loading={isFetching}
                 title={() => (
                     <h4 style={{ textAlign: 'left' }}>Chi tiết: name</h4>
                 )}

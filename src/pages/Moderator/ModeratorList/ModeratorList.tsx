@@ -92,7 +92,7 @@ const ModeratorList = () => {
                 </div>
             </div>
             <div className="moderators-list-table">
-                <Table columns={tableColumns} dataSource={data} bordered />;
+                <Table columns={tableColumns} dataSource={data} bordered loading={isFetching} />;
             </div>
 
             <ModeratorAddModal

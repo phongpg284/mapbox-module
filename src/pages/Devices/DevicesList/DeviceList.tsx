@@ -109,6 +109,7 @@ const DeviceList = () => {
                         }
                         value={search}
                         onChange={onChangeSearch}
+                        placeholder="Tên thiết bị"
                     />
                 </div>
                 <div className="devices-list-control-actions">
@@ -120,6 +121,7 @@ const DeviceList = () => {
                     columns={tableColumns}
                     dataSource={filterData}
                     bordered
+                    loading={isFetching}
                 />
             </div>
             <DeviceAddModal

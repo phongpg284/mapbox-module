@@ -122,6 +122,7 @@ const DeviceSummaryModal: React.FC<ISummaryDeviceModal> = ({
                         dataSource={dataSource}
                         showHeader={false}
                         pagination={false}
+                        loading={iseFetching}
                     />
                 </div>
             </Modal>

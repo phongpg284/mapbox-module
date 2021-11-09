@@ -123,6 +123,7 @@ const UserDetail = ({ id }: any) => {
                         Cập nhật thông tin
                     </Button>
                 )}
+                loading={isFetching}
             />
             <img
                 alt="avatar"

@@ -166,7 +166,7 @@ const ProjectSummaryModal: React.FC<ISummaryProjectModal> = ({
 }) => {
     const [data, setData] = useState<any>()
     const [dataSource, setDataSource] = useState<any>()
-    const [response, iseFetching, setRequest] = useFetch({} as any)
+    const [response, isFetching, setRequest] = useFetch({} as any)
 
     useEffect(() => {
         if (visible)
@@ -184,7 +184,7 @@ const ProjectSummaryModal: React.FC<ISummaryProjectModal> = ({
     }, [visible])
 
     useEffect(() => {
-        if (!iseFetching && response && response.data && !response.hasError) {
+        if (!isFetching && response && response.data && !response.hasError) {
             setData(response.data)
         }
     }, [response])
@@ -224,6 +224,7 @@ const ProjectSummaryModal: React.FC<ISummaryProjectModal> = ({
                         dataSource={dataSource}
                         showHeader={false}
                         pagination={false}
+                        loading={isFetching}
                     />
                 </div>
             </Modal>

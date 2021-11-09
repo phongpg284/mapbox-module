@@ -118,6 +118,7 @@ const ProjectList = () => {
                     columns={tableColumns}
                     dataSource={filterData}
                     bordered
+                    loading={isFetching}
                 />
             </div>
             <ProjectAddModal
