@@ -54,6 +54,7 @@ const HomePage = ({ parentPath }: any) => {
         <div>
             <Layout style={{ maxHeight: '100vh' }}>
                 <Drawer
+                    className="control-menu"
                     placement="left"
                     closable={false}
                     onClose={() => setIsSideboardCollapse(false)}
@@ -64,6 +65,7 @@ const HomePage = ({ parentPath }: any) => {
                 </Drawer>
 
                 <Drawer
+                    className="profile-menu"
                     placement="right"
                     closable={false}
                     onClose={() => setIsProfileCollapse(false)}
