@@ -7,7 +7,9 @@ import DeviceSummary from './DeviceSummary'
 import DeviceTask from './DeviceTask'
 import dayjs from 'dayjs'
 
-const DeviceInfo = ({ id }: any) => {
+const DeviceInfo = ({ match }: any) => {
+    console.log(match)
+    const id = match.params.id
     const [currentTab, setCurrentTab] = useState('summary')
     const handleClick = (e: any) => {
         setCurrentTab(e.key)
@@ -45,6 +47,7 @@ const DeviceInfo = ({ id }: any) => {
 
     return (
         <div className="device-detail-container">
+            Hoho
             <div className="device-detail-wrapper">
                 <Menu
                     style={centerStyle}

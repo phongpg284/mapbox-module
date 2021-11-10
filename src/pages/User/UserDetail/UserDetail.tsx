@@ -49,7 +49,8 @@ const IKeyCode = {
     },
 }
 
-const UserDetail = ({ id }: any) => {
+const UserDetail = ({ match }: any) => {
+    const id = match?.params?.id
     const history = useHistory()
 
     const [dataSource, setDataSource] = useState<any[]>([])

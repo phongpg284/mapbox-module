@@ -8,7 +8,8 @@ import ProjectSummary from './ProjectSummary'
 
 import useData from '../../../hooks/useData'
 
-const ProjectDetail = ({ id }: any) => {
+const ProjectDetail = ({ match }: any) => {
+    const id = match?.params?.id
     const [currentTab, setCurrentTab] = useState('summary')
     const handleClick = (e: any) => {
         setCurrentTab(e.key)

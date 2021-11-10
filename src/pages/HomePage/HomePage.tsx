@@ -29,6 +29,7 @@ import ModeratorDetail from '../Moderator/ModeratorDetail'
 import MachinesList from '../Machine/MachinesList'
 import MachineInfo from '../Machine/MachineInfo'
 import DeviceInfo from '../Devices/DeviceInfo'
+import PrivateRoute from '../../components/PrivateRoute'
 
 const { Header, Content } = Layout
 
@@ -94,82 +95,92 @@ const HomePage = ({ parentPath }: any) => {
                         ></img>
                     </div>
                 </Header>
-                <Content style={{padding: "20px", height: "100vh", overflow: "auto"}}>
+                <Content
+                    style={{
+                        padding: '20px',
+                        height: '100vh',
+                        overflow: 'auto',
+                    }}
+                >
                     <Switch>
-                        <Route path={`${parentPath}devices/list`}>
-                            <DeviceList />
-                        </Route>
-                        <Route path={`${parentPath}devices/:id/tasks`}>
-                            <DeviceTask />
-                        </Route>
-                        <Route path={`${parentPath}devices/:id`} render={({match}) => (
-                            <DeviceInfo id={match.params.id}/>
-                        )} />
-                        <Route path={`${parentPath}devices-summary`}>
-                            <DeviceDetail />
-                        </Route>
+                        <PrivateRoute
+                            path={`${parentPath}devices/list`}
+                            component={DeviceList}
+                        />
+                        <PrivateRoute
+                            path={`${parentPath}devices/:id/tasks`}
+                            component={DeviceTask}
+                        />
+                        <PrivateRoute
+                            path={`${parentPath}devices/:id`}
+                            component={DeviceInfo}
+                        />
+                        <PrivateRoute
+                            path={`${parentPath}devices-summary`}
+                            component={DeviceDetail}
+                        />
 
-                        <Route path={`${parentPath}machines/list`}>
-                            <MachinesList />
-                        </Route>
-                        <Route path={`${parentPath}machines/:id`} render={({match}) => (
-                            <MachineInfo id={match.params.id}/>
-                        )} />
+                        <PrivateRoute
+                            path={`${parentPath}machines/list`}
+                            component={MachinesList}
+                        />
+                        <PrivateRoute
+                            path={`${parentPath}machines/:id`}
+                            component={MachineInfo}
+                        />
 
-                        <Route path={`${parentPath}projects/list`}>
-                            <ProjectList />
-                        </Route>
-                        <Route path={`${parentPath}projects/:id`} render={({match}) => (
-                            <ProjectDetail id={match.params.id}/>
-                        )} />
-                        {/* <Route path={`${parentPath}projects-summary`}>
-                            <ProjectSummary />
-                        </Route> */}
+                        <PrivateRoute
+                            path={`${parentPath}projects/list`}
+                            component={ProjectList}
+                        />
+                        <PrivateRoute
+                            path={`${parentPath}projects/:id`}
+                            component={ProjectDetail}
+                        />
 
-
-                        <Route path={`${parentPath}users/list`}>
-                            <UserList />
-                        </Route>
-                        <Route path={`${parentPath}users/edit/:id`} render={({match}) => (
-                            <UserEdit id={match.params.id}/>
-                        )} />
-                        <Route path={`${parentPath}users/:id`} render={({match}) => (
-                            <UserDetail id={match.params.id}/>
-                        )} />
-                        {/* <Route path={`${parentPath}users-summary`}>
-                            <ProjectSummary />
-                        </Route> */}
-
+                        <PrivateRoute
+                            path={`${parentPath}users/list`}
+                            component={UserList}
+                        />
+                        <PrivateRoute
+                            path={`${parentPath}users/edit/:id`}
+                            component={UserEdit}
+                        />
+                        <PrivateRoute
+                            path={`${parentPath}users/:id`}
+                            component={UserDetail}
+                        />
 
                         <Route path={`${parentPath}moderators/list`}>
                             <ModeratorList />
                         </Route>
-                        <Route path={`${parentPath}moderators/edit/:id`} render={({match}) => (
-                            <ModeratorEdit id={match.params.id}/>
-                        )} />
-                        <Route path={`${parentPath}moderators/:id`} render={({match}) => (
-                            <ModeratorDetail id={match.params.id}/>
-                        )}>
-                        </Route>
-                        {/* <Route path={`${parentPath}moderators-summary`}>
-                            <ProjectSummary />
-                        </Route> */}
+                        <Route
+                            path={`${parentPath}moderators/edit/:id`}
+                            render={({ match }) => (
+                                <ModeratorEdit id={match.params.id} />
+                            )}
+                        />
+                        <Route
+                            path={`${parentPath}moderators/:id`}
+                            render={({ match }) => (
+                                <ModeratorDetail id={match.params.id} />
+                            )}
+                        />
 
-
-                        <Route path={`${parentPath}fields/list`}>
+                        <PrivateRoute path={`${parentPath}fields/list`}>
                             <FieldPage>
                                 {(props: any) => <FieldList data={props} />}
                             </FieldPage>
-                        </Route>
-                        <Route path={`${parentPath}fields/card`}>
+                        </PrivateRoute>
+                        <PrivateRoute path={`${parentPath}fields/card`}>
                             <FieldPage>
                                 {(props: any) => <FieldCard data={props} />}
                             </FieldPage>
-                        </Route>
-                        <Route
+                        </PrivateRoute>
+                        <PrivateRoute
                             path={`${parentPath}fields/:id`}
-                            render={({ match }) => <RecordMap match={match} />}
-                        ></Route>
+                            component={RecordMap}
+                        />
                     </Switch>
                 </Content>
             </Layout>

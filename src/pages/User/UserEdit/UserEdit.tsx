@@ -162,7 +162,8 @@ interface EditableTableState {
     count: number
 }
 
-const UserEdit = ({ id }: any) => {
+const UserEdit = ({ match }: any) => {
+    const id = match?.params?.id
     // const [dataSource, setDataSource] = useState<any>([])
     // useEffect(() => {
     //     setDataSource(fakeDataSource)

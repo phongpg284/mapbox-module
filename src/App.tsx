@@ -8,7 +8,6 @@ import HomePage from './pages/HomePage/HomePage'
 import MapPage from './pages/Map/Map'
 
 function App() {
-    const account = useAppSelector((state) => state.account)
     return (
         <div className="App">
             <Switch>
@@ -21,9 +20,9 @@ function App() {
                 <Route path="/register">
                     <Register />
                 </Route>
-                <PrivateRoute path="/">
+                <Route path="/">
                     <HomePage parentPath={'/'} />
-                </PrivateRoute>
+                </Route>
             </Switch>
         </div>
     )

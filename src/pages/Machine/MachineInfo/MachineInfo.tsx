@@ -6,8 +6,8 @@ import MachineUser from '../MachineDetail/MachineUser'
 import MachineSummary from '../MachineDetail/MachineSummary'
 import useData from '../../../hooks/useData'
 
-const MachineDetail = ({ id }: any) => {
-    console.log(typeof id)
+const MachineDetail = ({match}: any) => {
+    const id = match?.params?.id;
     const [currentTab, setCurrentTab] = useState('summary')
     const handleClick = (e: any) => {
         setCurrentTab(e.key)
