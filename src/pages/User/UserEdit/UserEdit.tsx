@@ -20,66 +20,46 @@ const column = [
     },
 ]
 
-const fakeDataSource = [
-    {
-        key: '1',
-        ckey: 'Tên người dùng',
-        value: faker.internet.userName(),
+const IKeyCode = {
+    name: {
+        brand: 'Tên người dùng',
+        type: 'string',
     },
-    {
-        key: '2',
-        ckey: 'Email',
-        value: faker.internet.email(),
+    username: {
+        brand: 'Tên đăng nhập',
+        type: 'string',
     },
-    {
-        key: '3',
-        ckey: 'Tên đăng nhập',
-        value: faker.internet.userName(),
+    password: {
+        brand: 'Mật khẩu',
+        type: 'string',
     },
-    {
-        key: '4',
-        ckey: 'Số điện thoại',
-        value: faker.phone.phoneNumber(),
+    email: {
+        brand: 'Email',
+        type: 'string',
     },
-    {
-        key: '5',
-        ckey: 'Ngày sinh',
-        value: faker.datatype.datetime().toISOString(),
+    phone: {
+        brand: 'Số điện thoại',
+        type: 'string',
     },
-    {
-        key: '6',
-        ckey: 'Địa chỉ',
-        value: faker.address.city(),
+    role: {
+        brand: 'Chức vụ',
+        type: 'string',
     },
-    {
-        key: '7',
-        ckey: 'Chức vụ',
-        value: faker.name.jobTitle(),
+    department: {
+        brand: 'Phòng ban',
+        type: 'string',
     },
-    {
-        key: '8',
-        ckey: 'Đơn vị công tác',
-        value: faker.address.country(),
-    },
-    {
-        key: '9',
-        ckey: 'Ngày đăng ký',
-        value: faker.datatype.datetime().toDateString(),
-    },
-    {
-        key: '10',
-        ckey: 'Chỉnh sửa lần cuối',
-        value: faker.datatype.datetime().toISOString(),
-    },
-]
+}
 
 const EditableContext = createContext<FormInstance<any> | null>(null)
 
 interface Item {
-    key: string
     name: string
-    age: string
-    address: string
+    username: string
+    password: string
+    role: string
+    email: string
+    department: string
 }
 
 interface EditableRowProps {
@@ -159,7 +139,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         ) : (
             <div
                 className="editable-cell-value-wrap"
-                style={{ paddingRight: 24, height: "30px" }}
+                style={{ paddingRight: 24, height: '30px' }}
                 onClick={toggleEdit}
             >
                 {children}
@@ -173,10 +153,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
 type EditableTableProps = Parameters<typeof Table>[0]
 
 interface DataType {
-    key: React.Key
-    name: string
-    age: string
-    address: string
+    ckey: string
+    value: string
 }
 
 interface EditableTableState {
@@ -200,30 +178,33 @@ const UserEdit = ({ id }: any) => {
                 pk: id,
             },
             headers: {
-                "Content-type": "application/json"
-            }
+                'Content-type': 'application/json',
+            },
         })
     }, [])
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
-            // setDataSource(response.data)
-            const convertDataSource = [];
-            let i = 0;
-            for (const [key, value] of Object.entries(response.data[0])) {
-                convertDataSource.push({
-                    key: i,
-                    ckey: key,
-                    value: value
-                })    
-                i++;
+            const convertDataSource = []
+            if (response.data[0]) {
+                for (const [key, value] of Object.entries(response.data[0])) {
+                    if ((IKeyCode as any)[key]) {
+                        const { brand, type } = (IKeyCode as any)[key]
+                        const pushData = {
+                            ckey: brand,
+                            value: value,
+                        }
+                        if (type === 'date')
+                            pushData.value = new Date(
+                                value as any
+                            ).toLocaleString()
+                        convertDataSource.push(pushData)
+                    }
+                }
             }
             setDataSource(convertDataSource)
-            
         }
     }, [response])
-
-
 
     const components = {
         body: {
@@ -250,8 +231,8 @@ const UserEdit = ({ id }: any) => {
 
     const handleSave = (row: DataType) => {
         const newData = [...dataSource]
-        const index = newData.findIndex((item: any) => row.key === item.key)
-        const item = newData[index];
+        const index = newData.findIndex((item: any) => row.ckey === item.ckey)
+        const item = newData[index]
 
         newData.splice(index, 1, {
             ...item,
@@ -260,35 +241,46 @@ const UserEdit = ({ id }: any) => {
         setDataSource(newData)
     }
 
-
-    const [updateResponse, isFetchingUpdate, setRequestUpdate] = useFetch({} as any); 
+    const [updateResponse, isFetchingUpdate, setRequestUpdate] = useFetch(
+        {} as any
+    )
     const handleSubmitEdit = () => {
-        const body = dataSource.reduce((prev: any, curr: any) => {
-            if(curr.value)
-          prev[curr.ckey] = curr.value;
-          return prev
-        },{})
-        body.pk = body.id;
-        delete body.id;
-        delete body.username;
-        delete body.role;
+        let convertDataSource: any = {}
+        if (dataSource) {
+            for (const item of dataSource) {
+                for (const [key, value] of Object.entries(IKeyCode)) {
+                    if (item.ckey === value.brand) {
+                        ;(convertDataSource as any)[key] = item.value
+                    }
+                }
+            }
+        }
+        delete convertDataSource.username
+
         setRequestUpdate({
-            endPoint: "https://dinhvichinhxac.online/api/user/",
-            method: "POST",
+            endPoint: 'https://dinhvichinhxac.online/api/user/',
+            method: 'POST',
             headers: {
-                "Content-type": "application/json",
+                'Content-type': 'application/json',
             },
             requestBody: {
-                ...body,
-                action: "update",
-            }
+                ...convertDataSource,
+                pk: id,
+                action: 'update',
+            },
         })
     }
 
     useEffect(() => {
-        if (!isFetchingUpdate && updateResponse && updateResponse.data && !updateResponse.hasError)
-        message.info(updateResponse.data)
-    },[updateResponse])
+        if (
+            !isFetchingUpdate &&
+            updateResponse &&
+            updateResponse.data &&
+            !updateResponse.hasError
+        ) {
+            message.success(updateResponse.data?.detail)
+        }
+    }, [updateResponse])
 
     return (
         <div className={style.user_edit_container}>
@@ -306,17 +298,19 @@ const UserEdit = ({ id }: any) => {
                 footer={() => (
                     <Button
                         danger
-                        style={{ float: 'left' }}
+                        style={{ display: 'flex' }}
                         onClick={handleSubmitEdit}
                     >
                         Cập nhật thông tin
                     </Button>
                 )}
             />
-            <img
-                alt="avatar"
-                src="https://apsec.iafor.org/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg"
-            ></img>
+            <div className={style.user_avatar}>
+                <img
+                    alt="avatar"
+                    src="https://apsec.iafor.org/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg"
+                ></img>
+            </div>
         </div>
     )
 }

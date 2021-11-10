@@ -1,14 +1,14 @@
 import { Button, Form, Input, message, Modal } from 'antd'
 
 interface IModal {
-    centered?: boolean;
-    width?: number;
-    visible: boolean;
-    onClose: () => void;
+    centered?: boolean
+    width?: number
+    visible: boolean
+    onClose: () => void
     update: () => void
 }
 
-const UserAddModal: React.FC<IModal> = ({update, onClose, ...props }) => {
+const UserAddModal: React.FC<IModal> = ({ update, onClose, ...props }) => {
     const [form] = Form.useForm()
 
     const addNewUser = async (value: any) => {
@@ -74,6 +74,32 @@ const UserAddModal: React.FC<IModal> = ({update, onClose, ...props }) => {
                     </div> */}
                     <div style={{ overflow: 'hidden' }}>
                         <Form.Item
+                            name="username"
+                            label="Tên đăng nhập"
+                            rules={[
+                                { required: true },
+                                //@ts-ignore
+                                { type: 'string', warningOnly: true },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </div>
+                    <div style={{ overflow: 'hidden' }}>
+                        <Form.Item
+                            name="password"
+                            label="Mật khẩu"
+                            rules={[
+                                { required: true },
+                                //@ts-ignore
+                                { type: 'string', warningOnly: true },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </div>
+                    <div style={{ overflow: 'hidden' }}>
+                        <Form.Item
                             name="name"
                             label="Tên người dùng"
                             rules={[
@@ -82,16 +108,11 @@ const UserAddModal: React.FC<IModal> = ({update, onClose, ...props }) => {
                                 { type: 'string', warningOnly: true },
                             ]}
                         >
-                            <Input placeholder="" />
+                            <Input />
                         </Form.Item>
                     </div>
                     <div style={{ overflow: 'hidden' }}>
                         <Form.Item name="email" label="Email">
-                            <Input placeholder="" />
-                        </Form.Item>
-                    </div>
-                    <div style={{ overflow: 'hidden' }}>
-                        <Form.Item name="username" label="Tên đăng nhập">
                             <Input placeholder="" />
                         </Form.Item>
                     </div>
@@ -103,7 +124,15 @@ const UserAddModal: React.FC<IModal> = ({update, onClose, ...props }) => {
                     </div>
 
                     <div style={{ overflow: 'hidden' }}>
-                        <Form.Item name="role" label="Chức vụ">
+                        <Form.Item
+                            name="role"
+                            label="Chức vụ"
+                            rules={[
+                                { required: true },
+                                //@ts-ignore
+                                { type: 'string', warningOnly: true },
+                            ]}
+                        >
                             <Input placeholder="" />
                         </Form.Item>
                     </div>

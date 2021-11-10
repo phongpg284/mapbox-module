@@ -1,8 +1,21 @@
 .user_detail_container {
     /* margin: auto; */
     border: groove 1px;
-    // background-color: white;
+    background-color: white;
     margin: 30px auto;
+    display: flex;
+    justify-content: center;
+    .user_table_content {
+        flex-grow: 2;
+    }
+    .user_avatar {
+        flex-grow: 1;
+        img {
+            display: block;
+            width: 200px;
+            margin: 20px;
+        }
+    }
 }
 
 .user_detail_title {
@@ -20,7 +33,6 @@
     margin: 20px;
     padding: 5px;
 }
-
 
 .user_update_button {
     text-align: end;

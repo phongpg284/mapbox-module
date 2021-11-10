@@ -215,7 +215,6 @@ const MachineEditModal: React.FC<IMachineEditModal> = ({
                 }
             }
         }
-        console.log(convertDataSource)
         setDataSource(convertDataSource)
     }, [data])
 
@@ -275,7 +274,7 @@ const MachineEditModal: React.FC<IMachineEditModal> = ({
             for (const item of dataSource) {
                 for (const [key, value] of Object.entries(IKeyCode)) {
                     if (item.ckey === value.brand) {
-                        ;(convertDataSource as any)[key] = item.value
+                        (convertDataSource as any)[key] = item.value
                     }
                 }
             }

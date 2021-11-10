@@ -91,7 +91,7 @@ const UserList = () => {
     
     const handleConfirmDelete = () => {
         setDeleteRequest({
-            endPoint: "https://dinhvichinhxac.online/api/project/",
+            endPoint: "https://dinhvichinhxac.online/api/user/",
             method: "POST",
             headers: {
                 "Content-type": "application/json"

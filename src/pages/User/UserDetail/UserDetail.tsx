@@ -1,6 +1,5 @@
 import style from './index.module.scss'
 import { Button, Table } from 'antd'
-import faker from 'faker'
 import { useEffect, useState } from 'react'
 import useFetch from '../../../hooks/useFetch'
 import { useHistory } from 'react-router'
@@ -19,58 +18,36 @@ const column = [
     },
 ]
 
-const data = [
-    {
-        key: '1',
-        ckey: 'Tên người dùng',
-        value: faker.internet.userName(),
+const IKeyCode = {
+    name: {
+        brand: 'Tên người dùng ',
+        type: 'string',
     },
-    {
-        key: '2',
-        ckey: 'Email',
-        value: faker.internet.email(),
+    username: {
+        brand: 'Tên đăng nhập',
+        type: 'string',
     },
-    {
-        key: '3',
-        ckey: 'Tên đăng nhập',
-        value: faker.internet.userName(),
+    password: {
+        brand: 'Mật khẩu',
+        type: 'string',
     },
-    {
-        key: '4',
-        ckey: 'Số điện thoại',
-        value: faker.phone.phoneNumber(),
+    email: {
+        brand: 'Email',
+        type: 'string',
     },
-    {
-        key: '5',
-        ckey: 'Ngày sinh',
-        value: faker.datatype.datetime().toISOString(),
+    phone: {
+        brand: 'Số điện thoại',
+        type: 'string',
     },
-    {
-        key: '6',
-        ckey: 'Địa chỉ',
-        value: faker.address.city(),
+    role: {
+        brand: 'Chức vụ',
+        type: 'string',
     },
-    {
-        key: '7',
-        ckey: 'Chức vụ',
-        value: faker.name.jobTitle(),
+    department: {
+        brand: 'Phòng ban',
+        type: 'string',
     },
-    {
-        key: '8',
-        ckey: 'Đơn vị công tác',
-        value: faker.address.country(),
-    },
-    {
-        key: '9',
-        ckey: 'Ngày đăng ký',
-        value: faker.datatype.datetime().toDateString(),
-    },
-    {
-        key: '10',
-        ckey: 'Chỉnh sửa lần cuối',
-        value: faker.datatype.datetime().toISOString(),
-    },
-]
+}
 
 const UserDetail = ({ id }: any) => {
     const history = useHistory()
@@ -93,12 +70,22 @@ const UserDetail = ({ id }: any) => {
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
-            const convertDataSource = [];
-            for (const [key, value] of Object.entries(response.data[0])) {
-                convertDataSource.push({
-                    ckey: key,
-                    value: value
-                })    
+            const convertDataSource = []
+            if (response.data[0]) {
+                for (const [key, value] of Object.entries(response.data[0])) {
+                    if ((IKeyCode as any)[key]) {
+                        const { brand, type } = (IKeyCode as any)[key]
+                        const pushData = {
+                            ckey: brand,
+                            value: value,
+                        }
+                        if (type === 'date')
+                            pushData.value = new Date(
+                                value as any
+                            ).toLocaleString()
+                        convertDataSource.push(pushData)
+                    }
+                }
             }
             setDataSource(convertDataSource)
         }
@@ -112,23 +99,27 @@ const UserDetail = ({ id }: any) => {
                 showHeader={false}
                 pagination={false}
                 title={() => (
-                    <h4 style={{ textAlign: 'left' }}>Chi tiết: name</h4>
+                    <h4 style={{ textAlign: 'left' }}>
+                        Chi tiết người dùng {response?.data?.[0]?.name}
+                    </h4>
                 )}
                 footer={() => (
                     <Button
                         danger
-                        style={{ float: 'left' }}
-                        onClick={() => history.push('/users/edit/' + id )}
+                        style={{ display: 'flex' }}
+                        onClick={() => history.push('/users/edit/' + id)}
                     >
                         Cập nhật thông tin
                     </Button>
                 )}
                 loading={isFetching}
             />
-            <img
-                alt="avatar"
-                src="https://apsec.iafor.org/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg"
-            ></img>
+            <div className={style.user_avatar}>
+                <img
+                    alt="avatar"
+                    src="https://apsec.iafor.org/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg"
+                ></img>
+            </div>
         </div>
     )
 }

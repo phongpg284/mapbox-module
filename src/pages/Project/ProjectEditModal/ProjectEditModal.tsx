@@ -215,7 +215,6 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
                 }
             }
         }
-        console.log(convertDataSource)
         setDataSource(convertDataSource)
     }, [data])
 
@@ -275,7 +274,7 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
             for (const item of dataSource) {
                 for (const [key, value] of Object.entries(IKeyCode)) {
                     if (item.ckey === value.brand) {
-                        ;(convertDataSource as any)[key] = item.value
+                        (convertDataSource as any)[key] = item.value
                     }
                 }
             }
@@ -286,14 +285,6 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
         delete convertDataSource.create_time
         delete convertDataSource.update_time
 
-        // const body = convertDataSource.reduce((prev: any, curr: any) => {
-        //     if(curr.value)
-        //   prev[curr.ckey] = curr.value;
-        //   return prev
-        // },{})
-        // body.pk = id;
-        // delete body.id;
-        // console.log(body, "hoho")
         setRequestUpdate({
             endPoint: 'https://dinhvichinhxac.online/api/project/',
             method: 'POST',
