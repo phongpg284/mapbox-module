@@ -2,7 +2,7 @@ import style from './index.module.scss'
 import { createContext, useContext, useEffect, useState, useRef } from 'react'
 import { Button, Input, Table, Form } from 'antd'
 import { FormInstance } from 'antd/lib/form'
-import faker from 'faker'
+
 import useFetch from '../../../hooks/useFetch'
 
 const column = [
@@ -17,59 +17,6 @@ const column = [
         key: 'value',
         dataIndex: 'value',
         editable: true,
-    },
-]
-
-const fakeDataSource = [
-    {
-        key: '1',
-        ckey: 'Tên người dùng',
-        value: faker.internet.userName(),
-    },
-    {
-        key: '2',
-        ckey: 'Email',
-        value: faker.internet.email(),
-    },
-    {
-        key: '3',
-        ckey: 'Tên đăng nhập',
-        value: faker.internet.userName(),
-    },
-    {
-        key: '4',
-        ckey: 'Số điện thoại',
-        value: faker.phone.phoneNumber(),
-    },
-    {
-        key: '5',
-        ckey: 'Ngày sinh',
-        value: faker.datatype.datetime().toISOString(),
-    },
-    {
-        key: '6',
-        ckey: 'Địa chỉ',
-        value: faker.address.city(),
-    },
-    {
-        key: '7',
-        ckey: 'Chức vụ',
-        value: faker.name.jobTitle(),
-    },
-    {
-        key: '8',
-        ckey: 'Đơn vị công tác',
-        value: faker.address.country(),
-    },
-    {
-        key: '9',
-        ckey: 'Ngày đăng ký',
-        value: faker.datatype.datetime().toDateString(),
-    },
-    {
-        key: '10',
-        ckey: 'Chỉnh sửa lần cuối',
-        value: faker.datatype.datetime().toISOString(),
     },
 ]
 
@@ -219,11 +166,6 @@ const ModeratorEdit = ({ id }: any) => {
         }
     }, [response])
 
-    useEffect(() => {
-      console.log(dataSource);
-      
-    })
-
     const components = {
         body: {
             row: EditableRow,
@@ -248,7 +190,6 @@ const ModeratorEdit = ({ id }: any) => {
     })
 
     const handleSave = (row: DataType) => {
-        console.log("edit")
         const newData = [...dataSource]
         const index = newData.findIndex((item: any) => row.key === item.key)
         const item = newData[index]

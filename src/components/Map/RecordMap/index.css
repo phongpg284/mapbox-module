@@ -1,6 +1,6 @@
 .record-view{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     width: 100vw;
     max-width: 100%;
 }

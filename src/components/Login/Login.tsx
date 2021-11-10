@@ -1,9 +1,11 @@
 import './index.css'
-import { Form, Input, Button, Checkbox } from 'antd'
+import imetLogo from '../../assets/imet-logo.png'
+
+import { useHistory } from 'react-router'
+import { Form, Button } from 'antd'
+
 import { useAppDispatch } from '../../app/store'
 import { updateToken } from '../../app/authSlice'
-import { useHistory } from 'react-router'
-import imetLogo from '../../assets/imet-logo.png'
 
 
 const Login = () => {
@@ -12,8 +14,6 @@ const Login = () => {
     const dispatch = useAppDispatch()
 
     const onFinish = (values: any) => {
-        console.log('Success:', values)
-
         const query = {
             username: values.username,
             password: values.password,
@@ -110,7 +110,6 @@ const Login = () => {
                         </Button>
                     </Form.Item>
                 </Form>
-  
             </div>
         </div>
     )

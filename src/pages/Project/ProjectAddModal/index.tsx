@@ -1,4 +1,4 @@
-import { Form, Input, message, Button, Space, Modal } from 'antd'
+import { Form, Input, message, Button, Modal } from 'antd'
 
 interface IModal {
     centered?: boolean;
@@ -29,7 +29,6 @@ const ProjectAddModal: React.FC<IModal> = ({ onClose, update, ...props }) => {
     }
 
     const onFinish = (value: any) => {
-        console.log(value)
         addNewProject(value).then((data) => {
             update();
             message.success(data.response)

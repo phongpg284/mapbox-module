@@ -1,5 +1,5 @@
 import ReactECharts from 'echarts-for-react'
-import { memo, useEffect } from 'react'
+import { memo } from 'react'
 import customTooltip from './customTooltip'
 
 const Chart = memo(({ taskData, setViewIndex, onEvents }: any) => {

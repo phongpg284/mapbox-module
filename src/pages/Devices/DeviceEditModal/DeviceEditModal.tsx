@@ -1,16 +1,8 @@
 import style from './index.module.scss'
-import {
-    Button,
-    Modal,
-    Table,
-    Form,
-    Input,
-    FormInstance,
-    message,
-    Spin,
-} from 'antd'
-import useFetch from '../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
+import { Button, Modal, Form, Input, message, Spin } from 'antd'
+
+import useFetch from '../../../hooks/useFetch'
 
 interface IDeviceEditModal {
     centered?: boolean
@@ -31,7 +23,7 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
     const [form] = Form.useForm()
 
     const [data, setData] = useState<any>()
-    const [response, iseFetching, setRequest] = useFetch({} as any)
+    const [response, isFetching, setRequest] = useFetch({} as any)
 
     useEffect(() => {
         if (visible)
@@ -49,7 +41,7 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
     }, [visible])
 
     useEffect(() => {
-        if (!iseFetching && response && response.data && !response.hasError) {
+        if (!isFetching && response && response.data && !response.hasError) {
             setData(response.data)
         }
     }, [response])

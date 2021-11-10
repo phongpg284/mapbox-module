@@ -67,11 +67,6 @@ const ProjectDevice = ({id, data, refetch }: any) => {
         }
     }, [data])
 
-    useEffect(() => {
-      console.log("data",data);
-      
-    })
-
     const [isShowProjectDeviceAddModal, setIsShowProjectDeviceAddModal] =
         useState(false)
 

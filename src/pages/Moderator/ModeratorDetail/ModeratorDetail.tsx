@@ -1,9 +1,9 @@
 import style from './index.module.scss'
-import { Button, Table } from 'antd'
-import faker from 'faker'
 import { useEffect, useState } from 'react'
-import useFetch from '../../../hooks/useFetch'
 import { useHistory } from 'react-router'
+import { Button, Table } from 'antd'
+
+import useFetch from '../../../hooks/useFetch'
 
 const column = [
     {
@@ -18,59 +18,6 @@ const column = [
         dataIndex: 'value',
     },
 ]
-
-// const dataSource = [
-//     {
-//         key: '1',
-//         ckey: 'Tên người dùng',
-//         value: faker.internet.userName(),
-//     },
-//     {
-//         key: '2',
-//         ckey: 'Email',
-//         value: faker.internet.email(),
-//     },
-//     {
-//         key: '3',
-//         ckey: 'Tên đăng nhập',
-//         value: faker.internet.userName(),
-//     },
-//     {
-//         key: '4',
-//         ckey: 'Số điện thoại',
-//         value: faker.phone.phoneNumber(),
-//     },
-//     {
-//         key: '5',
-//         ckey: 'Ngày sinh',
-//         value: faker.datatype.datetime().toISOString(),
-//     },
-//     {
-//         key: '6',
-//         ckey: 'Địa chỉ',
-//         value: faker.address.city(),
-//     },
-//     {
-//         key: '7',
-//         ckey: 'Chức vụ',
-//         value: faker.name.jobTitle(),
-//     },
-//     {
-//         key: '8',
-//         ckey: 'Đơn vị công tác',
-//         value: faker.address.country(),
-//     },
-//     {
-//         key: '9',
-//         ckey: 'Ngày đăng ký',
-//         value: faker.datatype.datetime().toDateString(),
-//     },
-//     {
-//         key: '10',
-//         ckey: 'Chỉnh sửa lần cuối',
-//         value: faker.datatype.datetime().toISOString(),
-//     },
-// ]
 
 const ModeratorDetail = ({ id }: any) => {
     const history = useHistory()

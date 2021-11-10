@@ -1,9 +1,11 @@
+import './style.css'
 import { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+
 import { Button, Collapse, Table } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import { WarningFilled } from '@ant-design/icons'
-import './style.css'
+
 const { Panel } = Collapse;
 
 export interface ITaskData {
@@ -75,8 +77,6 @@ const TaskList = ({ data }: Partial<ITaskListProps>) => {
                     <div className="fw-bold fs-6">
                         Machine: {record.machine}
                     </div>
-
-                    {/* <div className="fw-bold fs-6">{record.area} m2</div> */}
                 </div>
             ),
         },
@@ -131,9 +131,6 @@ const TaskList = ({ data }: Partial<ITaskListProps>) => {
 
     return (
         <div>
-            {/* <div className="title text-start fw-bold fs-5 mb-3 d-flex ">
-                <div>Lịch trình hoạt động trong ngày</div>
-            </div> */}
             <div>
                 <Collapse defaultActiveKey={['1']}>
                     <Panel header="Lịch trình hoạt động trong ngày " key="1">

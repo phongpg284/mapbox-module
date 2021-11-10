@@ -1,11 +1,12 @@
-import { Route, Switch } from 'react-router'
 import './App.css'
-import { useAppSelector } from './app/store'
-import Login from './components/Login'
-import PrivateRoute from './components/PrivateRoute'
-import Register from './components/Register'
+import { Route, Switch } from 'react-router'
+
 import HomePage from './pages/HomePage/HomePage'
 import MapPage from './pages/Map/Map'
+
+import PrivateRoute from './components/PrivateRoute'
+import Login from './components/Login'
+import Register from './components/Register'
 
 function App() {
     return (

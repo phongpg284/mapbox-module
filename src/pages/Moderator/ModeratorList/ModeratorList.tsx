@@ -1,18 +1,17 @@
 import './index.css'
 
+import { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
 import { Button, Input, Space, Table } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
-import faker from 'faker'
-import columns from './columns'
-import { useEffect, useState } from 'react'
 import ModeratorAddModal from '../ModeratorAddModal'
+
+import columns from './columns'
 import useFetch from '../../../hooks/useFetch'
 
 const ModeratorList = () => {
-    const history = useHistory()
     const tableColumns = [
         ...columns.slice(0, 1),
         {
@@ -39,16 +38,6 @@ const ModeratorList = () => {
             ),
         },
     ]
-    // const data = []
-    // for (let i = 0; i < 50; i++) {
-    //     data.push({
-    //         index: i,
-    //         name: faker.name.findName(),
-    //         username: faker.internet.userName(),
-    //         phone: faker.phone.phoneNumber(),
-    //         role: faker.name.jobTitle(),
-    //     })
-    // }
 
     const [data, setData] = useState([])
     const [response, isFetching, setRequest] = useFetch({} as any)

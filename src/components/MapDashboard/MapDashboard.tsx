@@ -1,3 +1,4 @@
+import './index.css'
 import { Menu } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 import EcoIcon from "@material-ui/icons/Eco";
@@ -5,8 +6,6 @@ import RoomIcon from "@material-ui/icons/Room";
 import AddIcon from "@material-ui/icons/Add";
 import ListIcon from "@material-ui/icons/List";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
-import './index.css'
-import homePage from '../../assets/Dashboard/home-page.png';
 
 const MapDashboard = ({ selectItem, handleSelectMenuItem }: any) => {
   return (

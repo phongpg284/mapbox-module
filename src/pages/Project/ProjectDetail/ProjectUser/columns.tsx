@@ -1,5 +1,3 @@
-import { Space, Tag } from "antd";
-
 const columns = [
   {
     title: "Mã",
@@ -20,16 +18,6 @@ const columns = [
     title: "Chức vụ",
     dataIndex: "role",
     key: "role",
-  },
-  {
-    title: "Thao tác",
-    key: "action",
-    render: (text: any, record: any) => (
-      <Space size="middle">
-        <button>Info</button>
-        <button>Delete</button>
-      </Space>
-    ),
   },
 ];
 

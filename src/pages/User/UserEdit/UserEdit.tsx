@@ -1,8 +1,7 @@
 import style from './index.module.scss'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import { Button, Input, Table, Form, message } from 'antd'
-import { FormInstance } from 'antd/lib/form'
-import faker from 'faker'
+import { Button, Input, Table, Form, message, FormInstance } from 'antd'
+
 import useFetch from '../../../hooks/useFetch'
 
 const column = [

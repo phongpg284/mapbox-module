@@ -1,11 +1,12 @@
 import './style.css'
 import columns from './columns'
-import { Button, Space, Table } from 'antd'
-import faker from 'faker'
-import { Link } from 'react-router-dom'
-import useFetch from '../../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+
+import { Button, Space, Table } from 'antd'
+
 import ProjectUserAddModal from './ProjectUserAddModal'
+
 const ProjectUser = ({ id, data, refetch }: any) => {
     const tableColumns = [
         ...columns.slice(0, 1),
@@ -29,25 +30,6 @@ const ProjectUser = ({ id, data, refetch }: any) => {
             ),
         },
     ]
-
-    // const [response, isFetching, setRequest] = useFetch({} as any)
-
-    // useEffect(() => {
-    //     if (isUpdate) {
-    //         setRequest({
-    //             endPoint: 'https://dinhvichinhxac.online/api/project-user/',
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-type': 'application/json',
-    //             },
-    //             requestBody: {
-    //                 action: 'read',
-    //                 project_id: id,
-    //             },
-    //         })
-    //         setIsUpdate(false)
-    //     }
-    // }, [isUpdate])
 
     const [userList, setUserList] = useState<any>([])
     useEffect(() => {

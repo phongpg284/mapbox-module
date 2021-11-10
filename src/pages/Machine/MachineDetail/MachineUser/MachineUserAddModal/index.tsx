@@ -1,23 +1,12 @@
 import './index.scss'
-import { Button, message, Modal, Select } from 'antd'
 import { useEffect, useState } from 'react'
-import useFetch from '../../../../../hooks/useFetch'
-import faker from 'faker'
-const { Option } = Select
+import { Button, message, Modal, Select } from 'antd'
 
-const columns = [
-    {
-        key: 'ckey',
-        dataIndex: 'ckey',
-        render: (text: string) => (
-            <h6 style={{ fontWeight: 'bold' }}>{text}</h6>
-        ),
-    },
-    {
-        key: 'value',
-        dataIndex: 'value',
-    },
-]
+import faker from 'faker'
+
+import useFetch from '../../../../../hooks/useFetch'
+
+const { Option } = Select
 
 interface IMachineUserAddModal {
     centered?: boolean
@@ -40,7 +29,7 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
     const [selectUser, setSelectUser] = useState<any>([])
     const [selectRole, setSelectRole] = useState<any>([])
 
-    const [response, iseFetching, setRequest] = useFetch({} as any)
+    const [response, isFetching, setRequest] = useFetch({} as any)
 
     useEffect(() => {
         if (visible)
@@ -51,37 +40,26 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
     }, [visible])
 
     useEffect(() => {
-        if (!iseFetching && response && response.data && !response.hasError) {
+        if (!isFetching && response && response.data && !response.hasError) {
             setUsers(response.data)
         }
     }, [response])
 
     useEffect(() => {
-        //TODO: call api
-        let fakeUsers = []
         let fakeRoles = []
         for (let i = 0; i < 5; i++)
             fakeRoles.push({
                 id: i,
                 name: faker.name.jobTitle(),
             })
-
-        for (let i = 0; i < 15; i++)
-            fakeUsers.push({
-                id: i,
-                name: faker.name.findName(),
-            })
-
         setRoles(fakeRoles)
     }, [])
 
     function onChangeUser(value: any) {
-        console.log(`selected user ${value}`)
         setSelectUser(value)
     }
 
     function onChangeRole(value: any) {
-        console.log(`selected role ${value}`)
         setSelectRole(value)
     }
 
@@ -89,7 +67,7 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
         console.log('search:', val)
     }
 
-    const [responseUpdate, iseFetchingUpdate, setRequestUpdate] = useFetch(
+    const [responseUpdate, isFetchingUpdate, setRequestUpdate] = useFetch(
         {} as any
     )
 
@@ -111,7 +89,7 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
 
     useEffect(() => {
         if (
-            !iseFetchingUpdate &&
+            !isFetchingUpdate &&
             responseUpdate &&
             responseUpdate.data &&
             !responseUpdate.hasError
@@ -119,7 +97,7 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
             update()
             message.success(responseUpdate.data)
         }
-        else if (!iseFetching && response.hasError) {
+        else if (!isFetching && response.hasError) {
             message.error(response.hasError)
         }
         onClose()

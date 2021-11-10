@@ -1,5 +1,5 @@
 import './index.css'
-import { Form, Input, Button, Checkbox } from 'antd'
+import { Form, Input, Button } from 'antd'
 
 const Register = () => {
     const onFinish = (values: any) => {

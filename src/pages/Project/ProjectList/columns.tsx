@@ -1,5 +1,3 @@
-import { Space, Tag } from 'antd'
-
 export const fixedData = {
     code: "",
     name: "",

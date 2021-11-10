@@ -64,7 +64,7 @@ const DeviceSummaryModal: React.FC<ISummaryDeviceModal> = ({
 }) => {
     const [data, setData] = useState<any>()
     const [dataSource, setDataSource] = useState<any>()
-    const [response, iseFetching, setRequest] = useFetch({} as any)
+    const [response, isFetching, setRequest] = useFetch({} as any)
 
     useEffect(() => {
         if (visible)
@@ -82,7 +82,7 @@ const DeviceSummaryModal: React.FC<ISummaryDeviceModal> = ({
     }, [visible])
 
     useEffect(() => {
-        if (!iseFetching && response && response.data && !response.hasError) {
+        if (!isFetching && response && response.data && !response.hasError) {
             setData(response.data)            
         }
     }, [response])
@@ -122,7 +122,7 @@ const DeviceSummaryModal: React.FC<ISummaryDeviceModal> = ({
                         dataSource={dataSource}
                         showHeader={false}
                         pagination={false}
-                        loading={iseFetching}
+                        loading={isFetching}
                     />
                 </div>
             </Modal>

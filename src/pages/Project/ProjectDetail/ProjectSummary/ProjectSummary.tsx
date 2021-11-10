@@ -1,7 +1,6 @@
 import style from './index.module.scss'
-import { Button, Modal, Table } from 'antd'
 import { useEffect, useState } from 'react'
-import useFetch from '../../../../hooks/useFetch'
+import { Table } from 'antd'
 
 const column = [
     {

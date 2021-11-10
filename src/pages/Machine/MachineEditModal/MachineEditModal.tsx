@@ -1,9 +1,9 @@
 import style from './index.module.scss'
-import { Button, Modal, Table, Form, Input, FormInstance, message } from 'antd'
-import useFetch from '../../../hooks/useFetch'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import { keyBy } from 'lodash'
+import { Button, Modal, Table, Form, Input, FormInstance, message } from 'antd'
+
 import { fixedData } from '../MachinesList/columns'
+import useFetch from '../../../hooks/useFetch'
 
 const column = [
     {
@@ -174,7 +174,7 @@ const MachineEditModal: React.FC<IMachineEditModal> = ({
 }) => {
     const [data, setData] = useState<any>()
     const [dataSource, setDataSource] = useState<any>()
-    const [response, iseFetching, setRequest] = useFetch({} as any)
+    const [response, isFetching, setRequest] = useFetch({} as any)
 
     useEffect(() => {
         if (visible)
@@ -192,7 +192,7 @@ const MachineEditModal: React.FC<IMachineEditModal> = ({
     }, [visible])
 
     useEffect(() => {
-        if (!iseFetching && response && response.data && !response.hasError) {
+        if (!isFetching && response && response.data && !response.hasError) {
             setData(response.data)
         }
     }, [response])

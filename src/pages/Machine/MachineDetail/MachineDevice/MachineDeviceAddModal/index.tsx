@@ -1,23 +1,10 @@
 import './index.scss'
-import { Button, message, Modal, Select } from 'antd'
 import { useEffect, useState } from 'react'
-import useFetch from '../../../../../hooks/useFetch'
-import faker from 'faker'
-const { Option } = Select
+import { Button, message, Modal, Select } from 'antd'
 
-const columns = [
-    {
-        key: 'ckey',
-        dataIndex: 'ckey',
-        render: (text: string) => (
-            <h6 style={{ fontWeight: 'bold' }}>{text}</h6>
-        ),
-    },
-    {
-        key: 'value',
-        dataIndex: 'value',
-    },
-]
+import useFetch from '../../../../../hooks/useFetch'
+
+const { Option } = Select
 
 interface IProjectDeviceAddModal {
     centered?: boolean
@@ -36,11 +23,11 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
     ...props
 }) => {
     const [devices, setDevices] = useState<any[]>([])
-    const [roles, setRoles] = useState<any[]>([])
     const [selectDevice, setSelectDevice] = useState<any>([])
-    const [selectRole, setSelectRole] = useState<any>([])
+    // const [roles, setRoles] = useState<any[]>([])
+    // const [selectRole, setSelectRole] = useState<any>([])
 
-    const [response, iseFetching, setRequest] = useFetch({} as any)
+    const [response, isFetching, setRequest] = useFetch({} as any)
 
     useEffect(() => {
         if (visible)
@@ -51,7 +38,7 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
     }, [visible])
 
     useEffect(() => {
-        if (!iseFetching && response && response.data && !response.hasError) {
+        if (!isFetching && response && response.data && !response.hasError) {
             setDevices(response.data)
             console.log(response.data)
         }
@@ -62,16 +49,16 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
         setSelectDevice(value)
     }
 
-    function onChangeRole(value: any) {
-        console.log(`selected role ${value}`)
-        setSelectRole(value)
-    }
+    // function onChangeRole(value: any) {
+    //     console.log(`selected role ${value}`)
+    //     setSelectRole(value)
+    // }
 
     function onSearch(val: any) {
         console.log('search:', val)
     }
 
-    const [responseUpdate, iseFetchingUpdate, setRequestUpdate] = useFetch(
+    const [responseUpdate, isFetchingUpdate, setRequestUpdate] = useFetch(
         {} as any
     )
 
@@ -95,14 +82,14 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
 
     useEffect(() => {
         if (
-            !iseFetchingUpdate &&
+            !isFetchingUpdate &&
             responseUpdate &&
             responseUpdate.data &&
             !responseUpdate.hasError
         ) {
             update()
             message.success(responseUpdate.data)
-        } else if (!iseFetching && response.hasError) {
+        } else if (!isFetching && response.hasError) {
             message.error(response.hasError)
         }
         onClose()

@@ -3,33 +3,36 @@ import './index.scss'
 import { useState } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
 
-import HomeDashboard from './HomeDashboard'
-import ProjectList from '../Project/ProjectList'
-import DeviceList from '../Devices/DevicesList'
-
 import { Drawer, Layout } from 'antd'
 import { Dehaze } from '@material-ui/icons'
 
+import HomeDashboard from './HomeDashboard'
 import ProfileDashboard from '../../components/ProfileDashboard'
+import PrivateRoute from '../../components/PrivateRoute'
+
 import FieldPage from '../../components/Map/FieldPage'
 import FieldList from '../../components/Map/FieldPage/FieldList'
 import FieldCard from '../../components/Map/FieldPage/FieldCard'
-import BoundingMap from '../../components/Map/BoundingMap'
 import RecordMap from '../../components/Map/RecordMap'
-import ProjectSummaryModal from '../Project/ProjectSummaryModal'
+
+import ProjectList from '../Project/ProjectList'
 import ProjectDetail from '../Project/ProjectDetail'
-import UserDetail from '../User/UserDetail'
+
+import DeviceList from '../Devices/DevicesList'
 import DeviceDetail from '../Devices/DeviceInfo/DeviceDetail'
 import DeviceTask from '../Devices/DeviceInfo/DeviceTask'
+import DeviceInfo from '../Devices/DeviceInfo'
+
+import MachinesList from '../Machine/MachinesList'
+import MachineInfo from '../Machine/MachineInfo'
+
 import UserList from '../User/UserList'
+import UserDetail from '../User/UserDetail'
 import UserEdit from '../User/UserEdit'
+
 import ModeratorList from '../Moderator/ModeratorList'
 import ModeratorEdit from '../Moderator/ModeratorEdit'
 import ModeratorDetail from '../Moderator/ModeratorDetail'
-import MachinesList from '../Machine/MachinesList'
-import MachineInfo from '../Machine/MachineInfo'
-import DeviceInfo from '../Devices/DeviceInfo'
-import PrivateRoute from '../../components/PrivateRoute'
 
 const { Header, Content } = Layout
 
