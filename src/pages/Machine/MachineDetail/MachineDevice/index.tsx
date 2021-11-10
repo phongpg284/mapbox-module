@@ -41,7 +41,7 @@ const MachineDevice = ({ id, data, refetch }: any) => {
                     status:
                         Math.abs(
                             new Date(device.update_time).getTime() - Date.now()
-                        ) < 120,
+                        ) < 120000,
                 }
                 convertDeviceList.push(newDevice)
             }

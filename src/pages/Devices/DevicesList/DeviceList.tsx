@@ -38,7 +38,18 @@ const DeviceList = () => {
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError)
-            setDevices(response.data)
+            setDevices(
+                response.data.map((device: any) => {
+                    return {
+                        ...device,
+                        status:
+                            Math.abs(
+                                new Date(device.update_time).getTime() -
+                                    Date.now()
+                            ) < 120000,
+                    }
+                })
+            )
     }, [response])
 
     const handleShowAddDevice = () => {
@@ -89,7 +100,11 @@ const DeviceList = () => {
                     <button onClick={() => handleShowEditDevice(record.id)}>
                         Cập nhật
                     </button>
-                    <button onClick={() => handleDelete(record.id, record.name)}>Xóa</button>
+                    <button
+                        onClick={() => handleDelete(record.id, record.name)}
+                    >
+                        Xóa
+                    </button>
                 </Space>
             ),
         },
@@ -101,32 +116,37 @@ const DeviceList = () => {
         setIsUpdate(true)
     }
 
-    const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-    const [selectDeleteName, setSelectDeleteName] = useState("");
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false)
+    const [selectDeleteName, setSelectDeleteName] = useState('')
     const [deleteResponse, isDeleting, setDeleteRequest] = useFetch({} as any)
-    
+
     const handleConfirmDelete = () => {
         setDeleteRequest({
-            endPoint: "https://dinhvichinhxac.online/api/device/",
-            method: "POST",
+            endPoint: 'https://dinhvichinhxac.online/api/device/',
+            method: 'POST',
             headers: {
-                "Content-type": "application/json"
+                'Content-type': 'application/json',
             },
             requestBody: {
-                action: "delete",
-                pk: viewId
-            }
+                action: 'delete',
+                pk: viewId,
+            },
         })
         setDeleteModalVisible(false)
     }
     const handleDelete = (id: number, name: string) => {
-        setSelectDeleteName(name);
-        setViewId(id);
-        setDeleteModalVisible(true)        
+        setSelectDeleteName(name)
+        setViewId(id)
+        setDeleteModalVisible(true)
     }
 
     useEffect(() => {
-        if(!isDeleting && deleteResponse && deleteResponse.data && !deleteResponse.hasError) {
+        if (
+            !isDeleting &&
+            deleteResponse &&
+            deleteResponse.data &&
+            !deleteResponse.hasError
+        ) {
             reFetchAfterUpdate()
             message.success(deleteResponse.data)
         }
