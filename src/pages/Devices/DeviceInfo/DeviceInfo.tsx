@@ -35,8 +35,6 @@ const DeviceInfo = ({ match }: any) => {
         },
         requestBody: {
             device_id: id,
-            start: dayjs(new Date()).format('DD/MM/YYYY') + ' 0:00:00',
-            end: dayjs(new Date()).format('DD/MM/YYYY') + ' 23:59:59',
         },
     })
 
@@ -47,7 +45,6 @@ const DeviceInfo = ({ match }: any) => {
 
     return (
         <div className="device-detail-container">
-            Hoho
             <div className="device-detail-wrapper">
                 <Menu
                     style={centerStyle}

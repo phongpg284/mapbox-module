@@ -38,6 +38,9 @@ const HomeDashboard = ({ selectItem }: any) => {
                     </Menu.Item>
                 </Menu.ItemGroup>
                 <Menu.ItemGroup className="function-menu-title" title="QUẢN LÍ THIẾT BỊ">
+                    <Menu.Item className="function-menu-item" key="/active-devices/list" icon={<UserOutlined />}>
+                        Thiết bị hoạt động
+                    </Menu.Item>
                     <Menu.Item className="function-menu-item" key="/devices/list" icon={<UserOutlined />}>
                         Danh sách thiết bị
                     </Menu.Item>

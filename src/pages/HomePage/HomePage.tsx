@@ -33,6 +33,8 @@ import UserEdit from '../User/UserEdit'
 import ModeratorList from '../Moderator/ModeratorList'
 import ModeratorEdit from '../Moderator/ModeratorEdit'
 import ModeratorDetail from '../Moderator/ModeratorDetail'
+import ActiveDeviceList from '../ActiveDevice/ActiveDeviceList'
+import TrackingMap from '../../components/Map/TrackingMap'
 
 const { Header, Content } = Layout
 
@@ -121,6 +123,15 @@ const HomePage = ({ parentPath }: any) => {
                         <PrivateRoute
                             path={`${parentPath}devices-summary`}
                             component={DeviceDetail}
+                        />
+
+                        <PrivateRoute
+                            path={`${parentPath}active-devices`}
+                            component={ActiveDeviceList}
+                        />
+                        <PrivateRoute
+                            path={`${parentPath}active-tasks/:id`}
+                            component={TrackingMap}
                         />
 
                         <PrivateRoute

@@ -5,7 +5,9 @@ import * as turf from "@turf/turf";
 
 const accessToken = process.env.REACT_APP_MAPBOX_TOKEN_ACCESS;
 
-const TrackingMap = () => {
+const TrackingMap = ({match}: any) => {
+  const id = match?.params?.id;
+  console.log(id)
   const [workAreaData, setWorkAreaData] = useState<any>();
   const [cropsData, setCropsData] = useState<any>();
   const [center, setCenter] = useState<any>();
