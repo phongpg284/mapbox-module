@@ -2,7 +2,7 @@ import "./index.css"
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Button, Input, Space, Table } from 'antd'
+import { Button, Input, message, Space, Table } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
 import MachineAddModal from '../MachineAddModal'
@@ -12,6 +12,7 @@ import useFetch from '../../../hooks/useFetch'
 import useFilter from '../../../hooks/useFilter'
 import MachineSummaryModal from '../MachineSummaryModal'
 import MachineEditModal from '../MachineEditModal'
+import DeleteConfirmModal from "../../../components/Modal/DeleteConfirmModal"
 
 const MachineList = () => {
     const [isUpdate, setIsUpdate] = useState(true)
@@ -64,7 +65,7 @@ const MachineList = () => {
                 <Space size="middle">
                     <button onClick={() => handleShowSummary(record.id)} >Tổng quan</button>
                     <button onClick={() => handleShowEditMachine(record.id)}>Cập nhật</button>
-                    <button>Xóa</button>
+                    <button onClick={() => handleDelete(record.id, record.name)}>Xóa</button>
                 </Space>
             ),
         },
@@ -93,6 +94,38 @@ const MachineList = () => {
     const reFetchAfterUpdate = () => {
         setIsUpdate(true);
     }
+    
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+    const [selectDeleteName, setSelectDeleteName] = useState("");
+    const [deleteResponse, isDeleting, setDeleteRequest] = useFetch({} as any)
+    
+    const handleConfirmDelete = () => {
+        setDeleteRequest({
+            endPoint: "https://dinhvichinhxac.online/api/machine/",
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            requestBody: {
+                action: "delete",
+                pk: viewId
+            }
+        })
+        setDeleteModalVisible(false)
+    }
+    const handleDelete = (id: number, name: string) => {
+        setSelectDeleteName(name);
+        setViewId(id);
+        setDeleteModalVisible(true)        
+    }
+
+    useEffect(() => {
+        if(!isDeleting && deleteResponse && deleteResponse.data && !deleteResponse.hasError) {
+            reFetchAfterUpdate()
+            message.success(deleteResponse.data)
+        }
+    }, [deleteResponse])
+
 
     return (
         <div className="machines-list-wrapper">
@@ -135,6 +168,12 @@ const MachineList = () => {
                 visible={isEditModalVisible}
                 onClose={handleHideEditMachine}
                 id={viewId}
+            />
+            <DeleteConfirmModal
+                title={`máy móc ${selectDeleteName}`}
+                visible={deleteModalVisible}
+                setVisible={setDeleteModalVisible}
+                handleOK={handleConfirmDelete}
             />
         </div>
     )

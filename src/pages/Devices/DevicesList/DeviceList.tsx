@@ -3,7 +3,7 @@ import './index.scss'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Button, Input, Space, Table } from 'antd'
+import { Button, Input, message, Space, Table } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
 import columns from './columns'
@@ -14,6 +14,7 @@ import DeviceEditModal from '../DeviceEditModal'
 import DeviceSummaryModal from '../DeviceSummaryModal'
 
 import useFetch from '../../../hooks/useFetch'
+import DeleteConfirmModal from '../../../components/Modal/DeleteConfirmModal'
 
 const DeviceList = () => {
     const [isUpdate, setIsUpdate] = useState(true)
@@ -88,6 +89,7 @@ const DeviceList = () => {
                     <button onClick={() => handleShowEditDevice(record.id)}>
                         Cập nhật
                     </button>
+                    <button onClick={() => handleDelete(record.id, record.name)}>Xóa</button>
                 </Space>
             ),
         },
@@ -98,6 +100,37 @@ const DeviceList = () => {
     const reFetchAfterUpdate = () => {
         setIsUpdate(true)
     }
+
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+    const [selectDeleteName, setSelectDeleteName] = useState("");
+    const [deleteResponse, isDeleting, setDeleteRequest] = useFetch({} as any)
+    
+    const handleConfirmDelete = () => {
+        setDeleteRequest({
+            endPoint: "https://dinhvichinhxac.online/api/device/",
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            requestBody: {
+                action: "delete",
+                pk: viewId
+            }
+        })
+        setDeleteModalVisible(false)
+    }
+    const handleDelete = (id: number, name: string) => {
+        setSelectDeleteName(name);
+        setViewId(id);
+        setDeleteModalVisible(true)        
+    }
+
+    useEffect(() => {
+        if(!isDeleting && deleteResponse && deleteResponse.data && !deleteResponse.hasError) {
+            reFetchAfterUpdate()
+            message.success(deleteResponse.data)
+        }
+    }, [deleteResponse])
 
     return (
         <div className="devices-list-wrapper">
@@ -145,6 +178,12 @@ const DeviceList = () => {
                 visible={isEditModalVisible}
                 onClose={handleHideEditDevice}
                 id={viewId}
+            />
+            <DeleteConfirmModal
+                title={`thiết bị ${selectDeleteName}`}
+                visible={deleteModalVisible}
+                setVisible={setDeleteModalVisible}
+                handleOK={handleConfirmDelete}
             />
         </div>
     )

@@ -3,7 +3,7 @@ import './index.css'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Button, Input, Modal, Space, Table } from 'antd'
+import { Button, Input, message, Space, Table } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
 import columns from './columns'
@@ -12,6 +12,7 @@ import ProjectAddModal from '../ProjectAddModal'
 import ProjectSummaryModal from '../ProjectSummaryModal'
 import ProjectEditModal from '../ProjectEditModal'
 import useFilter from '../../../hooks/useFilter'
+import DeleteConfirmModal from '../../../components/Modal/DeleteConfirmModal'
 
 const ProjectList = () => {
     const [isUpdate, setIsUpdate] = useState(true)
@@ -68,6 +69,7 @@ const ProjectList = () => {
                     <button onClick={() => handleShowEditProject(record.id)}>
                         Cập nhật
                     </button>
+                    <button onClick={() => handleDelete(record.id, record.name)}>Xóa</button>
                 </Space>
             ),
         },
@@ -96,6 +98,37 @@ const ProjectList = () => {
         setIsUpdate(true)
     }
 
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+    const [selectDeleteName, setSelectDeleteName] = useState("");
+    const [deleteResponse, isDeleting, setDeleteRequest] = useFetch({} as any)
+    
+    const handleConfirmDelete = () => {
+        setDeleteRequest({
+            endPoint: "https://dinhvichinhxac.online/api/project/",
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            requestBody: {
+                action: "delete",
+                pk: viewId
+            }
+        })
+        setDeleteModalVisible(false)
+    }
+    const handleDelete = (id: number, name: string) => {
+        setSelectDeleteName(name);
+        setViewId(id);
+        setDeleteModalVisible(true)        
+    }
+
+    useEffect(() => {
+        if(!isDeleting && deleteResponse && deleteResponse.data && !deleteResponse.hasError) {
+            reFetchAfterUpdate()
+            message.success(deleteResponse.data)
+        }
+    }, [deleteResponse])
+
     return (
         <div className="projects-list-wrapper">
             <div className="projects-list-control me-5">
@@ -121,6 +154,12 @@ const ProjectList = () => {
                     loading={isFetching}
                 />
             </div>
+            <DeleteConfirmModal
+                title={`dự án ${selectDeleteName}`}
+                visible={deleteModalVisible}
+                setVisible={setDeleteModalVisible}
+                handleOK={handleConfirmDelete}
+            />
             <ProjectAddModal
                 update={reFetchAfterUpdate}
                 centered
