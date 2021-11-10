@@ -1,3 +1,4 @@
+import "./index.css"
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -9,42 +10,42 @@ import MachineAddModal from '../MachineAddModal'
 import columns from './columns'
 import useFetch from '../../../hooks/useFetch'
 import useFilter from '../../../hooks/useFilter'
+import MachineSummaryModal from '../MachineSummaryModal'
+import MachineEditModal from '../MachineEditModal'
 
 const MachineList = () => {
     const [isUpdate, setIsUpdate] = useState(true)
-    const [machines, setMachines] = useState([])
-    const [response, isFetching, setRequest] = useFetch({} as any)
+    const [isAddModalVisible, setIsAddModalVisible] = useState(false)
+    const [isSummaryModalVisible, setIsSummaryModalVisible] = useState(false)
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false)
+    const [viewId, setViewId] = useState(0)
 
-    useEffect(() => {
-        if (isUpdate) {
-            setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/machine/',
-                method: 'GET',
-            })
-            setIsUpdate(false)
-        }
-    }, [isUpdate])
-
-    useEffect(() => {
-        if (!isFetching && response && response.data && !response.hasError) setMachines(response.data)
-    }, [response])
-
-    const [isModalVisible, setIsModalVisible] = useState(false)
-
-    const showModal = () => {
-        setIsModalVisible(true)
+    const handleShowAddMachine = () => {
+        setIsAddModalVisible(true)
     }
 
-    const handleOk = () => {
-        setIsModalVisible(false)
+    const handleShowEditMachine = (id: number) => {
+        setViewId(id)
+        setIsEditModalVisible(true)
     }
 
-    const handleCancel = () => {
-        setIsModalVisible(false)
+    const handleShowSummary = (id: number) => {
+        setViewId(id)
+        setIsSummaryModalVisible(true)
     }
-    const handleClickInfo = () => {
-        showModal()
+
+    const handleHideSummary = () => {
+        setIsSummaryModalVisible(false)
     }
+
+    const handleHideAddMachine = () => {
+        setIsAddModalVisible(false)
+    }
+
+    const handleHideEditMachine = () => {
+        setIsEditModalVisible(false)
+    }
+
     const tableColumns = [
         ...columns.slice(0, 1),
         {
@@ -61,12 +62,31 @@ const MachineList = () => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button>Info</button>
-                    <button>Delete</button>
+                    <button onClick={() => handleShowSummary(record.id)} >Tổng quan</button>
+                    <button onClick={() => handleShowEditMachine(record.id)}>Cập nhật</button>
+                    <button>Xóa</button>
                 </Space>
             ),
         },
     ]
+
+    const [machines, setMachines] = useState([])
+    const [response, isFetching, setRequest] = useFetch({} as any)
+
+    useEffect(() => {
+        if (isUpdate) {
+            setRequest({
+                endPoint: 'https://dinhvichinhxac.online/api/machine/',
+                method: 'GET',
+            })
+            setIsUpdate(false)
+        }
+    }, [isUpdate])
+
+    useEffect(() => {
+        if (!isFetching && response && response.data && !response.hasError) 
+        setMachines(response.data)
+    }, [response])
 
     const [search, onChangeSearch, filterData] = useFilter(machines, "name");
 
@@ -75,9 +95,9 @@ const MachineList = () => {
     }
 
     return (
-        <div className="projects-list-wrapper">
-            <div className="projects-list-control">
-                <div className="projects-list-control-search">
+        <div className="machines-list-wrapper">
+            <div className="machines-list-control">
+                <div className="machines-list-control-search">
                     <Input
                         prefix={
                             <SearchOutlined className="site-form-item-icon" />
@@ -87,19 +107,34 @@ const MachineList = () => {
                         placeholder="Tên máy móc"
                     />
                 </div>
-                <div className="projects-list-control-actions">
-                    <Button onClick={handleClickInfo}>Thêm máy móc</Button>
+                <div className="machines-list-control-actions">
+                    <Button onClick={handleShowAddMachine}>Thêm máy móc</Button>
                 </div>
             </div>
-            <div className="projects-list-table">
+            <div className="machines-list-table">
                 <Table columns={tableColumns} dataSource={filterData} bordered loading={isFetching} />
             </div>
             <MachineAddModal
-                centered
-                width={1000}
-                visible={isModalVisible}
-                onClose={handleCancel}
                 update={reFetchAfterUpdate}
+                centered
+                width={800}
+                visible={isAddModalVisible}
+                onClose={handleHideAddMachine}
+            />
+            <MachineSummaryModal
+                centered
+                width={800}
+                visible={isSummaryModalVisible}
+                onClose={handleHideSummary}
+                id={viewId}
+            />
+            <MachineEditModal
+                update={reFetchAfterUpdate}
+                centered
+                width={800}
+                visible={isEditModalVisible}
+                onClose={handleHideEditMachine}
+                id={viewId}
             />
         </div>
     )

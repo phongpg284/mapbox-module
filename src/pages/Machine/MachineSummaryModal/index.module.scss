@@ -1,0 +1,17 @@
+.machine_summary_container {
+    background-color: white;
+    margin: auto;
+}
+
+.machine_summary_content {
+    border: groove 1px;
+    padding: 5px;
+}
+
+.machine_table_content {
+    :global {
+        .ant-table-tbody > tr > td {
+            border: none;
+        }
+    }
+}

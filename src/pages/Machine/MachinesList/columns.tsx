@@ -1,3 +1,10 @@
+export const fixedData = {
+    id: "",
+    name: "",
+    model: "",
+    description: "",
+}
+
 const columns = [
     {
         title: 'ID',
