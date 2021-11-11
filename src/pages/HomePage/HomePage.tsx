@@ -101,13 +101,7 @@ const HomePage = ({ parentPath }: any) => {
                         ></img>
                     </div>
                 </Header>
-                <Content
-                    style={{
-                        padding: '20px',
-                        height: '100vh',
-                        overflow: 'auto',
-                    }}
-                >
+                <Content className="home-content">
                     <Switch>
                         <PrivateRoute
                             path={`${parentPath}devices/list`}

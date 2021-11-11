@@ -1,11 +1,9 @@
 import 'mapbox-gl/dist/mapbox-gl.css'
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
-import './style.css'
+import './style.scss'
 
-import { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, memo, useImperativeHandle, useRef, useState } from 'react'
 import { render } from 'react-dom'
-
-import { Radio, Space } from 'antd'
 
 import mapboxgl from 'mapbox-gl'
 import {
@@ -92,43 +90,16 @@ const Mapbox: any = memo(
         const [currentCenter, setCurrentCenter] = useState(props.center)
 
         const handleChangeLayer = (e: any) => {
-            setVisibleLayer(e.target.value)
+            setVisibleLayer(e)
         }
 
         const menu = (
-            <div className="layers">
-                <div className="layer-option">
-                    <Radio.Group
-                        onChange={handleChangeLayer}
-                        value={visibleLayer}
-                    >
-                        <Space direction="vertical">
-                            <Radio
-                                value="satellite-v9"
-                                className="float-start fs-5"
-                            >
-                                satellite
-                            </Radio>
-                            <Radio
-                                value="light-v10"
-                                className="float-start fs-5"
-                            >
-                                light
-                            </Radio>
-                            <Radio
-                                value="dark-v10"
-                                className="float-start fs-5"
-                            >
-                                dark
-                            </Radio>
-                            <Radio
-                                value="streets-v11"
-                                className="float-start fs-5"
-                            >
-                                streets
-                            </Radio>
-                        </Space>
-                    </Radio.Group>
+            <div>
+                <div className="layer-control">
+                    <button className={`control-option ${visibleLayer==="satellite-v9" ? "control-option-select" : ""}`} onClick={() => handleChangeLayer("satellite-v9")}>Satellite</button>
+                    <button className={`control-option ${visibleLayer==="dark-v10" ? "control-option-select" : ""}`} onClick={() => handleChangeLayer("dark-v10")}>Dark</button>
+                    <button className={`control-option ${visibleLayer==="light-v10" ? "control-option-select" : ""}`} onClick={() => handleChangeLayer("light-v10")}>Light</button>
+                    <button className={`control-option ${visibleLayer==="streets-v11" ? "control-option-select" : ""}`} onClick={() => handleChangeLayer("streets-v11")}>Map</button>
                 </div>
             </div>
         )
@@ -178,7 +149,7 @@ const Mapbox: any = memo(
                 }),
                 'bottom-right'
             )
-            mapbox.addControl(new LayerControl(), 'top-right')
+            mapbox.addControl(new LayerControl(), 'top-left')
         }
 
         useImperativeHandle(ref, () => ({

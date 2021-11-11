@@ -1,18 +1,12 @@
-// .home-layout-header {
-//     /* color: white; */
-//     background-color: white;
-// }
+.home-content {
+    padding: 20px;
+    height: 100vh;
+    overflow: auto;
+    @media (max-width: 400px) {
+        padding: 0
+    }
+}
 
-// .home-layout-sider-control {
-//     text-align: left;
-// }
-
-// .home-layout-content-breadcrumb {
-//     text-align: left;
-//     margin-top: 2px;
-//     padding: 8px;
-//     background-color: white;
-// }
 
 .control-menu {
     height: calc(100% - 70px);
