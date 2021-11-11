@@ -44,11 +44,29 @@ async function GetRealtimeData(
         const pointsData = data.positions
         if (pointsData && pointsData?.length !== 0) {
             const nextIndex = data.last_id + 1
-            console.log(nextIndex, pointsData.length)
 
-            let convertData: any[] = []
+            let convertData: [number, number][] = []
+            let convertStatistic: {
+                speed: number[]
+                accuracy: number[]
+                timestamp: number[]
+            } = {
+                speed: [],
+                accuracy: [],
+                timestamp: [],
+            }
+
             for (const point of pointsData) {
-                convertData.push([point[1], point[0]])
+                const latitude = point[0]
+                const longitude = point[1]
+                const accuracy = point[3]
+                const speed = point[4]
+                const timestamp = point[5]
+
+                convertData.push([longitude, latitude])
+                convertStatistic.accuracy.push(accuracy)
+                convertStatistic.speed.push(speed)
+                convertStatistic.timestamp.push(timestamp)
             }
 
             updateTracking((prevState: any) => {
@@ -58,15 +76,39 @@ async function GetRealtimeData(
                         data: turf.lineString(
                             prevState?.data.geometry.coordinates.concat(
                                 convertData
-                            )
+                            ),
+                            {
+                                accuracy: [
+                                    prevState?.data?.properties?.accuracy,
+                                    ...convertStatistic.accuracy,
+                                ],
+                                speed: [
+                                    prevState?.data?.properties?.speed,
+                                    ...convertStatistic.speed,
+                                ],
+                                timestamp: [
+                                    prevState?.data?.properties?.timestamp,
+                                    ...convertStatistic.timestamp,
+                                ],
+                            }
                         ),
                     }
                 } else
                     return {
                         type: 'geojson',
-                        data: turf.lineString(convertData),
+                        data: turf.lineString(convertData, {
+                            accuracy: convertStatistic.accuracy,
+                            speed: convertStatistic.speed,
+                            timestamp: convertStatistic.timestamp,
+                        }),
                     }
             })
+            if (lastIndex === 0) {
+                mapRef?.current?.flyTo({
+                    center: [pointsData[0][1], pointsData[0][0]],
+                    essential: true,
+                })
+            }
             GetRealtimeData(nextIndex, url, query, updateTracking, mapRef)
         } else {
             setTimeout(() => {
