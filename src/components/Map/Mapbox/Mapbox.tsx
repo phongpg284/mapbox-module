@@ -157,6 +157,7 @@ const Mapbox: any = memo(
             // setCurrentZoom(mapbox.getZoom())
 
             mapboxInstance.current = mapbox
+            if (props.mapInstance)
             props.mapInstance.current = mapbox
 
             mapbox.addControl(new ScaleControl(), 'bottom-left')

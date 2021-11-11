@@ -62,13 +62,15 @@ const DeviceDetail = ({ id, currentDateData }: any) => {
 
     useEffect(() => {
         const convertData = []
-        for (const [key, value] of Object.entries(currentDateData)) {
-            convertData.push({
-                ...(value as any),
-                date: key,
-            })
+        if (currentDateData) {
+            for (const [key, value] of Object.entries(currentDateData)) {
+                convertData.push({
+                    ...(value as any),
+                    date: key,
+                })
+            }
+            setData(convertData)
         }
-        setData(convertData)
     }, [currentDateData])
 
     useEffect(() => {

@@ -13,7 +13,7 @@ const ActiveDeviceList = () => {
             <div className="active-device-list-title">Danh sách thiết bị đang hoạt động</div>
             {devices &&
                 devices.map((device: any) => (
-                    <div className="active-device-item">
+                    <div className="active-device-item" key={device.device_id}>
                         <div>
                             <div className="active-device-info">
                                 Thiết bị ID: {device.device_id}
