@@ -107,7 +107,7 @@ const MapPage = ({ parentPath }: any) => {
               <Route path={`${parentPath}/record`}>
                 <RecordMap />
               </Route>
-              <Route path={`${parentPath}`}>
+              <Route path={`${parentPath}/tracking`}>
                 <TrackingMap />
               </Route>
             </Switch>

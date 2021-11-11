@@ -4,6 +4,7 @@ import { useParams } from 'react-router'
 import Mapbox from '../Mapbox'
 
 import GetRealtimeData from '../../../utils/GetRealtimeData'
+import useRealtimeFetch from './useRealtimeFetch'
 
 const accessToken = process.env.REACT_APP_MAPBOX_TOKEN_ACCESS
 export const TrackingDataContext = createContext<any>(null)
@@ -18,26 +19,31 @@ const RealtimeMap = () => {
     }
     const endpoint = process.env.REACT_APP_API_URL + '/task-online/'
 
-    const [trackingData, setTrackingData] = useState<any>({
-        type: 'geojson',
-        data: {
-            type: 'Feature',
-            geometry: {
-                type: 'LineString',
-                coordinates: [],
-            },
-        },
-    })
+    // const [trackingData, setTrackingData] = useState<any>({
+    //     type: 'geojson',
+    //     data: {
+    //         type: 'Feature',
+    //         geometry: {
+    //             type: 'LineString',
+    //             coordinates: [],
+    //         },
+    //     },
+    // })
 
-    useEffect(() => {
-        return () => {
-            setTrackingData({})
-        }
-    }, [])
+    // useEffect(() => {
+    //     return () => {
+    //         setTrackingData({})
+    //     }
+    // }, [])
 
-    useEffect(() => {
-        GetRealtimeData(0, endpoint, query, setTrackingData, mapRef)
-    }, [])
+    // useEffect(() => {
+    //     GetRealtimeData(0, endpoint, query, setTrackingData, mapRef)
+    //     return (() => {
+    //       console.log("exit")
+    //     })
+    // }, [])
+
+    const [trackingData] = useRealtimeFetch(endpoint, query, mapRef);
 
     return (
         <div className="wrapper">

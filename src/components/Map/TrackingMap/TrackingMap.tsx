@@ -10,7 +10,7 @@ const TrackingMap = () => {
   const [cropsData, setCropsData] = useState<any>();
   const [center, setCenter] = useState<any>();
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/get_project", {
+    fetch("https://dinhvichinhxac.online/api/fake_tracking/get_project", {
       method: "GET",
     })
       .then((res) => res.json())
@@ -62,7 +62,7 @@ const TrackingMap = () => {
           crops={cropsData}
           fitBounds={workAreaData?.data?.bbox}
           trackingApiEndpoint={
-            process.env.REACT_APP_API_URL + "/get_track?last_index"
+            "https://dinhvichinhxac.online/api/fake_tracking/get_track?last_index"
           }
           // center={center}
           maxWidth="100%"

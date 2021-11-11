@@ -1,5 +1,6 @@
-// @ts-ignore
+import { useEffect, useState } from 'react'
 import * as turf from '@turf/turf'
+
 interface IQuery {
     task_id: number
     device_id: number
@@ -11,40 +12,63 @@ interface IResData {
     positions: [[number, number, number, number, number, number]] | []
 }
 
-/**
- *
- * @param lastIndex Last index fetch from api
- * @param url URL
- * @param query task_id and device_id
- * @param updateTracking update updateTracking state
- * @param deviceId deviceID
- */
-async function GetRealtimeData(
-    lastIndex: number,
+const useRealtimeFetch = (
     url: string,
     query: IQuery,
-    updateTracking: any,
-    mapRef: any
-) {
-    console.log(lastIndex)
-    let data: IResData | undefined = undefined
-    try {
-        data = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify({
-                ...query,
-                last_id: lastIndex,
-            }),
-        }).then((res) => res.json())
-    } catch (error) {
-        console.log(error)
+    mapRef: React.MutableRefObject<any>
+) => {
+    const [fetchNext, setFetchNext] = useState(false)
+    const [isFetching, setIsFetching] = useState(true)
+    const [lastIndex, setLastIndex] = useState(0)
+    const [newData, setNewData] = useState<any>()
+    const [trackingData, setTrackingData] = useState<any>({
+        type: 'geojson',
+        data: {
+            type: 'Feature',
+            geometry: {
+                type: 'LineString',
+                coordinates: [],
+            },
+        },
+    })
+
+    async function getTrack() {
+        let data: IResData | undefined = undefined
+        try {
+            data = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify({
+                    ...query,
+                    last_id: lastIndex,
+                }),
+            }).then((res) => res.json())
+        } catch (error) {
+            console.log(error)
+        }
+        return data
     }
-    if (data) {
-        console.log(data)
-        const pointsData = data.positions
+
+    useEffect(() => {
+        if (isFetching) {
+            getTrack().then((data) => {
+                console.log('Data: ', data)
+                setNewData(data)
+            })
+        }
+    }, [isFetching, fetchNext])
+
+    useEffect(() => {
+        return () => {
+            console.log("exit")
+            setIsFetching(false)
+        }
+    }, [])
+
+    useEffect(() => {
+        const pointsData = newData?.positions
         if (pointsData && pointsData?.length !== 0) {
-            const nextIndex = data.last_id + 1
+            const nextIndex = newData.last_id + 1
 
             let convertData: [number, number][] = []
             let convertStatistic: {
@@ -70,7 +94,7 @@ async function GetRealtimeData(
                 convertStatistic.timestamp.push(timestamp)
             }
 
-            updateTracking((prevState: any) => {
+            setTrackingData((prevState: any) => {
                 if (prevState) {
                     return {
                         type: 'geojson',
@@ -104,19 +128,20 @@ async function GetRealtimeData(
                         }),
                     }
             })
-            if (lastIndex === 0) {
-                mapRef?.current?.flyTo({
-                    center: [pointsData[0][1], pointsData[0][0]],
-                    essential: true,
-                })
-            }
-            GetRealtimeData(nextIndex, url, query, updateTracking, mapRef)
+            mapRef?.current?.flyTo({
+                center: [pointsData[0][1], pointsData[0][0]],
+                essential: true,
+            })
+            setLastIndex(nextIndex)
+            setFetchNext(!fetchNext)
         } else {
             setTimeout(() => {
-                GetRealtimeData(lastIndex, url, query, updateTracking, mapRef)
-            }, 700)
+                setLastIndex(lastIndex)
+                setFetchNext(!fetchNext)
+            }, 1000)
         }
-    }
+    }, [newData])
+    return [trackingData]
 }
 
-export default GetRealtimeData
+export default useRealtimeFetch
