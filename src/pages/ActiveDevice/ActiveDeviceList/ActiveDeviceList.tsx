@@ -23,7 +23,7 @@ const ActiveDeviceList = () => {
                             </div>
                         </div>
                         <div className="active-device-detail-link">
-                            <Link to={`/active-tasks/${device.task_id}`}>Chi tiết</Link>
+                            <Link to={`/active-tasks/${device.device_id}/${device.task_id}`}>Chi tiết</Link>
                         </div>
                     </div>
                 ))}

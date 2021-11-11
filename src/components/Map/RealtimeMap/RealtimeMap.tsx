@@ -1,46 +1,74 @@
-import { useState } from "react";
-import Mapbox from "../Mapbox";
-import { Select } from "antd";
+import { createContext, useEffect, useRef, useState } from 'react'
+import Mapbox from '../Mapbox'
 
-const accessToken = process.env.REACT_APP_MAPBOX_TOKEN_ACCESS;
+import * as turf from '@turf/turf'
+import { useParams } from 'react-router'
+import GetRealtimeData from '../../../utils/GetRealtimeData'
+import RealtimeDraw from '../../Map/Mapbox/RealtimeDraw'
+const accessToken = process.env.REACT_APP_MAPBOX_TOKEN_ACCESS
+
+export const TrackingDataContext = createContext<any>(null)
+
 const RealtimeMap = () => {
-  const [data, setData] = useState<any>();
-  const [selectMap, setSelectMap] = useState<string>("0");
+  const mapRef = useRef();
+  //@ts-ignore
+    const { device, task } = useParams()
+    const query = {
+        device_id: device,
+        task_id: task,
+    }
+    const endpoint = process.env.REACT_APP_API_URL + '/task-online/'
 
-  return (
-    <div className="wrapper">
-      <div className="content">
-        <div className="title fw-bold fs-3 mb-4 d-flex">
-          <div>Realtime Map</div>
-          <div className="ms-5">
-            <Select defaultValue="9/3 track" onChange={(value: string) => setSelectMap(value)}>
-              <Select.Option value="0">9/3 track</Select.Option>
-              <Select.Option value="1">IMET</Select.Option>
-              <Select.Option value="2">Test RTK</Select.Option>
-              <Select.Option value="3">test26t5</Select.Option>
-              <Select.Option value="4">mandevices_plot</Select.Option>
-              <Select.Option value="5">BK-test</Select.Option>
-            </Select>
-          </div>
+    const [trackingData, setTrackingData] = useState<any>({
+        type: 'geojson',
+        data: {
+            type: 'Feature',
+            geometry: {
+                type: 'LineString',
+                coordinates: [],
+            },
+        },
+    })
+
+    const [showPopup, setShowPopup] = useState(false)
+
+    useEffect(() => {
+        return () => {
+            setTrackingData({})
+        }
+    }, [])
+
+    useEffect(() => {
+        console.log(trackingData)
+    })
+
+    useEffect(() => {
+        GetRealtimeData(0, endpoint, query, setTrackingData, mapRef)
+    }, [])
+
+    const [center, setCenter] = useState<[number, number]>()
+
+
+    return (
+        <div className="wrapper">
+            <div className="content">
+                <div className="title fw-bold fs-3 mb-4 d-flex">
+                    <div>Hoạt động của thiết bị ID {device}</div>
+                </div>
+            </div>
+            <div className="mapbox-container">
+                <TrackingDataContext.Provider value={trackingData}>
+                    <Mapbox
+                        accessToken={accessToken}
+                        maxWidth="100%"
+                        height="calc(100vh - 175px)"
+                        realtimeMode
+                        mapInstance={mapRef}
+                    />
+                </TrackingDataContext.Provider>
+            </div>
         </div>
-      </div>
-      <div className="mapbox-container">
-        <Mapbox
-          //   ref={mapRef}
-          url="http://localhost:4000/api/users"
-          accessToken={accessToken}
-          data={data?.bounding}
-          dataTest={selectMap}
-          //   drawStyles={drawStyles}
-          //   displayStyles={displayStyles}
-          center={data?.bounding.features[0].geometry.coordinates[0]}
-          zoom={21}
-          maxWidth="100%"
-          height="calc(100vh - 175px)"
-        />
-      </div>
-    </div>
-  );
-};
+    )
+}
 
-export default RealtimeMap;
+export default RealtimeMap

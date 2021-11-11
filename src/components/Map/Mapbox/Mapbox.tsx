@@ -2,7 +2,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import './style.css'
 
-import { forwardRef, memo, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { render } from 'react-dom'
 
 import { Radio, Space } from 'antd'
@@ -32,6 +32,7 @@ import {
     cropsLinePaint,
 } from './config'
 import TrackingDrawWrapper from './TrackingDraw/TrackingDrawWrapper'
+import RealtimeDrawWrapper from './RealtimeDraw/RealtimeDrawWrapper'
 import { FitBounds } from 'react-mapbox-gl/lib/map'
 import RecordDraw from './RecordDraw'
 
@@ -64,6 +65,9 @@ interface IMapboxProps {
     viewDrawData: any
     viewIndexContextKey: string
     multiple: boolean
+
+    realtimeMode: boolean
+    mapInstance: any
 }
 /**
  * Mapbox module
@@ -77,15 +81,15 @@ interface IMapboxProps {
 const Mapbox: any = memo(
     forwardRef<any, Partial<IMapboxProps>>(({ ...props }, ref) => {
         let drawRef: any
-        const [visibleLayer, setVisibleLayer] =
-            useState<LayerType>('satellite-v9')
+        const [visibleLayer, setVisibleLayer] = useState<LayerType>('satellite-v9')
         const mapboxInstance = useRef(null)
-        const Map = ReactMapboxGl({
+        const Map = memo(ReactMapboxGl({
             accessToken: props.accessToken || defaultAccessToken,
             maxZoom: 23,
-        })
+        }))
 
-        const [currentZoom, setCurrentZoom] = useState(props.zoom);
+        const [currentZoom, setCurrentZoom] = useState(props.zoom)
+        const [currentCenter, setCurrentCenter] = useState(props.center)
 
         const handleChangeLayer = (e: any) => {
             setVisibleLayer(e.target.value)
@@ -150,10 +154,11 @@ const Mapbox: any = memo(
 
             if (props.lockZoom) mapbox.setMinZoom(mapbox.getZoom())
             console.log('zoom: ', mapbox.getZoom())
-            setCurrentZoom(mapbox.getZoom());
-
+            // setCurrentZoom(mapbox.getZoom())
 
             mapboxInstance.current = mapbox
+            props.mapInstance.current = mapbox
+
             mapbox.addControl(new ScaleControl(), 'bottom-left')
             mapbox.addControl(
                 new GeolocateControl({
@@ -184,6 +189,7 @@ const Mapbox: any = memo(
 
         return (
             <div>
+                <button onClick={() => setCurrentCenter([105.8018616, 20.99161131])}>click</button> 
                 <Map
                     style={`mapbox://styles/mapbox/${visibleLayer}`}
                     containerStyle={{
@@ -192,7 +198,7 @@ const Mapbox: any = memo(
                         maxWidth: props.maxWidth || '100%',
                         maxHeight: props.maxHeight || '100%',
                     }}
-                    center={props.center || defaultCenter}
+                    center={props.center || currentCenter || defaultCenter}
                     zoom={[props.zoom || currentZoom || defaultZoom]}
                     onStyleLoad={mapDidLoad}
                     fitBounds={props.fitBounds}
@@ -264,6 +270,19 @@ const Mapbox: any = memo(
                             />
                         )}
                     </div>
+                    <div className="tracking-devices-draw">
+                        {props.realtimeMode && (
+                            <RealtimeDrawWrapper
+                                // data={props.realtimeMode}
+                                zoom={
+                                    (
+                                        mapboxInstance?.current as any
+                                    )?.getZoom() || 16
+                                }
+                            />
+                        )}
+                    </div>
+
                     {mapboxInstance && (
                         <DrawControl
                             ref={(drawControl) => (drawRef = drawControl)}

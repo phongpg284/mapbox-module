@@ -35,6 +35,7 @@ import ModeratorEdit from '../Moderator/ModeratorEdit'
 import ModeratorDetail from '../Moderator/ModeratorDetail'
 import ActiveDeviceList from '../ActiveDevice/ActiveDeviceList'
 import TrackingMap from '../../components/Map/TrackingMap'
+import RealtimeMap from '../../components/Map/RealtimeMap'
 
 const { Header, Content } = Layout
 
@@ -130,8 +131,8 @@ const HomePage = ({ parentPath }: any) => {
                             component={ActiveDeviceList}
                         />
                         <PrivateRoute
-                            path={`${parentPath}active-tasks/:id`}
-                            component={TrackingMap}
+                            path={`${parentPath}active-tasks/:device/:task`}
+                            component={RealtimeMap}
                         />
 
                         <PrivateRoute
