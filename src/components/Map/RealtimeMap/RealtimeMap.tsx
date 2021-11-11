@@ -1,12 +1,11 @@
 import { createContext, useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router'
+
 import Mapbox from '../Mapbox'
 
-import * as turf from '@turf/turf'
-import { useParams } from 'react-router'
 import GetRealtimeData from '../../../utils/GetRealtimeData'
-import RealtimeDraw from '../../Map/Mapbox/RealtimeDraw'
-const accessToken = process.env.REACT_APP_MAPBOX_TOKEN_ACCESS
 
+const accessToken = process.env.REACT_APP_MAPBOX_TOKEN_ACCESS
 export const TrackingDataContext = createContext<any>(null)
 
 const RealtimeMap = () => {
@@ -30,8 +29,6 @@ const RealtimeMap = () => {
         },
     })
 
-    const [showPopup, setShowPopup] = useState(false)
-
     useEffect(() => {
         return () => {
             setTrackingData({})
@@ -39,15 +36,8 @@ const RealtimeMap = () => {
     }, [])
 
     useEffect(() => {
-        console.log(trackingData)
-    })
-
-    useEffect(() => {
         GetRealtimeData(0, endpoint, query, setTrackingData, mapRef)
     }, [])
-
-    const [center, setCenter] = useState<[number, number]>()
-
 
     return (
         <div className="wrapper">

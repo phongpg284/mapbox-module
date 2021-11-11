@@ -189,7 +189,6 @@ const Mapbox: any = memo(
 
         return (
             <div>
-                <button onClick={() => setCurrentCenter([105.8018616, 20.99161131])}>click</button> 
                 <Map
                     style={`mapbox://styles/mapbox/${visibleLayer}`}
                     containerStyle={{
