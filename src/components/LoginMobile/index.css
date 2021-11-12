@@ -136,123 +136,43 @@
         margin-top: 20px;
     }
 }
-/* 
-@media (min-width: 375px) {
+
+@media only screen and (max-width: 768px) and (min-width: 415px) {
     .login-wrapper .login-logo {
-        width: 80px;
-        height: 80px;
-        margin-top: 75px;
+        width: 100px;
+        height: 100px;
+        margin-top: 80px;
     }
     .login-wrapper .login-title {
-        font-size: 25px;
-        line-height: 32px;
-        margin-top: 20px;
-        margin-bottom: 30px;
+        font-size: 30px;
+        line-height: 42px;
+        margin-top: 30px;
+        margin-bottom: 35px;
     }
     
     .login-wrapper .login-form .login-form-input {
-        width: 250px;
-        height: 40px;
+        width: 300px;
+        height: 45px;
         padding: 5px;
-        font-size: 14px;
-        line-height: 20px;
+        font-size: 16px;
+        line-height: 23px;
     }
     
     .login-wrapper .login-form .input-username {
-        background-size: 20px;
-        padding-left: 40px;
+        background-size: 23px;
+        padding-left: 45px;
     }
     
     .login-wrapper .login-form .input-password {
-        background-size: 20px;
-        padding-left: 40px;
+        background-size: 23px;
+        padding-left: 45px;
     }
  
     .login-wrapper .login-form .login-form-button {
-        width: 250px;
-        height: 40px;
-        font-size: 18px;
-        line-height: 25px;
+        width: 300px;
+        height: 45px;
+        font-size: 20px;
+        line-height: 32px;
         margin-top: 20px;
     }
 }
-
-@media (min-width: 375px) {
-    .login-wrapper .login-logo {
-        width: 80px;
-        height: 80px;
-        margin-top: 75px;
-    }
-    .login-wrapper .login-title {
-        font-size: 25px;
-        line-height: 32px;
-        margin-top: 20px;
-        margin-bottom: 30px;
-    }
-    
-    .login-wrapper .login-form .login-form-input {
-        width: 250px;
-        height: 40px;
-        padding: 5px;
-        font-size: 14px;
-        line-height: 20px;
-    }
-    
-    .login-wrapper .login-form .input-username {
-        background-size: 20px;
-        padding-left: 40px;
-    }
-    
-    .login-wrapper .login-form .input-password {
-        background-size: 20px;
-        padding-left: 40px;
-    }
- 
-    .login-wrapper .login-form .login-form-button {
-        width: 250px;
-        height: 40px;
-        font-size: 18px;
-        line-height: 25px;
-        margin-top: 20px;
-    }
-}
-
-@media (min-width: 375px) {
-    .login-wrapper .login-logo {
-        width: 80px;
-        height: 80px;
-        margin-top: 75px;
-    }
-    .login-wrapper .login-title {
-        font-size: 25px;
-        line-height: 32px;
-        margin-top: 20px;
-        margin-bottom: 30px;
-    }
-    
-    .login-wrapper .login-form .login-form-input {
-        width: 250px;
-        height: 40px;
-        padding: 5px;
-        font-size: 14px;
-        line-height: 20px;
-    }
-    
-    .login-wrapper .login-form .input-username {
-        background-size: 20px;
-        padding-left: 40px;
-    }
-    
-    .login-wrapper .login-form .input-password {
-        background-size: 20px;
-        padding-left: 40px;
-    }
- 
-    .login-wrapper .login-form .login-form-button {
-        width: 250px;
-        height: 40px;
-        font-size: 18px;
-        line-height: 25px;
-        margin-top: 20px;
-    }
-} */
