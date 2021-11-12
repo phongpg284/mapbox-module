@@ -8,6 +8,7 @@ import { useAppDispatch } from '../../app/store'
 import { updateToken } from '../../app/authSlice'
 import { Link } from 'react-router-dom'
 
+import loginLogo from '../../assets/imet-logo-mobile.png'
 
 const LoginMobile = () => {
     const history = useHistory()
@@ -47,16 +48,9 @@ const LoginMobile = () => {
 
     return (
         <div className="login-wrapper">
-            <div className="login-intro">
-                <div className="login-theme"></div>
-                <div className="intro-info">
-                    <img src={imetLogo} alt="" className="intro-logo" />
-                    <div className="intro-title">WELCOME TO iMET</div>
-                    <div className="intro-description">The best construction vehicles tracking-app</div>
-                    <div className="intro-description">you can find!</div>
-                </div>
-            </div>
-            <div className="login-container">
+
+                <img src={loginLogo} alt="" className="login-logo" />
+        
                 <div className="login-title">LOG IN TO iMET</div>
                 
                 <Form
@@ -95,7 +89,7 @@ const LoginMobile = () => {
                     </Form.Item>
 
                     <Form.Item
-                        className="login-form-checkbox"
+                        className="login-form-forget-password"
                         name="remember"
                         valuePropName="checked"
                         wrapperCol={{ offset: 4, span: 16 }}
@@ -112,7 +106,6 @@ const LoginMobile = () => {
                     </Form.Item>
                 </Form>
             </div>
-        </div>
     )
 }
 
