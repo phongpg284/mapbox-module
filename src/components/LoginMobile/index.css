@@ -2,6 +2,10 @@
     margin-bottom: 15px;
 }
 
+.ant-form {
+    width: 100%;
+}
+
 .login-wrapper { 
     display: flex;
     flex-direction: column;
@@ -13,8 +17,8 @@
 }
 
 .login-wrapper .login-logo {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     margin-top: 75px;
 }
 
@@ -23,8 +27,8 @@
     color: #000000;
     font-style: normal;
     font-weight: bold;
-    font-size: 25px;
-    line-height: 32px;
+    font-size: 30px;
+    line-height: 42px;
     margin-top: 20px;
     margin-bottom: 30px;
 
@@ -33,7 +37,7 @@
 .login-wrapper .login-form .login-form-input {
     border: 2px solid #A9A9A9;
     border-radius: 5px;
-    width: 250px;
+    width: 280px;
     height: 40px;
     padding: 5px;
     font-family: 'Roboto', sans-serif;
@@ -71,7 +75,7 @@
 }
 
 .login-wrapper .login-form .login-form-button {
-    width: 250px;
+    width: 280px;
     height: 40px;
     background-color: #3B9E3E ;
     color: #ffffff;
@@ -97,22 +101,22 @@
 
 
 
-@media only screen and (max-width: 414px) and (min-width: 321px) {
+@media only screen and (min-width: 576px) {
     .login-wrapper .login-logo {
-        width: 100px;
-        height: 100px;
-        margin-top: 80px;
+        width: 120px;
+        height: 120px;
+        margin-top: 90px;
     }
     .login-wrapper .login-title {
-        font-size: 30px;
-        line-height: 42px;
+        font-size: 40px;
+        line-height: 52px;
         margin-top: 30px;
         margin-bottom: 35px;
     }
     
     .login-wrapper .login-form .login-form-input {
-        width: 300px;
-        height: 45px;
+        width: 400px;
+        height: 50px;
         padding: 5px;
         font-size: 16px;
         line-height: 23px;
@@ -129,49 +133,49 @@
     }
  
     .login-wrapper .login-form .login-form-button {
-        width: 300px;
-        height: 45px;
-        font-size: 20px;
+        width: 400px;
+        height: 50px;
+        font-size: 25px;
         line-height: 32px;
         margin-top: 20px;
     }
 }
 
-@media only screen and (max-width: 768px) and (min-width: 415px) {
+@media only screen and (min-width: 768px) {
     .login-wrapper .login-logo {
-        width: 100px;
-        height: 100px;
-        margin-top: 80px;
+        width: 130px;
+        height: 130px;
+        margin-top: 120px;
     }
     .login-wrapper .login-title {
-        font-size: 30px;
-        line-height: 42px;
-        margin-top: 30px;
-        margin-bottom: 35px;
+        font-size: 40px;
+        line-height: 52px;
+        margin-top: 40px;
+        margin-bottom: 50px;
     }
     
     .login-wrapper .login-form .login-form-input {
-        width: 300px;
-        height: 45px;
-        padding: 5px;
-        font-size: 16px;
-        line-height: 23px;
+        width: 500px;
+        height: 60px;
+        padding: 10px;
+        font-size: 20px;
+        line-height: 32px;
     }
     
     .login-wrapper .login-form .input-username {
-        background-size: 23px;
-        padding-left: 45px;
+        background-size: 30px;
+        padding-left: 50px;
     }
     
     .login-wrapper .login-form .input-password {
-        background-size: 23px;
-        padding-left: 45px;
+        background-size: 30px;
+        padding-left: 50px;
     }
  
     .login-wrapper .login-form .login-form-button {
-        width: 300px;
-        height: 45px;
-        font-size: 20px;
+        width: 500px;
+        height: 60px;
+        font-size: 25px;
         line-height: 32px;
         margin-top: 20px;
     }
