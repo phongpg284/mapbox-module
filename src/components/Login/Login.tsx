@@ -45,21 +45,21 @@ const Login = () => {
     }
 
     return (
-        <div className="login-wrapper">
-            <div className="login-intro">
-                <div className="login-theme"></div>
-                <div className="intro-info">
-                    <img src={imetLogo} alt="" className="intro-logo" />
-                    <div className="intro-title">WELCOME TO iMET</div>
-                    <div className="intro-description">The best construction vehicles tracking-app</div>
-                    <div className="intro-description">you can find!</div>
+        <div className="login-pc-wrapper">
+            <div className="login-pc-intro">
+                <div className="login-pc-theme"></div>
+                <div className="pc-intro-info">
+                    <img src={imetLogo} alt="" className="pc-intro-logo" />
+                    <div className="pc-intro-title">WELCOME TO iMET</div>
+                    <div className="pc-intro-description">The best construction vehicles tracking-app</div>
+                    <div className="pc-intro-description">you can find!</div>
                 </div>
             </div>
-            <div className="login-container">
-                <div className="login-title">LOG IN TO iMET</div>
+            <div className="login-pc-container">
+                <div className="login-pc-title">LOG IN TO iMET</div>
                 
                 <Form
-                    className="login-form"
+                    className="login-pc-form"
                     name="basic"
                     layout="vertical"
                     labelCol={{ span: 16 }}
@@ -78,7 +78,7 @@ const Login = () => {
                             },
                         ]}
                     >
-                        <input type="text" className="login-form-input input-username" placeholder="Username" />
+                        <input type="text" className="login-pc-form-input pc-input-username" placeholder="Username" />
                     </Form.Item>
 
                     <Form.Item
@@ -90,7 +90,7 @@ const Login = () => {
                             },
                         ]}
                     >
-                        <input type="password" className="login-form-input input-password" placeholder="Password" />
+                        <input type="password" className="login-pc-form-input pc-input-password" placeholder="Password" />
                     </Form.Item>
 
                     {/* <Form.Item
@@ -105,7 +105,7 @@ const Login = () => {
                     <Form.Item 
                         // wrapperCol={{ offset: 4, span: 16 }}
                     >
-                        <Button className="login-form-button" type="primary" htmlType="submit">
+                        <Button className="login-pc-form-button" type="primary" htmlType="submit">
                             LOG IN
                         </Button>
                     </Form.Item>

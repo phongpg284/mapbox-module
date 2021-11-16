@@ -4,6 +4,8 @@ import { Menu } from 'antd'
 import { UserOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import { useAppSelector } from '../../../app/store'
 
+import ProjectsIcon from '../MenuIcons/ProjectsIcon'
+
 const HomeDashboard = ({ selectItem }: any) => {
     const account = useAppSelector((state) => state.account)
     const location = useLocation()
@@ -30,7 +32,7 @@ const HomeDashboard = ({ selectItem }: any) => {
                 </Menu.ItemGroup>
 
                 <Menu.ItemGroup className="function-menu-title" title="QUẢN LÍ DỰ ÁN">
-                    <Menu.Item className="function-menu-item" key="/projects/list" icon={<UserOutlined />}>
+                    <Menu.Item className="function-menu-item" key="/projects/list" icon={<ProjectsIcon/>} >
                         Dự án
                     </Menu.Item>
                     <Menu.Item className="function-menu-item" key="/reports" icon={<VideoCameraOutlined />}>
