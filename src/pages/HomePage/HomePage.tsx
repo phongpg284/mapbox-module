@@ -72,6 +72,7 @@ const HomePage = ({ parentPath }: any) => {
                 </Drawer>
 
                 <Drawer
+                    width={380}
                     className="profile-menu"
                     placement="right"
                     closable={false}

@@ -37,20 +37,20 @@ const Chart = memo(({ taskData, setViewIndex, onEvents }: any) => {
 
         series: [
             {
-                name: 'speed',
+                name: 'Vận tốc',
                 data: taskData.speed || [],
                 type: 'line',
                 smooth: true,
             },
             {
-                name: 'distance',
+                name: 'Quãng đường',
                 yAxisIndex: 1,
                 data: taskData.distance || [],
                 type: 'line',
                 smooth: true,
             },
             {
-                name: 'accuracy',
+                name: 'Độ chính xác',
                 yAxisIndex: 2,
                 data: taskData.accuracy || [],
                 type: 'line',
@@ -62,24 +62,22 @@ const Chart = memo(({ taskData, setViewIndex, onEvents }: any) => {
             formatter: function (params: any) {
                 console.log(params[0].dataIndex)
                 setViewIndex(params[0].dataIndex)
-                return customTooltip(params);
+                return customTooltip(params)
             },
         },
         legend: {
-            data: ['distance', 'speed', 'accuracy'],
+            data: [
+                { name: 'Quãng đường', textStyle: { fontFamily: 'sans-serif' } },
+                { name: 'Vận tốc', textStyle: { fontFamily: 'sans-serif' } },
+                { name: 'Độ chính xác', textStyle: { fontFamily: 'sans-serif' } },
+            ],
             top: 10,
             left: 10,
             itemHeight: 20,
         },
     }
 
-    return (
-        <ReactECharts
-            style={{ height: '100%', width: '100%' }}
-            option={options}
-            onEvents={onEvents}
-        />
-    )
+    return <ReactECharts style={{ height: '100%', width: '100%' }} option={options} onEvents={onEvents} />
 })
 
 export default Chart

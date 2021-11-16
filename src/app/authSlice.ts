@@ -5,6 +5,7 @@ interface AuthState {
     role?: string
     id?: string
     avatar?: string
+    name?: string
 }
 
 const initialState: Partial<AuthState> = {
@@ -12,6 +13,7 @@ const initialState: Partial<AuthState> = {
     role: '',
     id: '',
     avatar: '',
+    name: '',
 }
 
 export const authSlice = createSlice({
@@ -23,12 +25,14 @@ export const authSlice = createSlice({
             state.role = action.payload.role
             state.id = action.payload.id
             state.avatar = action.payload.avatar
+            state.name = action.payload.name
         },
         clearToken: (state) => {
             state.accessToken = ''
             state.role = ''
             state.id = ''
             state.avatar = ''
+            state.name = ''
         },
     },
 })

@@ -8,7 +8,6 @@ import { useAppDispatch } from '../../app/store'
 import { updateToken } from '../../app/authSlice'
 import { ENDPOINT_URL } from '../../app/config'
 
-
 const Login = () => {
     const history = useHistory()
 
@@ -29,16 +28,45 @@ const Login = () => {
             .then((res) => res.json())
             .then((data) => {
                 const { token, id, role } = data
-                message.success("Đăng nhập thành công")
-                dispatch(
-                    updateToken({
-                        accessToken: token,
-                        id: id,
-                        role: role,
-                        avatar: ""
+                const newQuery = {
+                    pk: id,
+                    action: 'read',
+                }
+                if (id === 1) {
+                    message.success('Đăng nhập thành công')
+                    dispatch(
+                        updateToken({
+                            accessToken: token,
+                            id: id,
+                            role: role,
+                            avatar: '',
+                            name: 'Mod',
+                        })
+                    )
+                    history.push('/')
+                } else
+                    fetch(ENDPOINT_URL + '/user/', {
+                        method: 'POST',
+                        body: JSON.stringify(newQuery),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
                     })
-                )
-                history.push('/')
+                        .then((res) => res.json())
+                        .then((data) => {
+                            const { name } = data[0]
+                            message.success('Đăng nhập thành công')
+                            dispatch(
+                                updateToken({
+                                    accessToken: token,
+                                    id: id,
+                                    role: role,
+                                    avatar: '',
+                                    name: name,
+                                })
+                            )
+                            history.push('/')
+                        })
             })
             .catch((err) => console.log(err))
     }
@@ -60,7 +88,7 @@ const Login = () => {
             </div>
             <div className="login-pc-container">
                 <div className="login-pc-title">LOG IN TO iMET</div>
-                
+
                 <Form
                     className="login-pc-form"
                     name="basic"
@@ -105,8 +133,8 @@ const Login = () => {
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item> */}
 
-                    <Form.Item 
-                        // wrapperCol={{ offset: 4, span: 16 }}
+                    <Form.Item
+                    // wrapperCol={{ offset: 4, span: 16 }}
                     >
                         <Button className="login-pc-form-button" type="primary" htmlType="submit">
                             LOG IN

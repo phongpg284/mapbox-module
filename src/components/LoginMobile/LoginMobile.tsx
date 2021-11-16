@@ -31,15 +31,45 @@ const LoginMobile = () => {
             .then((res) => res.json())
             .then((data) => {
                 const { token, id, role } = data
-                message.success("Đăng nhập thành công")
-                dispatch(
-                    updateToken({
-                        accessToken: token,
-                        id: id,
-                        role: role,
+                const newQuery = {
+                    pk: id,
+                    action: 'read',
+                }
+                if (id === 1) {
+                    message.success('Đăng nhập thành công')
+                    dispatch(
+                        updateToken({
+                            accessToken: token,
+                            id: id,
+                            role: role,
+                            avatar: '',
+                            name: 'Mod',
+                        })
+                    )
+                    history.push('/')
+                } else
+                    fetch(ENDPOINT_URL + '/user/', {
+                        method: 'POST',
+                        body: JSON.stringify(newQuery),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
                     })
-                )
-                history.push('/')
+                        .then((res) => res.json())
+                        .then((data) => {
+                            const { name } = data[0]
+                            message.success('Đăng nhập thành công')
+                            dispatch(
+                                updateToken({
+                                    accessToken: token,
+                                    id: id,
+                                    role: role,
+                                    avatar: '',
+                                    name: name,
+                                })
+                            )
+                            history.push('/')
+                        })
             })
             .catch((err) => console.log(err))
     }
