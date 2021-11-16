@@ -4,7 +4,6 @@ import { Menu } from 'antd'
 import { UserOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import { useAppSelector } from '../../../app/store'
 
-import ProjectsIcon from '../MenuIcons/ProjectsIcon'
 
 const HomeDashboard = ({ selectItem }: any) => {
     const account = useAppSelector((state) => state.account)
@@ -23,34 +22,39 @@ const HomeDashboard = ({ selectItem }: any) => {
                 onClick={handleSelectMenuItem}
             >
                 <Menu.ItemGroup>
-                    <Menu.Item className="function-menu-item" key="/" icon={<UserOutlined />}>
+                    <Menu.Item className="function-menu-item" key="/">
+                        
                         Trang chủ
                     </Menu.Item>
-                    <Menu.Item className="function-menu-item" key="/settings" icon={<VideoCameraOutlined />}>
+                    <Menu.Item className="function-menu-item" key="/settings">
                         Cài đặt
                     </Menu.Item>
                 </Menu.ItemGroup>
 
                 <Menu.ItemGroup className="function-menu-title" title="QUẢN LÍ DỰ ÁN">
-                    <Menu.Item className="function-menu-item" key="/projects/list" icon={<ProjectsIcon/>} >
+                    <Menu.Item className="function-menu-item" key="/projects/list"  >
+                        <div className="projects-icon"></div>
                         Dự án
                     </Menu.Item>
-                    <Menu.Item className="function-menu-item" key="/reports" icon={<VideoCameraOutlined />}>
+                    <Menu.Item className="function-menu-item" key="/reports">
+                        <div className="reports-icon"></div>
                         Báo cáo
                     </Menu.Item>
                 </Menu.ItemGroup>
                 <Menu.ItemGroup className="function-menu-title" title="QUẢN LÍ THIẾT BỊ">
-                    <Menu.Item className="function-menu-item" key="/active-devices/list" icon={<UserOutlined />}>
+                    <Menu.Item className="function-menu-item" key="/active-devices/list">
+                        <div className="active-devices-icon"></div>
                         Thiết bị hoạt động
                     </Menu.Item>
-                    <Menu.Item className="function-menu-item" key="/devices/list" icon={<UserOutlined />}>
+                    <Menu.Item className="function-menu-item" key="/devices/list">
+                        <div className="devices-icon"></div>
                         Danh sách thiết bị
                     </Menu.Item>
                     <Menu.Item
                         className="function-menu-item"
                         key="/machines/list"
-                        icon={<VideoCameraOutlined />}
                     >
+                        <div className="machines-icon"></div>
                         Danh sách máy móc
                     </Menu.Item>
                     {/* <Menu.Item key="menu_3_3" icon={<VideoCameraOutlined />}>
@@ -70,7 +74,6 @@ const HomeDashboard = ({ selectItem }: any) => {
                             <Menu.Item
                                 className="function-menu-item"
                                 key="/users/list"
-                                icon={<VideoCameraOutlined />}
                             >
                                 Người dùng
                             </Menu.Item>
@@ -79,13 +82,11 @@ const HomeDashboard = ({ selectItem }: any) => {
                             <Menu.SubMenu title="Lịch sử track">
                                 <Menu.Item
                                     key="/fields/list"
-                                    icon={<VideoCameraOutlined />}
                                 >
                                     List
                                 </Menu.Item>
                                 <Menu.Item
                                     key="/fields/card"
-                                    icon={<VideoCameraOutlined />}
                                 >
                                     Cards
                                 </Menu.Item>

@@ -84,7 +84,6 @@ const HomePage = ({ parentPath }: any) => {
                 </Drawer>
                 <Header
                     className="header"
-                    style={{ height: '70px', backgroundColor: '#00a26a' }}
                 >
                     <div className="float-start">
                         <Dehaze
