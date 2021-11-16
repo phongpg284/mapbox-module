@@ -1,4 +1,4 @@
-import { Divider, Menu, Switch } from 'antd'
+import { Divider, Menu, message, Switch } from 'antd'
 import PeopleIcon from '@material-ui/icons/People'
 import CreditCardIcon from '@material-ui/icons/CreditCard'
 import LockIcon from '@material-ui/icons/Lock'
@@ -8,7 +8,7 @@ import InputIcon from '@material-ui/icons/Input'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import { useHistory } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../../app/store'
-import { updateToken } from '../../app/authSlice'
+import { clearToken } from '../../app/authSlice'
 import { ENDPOINT_URL } from '../../app/config'
 const ProfileDashboard = () => {
     const history = useHistory()
@@ -22,14 +22,13 @@ const ProfileDashboard = () => {
                 'Content-Type': 'application/json',
             },
         })
-            .then(() => {
+            .then((res) => {
+                message.success("Đăng xuất thành công")
                 dispatch(
-                    updateToken({
-                        accessToken: '',
-                    })
+                    clearToken()
                 )
             })
-            .catch((err) => console.log(err))
+            .catch((err) => message.error(err))
         history.push('/')
     }
     return (

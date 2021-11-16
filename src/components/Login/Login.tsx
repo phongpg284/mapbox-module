@@ -2,7 +2,7 @@ import './index.css'
 import imetLogo from '../../assets/imet-logo.png'
 
 import { useHistory } from 'react-router'
-import { Form, Button } from 'antd'
+import { Form, Button, message } from 'antd'
 
 import { useAppDispatch } from '../../app/store'
 import { updateToken } from '../../app/authSlice'
@@ -29,11 +29,13 @@ const Login = () => {
             .then((res) => res.json())
             .then((data) => {
                 const { token, id, role } = data
+                message.success("Đăng nhập thành công")
                 dispatch(
                     updateToken({
                         accessToken: token,
                         id: id,
                         role: role,
+                        avatar: ""
                     })
                 )
                 history.push('/')
