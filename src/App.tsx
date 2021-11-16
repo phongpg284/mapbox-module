@@ -11,7 +11,7 @@ import { useMediaQuery } from 'react-responsive'
 import LoginMobile from './components/LoginMobile'
 
 function App() {
-    const isMobile = useMediaQuery({ query: `(max-width: 768px)` })
+    const isMobile = useMediaQuery({ query: `(max-width: 992px)` })
 
     return (
         <div className="App">
