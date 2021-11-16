@@ -1,0 +1,62 @@
+.record-info-container {
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.record-info-content {
+    display: block;
+    width: 420px;
+    padding: 20px 0 20px 0;
+    border-radius: 15px;
+
+    box-shadow: 3 px 3px 3px rgba(68, 68, 68, 0.6);
+    background-color: #A3E4D7;
+}
+
+.record-info-item-divider {
+    margin: 10px 0;
+}
+
+.record-info-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: left;
+    margin-left: 50px;
+}
+
+.record-info-item {
+    color: #212F3D;
+    text-align: left;
+    padding: 0 20px;
+    white-space: nowrap;
+    margin: 30px 20px;
+    /* background-color: white; */
+    border-radius: 20px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
+    &-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        margin-right: 20px;
+        font-size: 1.7rem;
+        border-radius: 50%;
+        background-color: #ffffff;
+    }
+
+    &-title {
+        font-weight: 400;
+        font-size: 0.9rem;
+
+    }
+
+    &-content {
+        font-weight: bold;
+        font-size: 1.6rem;
+
+    }
+}

@@ -87,7 +87,7 @@ const RecordMap = ({ match }: any) => {
                         value={{ viewIndex: viewIndex, viewWidth: viewWidth }}
                     >
                         <Mapbox
-                            height="calc(70vh - 70px)"
+                            height="calc(70vh - 90px)"
                             width="100%"
                             viewDrawData={drawData}
                             center={drawData ? drawData[0] : undefined}

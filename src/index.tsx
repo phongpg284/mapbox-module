@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { HashRouter } from 'react-router-dom'
+import { BrowserRouter, HashRouter } from 'react-router-dom'
 
 import reportWebVitals from './reportWebVitals'
 import App from './App'
@@ -13,9 +13,9 @@ import store from './app/store'
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <HashRouter>
+            <BrowserRouter>
                 <App />
-            </HashRouter>
+            </BrowserRouter>
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')
