@@ -13,6 +13,7 @@ import useFilter from '../../../hooks/useFilter'
 import MachineSummaryModal from '../MachineSummaryModal'
 import MachineEditModal from '../MachineEditModal'
 import DeleteConfirmModal from "../../../components/Modal/DeleteConfirmModal"
+import { ENDPOINT_URL } from "../../../app/config"
 
 const MachineList = () => {
     const [isUpdate, setIsUpdate] = useState(true)
@@ -77,7 +78,7 @@ const MachineList = () => {
     useEffect(() => {
         if (isUpdate) {
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/machine/',
+                endPoint: ENDPOINT_URL + '/machine/',
                 method: 'GET',
             })
             setIsUpdate(false)
@@ -101,7 +102,7 @@ const MachineList = () => {
     
     const handleConfirmDelete = () => {
         setDeleteRequest({
-            endPoint: "https://dinhvichinhxac.online/api/machine/",
+            endPoint: ENDPOINT_URL + "/machine/",
             method: "POST",
             headers: {
                 "Content-type": "application/json"

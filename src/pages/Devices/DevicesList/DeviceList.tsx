@@ -15,6 +15,7 @@ import DeviceSummaryModal from '../DeviceSummaryModal'
 
 import useFetch from '../../../hooks/useFetch'
 import DeleteConfirmModal from '../../../components/Modal/DeleteConfirmModal'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const DeviceList = () => {
     const [isUpdate, setIsUpdate] = useState(true)
@@ -29,7 +30,7 @@ const DeviceList = () => {
     useEffect(() => {
         if (isUpdate) {
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/device/',
+                endPoint: ENDPOINT_URL + '/device/',
                 method: 'GET',
             })
             setIsUpdate(false)
@@ -122,7 +123,7 @@ const DeviceList = () => {
 
     const handleConfirmDelete = () => {
         setDeleteRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/device/',
+            endPoint: ENDPOINT_URL + '/device/',
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

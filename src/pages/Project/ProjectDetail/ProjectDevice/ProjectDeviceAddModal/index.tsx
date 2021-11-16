@@ -3,6 +3,7 @@ import { Button, message, Modal, Select } from 'antd'
 import { useEffect, useState } from 'react'
 import useFetch from '../../../../../hooks/useFetch'
 import faker from 'faker'
+import { ENDPOINT_URL } from '../../../../../app/config'
 const { Option } = Select
 
 interface IProjectDeviceAddModal {
@@ -31,7 +32,7 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
     useEffect(() => {
         if (visible)
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/machine/',
+                endPoint: ENDPOINT_URL + '/machine/',
                 method: 'GET',
             })
     }, [visible])
@@ -78,7 +79,7 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
             project_id: id,
         }
         setRequestUpdate({
-            endPoint: 'https://dinhvichinhxac.online/api/project-machine/',
+            endPoint: ENDPOINT_URL + '/project-machine/',
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

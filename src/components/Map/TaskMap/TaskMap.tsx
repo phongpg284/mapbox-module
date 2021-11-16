@@ -6,6 +6,7 @@ import Mapbox from '../Mapbox'
 import Chart from '../RecordMap/Chart'
 import RecordInfo from '../RecordMap/RecordInfo'
 import useFetch from '../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../app/config'
 
 export const ViewIndexContext = createContext<any>(null)
 
@@ -26,7 +27,7 @@ const TaskMap = ({ id }: any) => {
 
     useEffect(() => {
         setRequestAllTask({
-            endPoint: 'https://dinhvichinhxac.online/api/task/',
+            endPoint: ENDPOINT_URL + '/task/',
             method: 'GET',
         })
     }, [])
@@ -56,7 +57,7 @@ const TaskMap = ({ id }: any) => {
         }
         if (selectedTask >= 0)
             setRequestSingleTask({
-                endPoint: 'https://dinhvichinhxac.online/api/task/',
+                endPoint: ENDPOINT_URL + '/task/',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

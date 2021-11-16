@@ -4,6 +4,7 @@ import { Button, Modal, Table, Form, Input, FormInstance, message } from 'antd'
 
 import { fixedData } from '../MachinesList/columns'
 import useFetch from '../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const column = [
     {
@@ -179,7 +180,7 @@ const MachineEditModal: React.FC<IMachineEditModal> = ({
     useEffect(() => {
         if (visible)
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/machine/',
+                endPoint: ENDPOINT_URL + '/machine/',
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
@@ -294,7 +295,7 @@ const MachineEditModal: React.FC<IMachineEditModal> = ({
         // delete body.id;
         // console.log(body, "hoho")
         setRequestUpdate({
-            endPoint: 'https://dinhvichinhxac.online/api/machine/',
+            endPoint: ENDPOINT_URL + '/machine/',
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

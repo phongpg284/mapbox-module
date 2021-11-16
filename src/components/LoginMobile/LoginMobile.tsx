@@ -2,13 +2,14 @@ import './index.css'
 import imetLogo from '../../assets/imet-logo.png'
 
 import { useHistory } from 'react-router'
-import { Form, Button } from 'antd'
+import { Form, Button, message } from 'antd'
 
 import { useAppDispatch } from '../../app/store'
 import { updateToken } from '../../app/authSlice'
 import { Link } from 'react-router-dom'
 
 import loginLogo from '../../assets/imet-logo-mobile.png'
+import { ENDPOINT_URL } from '../../app/config'
 
 const LoginMobile = () => {
     const history = useHistory()
@@ -20,7 +21,7 @@ const LoginMobile = () => {
             username: values.username,
             password: values.password,
         }
-        fetch('https://dinhvichinhxac.online/api/login/', {
+        fetch(ENDPOINT_URL + '/login/', {
             method: 'POST',
             body: JSON.stringify(query),
             headers: {
@@ -30,6 +31,7 @@ const LoginMobile = () => {
             .then((res) => res.json())
             .then((data) => {
                 const { token, id, role } = data
+                message.success("Đăng nhập thành công")
                 dispatch(
                     updateToken({
                         accessToken: token,

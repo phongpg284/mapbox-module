@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { ENDPOINT_URL } from "../../../app/config";
 
 const FieldPage: React.FC = ({ children }: any) => {
   const [data, setData] = useState();
   useEffect(() => {
-    fetch("https://dinhvichinhxac.online/api/task/", {
+    fetch(ENDPOINT_URL + "/task/", {
       method: "GET",
     })
       .then((res) => res.json())

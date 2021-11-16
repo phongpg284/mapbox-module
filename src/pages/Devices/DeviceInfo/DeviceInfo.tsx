@@ -6,6 +6,7 @@ import DeviceDetail from './DeviceDetail'
 import DeviceSummary from './DeviceSummary'
 import DeviceTask from './DeviceTask'
 import dayjs from 'dayjs'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const DeviceInfo = ({ match }: any) => {
     console.log(match)
@@ -16,7 +17,7 @@ const DeviceInfo = ({ match }: any) => {
     }
 
     const [data] = useData({
-        endPoint: 'https://dinhvichinhxac.online/api/device/',
+        endPoint: ENDPOINT_URL + '/device/',
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
@@ -28,7 +29,7 @@ const DeviceInfo = ({ match }: any) => {
     })
 
     const [deviceDetailData, refetchDeviceDetail] = useData({
-        endPoint: 'https://dinhvichinhxac.online/api/task-info/',
+        endPoint: ENDPOINT_URL + '/task-info/',
         method: 'POST',
         headers: {
             'Content-type': 'application/json',

@@ -10,6 +10,7 @@ import ModeratorAddModal from '../ModeratorAddModal'
 
 import columns from './columns'
 import useFetch from '../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const ModeratorList = () => {
     const tableColumns = [
@@ -43,7 +44,7 @@ const ModeratorList = () => {
     const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
         setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/user/',
+            endPoint: ENDPOINT_URL + '/user/',
             method: 'GET',
         })
     }, [])

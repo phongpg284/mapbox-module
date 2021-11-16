@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Button, Modal, Form, Input, message, Spin } from 'antd'
 
 import useFetch from '../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../app/config'
 
 interface IDeviceEditModal {
     centered?: boolean
@@ -28,7 +29,7 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
     useEffect(() => {
         if (visible)
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/device/',
+                endPoint: ENDPOINT_URL + '/device/',
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
@@ -65,7 +66,7 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
     const onFinish = (value: any) => {
         console.log(value)
         setRequestUpdate({
-            endPoint: 'https://dinhvichinhxac.online/api/device/',
+            endPoint: ENDPOINT_URL + '/device/',
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

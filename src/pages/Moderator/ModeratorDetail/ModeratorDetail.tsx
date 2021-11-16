@@ -4,6 +4,7 @@ import { useHistory } from 'react-router'
 import { Button, Table } from 'antd'
 
 import useFetch from '../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const column = [
     {
@@ -26,7 +27,7 @@ const ModeratorDetail = ({ id }: any) => {
     const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
         setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/user/',
+            endPoint: ENDPOINT_URL + '/user/',
             method: 'POST',
             requestBody: {
                 action: 'read',

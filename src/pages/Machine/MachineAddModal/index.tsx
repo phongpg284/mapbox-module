@@ -1,4 +1,5 @@
 import { Button, Form, Input, message, Modal } from 'antd'
+import { ENDPOINT_URL } from '../../../app/config'
 interface IModal {
     centered?: boolean;
     width?: number;
@@ -15,7 +16,7 @@ const MachineAddModal: React.FC<IModal> = ({onClose, update, ...props }) => {
             ...value,
             action: 'create',
         }
-        const res = await fetch('https://dinhvichinhxac.online/api/machine/', {
+        const res = await fetch(ENDPOINT_URL + '/machine/', {
             method: 'POST',
             body: JSON.stringify(query),
             headers: {

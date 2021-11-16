@@ -5,6 +5,7 @@ import { Button, message, Modal, Select } from 'antd'
 import faker from 'faker'
 
 import useFetch from '../../../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../../../app/config'
 
 const { Option } = Select
 
@@ -34,7 +35,7 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
     useEffect(() => {
         if (visible)
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/user/',
+                endPoint: ENDPOINT_URL + '/user/',
                 method: 'GET',
             })
     }, [visible])
@@ -78,7 +79,7 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
             machine_id: id,
         }
         setRequestUpdate({
-            endPoint: 'https://dinhvichinhxac.online/api/machine-user/',
+            endPoint: ENDPOINT_URL + '/machine-user/',
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

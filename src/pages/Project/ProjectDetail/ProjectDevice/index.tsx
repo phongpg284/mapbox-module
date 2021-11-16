@@ -36,7 +36,7 @@ const ProjectDevice = ({id, data, refetch }: any) => {
     // useEffect(() => {
     //     if (isUpdate) {
     //         setRequest({
-    //             endPoint: 'https://dinhvichinhxac.online/api/project-machine/',
+    //             endPoint: ENDPOINT_URL + '/project-machine/',
     //             method: 'POST',
     //             headers: {
     //                 'Content-type': 'application/json',

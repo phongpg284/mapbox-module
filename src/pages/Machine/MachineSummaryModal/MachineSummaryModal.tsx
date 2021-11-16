@@ -2,6 +2,7 @@ import style from './index.module.scss'
 import { Button, Modal, Table } from 'antd'
 import useFetch from '../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const column = [
     {
@@ -171,7 +172,7 @@ const MachineSummaryModal: React.FC<ISummaryMachineModal> = ({
     useEffect(() => {
         if (visible)
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/machine/',
+                endPoint: ENDPOINT_URL + '/machine/',
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
