@@ -1,4 +1,5 @@
 import { Button, Form, Input, message, Modal } from 'antd'
+import { ENDPOINT_URL } from '../../../app/config'
 
 interface IModal {
     centered?: boolean
@@ -16,7 +17,7 @@ const UserAddModal: React.FC<IModal> = ({ update, onClose, ...props }) => {
             ...value,
             action: 'create',
         }
-        const res = await fetch('https://dinhvichinhxac.online/api/user/', {
+        const res = await fetch(ENDPOINT_URL + '/user/', {
             method: 'POST',
             body: JSON.stringify(query),
             headers: {

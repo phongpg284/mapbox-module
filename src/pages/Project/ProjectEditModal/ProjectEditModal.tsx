@@ -4,6 +4,7 @@ import { Button, Modal, Table, Form, Input, FormInstance, message } from 'antd'
 
 import { fixedData } from '../ProjectList/columns'
 import useFetch from '../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const column = [
     {
@@ -179,7 +180,7 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
     useEffect(() => {
         if (visible)
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/project/',
+                endPoint: ENDPOINT_URL + '/project/',
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
@@ -286,7 +287,7 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
         delete convertDataSource.update_time
 
         setRequestUpdate({
-            endPoint: 'https://dinhvichinhxac.online/api/project/',
+            endPoint: ENDPOINT_URL + '/project/',
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

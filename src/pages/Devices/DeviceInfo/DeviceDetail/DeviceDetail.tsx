@@ -8,6 +8,7 @@ import { LoadingOutlined, SearchOutlined } from '@ant-design/icons'
 import columns from './columns'
 import useFetch from '../../../../hooks/useFetch'
 import TaskList from './TaskList'
+import { ENDPOINT_URL } from '../../../../app/config'
 const { RangePicker } = DatePicker
 
 const DeviceDetailItem = ({ data }: any) => {
@@ -47,7 +48,7 @@ const DeviceDetail = ({ id, currentDateData }: any) => {
         const end = dateString[1].split('-').reverse().join('/') + ' 23:59:59'
         console.log(start, end)
         setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/task-info/',
+            endPoint: ENDPOINT_URL + '/task-info/',
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

@@ -4,6 +4,7 @@ import { Button, message, Modal, Select } from 'antd'
 
 import faker from 'faker'
 import useFetch from '../../../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../../../app/config'
 
 const { Option } = Select
 
@@ -33,7 +34,7 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({
     useEffect(() => {
         if (visible)
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/user/',
+                endPoint: ENDPOINT_URL + '/user/',
                 method: 'GET',
             })
     }, [visible])
@@ -80,7 +81,7 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({
             project_id: id,
         }
         setRequestUpdate({
-            endPoint: 'https://dinhvichinhxac.online/api/project-user/',
+            endPoint: ENDPOINT_URL + '/project-user/',
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

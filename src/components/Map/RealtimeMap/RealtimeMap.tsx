@@ -18,31 +18,7 @@ const RealtimeMap = () => {
         task_id: task,
     }
     const endpoint = process.env.REACT_APP_API_URL + '/task-online/'
-
-    // const [trackingData, setTrackingData] = useState<any>({
-    //     type: 'geojson',
-    //     data: {
-    //         type: 'Feature',
-    //         geometry: {
-    //             type: 'LineString',
-    //             coordinates: [],
-    //         },
-    //     },
-    // })
-
-    // useEffect(() => {
-    //     return () => {
-    //         setTrackingData({})
-    //     }
-    // }, [])
-
-    // useEffect(() => {
-    //     GetRealtimeData(0, endpoint, query, setTrackingData, mapRef)
-    //     return (() => {
-    //       console.log("exit")
-    //     })
-    // }, [])
-
+    
     const [trackingData] = useRealtimeFetch(endpoint, query, mapRef);
 
     return (

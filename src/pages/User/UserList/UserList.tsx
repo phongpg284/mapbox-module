@@ -11,6 +11,7 @@ import useFetch from '../../../hooks/useFetch'
 import useFilter from '../../../hooks/useFilter'
 import UserAddModal from '../UserAddModal'
 import DeleteConfirmModal from '../../../components/Modal/DeleteConfirmModal'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const UserList = () => {
     const history = useHistory()
@@ -66,7 +67,7 @@ const UserList = () => {
     useEffect(() => {
         if (isUpdate) {
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/user/',
+                endPoint: ENDPOINT_URL + '/user/',
                 method: 'GET',
             })
             setIsUpdate(false)
@@ -91,7 +92,7 @@ const UserList = () => {
     
     const handleConfirmDelete = () => {
         setDeleteRequest({
-            endPoint: "https://dinhvichinhxac.online/api/user/",
+            endPoint: ENDPOINT_URL + "/user/",
             method: "POST",
             headers: {
                 "Content-type": "application/json"

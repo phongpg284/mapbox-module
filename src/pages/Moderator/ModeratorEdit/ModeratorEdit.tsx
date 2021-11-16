@@ -4,6 +4,7 @@ import { Button, Input, Table, Form } from 'antd'
 import { FormInstance } from 'antd/lib/form'
 
 import useFetch from '../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const column = [
     {
@@ -141,7 +142,7 @@ const ModeratorEdit = ({ id }: any) => {
     const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
         setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/user/',
+            endPoint: ENDPOINT_URL + '/user/',
             method: 'POST',
             requestBody: {
                 action: 'read',

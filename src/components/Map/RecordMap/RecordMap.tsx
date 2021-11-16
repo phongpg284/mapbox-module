@@ -6,6 +6,7 @@ import Mapbox from '../Mapbox'
 import RecordInfo from './RecordInfo'
 import useFetch from '../../../hooks/useFetch'
 import Chart from './Chart'
+import { ENDPOINT_URL } from '../../../app/config'
 
 export const ViewIndexContext = createContext<any>(null)
 
@@ -24,7 +25,7 @@ const RecordMap = ({ match }: any) => {
             pk: match.params.id,
         }
         setRequestSingleTask({
-            endPoint: 'https://dinhvichinhxac.online/api/task/',
+            endPoint: ENDPOINT_URL + '/task/',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

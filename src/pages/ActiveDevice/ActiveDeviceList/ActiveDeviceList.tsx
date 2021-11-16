@@ -1,10 +1,11 @@
 import './index.scss'
 import useData from '../../../hooks/useData'
 import { Link } from 'react-router-dom'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const ActiveDeviceList = () => {
     const [devices, refetchDevices] = useData({
-        endPoint: 'https://dinhvichinhxac.online/api/task-online/',
+        endPoint: ENDPOINT_URL + '/task-online/',
         method: 'GET',
     })
 

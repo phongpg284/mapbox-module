@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { Button, Input, Table, Form, message, FormInstance } from 'antd'
 
 import useFetch from '../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const column = [
     {
@@ -171,7 +172,7 @@ const UserEdit = ({ match }: any) => {
     const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
         setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/user/',
+            endPoint: ENDPOINT_URL + '/user/',
             method: 'POST',
             requestBody: {
                 action: 'read',
@@ -258,7 +259,7 @@ const UserEdit = ({ match }: any) => {
         delete convertDataSource.username
 
         setRequestUpdate({
-            endPoint: 'https://dinhvichinhxac.online/api/user/',
+            endPoint: ENDPOINT_URL + '/user/',
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

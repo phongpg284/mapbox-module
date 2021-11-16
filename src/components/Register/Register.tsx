@@ -1,5 +1,6 @@
 import './index.css'
 import { Form, Input, Button } from 'antd'
+import { ENDPOINT_URL } from '../../app/config'
 
 const Register = () => {
     const onFinish = (values: any) => {
@@ -10,7 +11,7 @@ const Register = () => {
             username: values.username,
             password: values.password,
         }
-        fetch('https://dinhvichinhxac.online/api/user/', {
+        fetch(ENDPOINT_URL + '/user/', {
             method: 'POST',
             body: JSON.stringify(query),
             headers: {

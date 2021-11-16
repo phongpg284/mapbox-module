@@ -3,6 +3,7 @@ import { Button, Table } from 'antd'
 import { useEffect, useState } from 'react'
 import useFetch from '../../../hooks/useFetch'
 import { useHistory } from 'react-router'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const column = [
     {
@@ -57,7 +58,7 @@ const UserDetail = ({ match }: any) => {
     const [response, isFetching, setRequest] = useFetch({} as any)
     useEffect(() => {
         setRequest({
-            endPoint: 'https://dinhvichinhxac.online/api/user/',
+            endPoint: ENDPOINT_URL + '/user/',
             method: 'POST',
             requestBody: {
                 action: 'read',

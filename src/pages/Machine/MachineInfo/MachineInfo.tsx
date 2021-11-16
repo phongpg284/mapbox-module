@@ -5,6 +5,7 @@ import MachineDevice from '../MachineDetail/MachineDevice'
 import MachineUser from '../MachineDetail/MachineUser'
 import MachineSummary from '../MachineDetail/MachineSummary'
 import useData from '../../../hooks/useData'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const MachineDetail = ({match}: any) => {
     const id = match?.params?.id;
@@ -14,7 +15,7 @@ const MachineDetail = ({match}: any) => {
     }
 
     const [data] = useData({
-        endPoint: 'https://dinhvichinhxac.online/api/machine/',
+        endPoint: ENDPOINT_URL + '/machine/',
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
@@ -26,7 +27,7 @@ const MachineDetail = ({match}: any) => {
     })
 
     const [machineUserData, refetchMachineUser] = useData({
-        endPoint: 'https://dinhvichinhxac.online/api/machine-user/',
+        endPoint: ENDPOINT_URL + '/machine-user/',
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
@@ -38,7 +39,7 @@ const MachineDetail = ({match}: any) => {
     })
 
     const [machineDeviceData, refetchMachineDevice] = useData({
-        endPoint: 'https://dinhvichinhxac.online/api/machine-device/',
+        endPoint: ENDPOINT_URL + '/machine-device/',
         method: 'POST',
         headers: {
             'Content-type': 'application/json',

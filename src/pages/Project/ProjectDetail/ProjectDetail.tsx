@@ -7,6 +7,7 @@ import ProjectDevice from './ProjectDevice'
 import ProjectSummary from './ProjectSummary'
 
 import useData from '../../../hooks/useData'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const ProjectDetail = ({ match }: any) => {
     const id = match?.params?.id
@@ -16,7 +17,7 @@ const ProjectDetail = ({ match }: any) => {
     }
 
     const [data] = useData({
-        endPoint: 'https://dinhvichinhxac.online/api/project/',
+        endPoint: ENDPOINT_URL + '/project/',
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
@@ -28,7 +29,7 @@ const ProjectDetail = ({ match }: any) => {
     })
 
     const [projectUserData, refetchProjectUser] = useData({
-        endPoint: 'https://dinhvichinhxac.online/api/project-user/',
+        endPoint: ENDPOINT_URL + '/project-user/',
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
@@ -40,7 +41,7 @@ const ProjectDetail = ({ match }: any) => {
     })
 
     const [projectDeviceData, refetchProjectDevice] = useData({
-        endPoint: 'https://dinhvichinhxac.online/api/project-machine/',
+        endPoint: ENDPOINT_URL + '/project-machine/',
         method: 'POST',
         headers: {
             'Content-type': 'application/json',

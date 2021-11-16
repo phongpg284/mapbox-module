@@ -13,6 +13,7 @@ import ProjectSummaryModal from '../ProjectSummaryModal'
 import ProjectEditModal from '../ProjectEditModal'
 import useFilter from '../../../hooks/useFilter'
 import DeleteConfirmModal from '../../../components/Modal/DeleteConfirmModal'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const ProjectList = () => {
     const [isUpdate, setIsUpdate] = useState(true)
@@ -79,7 +80,7 @@ const ProjectList = () => {
     useEffect(() => {
         if (isUpdate) {
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/project/',
+                endPoint: ENDPOINT_URL + '/project/',
                 method: 'GET',
             })
             setIsUpdate(false)
@@ -104,7 +105,7 @@ const ProjectList = () => {
     
     const handleConfirmDelete = () => {
         setDeleteRequest({
-            endPoint: "https://dinhvichinhxac.online/api/project/",
+            endPoint: ENDPOINT_URL + "/project/",
             method: "POST",
             headers: {
                 "Content-type": "application/json"

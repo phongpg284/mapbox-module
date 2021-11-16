@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { ENDPOINT_URL } from '../../../app/config';
 
 const getTask = async (id: string) => {
   let data;  
@@ -8,7 +9,7 @@ const getTask = async (id: string) => {
             pk: id,
         }
         const res = await fetch(
-            'https://dinhvichinhxac.online/api/task/',
+            ENDPOINT_URL + '/task/',
             {
                 method: 'POST',
                 body: JSON.stringify(query),

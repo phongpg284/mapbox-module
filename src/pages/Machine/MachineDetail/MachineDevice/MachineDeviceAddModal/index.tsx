@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Button, message, Modal, Select } from 'antd'
 
 import useFetch from '../../../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../../../app/config'
 
 const { Option } = Select
 
@@ -32,7 +33,7 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
     useEffect(() => {
         if (visible)
             setRequest({
-                endPoint: 'https://dinhvichinhxac.online/api/device/',
+                endPoint: ENDPOINT_URL + '/device/',
                 method: 'GET',
             })
     }, [visible])
@@ -71,7 +72,7 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
         console.log(query)
 
         setRequestUpdate({
-            endPoint: 'https://dinhvichinhxac.online/api/machine-device/',
+            endPoint: ENDPOINT_URL + '/machine-device/',
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

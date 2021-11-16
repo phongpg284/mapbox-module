@@ -49,7 +49,7 @@ const ModeratorAddModal = ({ ...props }) => {
             ...value,
             action: 'create',
         }
-        // const res = await fetch('https://dinhvichinhxac.online/api/project/', {
+        // const res = await fetch(ENDPOINT_URL + '/project/', {
         //     method: 'POST',
         //     body: JSON.stringify(query),
         //     headers: {
