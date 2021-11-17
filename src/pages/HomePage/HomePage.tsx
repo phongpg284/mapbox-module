@@ -3,7 +3,7 @@ import './index.scss'
 import { useState } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
 
-import { Drawer, Layout } from 'antd'
+import { Drawer, Dropdown, Layout } from 'antd'
 import { Dehaze } from '@material-ui/icons'
 
 import HomeDashboard from './HomeDashboard'
@@ -68,10 +68,13 @@ const HomePage = ({ parentPath }: any) => {
                     visible={isSideboardCollapse}
                     bodyStyle={{ padding: '0' }}
                 >
-                    <HomeDashboard selectItem={handleSelectMenuItem} />
+                    <HomeDashboard
+                        selectItem={handleSelectMenuItem}
+                        visible={isSideboardCollapse}
+                    />
                 </Drawer>
 
-                <Drawer
+                {/* <Drawer
                     width={380}
                     className="profile-menu"
                     placement="right"
@@ -81,12 +84,14 @@ const HomePage = ({ parentPath }: any) => {
                     bodyStyle={{ padding: '0' }}
                 >
                     <ProfileDashboard />
-                </Drawer>
-                <Header
-                    className="header"
-                >
+                </Drawer> */}
+                <Header className="header">
                     <div className="float-start">
-                        <button className="menu-toggle-button" type="button" onClick={handleClickMenu}>
+                        <button
+                            className="menu-toggle-button"
+                            type="button"
+                            onClick={handleClickMenu}
+                        >
                             <div className="button-image"></div>
                         </button>
                         <button className="branch">
@@ -99,13 +104,15 @@ const HomePage = ({ parentPath }: any) => {
                         /> */}
                     </div>
                     <div className="float-end">
-                        <img
-                            alt="no?"
-                            src="https://s3-ap-northeast-1.amazonaws.com/agri-info-design-public/icons/ic_person_black_48dp.png"
-                            className=""
-                            style={{ height: '40px' }}
-                            onClick={handleClickProfile}
-                        ></img>
+                        <Dropdown overlay={<ProfileDashboard />}>
+                            <img
+                                alt="no?"
+                                src="https://s3-ap-northeast-1.amazonaws.com/agri-info-design-public/icons/ic_person_black_48dp.png"
+                                className=""
+                                style={{ height: '40px' }}
+                                onClick={handleClickProfile}
+                            ></img>
+                        </Dropdown>
                     </div>
                 </Header>
                 <Content className="home-content">

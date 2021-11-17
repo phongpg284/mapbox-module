@@ -1,19 +1,8 @@
-import ReactECharts from 'echarts-for-react'
 import { memo } from 'react'
+import ReactECharts from 'echarts-for-react'
 import customTooltip from './customTooltip'
 
 const Chart = memo(({ taskData, setViewIndex, onEvents }: any) => {
-    const fakeData = []
-    const fakeData1 = []
-    const fakeData2 = []
-    const fakeAxis = []
-
-    for (let i = 0; i < 700; i++) {
-        fakeData.push(i)
-        fakeData1.push(1000 * Math.random())
-        fakeData2.push(2)
-        fakeAxis.push('')
-    }
     const options = {
         grid: { top: 70, right: 10, bottom: 24, left: 10 },
         xAxis: {

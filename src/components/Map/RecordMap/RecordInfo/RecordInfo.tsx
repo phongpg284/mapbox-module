@@ -63,9 +63,9 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching, viewWidthCont
                 <RecordInfoItem icon={<CalendarOutlined />} title="Ngày bắt đầu" content="20/10/2021 10:20 am" />
                 <RecordInfoItem icon={<BiArea />} title="Diện tích làm việc" content="100 km2" />
                 <RecordInfoItem icon={<ColumnWidthOutlined />} title="Độ rộng đường làm việc" content="2 m" />
-                <RecordInfoItem icon={<GiPathDistance />} title="Tổng quãng đường" content={`${data.distance?.[data.distance?.length - 1]?.toFixed(4)} m`} />
-                <RecordInfoItem icon={<FaMapMarkerAlt />} title="Độ chính xác trung bình" content={`${average.accuray.toFixed(4)} cm`} />
-                <RecordInfoItem icon={<SiSpeedtest />} title="Tốc độ trung bình" content={`${average.speed.toFixed(4)} km/h`} />
+                <RecordInfoItem icon={<GiPathDistance />} title="Tổng quãng đường" content={`${data.distance?.[data.distance?.length - 1]?.toFixed(2) ?? ""} m`} />
+                <RecordInfoItem icon={<FaMapMarkerAlt />} title="Độ chính xác trung bình" content={`${average.accuray.toFixed(2) ?? ""} cm`} />
+                <RecordInfoItem icon={<SiSpeedtest />} title="Tốc độ trung bình" content={`${average.speed.toFixed(2) ?? ""} km/h`} />
                 <RecordInfoItem icon={<FaSatellite />} title="GNSS" content="A" />
             </div>
         </div>
