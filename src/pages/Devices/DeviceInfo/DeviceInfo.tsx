@@ -1,20 +1,22 @@
-import './index.css'
-import { Menu } from 'antd'
-import { useState } from 'react'
+import './index.scss'
+import { Menu, Tag } from 'antd'
+import { useEffect, useState } from 'react'
 import useData from '../../../hooks/useData'
 import DeviceDetail from './DeviceDetail'
 import DeviceSummary from './DeviceSummary'
 import DeviceTask from './DeviceTask'
 import dayjs from 'dayjs'
 import { ENDPOINT_URL } from '../../../app/config'
+import { AiFillCalendar } from 'react-icons/ai'
 
 const DeviceInfo = ({ match }: any) => {
     console.log(match)
     const id = match.params.id
     const [currentTab, setCurrentTab] = useState('summary')
-    const handleClick = (e: any) => {
-        setCurrentTab(e.key)
+    const handleSelectTab = (key: string) => {
+        setCurrentTab(key)
     }
+    const [isDeviceActive, setIsDeviceActive] = useState(false)
 
     const [data] = useData({
         endPoint: ENDPOINT_URL + '/device/',
@@ -44,25 +46,68 @@ const DeviceInfo = ({ match }: any) => {
         justifyContent: 'space-between',
     }
 
+    useEffect(() => {
+        if (data && data.update_time) {
+            setIsDeviceActive(
+                Math.abs(new Date(data.update_time).getTime() - Date.now()) <
+                    120000
+            )
+        }
+    }, [data])
+
     return (
         <div className="device-detail-container">
+            <div className="device-detail-title">
+                Thiết bị {data?.name ?? ''}
+                {isDeviceActive && (
+                    <span className="device-tag-active">Đang hoạt động</span>
+                )}
+                {!isDeviceActive && (
+                    <span className="device-tag-no-active">
+                        Không hoạt động
+                    </span>
+                )}
+            </div>
+            <div className="device-detail-date">
+                <div className="device-detail-date-icon">
+                    <AiFillCalendar />
+                </div>
+                {`Ngày khởi tạo:  
+                ${dayjs(data?.create_time).format("DD/MM/YYYY HH:mm:ss") ?? ''}`}
+            </div>
             <div className="device-detail-wrapper">
-                <Menu
-                    style={centerStyle}
-                    onClick={handleClick}
-                    selectedKeys={[currentTab]}
-                    mode="inline"
-                >
-                    <Menu.Item key="summary" style={{ fontWeight: 'bold' }}>
-                        Thông tin chung
-                    </Menu.Item>
-                    <Menu.Item key="tasks" style={{ fontWeight: 'bold' }}>
-                        Lịch trình hoạt động
-                    </Menu.Item>
-                    <Menu.Item key="all-tasks" style={{ fontWeight: 'bold' }}>
-                        Lịch sử hành trình
-                    </Menu.Item>
-                </Menu>
+                <div className="device-detail-navigate">
+                    <div
+                        className={
+                            currentTab === 'summary'
+                                ? 'device-detail-navigate-select'
+                                : ''
+                        }
+                        onClick={() => handleSelectTab('summary')}
+                    >
+                        Thông tin
+                    </div>
+                    <div
+                        className={
+                            currentTab === 'tasks'
+                                ? 'device-detail-navigate-select'
+                                : ''
+                        }
+                        onClick={() => handleSelectTab('tasks')}
+                    >
+                        Lịch trình hoạt động theo ngày
+                    </div>
+                    <div
+                        className={
+                            currentTab === 'all-tasks'
+                                ? 'device-detail-navigate-select'
+                                : ''
+                        }
+                        onClick={() => handleSelectTab('all-tasks')}
+                    >
+                        Lịch sử hoạt động
+                    </div>
+                </div>
 
                 <div className="device-detail-content">
                     {currentTab === 'summary' && <DeviceSummary data={data} />}

@@ -1,0 +1,72 @@
+.device-detail-container {
+    width: 100%;
+    padding: 10px 40px;
+    background-color: white;
+}
+
+.device-detail-title {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    span {
+        margin-left: 10px;
+        font-size: 1.2rem;
+        padding: 1px 8px 5px 8px;
+        border-radius: 8px;
+    }
+    .device-tag-active {
+        background-color: #cbfaf0;
+        color: #47b2a7;
+    }
+    .device-tag-no-active {
+        background-color: #fadbd8;
+        color: #e74c3c;
+    }
+}
+
+.device-detail-date {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    color: #717883;
+    margin-bottom: 10px;
+    &-icon {
+        display: flex;
+        justify-content: center;
+        margin-right: 5px;
+        font-size: 1.2rem;
+        border-radius: 8px;
+    }
+}
+
+.device-detail-navigate {
+    display: flex;
+    justify-content: left;
+    padding: 10px 0;
+    border-bottom: solid 1px #e8e9eb;
+    div {
+        margin: 2px;
+        font-size: 1.1rem;
+        border-radius: 10px;
+        padding: 9px 17px;
+        font-weight: 650;
+        cursor: pointer;
+        color: #989da6;
+        &:hover {
+            color: #5e6673;
+            background-color: #f9fafb;
+        }
+    }
+    &-select {
+        background-color: #eef2ff;
+        color: #6e68e9 !important;
+        &:hover {
+            background-color: #eef2ff !important;
+            color: #6e68e9 !important;
+        }
+    }
+}
