@@ -86,10 +86,13 @@ const HomePage = ({ parentPath }: any) => {
                     className="header"
                 >
                     <div className="float-start">
-                        <Dehaze
+                        <button className="menu-toggle-button" type="button" onClick={handleClickMenu}>
+                            <div className="button-image"></div>
+                        </button>
+                        {/* <Dehaze
                             onClick={handleClickMenu}
                             style={{ color: 'white' }}
-                        />
+                        /> */}
                     </div>
                     <div className="float-end">
                         <img

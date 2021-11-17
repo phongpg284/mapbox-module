@@ -34,6 +34,33 @@
     background-color: #3B9E3E;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     height: 70px;
+    padding: 0; 
+    .float-start {
+        z-index: 9999;
+        .menu-toggle-button {
+            width: 70px; 
+            height: 70px;
+            border: none;
+            background-color: #3B9E3E;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .button-image {
+                display: block;
+                width: 40px;
+                height: 40px;
+                background: url(../../assets/Header/toggleButton.svg);
+                background-size: cover;
+                filter: invert(1) brightness(100);
+            }
+            &:hover,:focus,.active {
+                background-color: #FFFFFF;
+                .button-image {
+                    filter: none;
+                }
+            }
+        }
+    }
 }
 
 .home-dashboard {
@@ -53,7 +80,7 @@
                 font-style: normal;
                 line-height: 22px;
                 text-transform: uppercase;
-                font-size: 16px;
+                font-size: 17px;
                 font-weight: 600;
                 margin-bottom: 5px;
                 color: #3C4858;
@@ -84,25 +111,25 @@
                         background-size: cover;
                         margin: 14px 20px 14px 20px;
                         &.projects {
-                            background: url(../../assets/Dashboard/projectsIcon.svg);
+                            background: url(../../assets/HomeDashboard/projectsIcon.svg);
                         }
                         &.reports {
-                            background: url(../../assets/Dashboard/reportsIcon.svg);
+                            background: url(../../assets/HomeDashboard/reportsIcon.svg);
                         }
                         &.active-devices {
-                            background: url(../../assets/Dashboard/activeDevicesIcon.svg);
+                            background: url(../../assets/HomeDashboard/activeDevicesIcon.svg);
                         }
                         &.devices-list {
-                            background: url(../../assets/Dashboard/devicesListIcon.svg);
+                            background: url(../../assets/HomeDashboard/devicesListIcon.svg);
                         }
                         &.machine-list {
-                            background: url(../../assets/Dashboard/machineListIcon.svg);
+                            background: url(../../assets/HomeDashboard/machineListIcon.svg);
                         }
                         &.admins {
-                            background: url(../../assets/Dashboard/adminsIcon.svg);
+                            background: url(../../assets/HomeDashboard/adminsIcon.svg);
                         }
                         &.users {
-                            background: url(../../assets/Dashboard/usersIcon.svg);
+                            background: url(../../assets/HomeDashboard/usersIcon.svg);
                         }
                     }
                     .item-title {
