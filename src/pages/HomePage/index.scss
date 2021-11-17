@@ -1,3 +1,7 @@
+.ant-menu-item-selected::after {
+    display: none;
+}
+
 .home-content {
     // padding: 20px;
     height: 100vh;
@@ -33,7 +37,85 @@
 }
 
 .home-dashboard {
+    width: 100%;
+    height: 100%;
+    padding: 10px 15px 10px 15px;
     .function-menu {
-        
+        width: 100%;
+        height: 100%;
+        background-color: #FFFFFF;
+        list-style-type: none;
+        padding: 0;
+        .function-menu-group {
+            margin-bottom: 10px;
+            .group-title {
+                font-family: 'Roboto', sans-serif;
+                font-style: normal;
+                line-height: 22px;
+                text-transform: uppercase;
+                font-size: 16px;
+                font-weight: 600;
+                margin-bottom: 5px;
+                color: #3C4858;
+            }
+            .group-list {
+                list-style-type: none;
+                padding: 0;
+                .group-item {
+                    width: 230px;
+                    height: 50px;
+                    border-radius: 5px;
+                    display: flex;
+                    align-items: center;
+                    &:hover,:focus {
+                        background-color: #3B9E3E;
+                        .item-title {
+                            color: #FFFFFF;
+                        }
+                        .item-icon {
+                            filter: invert(1) brightness(100);
+                        }
+                    }
+                    .item-icon {
+                        display: inline-block;
+                        width: 22px;
+                        height: 22px;
+                        background-size: cover;
+                        margin: 14px 20px 14px 20px;
+                        &.projects {
+                            background: url(../../assets/Dashboard/projectsIcon.svg);
+                        }
+                        &.reports {
+                            background: url(../../assets/Dashboard/reportsIcon.svg);
+                        }
+                        &.active-devices {
+                            background: url(../../assets/Dashboard/activeDevicesIcon.svg);
+                        }
+                        &.devices-list {
+                            background: url(../../assets/Dashboard/devicesListIcon.svg);
+                        }
+                        &.machine-list {
+                            background: url(../../assets/Dashboard/machineListIcon.svg);
+                        }
+                        &.admins {
+                            background: url(../../assets/Dashboard/adminsIcon.svg);
+                        }
+                        &.users {
+                            background: url(../../assets/Dashboard/usersIcon.svg);
+                        }
+                    }
+                    .item-title {
+                        display: inline-block;
+                        font-family: 'Roboto', sans-serif;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 14px;
+                        line-height: 22px;
+                        letter-spacing: 0.1px;
+                        color: #3C4858;
+                    }
+                }
+            }
+        }       
     }
 }
