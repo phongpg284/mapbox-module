@@ -39,9 +39,8 @@ import RealtimeMap from '../../components/Map/RealtimeMap'
 
 const { Header, Content } = Layout
 
-const HomePage = ({ parentPath }: any) => {
+const HomePage = ({ parentPath, match}: any) => {
     const history = useHistory()
-
     const [isSideboardCollapse, setIsSideboardCollapse] = useState(false)
     const [isProfileCollapse, setIsProfileCollapse] = useState(false)
     const handleClickMenu = () => {
@@ -52,8 +51,8 @@ const HomePage = ({ parentPath }: any) => {
         setIsProfileCollapse(!isProfileCollapse)
     }
 
-    const handleSelectMenuItem = (menu: any) => {
-        history.push(menu.key)
+    const handleSelectMenuItem = (key: string) => {
+        history.push(key)
         setIsSideboardCollapse(false)
     }
 
@@ -88,7 +87,7 @@ const HomePage = ({ parentPath }: any) => {
                 <Header className="header">
                     <div className="float-start">
                         <button
-                            className="menu-toggle-button"
+                            className={`menu-toggle-button ${!isSideboardCollapse ? "active" : ""}`}
                             type="button"
                             onClick={handleClickMenu}
                         >
