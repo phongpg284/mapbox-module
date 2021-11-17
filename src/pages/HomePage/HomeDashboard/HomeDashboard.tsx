@@ -1,7 +1,5 @@
 import { useLocation } from 'react-router'
 
-import { Menu } from 'antd'
-
 import { useAppSelector } from '../../../app/store'
 
 

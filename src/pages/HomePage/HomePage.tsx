@@ -89,6 +89,10 @@ const HomePage = ({ parentPath }: any) => {
                         <button className="menu-toggle-button" type="button" onClick={handleClickMenu}>
                             <div className="button-image"></div>
                         </button>
+                        <button className="branch">
+                            <div className="branch-logo"></div>
+                            <div className="branch-name">iMET</div>
+                        </button>
                         {/* <Dehaze
                             onClick={handleClickMenu}
                             style={{ color: 'white' }}

@@ -36,7 +36,38 @@
     height: 70px;
     padding: 0; 
     .float-start {
-        z-index: 9999;
+        display: flex;
+        .branch {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            background-color: #3B9E3E;
+            border: none;
+            .branch-logo {
+                width: 50px;
+                height: 50px;
+                background: url(../../assets/Header/logo.svg);
+                background-size: cover;
+                filter: invert(1) brightness(100);
+            }
+            .branch-name {
+                font-family: 'Montserrat', sans;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 20px;
+                line-height: 32px;
+                color: #FFFFFF;
+            }
+            &:hover,:focus {
+                background-color: #FFFFFF;
+                .branch-logo {
+                    filter: none;
+                }
+                .branch-name {
+                    color: #3B9E3E;
+                }
+            }
+        }
         .menu-toggle-button {
             width: 70px; 
             height: 70px;
@@ -94,7 +125,7 @@
                     border-radius: 5px;
                     display: flex;
                     align-items: center;
-                    &:hover,:focus {
+                    &:hover,:focus,.active {
                         background-color: #3B9E3E;
                         cursor: pointer;
                         .item-title {
@@ -109,7 +140,7 @@
                         width: 22px;
                         height: 22px;
                         background-size: cover;
-                        margin: 14px 20px 14px 20px;
+                        margin: 14px 18px 14px 18px;
                         &.projects {
                             background: url(../../assets/HomeDashboard/projectsIcon.svg);
                         }
@@ -137,7 +168,7 @@
                         font-family: 'Roboto', sans-serif;
                         font-style: normal;
                         font-weight: normal;
-                        font-size: 14px;
+                        font-size: 16px;
                         line-height: 22px;
                         letter-spacing: 0.1px;
                         color: #3C4858;
