@@ -13,7 +13,7 @@
 }
 
 .ant-drawer-content-wrapper {
-    width: 260px;
+    width: 260px !important;
 }
 
 .control-menu {
@@ -87,11 +87,17 @@
                 background-size: cover;
                 filter: invert(1) brightness(100);
             }
-            &:hover,:focus,.active {
+            &:hover,:focus {
                 background-color: #FFFFFF;
                 .button-image {
                     filter: none;
                 }
+            }
+            &.active {
+                background-color: #FFFFFF;
+                .button-image {
+                    filter: none;
+                } 
             }
         }
     }
@@ -123,12 +129,13 @@
                 list-style-type: none;
                 padding: 0;
                 .group-item {
+                    margin: 5px 0 5px 0;
                     width: 230px;
                     height: 50px;
                     border-radius: 5px;
                     display: flex;
                     align-items: center;
-                    &:hover,:focus,.active {
+                    &:hover,:focus {
                         background-color: #3B9E3E;
                         cursor: pointer;
                         .item-title {
@@ -137,6 +144,16 @@
                         .item-icon {
                             filter: invert(1) brightness(100);
                         }
+                    }
+                    &.active {
+                        background-color: #3B9E3E;
+                        cursor: pointer;
+                        .item-title {
+                            color: #FFFFFF;
+                        }
+                        .item-icon {
+                            filter: invert(1) brightness(100);
+                        } 
                     }
                     .item-icon {
                         display: inline-block;
