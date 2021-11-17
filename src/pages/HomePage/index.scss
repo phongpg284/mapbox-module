@@ -69,6 +69,7 @@
                     align-items: center;
                     &:hover,:focus {
                         background-color: #3B9E3E;
+                        cursor: pointer;
                         .item-title {
                             color: #FFFFFF;
                         }
@@ -118,4 +119,12 @@
             }
         }       
     }
+}
+
+@media only screen and (min-width: 576px) {
+
+}
+
+@media only screen and (min-width: 992px) {
+
 }
