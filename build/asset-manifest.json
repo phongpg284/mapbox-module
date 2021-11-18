@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "./static/css/main.7cc5e056.chunk.css",
+    "main.js": "./static/js/main.b5d317de.chunk.js",
+    "runtime-main.js": "./static/js/runtime-main.e463d44c.js",
+    "static/css/2.b5d0baac.chunk.css": "./static/css/2.b5d0baac.chunk.css",
+    "static/js/2.f663b9fa.chunk.js": "./static/js/2.f663b9fa.chunk.js",
+    "static/js/3.98fae8a0.chunk.js": "./static/js/3.98fae8a0.chunk.js",
+    "index.html": "./index.html",
+    "static/js/2.f663b9fa.chunk.js.LICENSE.txt": "./static/js/2.f663b9fa.chunk.js.LICENSE.txt",
+    "static/media/index.scss": "./static/media/usersIcon.6d9a672c.svg",
+    "static/media/imet-logo-mobile.16e11c6c.png": "./static/media/imet-logo-mobile.16e11c6c.png",
+    "static/media/index.css": "./static/media/username.5b49b280.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e463d44c.js",
+    "static/css/2.b5d0baac.chunk.css",
+    "static/js/2.f663b9fa.chunk.js",
+    "static/css/main.7cc5e056.chunk.css",
+    "static/js/main.b5d317de.chunk.js"
+  ]
+}
