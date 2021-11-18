@@ -6,7 +6,7 @@ import { Button, Collapse, Table } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import { WarningFilled } from '@ant-design/icons'
 
-const { Panel } = Collapse;
+const { Panel } = Collapse
 
 export interface ITaskData {
     id: number
@@ -74,9 +74,7 @@ const TaskList = ({ data }: Partial<ITaskListProps>) => {
             render: (text: any, record: any) => (
                 <div>
                     <div className="fw-bold fs-6">Deivce: {record.device}</div>
-                    <div className="fw-bold fs-6">
-                        Machine: {record.machine}
-                    </div>
+                    <div className="fw-bold fs-6">Machine: {record.machine}</div>
                 </div>
             ),
         },
@@ -132,25 +130,12 @@ const TaskList = ({ data }: Partial<ITaskListProps>) => {
     return (
         <div>
             <div>
-                <Collapse defaultActiveKey={['1']}>
-                    <Panel header="Lịch trình hoạt động trong ngày " key="1">
-                        <Table
-                            dataSource={tableData}
-                            columns={columns}
-                            showHeader={false}
-                            pagination={false}
-                        />
-                    </Panel>
-                </Collapse>
+                {tableData && tableData.map((task: any) => (
+                    <div className="device-task-item">{task.id}</div>
+                ))}
             </div>
             <div>
-                <Modal
-                    visible={showConfirm}
-                    onOk={handleDelete}
-                    onCancel={changeConfirmModal}
-                    okText="OK"
-                    cancelText="Cancel"
-                >
+                <Modal visible={showConfirm} onOk={handleDelete} onCancel={changeConfirmModal} okText="OK" cancelText="Cancel">
                     <div>
                         <WarningFilled
                             style={{

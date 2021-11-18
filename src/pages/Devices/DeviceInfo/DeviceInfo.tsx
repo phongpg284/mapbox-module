@@ -18,7 +18,7 @@ const DeviceInfo = ({ match }: any) => {
     }
     const [isDeviceActive, setIsDeviceActive] = useState(false)
 
-    const [data] = useData({
+    const [data, refetch, isFetching] = useData({
         endPoint: ENDPOINT_URL + '/device/',
         method: 'POST',
         headers: {
@@ -48,10 +48,7 @@ const DeviceInfo = ({ match }: any) => {
 
     useEffect(() => {
         if (data && data.update_time) {
-            setIsDeviceActive(
-                Math.abs(new Date(data.update_time).getTime() - Date.now()) <
-                    120000
-            )
+            setIsDeviceActive(Math.abs(new Date(data.update_time).getTime() - Date.now()) < 120000)
         }
     }, [data])
 
@@ -59,64 +56,32 @@ const DeviceInfo = ({ match }: any) => {
         <div className="device-detail-container">
             <div className="device-detail-title">
                 Thiết bị {data?.name ?? ''}
-                {isDeviceActive && (
-                    <span className="device-tag-active">Đang hoạt động</span>
-                )}
-                {!isDeviceActive && (
-                    <span className="device-tag-no-active">
-                        Không hoạt động
-                    </span>
-                )}
+                {isDeviceActive && <span className="device-tag-active">Đang hoạt động</span>}
+                {!isDeviceActive && <span className="device-tag-no-active">Không hoạt động</span>}
             </div>
             <div className="device-detail-date">
                 <div className="device-detail-date-icon">
                     <AiFillCalendar />
                 </div>
                 {`Ngày khởi tạo:  
-                ${dayjs(data?.create_time).format("DD/MM/YYYY HH:mm:ss") ?? ''}`}
+                ${dayjs(data?.create_time).format('DD/MM/YYYY HH:mm:ss') ?? ''}`}
             </div>
             <div className="device-detail-wrapper">
                 <div className="device-detail-navigate">
-                    <div
-                        className={
-                            currentTab === 'summary'
-                                ? 'device-detail-navigate-select'
-                                : ''
-                        }
-                        onClick={() => handleSelectTab('summary')}
-                    >
+                    <div className={currentTab === 'summary' ? 'device-detail-navigate-select' : ''} onClick={() => handleSelectTab('summary')}>
                         Thông tin
                     </div>
-                    <div
-                        className={
-                            currentTab === 'tasks'
-                                ? 'device-detail-navigate-select'
-                                : ''
-                        }
-                        onClick={() => handleSelectTab('tasks')}
-                    >
+                    <div className={currentTab === 'tasks' ? 'device-detail-navigate-select' : ''} onClick={() => handleSelectTab('tasks')}>
                         Lịch trình hoạt động theo ngày
                     </div>
-                    <div
-                        className={
-                            currentTab === 'all-tasks'
-                                ? 'device-detail-navigate-select'
-                                : ''
-                        }
-                        onClick={() => handleSelectTab('all-tasks')}
-                    >
+                    <div className={currentTab === 'all-tasks' ? 'device-detail-navigate-select' : ''} onClick={() => handleSelectTab('all-tasks')}>
                         Lịch sử hoạt động
                     </div>
                 </div>
 
                 <div className="device-detail-content">
                     {currentTab === 'summary' && <DeviceSummary data={data} />}
-                    {currentTab === 'tasks' && (
-                        <DeviceDetail
-                            id={id}
-                            currentDateData={deviceDetailData}
-                        />
-                    )}
+                    {currentTab === 'tasks' && <DeviceDetail id={id} currentDateData={deviceDetailData} />}
                     {currentTab === 'all-tasks' && <DeviceTask id={id} />}
                 </div>
             </div>

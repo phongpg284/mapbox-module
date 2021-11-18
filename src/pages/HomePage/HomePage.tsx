@@ -102,8 +102,8 @@ const HomePage = ({ parentPath, match}: any) => {
                             style={{ color: 'white' }}
                         /> */}
                     </div>
-                    <div className="float-end">
-                        <Dropdown overlay={<ProfileDashboard />} trigger={['click']}>
+                    <div className="header-avatar">
+                        <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight">
                             <img
                                 alt="no?"
                                 src="https://s3-ap-northeast-1.amazonaws.com/agri-info-design-public/icons/ic_person_black_48dp.png"

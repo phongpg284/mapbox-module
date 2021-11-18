@@ -64,8 +64,6 @@ const ProfileDashboard = () => {
                 <Divider />
                 <ProfileDashboardItem label="Thông tin cá nhân" icon={<BsFillPersonFill />} />
                 <ProfileDashboardItem label="Cài đặt" icon={<MdSettings />} />
-                <ProfileDashboardItem label="Settings" icon={<MdSettings />} />
-                <ProfileDashboardItem label="Settings" icon={<MdSettings />} />
                 <button className="profile-dashboard-logout" onClick={handleLogout}>
                     <div className="profile-dashboard-logout-icon"><MdLogout /></div>
                     <div className="profile-dashboard-logout-title">Logout</div>

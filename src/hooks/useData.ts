@@ -31,7 +31,7 @@ const useData = (request: IRequest) => {
         setIsUpdate(true)
     }
 
-    return [data, refetch];
+    return [data, refetch, isFetching];
 }
 
 export default useData

@@ -3,3 +3,9 @@
         display: flex;
     }
 }
+
+.device-task-item {
+    height: 50px;
+    border: 1px solid;
+    margin: 5px
+}
