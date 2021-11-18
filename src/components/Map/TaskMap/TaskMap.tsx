@@ -114,21 +114,21 @@ const TaskMap = ({ id }: any) => {
                         <Mapbox height="calc(70vh - 150px)" width="100%" viewDrawData={drawData} multiple center={drawData?.[0]} viewIndexContextKey={'task'}></Mapbox>
                     </ViewIndexContext.Provider>
                 </div>
-                <div className="task-map-select">
-                    <span>Task: </span>
-                    <Select value={selectedTask} style={{ width: 120 }} onChange={handleChange}>
-                        {taskIdOption &&
-                            taskIdOption.map((id: any) => (
-                                <Option value={id} key={id}>
-                                    {id}
-                                </Option>
-                            ))}
-                    </Select>
-                    {isFetchingSingleTask && selectedTask && <Spin indicator={antIcon} />}
-                    <span>Width: </span>
-                    <InputNumber value={viewWidth} style={{ width: 100 }} onChange={handleChangeWidth} />
-                </div>
                 <div className="task-control-chart">
+                    <div className="task-map-select">
+                        <span>Task: </span>
+                        <Select value={selectedTask} style={{ width: 120 }} onChange={handleChange}>
+                            {taskIdOption &&
+                                taskIdOption.map((id: any) => (
+                                    <Option value={id} key={id}>
+                                        {id}
+                                    </Option>
+                                ))}
+                        </Select>
+                        {isFetchingSingleTask && selectedTask && <Spin indicator={antIcon} />}
+                        <span>Width: </span>
+                        <InputNumber value={viewWidth} style={{ width: 100 }} onChange={handleChangeWidth} />
+                    </div>
                     <Chart taskData={taskData} setViewIndex={setViewIndex} />
                 </div>
             </div>

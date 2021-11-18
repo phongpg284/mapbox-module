@@ -36,10 +36,11 @@ import ModeratorDetail from '../Moderator/ModeratorDetail'
 import ActiveDeviceList from '../ActiveDevice/ActiveDeviceList'
 import TrackingMap from '../../components/Map/TrackingMap'
 import RealtimeMap from '../../components/Map/RealtimeMap'
+import TaskMap from '../../components/Map/TaskMap'
 
 const { Header, Content } = Layout
 
-const HomePage = ({ parentPath, match}: any) => {
+const HomePage = ({ parentPath, match }: any) => {
     const history = useHistory()
     const [isSideboardCollapse, setIsSideboardCollapse] = useState(false)
     const [isProfileCollapse, setIsProfileCollapse] = useState(false)
@@ -67,10 +68,7 @@ const HomePage = ({ parentPath, match}: any) => {
                     visible={isSideboardCollapse}
                     bodyStyle={{ padding: '0' }}
                 >
-                    <HomeDashboard
-                        selectItem={handleSelectMenuItem}
-                        visible={isSideboardCollapse}
-                    />
+                    <HomeDashboard selectItem={handleSelectMenuItem} visible={isSideboardCollapse} />
                 </Drawer>
 
                 {/* <Drawer
@@ -86,11 +84,7 @@ const HomePage = ({ parentPath, match}: any) => {
                 </Drawer> */}
                 <Header className="header">
                     <div className="float-start">
-                        <button
-                            className={`menu-toggle-button ${!isSideboardCollapse ? "" : "active"}`}
-                            type="button"
-                            onClick={handleClickMenu}
-                        >
+                        <button className={`menu-toggle-button ${!isSideboardCollapse ? '' : 'active'}`} type="button" onClick={handleClickMenu}>
                             <div className="button-image"></div>
                         </button>
                         <button className="branch">
@@ -116,93 +110,40 @@ const HomePage = ({ parentPath, match}: any) => {
                 </Header>
                 <Content className="home-content">
                     <Switch>
-                        <PrivateRoute
-                            path={`${parentPath}devices/list`}
-                            component={DeviceList}
-                        />
-                        <PrivateRoute
-                            path={`${parentPath}devices/:id/tasks`}
-                            component={DeviceTask}
-                        />
-                        <PrivateRoute
-                            path={`${parentPath}devices/:id`}
-                            component={DeviceInfo}
-                        />
-                        <PrivateRoute
-                            path={`${parentPath}devices-summary`}
-                            component={DeviceDetail}
-                        />
+                        <PrivateRoute path={`${parentPath}devices/list`} component={DeviceList} />
+                        <PrivateRoute path={`${parentPath}devices/:id/tasks`} component={DeviceTask} />
+                        <PrivateRoute path={`${parentPath}devices/:id`} component={DeviceInfo} />
+                        <PrivateRoute path={`${parentPath}devices-summary`} component={DeviceDetail} />
 
-                        <PrivateRoute
-                            path={`${parentPath}active-devices`}
-                            component={ActiveDeviceList}
-                        />
-                        <PrivateRoute
-                            path={`${parentPath}active-tasks/:device/:task`}
-                            component={RealtimeMap}
-                        />
+                        <PrivateRoute path={`${parentPath}tasks/:id`} component={RecordMap} />
+                        {/* <PrivateRoute path={`${parentPath}devices/:id`} component={DeviceInfo} /> */}
 
-                        <PrivateRoute
-                            path={`${parentPath}machines/list`}
-                            component={MachinesList}
-                        />
-                        <PrivateRoute
-                            path={`${parentPath}machines/:id`}
-                            component={MachineInfo}
-                        />
+                        <PrivateRoute path={`${parentPath}active-devices`} component={ActiveDeviceList} />
+                        <PrivateRoute path={`${parentPath}active-tasks/:device/:task`} component={RealtimeMap} />
 
-                        <PrivateRoute
-                            path={`${parentPath}projects/list`}
-                            component={ProjectList}
-                        />
-                        <PrivateRoute
-                            path={`${parentPath}projects/:id`}
-                            component={ProjectDetail}
-                        />
+                        <PrivateRoute path={`${parentPath}machines/list`} component={MachinesList} />
+                        <PrivateRoute path={`${parentPath}machines/:id`} component={MachineInfo} />
 
-                        <PrivateRoute
-                            path={`${parentPath}users/list`}
-                            component={UserList}
-                        />
-                        <PrivateRoute
-                            path={`${parentPath}users/edit/:id`}
-                            component={UserEdit}
-                        />
-                        <PrivateRoute
-                            path={`${parentPath}users/:id`}
-                            component={UserDetail}
-                        />
+                        <PrivateRoute path={`${parentPath}projects/list`} component={ProjectList} />
+                        <PrivateRoute path={`${parentPath}projects/:id`} component={ProjectDetail} />
+
+                        <PrivateRoute path={`${parentPath}users/list`} component={UserList} />
+                        <PrivateRoute path={`${parentPath}users/edit/:id`} component={UserEdit} />
+                        <PrivateRoute path={`${parentPath}users/:id`} component={UserDetail} />
 
                         <Route path={`${parentPath}moderators/list`}>
                             <ModeratorList />
                         </Route>
-                        <Route
-                            path={`${parentPath}moderators/edit/:id`}
-                            render={({ match }) => (
-                                <ModeratorEdit id={match.params.id} />
-                            )}
-                        />
-                        <Route
-                            path={`${parentPath}moderators/:id`}
-                            render={({ match }) => (
-                                <ModeratorDetail id={match.params.id} />
-                            )}
-                        />
+                        <Route path={`${parentPath}moderators/edit/:id`} render={({ match }) => <ModeratorEdit id={match.params.id} />} />
+                        <Route path={`${parentPath}moderators/:id`} render={({ match }) => <ModeratorDetail id={match.params.id} />} />
 
                         <PrivateRoute path={`${parentPath}fields/list`}>
-                            <FieldPage>
-                                {(props: any) => <FieldList data={props} />}
-                            </FieldPage>
+                            <FieldPage>{(props: any) => <FieldList data={props} />}</FieldPage>
                         </PrivateRoute>
                         <PrivateRoute path={`${parentPath}fields/card`}>
-                            <FieldPage>
-                                {(props: any) => <FieldCard data={props} />}
-                            </FieldPage>
+                            <FieldPage>{(props: any) => <FieldCard data={props} />}</FieldPage>
                         </PrivateRoute>
-                        <PrivateRoute
-                            path={`${parentPath}fields/:id`}
-                            component={RecordMap}
-                        />
+                        <PrivateRoute path={`${parentPath}fields/:id`} component={RecordMap} />
                     </Switch>
                 </Content>
             </Layout>

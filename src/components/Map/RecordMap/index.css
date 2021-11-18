@@ -17,7 +17,17 @@
     width: 100%;
 }
 
+.record-map-select {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 1000;
+    margin-top: 10px;
+}
+
+
 .record-control-chart {
     height: 30vh;
     width: 100%;
+    position: relative;
 }

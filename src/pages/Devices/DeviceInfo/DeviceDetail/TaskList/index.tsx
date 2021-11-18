@@ -1,10 +1,11 @@
-import './style.css'
+import './style.scss'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-
-import { Button, Collapse, Table } from 'antd'
+import { Link, useHistory } from 'react-router-dom'
+import dayjs from 'dayjs'
+import { Button, Collapse, Descriptions, Table } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import { WarningFilled } from '@ant-design/icons'
+import SecondFormat from '../../../../../utils/SecondFormat'
 
 const { Panel } = Collapse
 
@@ -24,16 +25,15 @@ const TaskList = ({ data }: Partial<ITaskListProps>) => {
     const [showConfirm, setShowConfirm] = useState(false)
     const [deleteItem, setDeleteItem] = useState<any>()
     const [tableData, setTableData] = useState<any>()
+    const history = useHistory()
 
     useEffect(() => {
         setTableData(
             data?.map((task) => {
                 return {
-                    id: task?.id,
-                    device: task?.device_id,
-                    machine: task?.machine_id,
-                    createdAt: new Date(task?.create_time).toLocaleString(),
-                    updatedAt: new Date(task?.update_time).toLocaleString(),
+                    ...task,
+                    created_time: new Date(task?.create_time).toLocaleString(),
+                    updated_time: new Date(task?.update_time).toLocaleString(),
                     key: task?.create_time,
                 }
             })
@@ -44,80 +44,6 @@ const TaskList = ({ data }: Partial<ITaskListProps>) => {
         setShowConfirm(!showConfirm)
     }
 
-    const columns: any = [
-        {
-            width: '4%',
-            title: 'id',
-            key: 'id',
-            dataIndex: 'id',
-            render: (text: any, record: any) => <div>ID: {record.id}</div>,
-        },
-        {
-            title: '',
-            key: 'image',
-            dataIndex: 'image',
-            width: 50,
-            render: () => (
-                <img
-                    alt="no?"
-                    src="https://s3-ap-northeast-1.amazonaws.com/agri-info-design-public/icons/ic_person_black_48dp.png"
-                    className="align-self-center"
-                    style={{ height: '40px' }}
-                ></img>
-            ),
-        },
-        {
-            title: 'Info',
-            dataIndex: 'info',
-            key: 'info',
-            width: 800,
-            render: (text: any, record: any) => (
-                <div>
-                    <div className="fw-bold fs-6">Deivce: {record.device}</div>
-                    <div className="fw-bold fs-6">Machine: {record.machine}</div>
-                </div>
-            ),
-        },
-        {
-            title: 'CreatedAt',
-            dataIndex: 'createdAt',
-            key: 'createdAt',
-            width: 1000,
-            responsive: ['sm'],
-            render: (text: any, record: any) => (
-                <div>
-                    <div>Created Time: {record.createdAt}</div>
-                    <div>Updated Time: {record.updatedAt}</div>
-                </div>
-            ),
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (record: any) => (
-                <div className="control-buttons">
-                    <Link to={`/fields/${record.id}`}>
-                        <Button type="primary" size="large">
-                            Detail
-                        </Button>
-                    </Link>
-
-                    <Button
-                        type="primary"
-                        danger
-                        size="large"
-                        onClick={() => {
-                            changeConfirmModal()
-                            setDeleteItem(record)
-                        }}
-                    >
-                        Delete
-                    </Button>
-                </div>
-            ),
-        },
-    ]
-
     const handleDelete = () => {
         setShowConfirm(false)
         const newTaskData = data?.filter((task: any) => {
@@ -127,14 +53,28 @@ const TaskList = ({ data }: Partial<ITaskListProps>) => {
         setDeleteItem(data)
     }
 
+    const handleClickTaskItem = (id: number) => {
+        history.push(`/task/${id}`)
+    }
+
     return (
         <div>
             <div>
-                {tableData && tableData.map((task: any) => (
-                    <div className="device-task-item">{task.id}</div>
-                ))}
+                {tableData &&
+                    tableData.map((task: any) => (
+                        <div className="device-task-item" key={task.id} onClick={() => handleClickTaskItem(task?.id)}>
+                            <Descriptions title={`Lộ trình hoạt động #${task?.id}`}>
+                                <Descriptions.Item label="Quãng đường">{`${task?.distance.toFixed(2) ?? ''} km`}</Descriptions.Item>
+                                <Descriptions.Item label="Độ chính xác">{`${task?.accuracy.toFixed(2) ?? ''} cm`}</Descriptions.Item>
+                                <Descriptions.Item label="Tốc độ">{`${task?.speed.toFixed(2) ?? ''} km/h`}</Descriptions.Item>
+                                <Descriptions.Item label="Tổng thời gian">{`${SecondFormat(task?.time)}`}</Descriptions.Item>
+                                <Descriptions.Item label="Thời gian bắt đầu">{dayjs(task?.create_time).format('DD/MM/YYYY HH:mm:ss')}</Descriptions.Item>
+                                <Descriptions.Item label="Thời gian kết thúc">{dayjs(task?.update_time).format('DD/MM/YYYY HH:mm:ss')}</Descriptions.Item>
+                            </Descriptions>
+                        </div>
+                    ))}
             </div>
-            <div>
+            {/* <div>
                 <Modal visible={showConfirm} onOk={handleDelete} onCancel={changeConfirmModal} okText="OK" cancelText="Cancel">
                     <div>
                         <WarningFilled
@@ -147,7 +87,7 @@ const TaskList = ({ data }: Partial<ITaskListProps>) => {
                         Are you sure want to delete task "{deleteItem?.device}"
                     </div>
                 </Modal>
-            </div>
+            </div> */}
         </div>
     )
 }

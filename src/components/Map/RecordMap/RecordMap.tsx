@@ -7,6 +7,7 @@ import RecordInfo from './RecordInfo'
 import useFetch from '../../../hooks/useFetch'
 import Chart from './Chart'
 import { ENDPOINT_URL } from '../../../app/config'
+import { InputNumber } from 'antd'
 
 export const ViewIndexContext = createContext<any>(null)
 
@@ -16,8 +17,7 @@ const RecordMap = ({ match }: any) => {
     const [viewIndex, setViewIndex] = useState(0)
     const [viewWidth, setViewWidth] = useState(1)
 
-    const [singleTaskResponse, isFetchingSingleTask, setRequestSingleTask] =
-        useFetch({} as any)
+    const [singleTaskResponse, isFetchingSingleTask, setRequestSingleTask] = useFetch({} as any)
 
     useEffect(() => {
         const query = {
@@ -35,15 +35,11 @@ const RecordMap = ({ match }: any) => {
     }, [])
 
     useEffect(() => {
-        if (
-            !isFetchingSingleTask &&
-            singleTaskResponse &&
-            singleTaskResponse.data &&
-            !singleTaskResponse.hasError
-        ) {
+        if (!isFetchingSingleTask && singleTaskResponse && singleTaskResponse.data && !singleTaskResponse.hasError) {
             let graphData = {
                 distance: [0],
                 accuracy: [0],
+                timestamp: [0],
                 speed: [0],
                 xAxis: [0],
             }
@@ -65,11 +61,8 @@ const RecordMap = ({ match }: any) => {
                 if (index > 0) {
                     graphData.speed.push(speed)
                     graphData.accuracy.push(accuracy)
-                    graphData.distance.push(
-                        graphData.distance[graphData.distance.length - 1] +
-                            turf.distance(turf.point(from), turf.point(to)) *
-                                1000
-                    )
+                    graphData.timestamp.push(timestamp)
+                    graphData.distance.push(graphData.distance[graphData.distance.length - 1] + turf.distance(turf.point(from), turf.point(to)) * 1000)
                     graphData.xAxis.push(index)
                 }
             })
@@ -79,36 +72,31 @@ const RecordMap = ({ match }: any) => {
         }
     }, [singleTaskResponse])
 
+    const handleChangeWidth = (value: number) => {
+        setViewWidth(value)
+    }
+
     return (
         <div className="record-view">
             <div className="record-control-container">
                 <div className="record-map">
-                    <ViewIndexContext.Provider
-                        value={{ viewIndex: viewIndex, viewWidth: viewWidth }}
-                    >
-                        <Mapbox
-                            height="calc(70vh - 90px)"
-                            width="100%"
-                            viewDrawData={drawData}
-                            center={drawData ? drawData[0] : undefined}
-                            viewIndexContextKey={'record'}
-                        ></Mapbox>
+                    <ViewIndexContext.Provider value={{ viewIndex: viewIndex, viewWidth: viewWidth }}>
+                        <Mapbox height="calc(70vh - 90px)" width="100%" viewDrawData={drawData} center={drawData ? drawData[0] : undefined} viewIndexContextKey={'record'}></Mapbox>
                     </ViewIndexContext.Provider>
                 </div>
 
                 <div className="record-control-chart">
+                    <div className="record-map-select">
+                        <span>Width: </span>
+                        <InputNumber value={viewWidth} style={{ width: 100 }} onChange={handleChangeWidth} />
+                    </div>
                     <Chart taskData={recordData} setViewIndex={setViewIndex} />
                 </div>
             </div>
 
             <div className="record-graph">
-                <ViewIndexContext.Provider
-                    value={{ viewWidth: viewWidth, setViewWidth: setViewWidth }}
-                >
-                    <RecordInfo
-                        data={recordData}
-                        viewWidthContextKey="record"
-                    />
+                <ViewIndexContext.Provider value={{ viewWidth: viewWidth, setViewWidth: setViewWidth }}>
+                    <RecordInfo data={recordData} taskData={singleTaskResponse?.data} />
                 </ViewIndexContext.Provider>
             </div>
         </div>

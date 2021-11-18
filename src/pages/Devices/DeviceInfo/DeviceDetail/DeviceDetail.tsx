@@ -19,7 +19,7 @@ const DeviceDetailItem = ({ data }: any) => {
     const { task } = data
     return (
         <div className="device-detail-item-wrapper">
-            <Collapse className="device-detail-item-header" defaultActiveKey={['1']} expandIconPosition="right">
+            <Collapse className="device-detail-item-header" expandIconPosition="right">
                 <Panel
                     header={
                         <div className="device-detail-item-header-content container">
@@ -51,32 +51,14 @@ const DeviceDetailItem = ({ data }: any) => {
                                     <Statistic title="Tổng thời gian" value={SecondFormat(data?.total_time / 1000)} />
                                 </Col>
                             </Row>
-                            {/* <div className="statistic-content">
-                                <div className="statistic-content-title">Độ chính xác trung bình</div>
-                                <div className="statistic-content-value">{data?.avg_accuracy?.toFixed(2) ?? ''} cm</div>
-                            </div>
-                            <div className="statistic-content">
-                                <div className="statistic-content-title">Tốc độ trung bình</div>
-                                <div className="statistic-content-value">{data?.avg_accuracy?.toFixed(2) ?? ''} km/h</div>
-                            </div>
-                            <div className="statistic-content">
-                                <div className="statistic-content-title">Tổng thời gian</div>
-                                <div className="statistic-content-value">{SecondFormat(data?.total_time / 1000)}</div>
-                            </div> */}
                         </div>
                         <div className="device-detail-task-list">
-                            <div>Lịch trình làm việc</div>
+                            <div className="device-detail-task-list-title">Lịch trình làm việc</div>
                             <TaskList data={task} />
                         </div>
                     </div>
                 </Panel>
             </Collapse>
-            {/* <div className="device-detail-item-title">Ngày {data.date}</div>
-            <div className="device-tasks-list-table">
-                <div className="text-start fw-bold fs-5 mb-3">Thông số trong ngày</div>
-                <Table columns={columns} dataSource={[data]} bordered pagination={false} />
-            </div>
-            <div>{task && <TaskList data={task} />}</div> */}
         </div>
     )
 }

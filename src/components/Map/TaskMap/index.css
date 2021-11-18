@@ -19,11 +19,13 @@
 .task-map-select {
     z-index: 100;
     position: absolute;
-    right: 450px;
+    right: 0px;
+    top: 0px;
     margin-top: 10px;
 }
 
 .task-control-chart {
     height: 30vh;
     width: 100%;
+    position: relative;
 }

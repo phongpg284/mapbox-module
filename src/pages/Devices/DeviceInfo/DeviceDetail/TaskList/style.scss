@@ -1,0 +1,17 @@
+@media screen and (min-width: 450px) {
+    .control-buttons {
+        display: flex;
+    }
+}
+
+.device-task-item {
+    margin: 10px 10px 0 0;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f5f5f7;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    &:hover {
+        background-color: #dbe0e4;
+    }
+}

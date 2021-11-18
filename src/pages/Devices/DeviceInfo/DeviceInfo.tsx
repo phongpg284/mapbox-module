@@ -41,6 +41,11 @@ const DeviceInfo = ({ match }: any) => {
         },
     })
 
+    const [tasks, refetchTasks, isFetchingTasks] = useData({
+        endPoint: ENDPOINT_URL + '/task/',
+        method: 'GET',
+    })
+
     const centerStyle = {
         display: 'flex',
         justifyContent: 'space-between',
@@ -82,7 +87,7 @@ const DeviceInfo = ({ match }: any) => {
                 <div className="device-detail-content">
                     {currentTab === 'summary' && <DeviceSummary data={data} />}
                     {currentTab === 'tasks' && <DeviceDetail id={id} currentDateData={deviceDetailData} />}
-                    {currentTab === 'all-tasks' && <DeviceTask id={id} />}
+                    {currentTab === 'all-tasks' && <DeviceTask id={id} data={tasks} />}
                 </div>
             </div>
         </div>

@@ -1,0 +1,13 @@
+.device-task {
+    text-align: left;
+}
+
+.device-task-item {
+    position: relative;
+    &-info {
+        position: absolute;
+        right: 13px;
+        top: 10px;
+        color: blue;
+    }
+}

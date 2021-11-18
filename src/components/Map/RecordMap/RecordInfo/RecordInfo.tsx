@@ -26,7 +26,7 @@ const RecordInfoItem = ({ icon, title, content }: any) => {
     )
 }
 
-const RecordInfo = ({ data, options, changeSelectTask, isFetching, viewWidthContextKey }: any) => {
+const RecordInfo = ({ data, taskData }: any) => {
     // const [selectedTask, setSelectedTask] = useState()
 
     // function handleChange(value: any) {
@@ -61,12 +61,12 @@ const RecordInfo = ({ data, options, changeSelectTask, isFetching, viewWidthCont
             <div className={`record-info-content`}>
                 <div className="record-info-title">Thiết bị IMET 20</div>
                 <RecordInfoItem icon={<CalendarOutlined />} title="Ngày bắt đầu" content="20/10/2021 10:20 am" />
-                <RecordInfoItem icon={<BiArea />} title="Diện tích làm việc" content="100 km2" />
-                <RecordInfoItem icon={<ColumnWidthOutlined />} title="Độ rộng đường làm việc" content="2 m" />
+                <RecordInfoItem icon={<BiArea />} title="Diện tích làm việc" content="0 km2" />
+                <RecordInfoItem icon={<ColumnWidthOutlined />} title="Độ rộng đường làm việc" content="0 m" />
                 <RecordInfoItem icon={<GiPathDistance />} title="Tổng quãng đường" content={`${data.distance?.[data.distance?.length - 1]?.toFixed(2) ?? ""} m`} />
                 <RecordInfoItem icon={<FaMapMarkerAlt />} title="Độ chính xác trung bình" content={`${average.accuray.toFixed(2) ?? ""} cm`} />
                 <RecordInfoItem icon={<SiSpeedtest />} title="Tốc độ trung bình" content={`${average.speed.toFixed(2) ?? ""} km/h`} />
-                <RecordInfoItem icon={<FaSatellite />} title="GNSS" content="A" />
+                <RecordInfoItem icon={<FaSatellite />} title="GNSS" content={taskData?.gnss ?? ""} />
             </div>
         </div>
     )

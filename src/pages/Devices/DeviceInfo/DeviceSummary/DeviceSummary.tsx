@@ -1,14 +1,12 @@
 import style from './index.module.scss'
-import { Table } from 'antd'
+import { Badge, Descriptions, Table } from 'antd'
 import { useEffect, useState } from 'react'
 
 const column = [
     {
         key: 'ckey',
         dataIndex: 'ckey',
-        render: (text: string) => (
-            <h6 style={{ fontWeight: 'bold' }}>{text}</h6>
-        ),
+        render: (text: string) => <h6 style={{ fontWeight: 'bold' }}>{text}</h6>,
     },
     {
         key: 'value',
@@ -92,8 +90,7 @@ const DeviceSummary: React.FC<ISummaryDevice> = ({ data }) => {
                         ckey: brand,
                         value: value,
                     }
-                    if (type === 'date')
-                        pushData.value = new Date(value as any).toLocaleString()
+                    if (type === 'date') pushData.value = new Date(value as any).toLocaleString()
                     convertDataSource.push(pushData)
                 }
             }
@@ -104,20 +101,28 @@ const DeviceSummary: React.FC<ISummaryDevice> = ({ data }) => {
     return (
         <div className={style.device_summary_container}>
             <div className={style.device_summary_content}>
-                <Table
-                    className={style.device_table_content}
-                    columns={column}
-                    dataSource={dataSource?.slice(0,7)}
-                    showHeader={false}
-                    pagination={false}
-                />
-                <Table
-                    className={style.device_table_content}
-                    columns={column}
-                    dataSource={dataSource?.slice(7)}
-                    showHeader={false}
-                    pagination={false}
-                />
+                {/* <Table className={style.device_table_content} columns={column} dataSource={dataSource?.slice(0, 7)} showHeader={false} pagination={false} />
+                <Table className={style.device_table_content} columns={column} dataSource={dataSource?.slice(7)} showHeader={false} pagination={false} /> */}
+
+                <Descriptions bordered>
+                    <Descriptions.Item label="Sim IMEI">{data?.sim_imei}</Descriptions.Item>
+                    <Descriptions.Item label="Tên thiết bị">{data?.name}</Descriptions.Item>
+                    <Descriptions.Item label="Mô tả">{data?.description}</Descriptions.Item>
+                    <Descriptions.Item label="Sim Manufacturer">{data?.sim_manufacturer}</Descriptions.Item>
+                    <Descriptions.Item label="Sim Model">{data?.sim_model}</Descriptions.Item>
+                    <Descriptions.Item label="Sim Status">{data?.sim_status}</Descriptions.Item>
+                    <Descriptions.Item label="Sim Signal Strength">{data?.sim_signal}</Descriptions.Item>
+                    <Descriptions.Item label="Caster IP">{data?.caster_ip}</Descriptions.Item>
+                    <Descriptions.Item label="Caster Port">{data?.caster_port}</Descriptions.Item>
+                    <Descriptions.Item label="Mount Point">{data?.mount_point}</Descriptions.Item>
+                    <Descriptions.Item label="NTRIP Username">{data?.ntrip_username}</Descriptions.Item>
+                    <Descriptions.Item label="NTRIP Password">{data?.ntrip_password}</Descriptions.Item>
+                    <Descriptions.Item label="Digital In 1">{data?.digital_in_1}</Descriptions.Item>
+                    <Descriptions.Item label="Digital In 2">{data?.digital_in_2}</Descriptions.Item>
+                    <Descriptions.Item label="Digital Out 1">{data?.digital_out_1}</Descriptions.Item>
+                    <Descriptions.Item label="Digital Out 2">{data?.digital_out_2}</Descriptions.Item>
+                    <Descriptions.Item label="GPS Signal">{data?.gps_signal}</Descriptions.Item>
+                </Descriptions>
             </div>
         </div>
     )
