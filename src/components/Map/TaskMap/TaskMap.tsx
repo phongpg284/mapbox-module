@@ -63,11 +63,11 @@ const TaskMap = ({ id }: any) => {
 
     useEffect(() => {
         if (!isFetchingSingleTask && singleTaskResponse && singleTaskResponse.data && !singleTaskResponse.hasError) {
-            let graphData = {
-                distance: [0],
-                accuracy: [0],
-                speed: [0],
-                xAxis: [0],
+            let graphData: any = {
+                distance: [],
+                accuracy: [],
+                speed: [],
+                xAxis: [],
             }
             let from
             let to = [0, 0]
@@ -87,7 +87,8 @@ const TaskMap = ({ id }: any) => {
                 if (index > 0) {
                     graphData.speed.push(speed)
                     graphData.accuracy.push(accuracy)
-                    graphData.distance.push(graphData.distance[graphData.distance.length - 1] + turf.distance(turf.point(from), turf.point(to)) * 1000)
+                    graphData.timestamp.push(timestamp)
+                    graphData.distance.push(graphData.distance[graphData.distance.length - 1] ?? 0 + turf.distance(turf.point(from), turf.point(to)) * 1000)
                     graphData.xAxis.push(index)
                 }
             })

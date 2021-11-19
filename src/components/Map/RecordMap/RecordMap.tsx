@@ -36,12 +36,12 @@ const RecordMap = ({ match }: any) => {
 
     useEffect(() => {
         if (!isFetchingSingleTask && singleTaskResponse && singleTaskResponse.data && !singleTaskResponse.hasError) {
-            let graphData = {
-                distance: [0],
-                accuracy: [0],
-                timestamp: [0],
-                speed: [0],
-                xAxis: [0],
+            let graphData: any = {
+                distance: [],
+                accuracy: [],
+                timestamp: [],
+                speed: [],
+                xAxis: [],
             }
             let from
             let to = [0, 0]
@@ -62,7 +62,7 @@ const RecordMap = ({ match }: any) => {
                     graphData.speed.push(speed)
                     graphData.accuracy.push(accuracy)
                     graphData.timestamp.push(timestamp)
-                    graphData.distance.push(graphData.distance[graphData.distance.length - 1] + turf.distance(turf.point(from), turf.point(to)) * 1000)
+                    graphData.distance.push(graphData.distance[graphData.distance.length - 1] ?? 0 + turf.distance(turf.point(from), turf.point(to)) * 1000)
                     graphData.xAxis.push(index)
                 }
             })

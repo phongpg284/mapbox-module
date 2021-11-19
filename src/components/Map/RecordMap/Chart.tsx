@@ -1,13 +1,21 @@
 import { memo } from 'react'
 import ReactECharts from 'echarts-for-react'
 import customTooltip from './customTooltip'
+import dayjs from "dayjs"
+var customParseFormat = require('dayjs/plugin/customParseFormat')
+
+var utc = require('dayjs/plugin/utc')
+dayjs.extend(customParseFormat)
+dayjs.extend(utc)
 
 const Chart = memo(({ taskData, setViewIndex, onEvents }: any) => {
+    console.log(taskData);
+    
     const options = {
         grid: { top: 70, right: 10, bottom: 24, left: 10 },
         xAxis: {
-            data: taskData.xAxis || [],
-            show: false,
+            data: taskData.timestamp?.map((time: number) => dayjs.utc(time.toString(),"DMMYYHHmmss").local().format("HH:mm:ss")) || [],
+            // show: false,
         },
         yAxis: [
             {
@@ -21,6 +29,10 @@ const Chart = memo(({ taskData, setViewIndex, onEvents }: any) => {
             {
                 show: false,
                 name: 'accuracy',
+            },
+            {
+                show: false,
+                name: 'timestamp',
             },
         ],
 
@@ -44,6 +56,19 @@ const Chart = memo(({ taskData, setViewIndex, onEvents }: any) => {
                 data: taskData.accuracy || [],
                 type: 'line',
                 smooth: true,
+            },
+            {
+                name: 'Thời gian',
+                yAxisIndex: 3,
+                data: taskData.timestamp || [],
+                type: 'line',
+                smooth: true,
+                lineStyle: {
+                    width: 0
+                },
+                itemStyle: {
+                    opacity: 0
+                }
             },
         ],
         tooltip: {
