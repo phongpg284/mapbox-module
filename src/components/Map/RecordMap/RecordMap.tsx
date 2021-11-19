@@ -72,6 +72,26 @@ const RecordMap = ({ match }: any) => {
         }
     }, [singleTaskResponse])
 
+
+    const [deviceResponse, isFetchingDevice, setRequestDevice] = useFetch({} as any)
+
+    useEffect(() => {
+        const query = {
+            action: 'read',
+            pk: singleTaskResponse?.data?.device_id,
+        }
+        if (singleTaskResponse?.data?.device_id) {
+            setRequestDevice({
+                endPoint: ENDPOINT_URL + '/device/',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                requestBody: query,
+            })
+        }
+    }, [singleTaskResponse])
+
     const handleChangeWidth = (value: number) => {
         setViewWidth(value)
     }
@@ -96,7 +116,7 @@ const RecordMap = ({ match }: any) => {
 
             <div className="record-graph">
                 <ViewIndexContext.Provider value={{ viewWidth: viewWidth, setViewWidth: setViewWidth }}>
-                    <RecordInfo data={recordData} taskData={singleTaskResponse?.data} />
+                    <RecordInfo data={recordData} taskData={singleTaskResponse?.data} deviceData={deviceResponse?.data}/>
                 </ViewIndexContext.Provider>
             </div>
         </div>

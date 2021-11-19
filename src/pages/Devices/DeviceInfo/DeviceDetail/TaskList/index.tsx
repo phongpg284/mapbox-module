@@ -54,7 +54,7 @@ const TaskList = ({ data }: Partial<ITaskListProps>) => {
     }
 
     const handleClickTaskItem = (id: number) => {
-        history.push(`/task/${id}`)
+        history.push(`/tasks/${id}`)
     }
 
     return (

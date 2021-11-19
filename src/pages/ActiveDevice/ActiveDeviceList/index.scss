@@ -4,32 +4,30 @@
     margin-bottom: 20px;
 }
 
-.active-device-item {
-    background-color: #c2e0fb;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius: 20px;
-    height: 120px;
-    padding: 20px;
-    padding-left: 30px;
-    margin: 10px auto;
-    max-width: 700px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.active-device-info {
+.active-device-task {
     text-align: left;
-    font-weight: 600;
-    font-size: 1.4rem;
+}
+.active-device-list-container {
+    padding: 20px;
+    text-align: left;
 }
 
-.active-device-detail-link {
-    display: flex;
-    a {
-        align-self: center;
-        margin-right: 20px;
-        font-size: 1.2rem;
-        font-weight: 600;
-        // color: white;
+.active-device-list-title {
+    font-size: 2.4rem;
+}
+
+.active-device-list-content {
+    text-align: left;
+}
+
+.active-device-task-item {
+    margin: 10px 10px 0 0;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f5f5f7;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    &:hover {
+        background-color: #dbe0e4;
     }
 }
