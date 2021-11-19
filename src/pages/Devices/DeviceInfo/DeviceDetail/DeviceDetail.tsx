@@ -22,7 +22,7 @@ const DeviceDetailItem = ({ data }: any) => {
             <Collapse className="device-detail-item-header" expandIconPosition="right">
                 <Panel
                     header={
-                        <div className="device-detail-item-header-content container">
+                        <div className="device-detail-item-header-content container-fluid">
                             <div className="row">
                                 <div className="col-2">{data.date}</div>
                                 <div className="col-3 device-status">
