@@ -37,10 +37,12 @@ import ActiveDeviceList from '../ActiveDevice/ActiveDeviceList'
 import TrackingMap from '../../components/Map/TrackingMap'
 import RealtimeMap from '../../components/Map/RealtimeMap'
 import TaskMap from '../../components/Map/TaskMap'
+import { useAppSelector } from '../../app/store'
 
 const { Header, Content } = Layout
 
 const HomePage = ({ parentPath, match }: any) => {
+    const account = useAppSelector((state) => state.account)
     const history = useHistory()
     const [isSideboardCollapse, setIsSideboardCollapse] = useState(false)
     const [isProfileCollapse, setIsProfileCollapse] = useState(false)
@@ -96,17 +98,24 @@ const HomePage = ({ parentPath, match }: any) => {
                             style={{ color: 'white' }}
                         /> */}
                     </div>
-                    <div className="header-avatar">
-                        <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight">
-                            <img
-                                alt="no?"
-                                src="https://s3-ap-northeast-1.amazonaws.com/agri-info-design-public/icons/ic_person_black_48dp.png"
-                                className=""
-                                style={{ height: '40px' }}
-                                onClick={handleClickProfile}
-                            ></img>
-                        </Dropdown>
-                    </div>
+
+                    {account.accessToken && account.id && account.role && (
+                        <div className="header-avatar">
+                            <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight">
+                                <img
+                                    alt="no?"
+                                    src="https://s3-ap-northeast-1.amazonaws.com/agri-info-design-public/icons/ic_person_black_48dp.png"
+                                    className=""
+                                    style={{ height: '40px' }}
+                                    onClick={handleClickProfile}
+                                ></img>
+                            </Dropdown>
+                        </div>
+                    )}
+                    
+                    {!account.accessToken && !account.id && !account.role && (
+                        <button onClick={() => history.push("/login")}>Đăng nhập</button>
+                    )}
                 </Header>
                 <Content className="home-content">
                     <Switch>
