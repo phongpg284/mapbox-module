@@ -3,6 +3,7 @@ import { Button, Modal, Table } from 'antd'
 import useFetch from '../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
 import { ENDPOINT_URL } from '../../../app/config'
+import AddModal from '../../../components/AddModal'
 
 const column = [
     {
@@ -211,10 +212,11 @@ const MachineSummaryModal: React.FC<ISummaryMachineModal> = ({
 
     return (
         <div className={style.machine_summary_container}>
-            <Modal
+            <AddModal
                 {...props}
                 visible={visible}
                 onCancel={onClose}
+                width={600}
                 title={`Dự án ${data?.name}`}
                 footer={<Button onClick={onClose}>Đóng</Button>}
             >
@@ -228,7 +230,7 @@ const MachineSummaryModal: React.FC<ISummaryMachineModal> = ({
                         loading={isFetching}
                     />
                 </div>
-            </Modal>
+            </AddModal>
         </div>
     )
 }

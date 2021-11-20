@@ -1,6 +1,7 @@
 import { Button, Modal, Select } from 'antd'
 import { useEffect, useState } from 'react'
 import faker from 'faker'
+import AddModal from '../../../components/AddModal'
 const { Option } = Select
 
 const ModeratorAddModal = ({ ...props }) => {
@@ -62,8 +63,9 @@ const ModeratorAddModal = ({ ...props }) => {
     }
 
     return (
-        <Modal
+        <AddModal
             {...props}
+            width={600}
             title="Thêm quản trị viên"
             footer={<Button onClick={handleAddNewModerator}>Đăng ký</Button>}
         >
@@ -106,7 +108,7 @@ const ModeratorAddModal = ({ ...props }) => {
                         ))}
                 </Select>
             </div>
-        </Modal>
+        </AddModal>
     )
 }
 

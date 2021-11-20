@@ -1,5 +1,6 @@
 import { Button, Form, Input, message, Modal } from 'antd'
 import { ENDPOINT_URL } from '../../../app/config'
+import AddModal from '../../../components/AddModal'
 interface IModal {
     centered?: boolean;
     width?: number;
@@ -45,10 +46,11 @@ const MachineAddModal: React.FC<IModal> = ({onClose, update, ...props }) => {
     }
 
     return (
-        <Modal
+        <AddModal
             {...props}
             title="Thêm máy mới"
             onCancel={onClose}
+            width={600}
             footer={<Button onClick={handleAddNewMachine}>Đăng ký</Button>}
         >
             <div className="machine-add-container">
@@ -75,24 +77,29 @@ const MachineAddModal: React.FC<IModal> = ({onClose, update, ...props }) => {
                     <div style={{ overflow: 'hidden' }}>
                         <Form.Item
                             name="name"
-                            label="Name"
+                            label="Tên"
                             rules={[
                                 { required: true },
                                 //@ts-ignore
                                 { type: 'string', warningOnly: true },
                             ]}
                         >
-                            <Input placeholder="" />
+                            <Input placeholder="Tên máy" />
                         </Form.Item>
                     </div>
                     <div style={{ overflow: 'hidden' }}>
-                        <Form.Item name="model" label="Model">
-                            <Input placeholder="" />
+                        <Form.Item name="model" label="Kiểu máy">
+                            <Input placeholder="Kiểu máy" />
                         </Form.Item>
                     </div>
                     <div style={{ overflow: 'hidden' }}>
-                        <Form.Item name="description" label="Description">
-                            <Input placeholder="" />
+                        <Form.Item name="description" label="Ảnh">
+                            <Input placeholder="Ảnh máy" />
+                        </Form.Item>
+                    </div>
+                    <div style={{ overflow: 'hidden' }}>
+                        <Form.Item name="description" label="Mô tả">
+                            <Input placeholder="Mô tả chung" />
                         </Form.Item>
                     </div>
 
@@ -115,7 +122,7 @@ const MachineAddModal: React.FC<IModal> = ({onClose, update, ...props }) => {
                 </Form>
                 <div className="machine-add-item"></div>
             </div>
-        </Modal>
+        </AddModal>
     )
 }
 

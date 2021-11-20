@@ -1,5 +1,6 @@
 import { Form, Input, message, Button, Modal } from 'antd'
 import { ENDPOINT_URL } from '../../../app/config'
+import AddModal from '../../../components/AddModal'
 
 interface IModal {
     centered?: boolean;
@@ -46,8 +47,9 @@ const ProjectAddModal: React.FC<IModal> = ({ onClose, update, ...props }) => {
     }
 
     return (
-        <Modal
+        <AddModal
             {...props}
+            width={600}
             onCancel={onClose}
             title="Thêm dự án mới"
             footer={<Button onClick={handleAddNewProject}>Đăng ký</Button>}
@@ -107,7 +109,7 @@ const ProjectAddModal: React.FC<IModal> = ({ onClose, update, ...props }) => {
                 </Form>
                 <div className="project-add-item"></div>
             </div>
-        </Modal>
+        </AddModal>
     )
 }
 

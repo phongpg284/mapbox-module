@@ -3,6 +3,7 @@ import { Button, Modal, Table } from 'antd'
 import useFetch from '../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
 import { ENDPOINT_URL } from '../../../app/config'
+import AddModal from '../../../components/AddModal'
 
 const column = [
     {
@@ -109,10 +110,11 @@ const DeviceSummaryModal: React.FC<ISummaryDeviceModal> = ({
 
     return (
         <div className={style.device_summary_container}>
-            <Modal
+            <AddModal
                 {...props}
                 visible={visible}
                 onCancel={onClose}
+                width={600}
                 title={`Thiết bị ${data?.name}`}
                 footer={<Button onClick={onClose}>Đóng</Button>}
             >
@@ -126,7 +128,7 @@ const DeviceSummaryModal: React.FC<ISummaryDeviceModal> = ({
                         loading={isFetching}
                     />
                 </div>
-            </Modal>
+            </AddModal>
         </div>
     )
 }

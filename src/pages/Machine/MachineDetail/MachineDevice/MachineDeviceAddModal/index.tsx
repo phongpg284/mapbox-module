@@ -4,6 +4,7 @@ import { Button, message, Modal, Select } from 'antd'
 
 import useFetch from '../../../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../../../app/config'
+import AddModal from '../../../../../components/AddModal'
 
 const { Option } = Select
 
@@ -98,10 +99,11 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
 
     return (
         <div className={`project_summary_container`}>
-            <Modal
+            <AddModal
                 {...props}
                 visible={visible}
                 onCancel={onClose}
+                width={600}
                 title="Thêm thiết bị kết nối với máy móc"
                 footer={<Button onClick={handleAddNewDevice}>Thêm</Button>}
             >
@@ -147,7 +149,7 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
                         </Select>
                     </div>
                 </div>
-            </Modal>
+            </AddModal>
         </div>
     )
 }

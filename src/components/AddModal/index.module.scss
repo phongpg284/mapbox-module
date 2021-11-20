@@ -1,0 +1,27 @@
+.modal_wrapper {
+    :global {
+        .ant-modal-content {
+            border-radius: 8px;
+            .ant-modal-header {
+                border-radius: 8px;
+                .ant-modal-title {
+                    font-size: 1.3rem;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                }
+            }
+            .ant-modal-body {
+                .ant-form-item-label {
+                    font-weight: 500;
+                }
+                .ant-form-item-control-input-content {
+                    input {
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+    }
+    // .ant-modal-content {
+    // }
+}

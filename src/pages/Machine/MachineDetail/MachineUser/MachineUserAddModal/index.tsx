@@ -6,6 +6,7 @@ import faker from 'faker'
 
 import useFetch from '../../../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../../../app/config'
+import AddModal from '../../../../../components/AddModal'
 
 const { Option } = Select
 
@@ -106,10 +107,11 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
 
     return (
         <div className={`machine_summary_container`}>
-            <Modal
+            <AddModal
                 {...props}
                 visible={visible}
                 onCancel={onClose}
+                width={600}
                 title="Thêm lái máy"
                 footer={
                     <Button onClick={handleAddNewUser}>Thêm</Button>
@@ -157,7 +159,7 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
                         </Select>
                     </div>
                 </div>
-            </Modal>
+            </AddModal>
         </div>
     )
 }
