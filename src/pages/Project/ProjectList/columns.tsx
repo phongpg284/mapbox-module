@@ -6,6 +6,12 @@ export const fixedData = {
 
 const columns = [
     {
+        title: 'STT',
+        dataIndex: 'index',
+        render: (value: any, item:any, index: number) => index,
+        // sorter: (a: any, b: any) => a.index - b.index,
+    },
+    {
         title: 'Mã dự án',
         dataIndex: 'code',
         key: 'code',
