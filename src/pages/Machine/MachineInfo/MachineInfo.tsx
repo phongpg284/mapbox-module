@@ -1,17 +1,22 @@
 import './index.scss'
-import { Menu } from 'antd'
+
+import dayjs from 'dayjs'
 import { useState } from 'react'
+
 import MachineDevice from '../MachineDetail/MachineDevice'
 import MachineUser from '../MachineDetail/MachineUser'
 import MachineSummary from '../MachineDetail/MachineSummary'
-import useData from '../../../hooks/useData'
-import { ENDPOINT_URL } from '../../../app/config'
 
-const MachineDetail = ({match}: any) => {
-    const id = match?.params?.id;
+import { ENDPOINT_URL } from '../../../app/config'
+import useData from '../../../hooks/useData'
+import { AiFillCalendar } from 'react-icons/ai'
+
+const MachineDetail = ({ match }: any) => {
+    const id = match?.params?.id
     const [currentTab, setCurrentTab] = useState('summary')
-    const handleClick = (e: any) => {
-        setCurrentTab(e.key)
+
+    const handleSelectTab = (key: string) => {
+        setCurrentTab(key)
     }
 
     const [data] = useData({
@@ -50,52 +55,37 @@ const MachineDetail = ({match}: any) => {
         },
     })
 
-    const centerStyle = {
-        display: 'flex',
-        justifyContent: 'space-between',
-    }
     return (
         <div className="machine-detail-container">
+            <div className="machine-detail-title">
+                Máy {data?.name ?? ''}
+                {/* {isDeviceActive && <span className="device-tag-active">Đang hoạt động</span>}
+                {!isDeviceActive && <span className="device-tag-no-active">Không hoạt động</span>} */}
+            </div>
+            <div className="machine-detail-date">
+                <div className="machine-detail-date-icon">
+                    <AiFillCalendar />
+                </div>
+                {`Ngày khởi tạo:  
+                ${dayjs(data?.create_time).format('DD/MM/YYYY HH:mm:ss') ?? ''}`}
+            </div>
             <div className="machine-detail-wrapper">
-                <Menu
-                    style={centerStyle}
-                    onClick={handleClick}
-                    selectedKeys={[currentTab]}
-                    mode="inline"
-                >
-                    <Menu.Item key="summary" style={{ fontWeight: 'bold' }}>
+                <div className="machine-detail-navigate">
+                    <div className={currentTab === 'summary' ? 'machine-detail-navigate-select' : ''} onClick={() => handleSelectTab('summary')}>
                         Thông tin chung
-                    </Menu.Item>
-                    <Menu.Item key="user" style={{ fontWeight: 'bold' }}>
-                        Danh sách lái máy
-                    </Menu.Item>
-                    <Menu.Item key="device" style={{ fontWeight: 'bold' }}>
-                        Danh sách thiết bị
-                    </Menu.Item>
-                    <Menu.Item key="category" style={{ fontWeight: 'bold' }}>
-                        Danh sách hạng mục
-                    </Menu.Item>
-                    <Menu.Item key="fuel" style={{ fontWeight: 'bold' }}>
-                        Nhiên liệu
-                    </Menu.Item>
-                </Menu>
+                    </div>
+                    <div className={currentTab === 'user' ? 'machine-detail-navigate-select' : ''} onClick={() => handleSelectTab('user')}>
+                        Danh mục thiết bị
+                    </div>
+                    <div className={currentTab === 'device' ? 'machine-detail-navigate-select' : ''} onClick={() => handleSelectTab('device')}>
+                        Danh mục thiết bị
+                    </div>
+                </div>
 
                 <div className="machine-detail-content">
                     {currentTab === 'summary' && <MachineSummary data={data} />}
-                    {currentTab === 'user' && (
-                        <MachineUser
-                            id={id}
-                            data={machineUserData}
-                            refetch={refetchMachineUser}
-                        />
-                    )}
-                    {currentTab === 'device' && (
-                        <MachineDevice
-                            id={id}
-                            data={machineDeviceData}
-                            refetch={refetchMachineDevice}
-                        />
-                    )}
+                    {currentTab === 'user' && <MachineUser id={id} data={machineUserData} refetch={refetchMachineUser} />}
+                    {currentTab === 'device' && <MachineDevice id={id} data={machineDeviceData} refetch={refetchMachineDevice} />}
                     {/* {currentTab === 'moderator' && <MachineModerator id={id} />} */}
                 </div>
             </div>

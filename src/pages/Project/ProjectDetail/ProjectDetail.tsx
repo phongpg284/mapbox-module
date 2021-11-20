@@ -1,6 +1,7 @@
-import './index.css'
+import './index.scss'
+import dayjs from 'dayjs'
+
 import { useState } from 'react'
-import { Menu } from 'antd'
 
 import ProjectUser from './ProjectUser'
 import ProjectDevice from './ProjectDevice'
@@ -9,11 +10,14 @@ import ProjectSummary from './ProjectSummary'
 import useData from '../../../hooks/useData'
 import { ENDPOINT_URL } from '../../../app/config'
 
+import { AiFillCalendar } from 'react-icons/ai'
+
 const ProjectDetail = ({ match }: any) => {
     const id = match?.params?.id
     const [currentTab, setCurrentTab] = useState('summary')
-    const handleClick = (e: any) => {
-        setCurrentTab(e.key)
+
+    const handleSelectTab = (key: string) => {
+        setCurrentTab(key)
     }
 
     const [data] = useData({
@@ -52,55 +56,33 @@ const ProjectDetail = ({ match }: any) => {
         },
     })
 
-    const centerStyle = {
-        display: 'flex',
-        justifyContent: 'space-between',
-    }
     return (
         <div className="project-detail-container">
+            <div className="project-detail-title">Dự án {data?.name ?? ''}</div>
+            <div className="project-detail-date">
+                <div className="project-detail-date-icon">
+                    <AiFillCalendar />
+                </div>
+                {`Ngày khởi tạo:  
+                ${dayjs(data?.create_time).format('DD/MM/YYYY HH:mm:ss') ?? ''}`}
+            </div>
             <div className="project-detail-wrapper">
-                <Menu
-                    style={centerStyle}
-                    onClick={handleClick}
-                    selectedKeys={[currentTab]}
-                    mode="inline"
-                >
-                    <Menu.Item key="summary" style={{ fontWeight: 'bold' }}>
+                <div className="project-detail-navigate">
+                    <div className={currentTab === 'summary' ? 'project-detail-navigate-select' : ''} onClick={() => handleSelectTab('summary')}>
                         Thông tin chung
-                    </Menu.Item>
-                    <Menu.Item key="user" style={{ fontWeight: 'bold' }}>
+                    </div>
+                    <div className={currentTab === 'user' ? 'project-detail-navigate-select' : ''} onClick={() => handleSelectTab('user')}>
                         Danh sách người dùng
-                    </Menu.Item>
-                    <Menu.Item key="device" style={{ fontWeight: 'bold' }}>
+                    </div>
+                    <div className={currentTab === 'device' ? 'project-detail-navigate-select' : ''} onClick={() => handleSelectTab('device')}>
                         Danh sách máy móc
-                    </Menu.Item>
-                    <Menu.Item key="category" style={{ fontWeight: 'bold' }}>
-                        Danh sách hạng mục
-                    </Menu.Item>
-                    <Menu.Item key="fuel" style={{ fontWeight: 'bold' }}>
-                        Nhiên liệu
-                    </Menu.Item>
-                    {/* <Menu.Item key="moderator" style={{ fontWeight: 'bold' }}>
-                        Danh sách quản trị viên
-                    </Menu.Item> */}
-                </Menu>
+                    </div>
+                </div>
 
                 <div className="project-detail-content">
                     {currentTab === 'summary' && <ProjectSummary data={data} />}
-                    {currentTab === 'user' && (
-                        <ProjectUser
-                            id={id}
-                            data={projectUserData}
-                            refetch={refetchProjectUser}
-                        />
-                    )}
-                    {currentTab === 'device' && (
-                        <ProjectDevice
-                            id={id}
-                            data={projectDeviceData}
-                            refetch={refetchProjectDevice}
-                        />
-                    )}
+                    {currentTab === 'user' && <ProjectUser id={id} data={projectUserData} refetch={refetchProjectUser} />}
+                    {currentTab === 'device' && <ProjectDevice id={id} data={projectDeviceData} refetch={refetchProjectDevice} />}
                     {/* {currentTab === 'moderator' && <ProjectModerator id={id} />} */}
                 </div>
             </div>

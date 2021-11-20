@@ -1,18 +1,20 @@
 import './index.scss'
-import { Menu, Tag } from 'antd'
 import { useEffect, useState } from 'react'
+import dayjs from 'dayjs'
+
 import useData from '../../../hooks/useData'
+import { ENDPOINT_URL } from '../../../app/config'
+
 import DeviceDetail from './DeviceDetail'
 import DeviceSummary from './DeviceSummary'
 import DeviceTask from './DeviceTask'
-import dayjs from 'dayjs'
-import { ENDPOINT_URL } from '../../../app/config'
+
 import { AiFillCalendar } from 'react-icons/ai'
 
 const DeviceInfo = ({ match }: any) => {
-    console.log(match)
     const id = match.params.id
     const [currentTab, setCurrentTab] = useState('summary')
+
     const handleSelectTab = (key: string) => {
         setCurrentTab(key)
     }
@@ -45,11 +47,6 @@ const DeviceInfo = ({ match }: any) => {
         endPoint: ENDPOINT_URL + '/task/',
         method: 'GET',
     })
-
-    const centerStyle = {
-        display: 'flex',
-        justifyContent: 'space-between',
-    }
 
     useEffect(() => {
         if (data && data.update_time) {

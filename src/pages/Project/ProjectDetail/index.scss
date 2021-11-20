@@ -1,10 +1,10 @@
-.machine-detail-container {
+.project-detail-container {
     width: 100%;
     padding: 10px 40px;
     background-color: white;
 }
 
-.machine-detail-title {
+.project-detail-title {
     font-size: 2rem;
     font-weight: 600;
     text-align: left;
@@ -16,17 +16,17 @@
         padding: 1px 8px 5px 8px;
         border-radius: 8px;
     }
-    .machine-tag-active {
+    .project-tag-active {
         background-color: #cbfaf0;
         color: #47b2a7;
     }
-    .machine-tag-no-active {
+    .project-tag-no-active {
         background-color: #fadbd8;
         color: #e74c3c;
     }
 }
 
-.machine-detail-date {
+.project-detail-date {
     font-size: 1.2rem;
     font-weight: 600;
     text-align: left;
@@ -43,7 +43,7 @@
     }
 }
 
-.machine-detail-navigate {
+.project-detail-navigate {
     display: flex;
     justify-content: left;
     padding: 10px 0;
