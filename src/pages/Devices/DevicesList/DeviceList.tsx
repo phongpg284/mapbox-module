@@ -1,4 +1,4 @@
-import './index.scss'
+import style from './index.module.scss'
 
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -16,6 +16,8 @@ import DeviceSummaryModal from '../DeviceSummaryModal'
 import useFetch from '../../../hooks/useFetch'
 import DeleteConfirmModal from '../../../components/Modal/DeleteConfirmModal'
 import { ENDPOINT_URL } from '../../../app/config'
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineInfoCircle } from 'react-icons/ai'
+import { BsArrowDownCircle, BsPlusCircle } from 'react-icons/bs'
 
 const DeviceList = () => {
     const [isUpdate, setIsUpdate] = useState(true)
@@ -43,11 +45,7 @@ const DeviceList = () => {
                 response.data.map((device: any) => {
                     return {
                         ...device,
-                        status:
-                            Math.abs(
-                                new Date(device.update_time).getTime() -
-                                    Date.now()
-                            ) < 120000,
+                        status: Math.abs(new Date(device.update_time).getTime() - Date.now()) < 120000,
                     }
                 })
             )
@@ -85,9 +83,8 @@ const DeviceList = () => {
             title: 'Tên thiết bị',
             dataIndex: 'name',
             key: 'name',
-            render: (text: any, record: any) => (
-                <Link to={`/devices/${record.id}`}>{text}</Link>
-            ),
+            sorter: (a: any, b: any) => a.name - b.name,
+            render: (text: any, record: any) => <Link to={`/devices/${record.id}`}>{text}</Link>,
         },
         ...columns.slice(1),
         {
@@ -95,16 +92,14 @@ const DeviceList = () => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button onClick={() => handleShowSummary(record.id)}>
-                        Tổng quan
+                    <button className={style.control_button} onClick={() => handleShowSummary(record.id)}>
+                        <AiOutlineInfoCircle />
                     </button>
-                    <button onClick={() => handleShowEditDevice(record.id)}>
-                        Cập nhật
+                    <button className={style.control_button} onClick={() => handleShowEditDevice(record.id)}>
+                        <AiOutlineEdit />
                     </button>
-                    <button
-                        onClick={() => handleDelete(record.id, record.name)}
-                    >
-                        Xóa
+                    <button className={style.control_button} onClick={() => handleDelete(record.id, record.name)}>
+                        <AiOutlineDelete />
                     </button>
                 </Space>
             ),
@@ -142,70 +137,37 @@ const DeviceList = () => {
     }
 
     useEffect(() => {
-        if (
-            !isDeleting &&
-            deleteResponse &&
-            deleteResponse.data &&
-            !deleteResponse.hasError
-        ) {
+        if (!isDeleting && deleteResponse && deleteResponse.data && !deleteResponse.hasError) {
             reFetchAfterUpdate()
             message.success(deleteResponse.data)
         }
     }, [deleteResponse])
 
     return (
-        <div className="devices-list-wrapper">
-            <div className="devices-list-control">
-                <div className="devices-list-control-search">
-                    <Input
-                        prefix={
-                            <SearchOutlined className="site-form-item-icon" />
-                        }
-                        value={search}
-                        onChange={onChangeSearch}
-                        placeholder="Tên thiết bị"
-                    />
+        <div className={style.devices_list_wrapper}>
+            <div className={style.devices_list_title}>Danh sách thiết bị</div>
+            <div className={style.devices_list_control}>
+                <div className={style.devices_list_control_search}>
+                    <Input prefix={<SearchOutlined className="site-form-item-icon" />} value={search} onChange={onChangeSearch} placeholder="Tên thiết bị" />
                 </div>
-                <div className="devices-list-control-actions">
-                    <Button onClick={handleShowAddDevice}>Thêm thiết bị</Button>
+                <div className={style.devices_list_control_actions}>
+                    <Button onClick={handleShowAddDevice}>
+                        <BsPlusCircle />
+                        Thêm
+                    </Button>
+                    <Button>
+                        <BsArrowDownCircle />
+                        Xuất file
+                    </Button>
                 </div>
             </div>
-            <div className="devices-list-table">
-                <Table
-                    columns={tableColumns}
-                    dataSource={filterData}
-                    bordered
-                    loading={isFetching}
-                />
+            <div className={style.devices_list_table}>
+                <Table columns={tableColumns} dataSource={filterData} bordered loading={isFetching} />
             </div>
-            <DeviceAddModal
-                update={reFetchAfterUpdate}
-                centered
-                width={800}
-                visible={isAddModalVisible}
-                onClose={handleHideAddDevice}
-            />
-            <DeviceSummaryModal
-                centered
-                width={800}
-                visible={isSummaryModalVisible}
-                onClose={handleHideSummary}
-                id={viewId}
-            />
-            <DeviceEditModal
-                update={reFetchAfterUpdate}
-                centered
-                width={800}
-                visible={isEditModalVisible}
-                onClose={handleHideEditDevice}
-                id={viewId}
-            />
-            <DeleteConfirmModal
-                title={`thiết bị ${selectDeleteName}`}
-                visible={deleteModalVisible}
-                setVisible={setDeleteModalVisible}
-                handleOK={handleConfirmDelete}
-            />
+            <DeviceAddModal update={reFetchAfterUpdate} centered width={800} visible={isAddModalVisible} onClose={handleHideAddDevice} />
+            <DeviceSummaryModal centered width={800} visible={isSummaryModalVisible} onClose={handleHideSummary} id={viewId} />
+            <DeviceEditModal update={reFetchAfterUpdate} centered width={800} visible={isEditModalVisible} onClose={handleHideEditDevice} id={viewId} />
+            <DeleteConfirmModal title={`thiết bị ${selectDeleteName}`} visible={deleteModalVisible} setVisible={setDeleteModalVisible} handleOK={handleConfirmDelete} />
         </div>
     )
 }
