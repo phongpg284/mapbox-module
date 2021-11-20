@@ -2,7 +2,6 @@ import './index.scss'
 import { Button, message, Modal, Select } from 'antd'
 import { useEffect, useState } from 'react'
 import useFetch from '../../../../../hooks/useFetch'
-import faker from 'faker'
 import { ENDPOINT_URL } from '../../../../../app/config'
 const { Option } = Select
 
@@ -24,7 +23,7 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
 }) => {
     const [devices, setDevices] = useState<any[]>([])
     const [selectDevice, setSelectDevice] = useState<any>([])
-    const [roles, setRoles] = useState<any[]>([])
+    const [roles, setRoles] = useState<any[]>(["user", "driver"])
     const [selectRole, setSelectRole] = useState<any>([])
 
     const [response, isFetching, setRequest] = useFetch({} as any)
@@ -43,26 +42,10 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
         }
     }, [response])
 
-    useEffect(() => {
-        //TODO: call api
-        let fakeRoles = []
-        for (let i = 0; i < 5; i++)
-            fakeRoles.push({
-                id: i,
-                name: faker.name.jobTitle(),
-            })
-        setRoles(fakeRoles)
-    }, [])
-
     function onChangeDevice(value: any) {
         console.log(`selected device ${value}`)
         setSelectDevice(value)
     }
-
-    // function onChangeRole(value: any) {
-    //     console.log(`selected role ${value}`)
-    //     setSelectRole(value)
-    // }
 
     function onSearch(val: any) {
         console.log('search:', val)

@@ -1,19 +1,11 @@
 import './index.scss'
-import LocalShippingIcon from '@material-ui/icons/LocalShipping'
-import BorderAllIcon from '@material-ui/icons/BorderAll'
-import { CalendarOutlined, CaretLeftOutlined, CaretRightOutlined, ColumnWidthOutlined, LoadingOutlined } from '@ant-design/icons'
-import { useContext, useEffect, useState } from 'react'
-import { Select } from 'antd'
-import { ViewIndexContext as RecordViewIndex } from '../../RecordMap/RecordMap'
-import { ViewIndexContext as TaskViewIndex } from '../../TaskMap/TaskMap'
+
+import { CalendarOutlined, ColumnWidthOutlined } from '@ant-design/icons'
+
 import { FaMapMarkerAlt, FaSatellite } from 'react-icons/fa'
 import { SiSpeedtest } from 'react-icons/si'
-import { GiPathDistance } from 'react-icons/gi'
 import { BiArea } from 'react-icons/bi'
-import useFetch from '../../../../hooks/useFetch'
-import { ENDPOINT_URL } from '../../../../app/config'
-
-const { Option } = Select
+import { GiPathDistance } from 'react-icons/gi'
 
 const RecordInfoItem = ({ icon, title, content }: any) => {
     return (
@@ -23,7 +15,6 @@ const RecordInfoItem = ({ icon, title, content }: any) => {
                 <div className="record-info-item-content">{content}</div>
                 <div className="record-info-item-title">{title}</div>
             </div>
-            {/* <Divider className="record-info-item-divider" /> */}
         </div>
     )
 }

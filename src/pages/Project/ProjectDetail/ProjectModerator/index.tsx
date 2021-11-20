@@ -1,20 +1,10 @@
 import './style.css'
 import columns from './columns'
 import { Button, Modal, Space, Table } from 'antd'
-import faker from 'faker'
 import { useState } from 'react'
 import ModeratorProjectModal from '../../../../components/Modal/ModeratorProjectModal'
 const ProjectModerator = () => {
-    let data = []
-    for (let i = 0; i < 50; i++) {
-        data.push({
-            code: i,
-            name: faker.name.findName(),
-            username: faker.internet.userName(),
-            phone: faker.phone.phoneNumber(),
-            role: faker.name.jobTitle(),
-        })
-    }
+    let data: any[] = []
 
     const tableColumns = [
         ...columns.slice(0, 1),

@@ -1,6 +1,5 @@
-import { Button, Modal, Select } from 'antd'
 import { useEffect, useState } from 'react'
-import faker from 'faker'
+import { Button, Select } from 'antd'
 import AddModal from '../../../components/AddModal'
 const { Option } = Select
 
@@ -8,27 +7,7 @@ const ModeratorAddModal = ({ ...props }) => {
     const [users, setUsers] = useState<any[]>([])
     const [roles, setRoles] = useState<any[]>([])
     const [selectUser, setSelectUser] = useState<any>([])
-    const [selectRole, setSelectRole] = useState<any>([])
-
-    useEffect(() => {
-        //TODO: call api
-        let fakeUsers = []
-        let fakeRoles = []
-        for (let i = 0; i < 5; i++)
-            fakeRoles.push({
-                id: i,
-                name: faker.name.jobTitle(),
-            })
-
-        for (let i = 0; i < 15; i++)
-            fakeUsers.push({
-                id: i,
-                name: faker.name.findName(),
-            })
-
-        setUsers(fakeUsers)
-        setRoles(fakeRoles)
-    }, [])
+    const [selectRole, setSelectRole] = useState<any>(["user", "driver"])
 
     function onChangeUser(value: any) {
         console.log(`selected user ${value}`)

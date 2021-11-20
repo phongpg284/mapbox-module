@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
 
 import { Drawer, Dropdown, Layout } from 'antd'
-import { Dehaze } from '@material-ui/icons'
 
 import HomeDashboard from './HomeDashboard'
 import ProfileDashboard from '../../components/ProfileDashboard'

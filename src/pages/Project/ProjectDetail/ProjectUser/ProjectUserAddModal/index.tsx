@@ -2,7 +2,6 @@ import './index.scss'
 import { useEffect, useState } from 'react'
 import { Button, message, Modal, Select } from 'antd'
 
-import faker from 'faker'
 import useFetch from '../../../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../../../app/config'
 
@@ -27,7 +26,7 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({
     const [users, setUsers] = useState<any[]>([])
     const [roles, setRoles] = useState<any[]>([])
     const [selectUser, setSelectUser] = useState<any>([])
-    const [selectRole, setSelectRole] = useState<any>([])
+    const [selectRole, setSelectRole] = useState<any>(["user", "driver"])
 
     const [response, isFetching, setRequest] = useFetch({} as any)
 
@@ -44,17 +43,6 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({
             setUsers(response.data)
         }
     }, [response])
-
-    useEffect(() => {
-        //TODO: call api
-        let fakeRoles = []
-        for (let i = 0; i < 5; i++)
-            fakeRoles.push({
-                id: i,
-                name: faker.name.jobTitle(),
-            })
-        setRoles(fakeRoles)
-    }, [])
 
     function onChangeUser(value: any) {
         console.log(`selected user ${value}`)

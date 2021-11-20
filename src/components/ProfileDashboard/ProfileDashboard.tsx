@@ -1,13 +1,9 @@
-import { Divider, Menu, message, Switch } from 'antd'
-import PeopleIcon from '@material-ui/icons/People'
-import CreditCardIcon from '@material-ui/icons/CreditCard'
-import LockIcon from '@material-ui/icons/Lock'
-import PersonIcon from '@material-ui/icons/Person'
-import InputIcon from '@material-ui/icons/Input'
-
-import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import './index.scss'
+
 import { useHistory } from 'react-router'
+
+import { Divider, message } from 'antd'
+
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { clearToken } from '../../app/authSlice'
 import { ENDPOINT_URL } from '../../app/config'

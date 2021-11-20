@@ -1,8 +1,6 @@
 import './index.scss'
 import { useEffect, useState } from 'react'
-import { Button, message, Modal, Select } from 'antd'
-
-import faker from 'faker'
+import { Button, message, Select } from 'antd'
 
 import useFetch from '../../../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../../../app/config'
@@ -19,15 +17,9 @@ interface IMachineUserAddModal {
     id: number
 }
 
-const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
-    id,
-    onClose,
-    update,
-    visible,
-    ...props
-}) => {
+const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({ id, onClose, update, visible, ...props }) => {
     const [users, setUsers] = useState<any[]>([])
-    const [roles, setRoles] = useState<any[]>([])
+    const [roles, setRoles] = useState<any[]>(['user', 'driver'])
     const [selectUser, setSelectUser] = useState<any>([])
     const [selectRole, setSelectRole] = useState<any>([])
 
@@ -47,16 +39,6 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
         }
     }, [response])
 
-    useEffect(() => {
-        let fakeRoles = []
-        for (let i = 0; i < 5; i++)
-            fakeRoles.push({
-                id: i,
-                name: faker.name.jobTitle(),
-            })
-        setRoles(fakeRoles)
-    }, [])
-
     function onChangeUser(value: any) {
         setSelectUser(value)
     }
@@ -69,9 +51,7 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
         console.log('search:', val)
     }
 
-    const [responseUpdate, isFetchingUpdate, setRequestUpdate] = useFetch(
-        {} as any
-    )
+    const [responseUpdate, isFetchingUpdate, setRequestUpdate] = useFetch({} as any)
 
     const handleAddNewUser = () => {
         const query = {
@@ -90,16 +70,10 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
     }
 
     useEffect(() => {
-        if (
-            !isFetchingUpdate &&
-            responseUpdate &&
-            responseUpdate.data &&
-            !responseUpdate.hasError
-        ) {
+        if (!isFetchingUpdate && responseUpdate && responseUpdate.data && !responseUpdate.hasError) {
             update()
             message.success(responseUpdate.data)
-        }
-        else if (!isFetching && response.hasError) {
+        } else if (!isFetching && response.hasError) {
             message.error(response.hasError)
         }
         onClose()
@@ -107,26 +81,11 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
 
     return (
         <div className={`machine_summary_container`}>
-            <AddModal
-                {...props}
-                visible={visible}
-                onCancel={onClose}
-                width={600}
-                title="Thêm lái máy"
-                footer={
-                    <Button onClick={handleAddNewUser}>Thêm</Button>
-                }
-            >
+            <AddModal {...props} visible={visible} onCancel={onClose} width={600} title="Thêm lái máy" footer={<Button onClick={handleAddNewUser}>Thêm</Button>}>
                 <div className="machine-user-add-container">
                     <div className="machine-user-add-select">
                         Chức vụ:
-                        <Select
-                            style={{ width: 200 }}
-                            placeholder="Chọn chức vụ"
-                            optionFilterProp="children"
-                            onChange={onChangeRole}
-                            onSearch={onSearch}
-                        >
+                        <Select style={{ width: 200 }} placeholder="Chọn chức vụ" optionFilterProp="children" onChange={onChangeRole} onSearch={onSearch}>
                             {roles &&
                                 roles.map((role) => (
                                     <Option value={role.name} key={role.id}>
@@ -144,11 +103,7 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({
                             optionFilterProp="children"
                             onChange={onChangeUser}
                             onSearch={onSearch}
-                            filterOption={(input, option) =>
-                                option?.children
-                                    .toLowerCase()
-                                    .indexOf(input.toLowerCase()) >= 0
-                            }
+                            filterOption={(input, option) => option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                         >
                             {users &&
                                 users.map((user) => (

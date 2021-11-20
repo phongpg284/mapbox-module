@@ -3,7 +3,6 @@ import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 
 import { Drawer } from "antd";
 import Layout, { Content, Header } from "antd/lib/layout/layout";
-import { Dehaze } from "@material-ui/icons";
 
 import MapDashboard from "../../components/MapDashboard";
 import ProfileDashboard from "../../components/ProfileDashboard";
@@ -17,6 +16,7 @@ import RealtimeMap from "../../components/Map/RealtimeMap";
 import RecordMap from "../../components/Map/RecordMap";
 import TrackingMap from "../../components/Map/TrackingMap";
 import BoundingMap from "../../components/Map/BoundingMap";
+import { MdDehaze } from "react-icons/md";
 
 const MapPage = ({ parentPath }: any) => {
   const location = useLocation();
@@ -66,7 +66,7 @@ const MapPage = ({ parentPath }: any) => {
           style={{ height: "70px", backgroundColor: "#00a26a" }}
         >
           <div className="float-start">
-            <Dehaze onClick={handleClickMenu} style={{ color: "white" }} />
+            <MdDehaze onClick={handleClickMenu} style={{ color: "white" }} />
           </div>
           <div className="float-end">
             <img
