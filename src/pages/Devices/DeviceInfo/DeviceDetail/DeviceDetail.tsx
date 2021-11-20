@@ -24,15 +24,15 @@ const DeviceDetailItem = ({ data }: any) => {
                     header={
                         <div className="device-detail-item-header-content container-fluid">
                             <div className="row">
-                                <div className="col-2">{data.date}</div>
-                                <div className="col-3 device-status">
-                                    <span>
+                                <div className="col-2">{data?.date}</div>
+                                <div className="col-3">
+                                    {/* <span>
                                         <GoPrimitiveDot />
-                                    </span>
-                                    {'Đang hoạt động'}
+                                    </span> */}
+                                    {data?.avg_speed?.toFixed(2) ?? ''}
                                 </div>
-                                <div className="col-3">{'Nguyen Ba Dat'}</div>
-                                <div className="col-4">{'Máy machine 1'}</div>
+                                <div className="col-3">{data?.avg_accuracy?.toFixed(2) ?? ''}</div>
+                                <div className="col-4">{SecondFormat(data?.total_time / 1000)}</div>
                             </div>
                         </div>
                     }
@@ -42,10 +42,10 @@ const DeviceDetailItem = ({ data }: any) => {
                         <div className="statistic-list">
                             <Row gutter={16}>
                                 <Col span={8}>
-                                    <Statistic title="Tốc độ trung bình" value={data?.avg_speed?.toFixed(2) ?? ''} suffix="cm" />
+                                    <Statistic title="Tốc độ trung bình" value={data?.avg_speed?.toFixed(2) ?? ''} suffix="km/h" />
                                 </Col>
                                 <Col span={8}>
-                                    <Statistic title="Độ chính xác trung bình" value={data?.avg_accuracy?.toFixed(2) ?? ''} suffix="km/h" />
+                                    <Statistic title="Độ chính xác trung bình" value={data?.avg_accuracy?.toFixed(2) ?? ''} suffix="cm" />
                                 </Col>
                                 <Col span={8}>
                                     <Statistic title="Tổng thời gian" value={SecondFormat(data?.total_time / 1000)} />
@@ -145,9 +145,9 @@ const DeviceDetail = ({ id, currentDateData }: any) => {
                     <div className="device-tasks-list-item-header container-fluid">
                         <div className="row">
                             <div className="col-2">Ngày</div>
-                            <div className="col-3">Trạng thái</div>
-                            <div className="col-3">Lái máy</div>
-                            <div className="col-4">Máy</div>
+                            <div className="col-3">Tốc độ (km/h)</div>
+                            <div className="col-3">Độ chính xác (cm)</div>
+                            <div className="col-4">Tổng thời gian</div>
                         </div>
                     </div>
                     {data && data.map((deviceData) => <DeviceDetailItem key={deviceData.date} data={deviceData} />)}
