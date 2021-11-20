@@ -72,8 +72,8 @@
             align-items: center;
             .button-image {
                 display: block;
-                width: 40px;
-                height: 40px;
+                width: 30px;
+                height: 30px;
                 background: url(../../assets/Header/toggleButton.svg);
                 background-size: cover;
                 filter: invert(1) brightness(100);
@@ -84,12 +84,7 @@
                     filter: none;
                 }
             }
-            &.active {
-                background-color: #FFFFFF;
-                .button-image {
-                    filter: none;
-                } 
-            }
+
         }
     }
     &-avatar {
