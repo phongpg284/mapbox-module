@@ -1,8 +1,9 @@
 const columns = [
     {
         title: 'STT',
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'index',
+        render: (value: any, item:any, index: number) => index,
+        // sorter: (a: any, b: any) => a.index - b.index,
     },
     {
         title: 'Tên đăng nhập',

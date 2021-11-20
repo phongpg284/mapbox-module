@@ -1,15 +1,21 @@
 export const fixedData = {
-    id: "",
-    name: "",
-    model: "",
-    description: "",
+    id: '',
+    name: '',
+    model: '',
+    description: '',
 }
 
 const columns = [
     {
-        title: 'ID',
-        dataIndex: 'id',
+        title: 'STT',
+        dataIndex: 'index',
+        render: (value: any, item: any, index: number) => index,
+        // sorter: (a: any, b: any) => a.index - b.index,
     },
+    // {
+    //     title: 'ID',
+    //     dataIndex: 'id',
+    // },
     {
         title: 'Kiểu xe',
         dataIndex: 'model',
