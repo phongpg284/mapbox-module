@@ -3,13 +3,13 @@ import columns from './columns'
 import { Button, Input, Space, Table } from 'antd'
 import { Link, useHistory } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import ProjectDeviceAddModal from './ProjectDeviceAddModal'
+import ProjectMachineAddModal from './ProjectMachineAddModal'
 import { AiOutlineDelete, AiOutlineInfoCircle } from 'react-icons/ai'
 import useFilter from '../../../../hooks/useFilter'
 import { SearchOutlined } from '@ant-design/icons'
 import { BsArrowDownCircle, BsPlusCircle } from 'react-icons/bs'
 
-const ProjectDevice = ({ id, data, refetch }: any) => {
+const ProjectMachine = ({ id, data, refetch }: any) => {
     const history = useHistory()
 
     const tableColumns = [
@@ -18,7 +18,7 @@ const ProjectDevice = ({ id, data, refetch }: any) => {
             title: 'Tên',
             dataIndex: 'name',
             key: 'name',
-            render: (text: any, record: any) => <Link to={`/devices/${record.id}`}>{text}</Link>,
+            render: (text: any, record: any) => <Link to={`/machines/${record.id}`}>{text}</Link>,
         },
         ...columns.slice(1),
         {
@@ -26,7 +26,7 @@ const ProjectDevice = ({ id, data, refetch }: any) => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button className={style.control_button} onClick={() => history.push(`/devices/${record.id}`)}>
+                    <button className={style.control_button} onClick={() => history.push(`/machines/${record.id}`)}>
                         <AiOutlineInfoCircle />
                     </button>
                     <button className={style.control_button}>
@@ -37,43 +37,43 @@ const ProjectDevice = ({ id, data, refetch }: any) => {
         },
     ]
 
-    const [deviceList, setDeviceList] = useState<any>([])
+    const [machineList, setMachineList] = useState<any>([])
     useEffect(() => {
         if (data) {
-            const convertDeviceList = []
+            const convertMachineList = []
             for (const { machine } of data) {
-                const newDevice = {
+                const newMachine = {
                     id: machine.id,
                     name: machine.name,
                     create_time: machine.create_time,
                     update_time: machine.update_time,
                 }
-                convertDeviceList.push(newDevice)
+                convertMachineList.push(newMachine)
             }
-            setDeviceList(convertDeviceList)
+            setMachineList(convertMachineList)
         }
     }, [data])
 
-    const [isShowProjectDeviceAddModal, setIsShowProjectDeviceAddModal] = useState(false)
+    const [isShowProjectMachineAddModal, setIsShowProjectMachineAddModal] = useState(false)
 
-    const handleShowProjectDeviceAddModal = () => {
-        setIsShowProjectDeviceAddModal(true)
+    const handleShowProjectMachineAddModal = () => {
+        setIsShowProjectMachineAddModal(true)
     }
 
-    const handleHideProjectDeviceAddModal = () => {
-        setIsShowProjectDeviceAddModal(false)
+    const handleHideProjectMachineAddModal = () => {
+        setIsShowProjectMachineAddModal(false)
     }
 
-    const [search, onChangeSearch, filterData] = useFilter(deviceList, 'name')
+    const [search, onChangeSearch, filterData] = useFilter(machineList, 'name')
 
     return (
-        <div className={style.project_devices_list_wrapper}>
-            <div className={style.project_devices_list_control}>
-                <div className={style.project_devices_list_control_search}>
+        <div className={style.project_machines_list_wrapper}>
+            <div className={style.project_machines_list_control}>
+                <div className={style.project_machines_list_control_search}>
                     <Input prefix={<SearchOutlined className="site-form-item-icon" />} value={search} onChange={onChangeSearch} placeholder="Tên máy" />
                 </div>
-                <div className={style.project_devices_list_control_actions}>
-                    <Button onClick={handleShowProjectDeviceAddModal}>
+                <div className={style.project_machines_list_control_actions}>
+                    <Button onClick={handleShowProjectMachineAddModal}>
                         <BsPlusCircle />
                         Thêm
                     </Button>
@@ -83,12 +83,12 @@ const ProjectDevice = ({ id, data, refetch }: any) => {
                     </Button>
                 </div>
             </div>
-            <div className={style.project_devices_list_table}>
+            <div className={style.project_machines_list_table}>
                 <Table columns={tableColumns} dataSource={filterData} bordered />
             </div>
-            <ProjectDeviceAddModal update={refetch} id={id} centered width={800} visible={isShowProjectDeviceAddModal} onClose={handleHideProjectDeviceAddModal} />
+            <ProjectMachineAddModal update={refetch} id={id} centered width={800} visible={isShowProjectMachineAddModal} onClose={handleHideProjectMachineAddModal} />
         </div>
     )
 }
 
-export default ProjectDevice
+export default ProjectMachine

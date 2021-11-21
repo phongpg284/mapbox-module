@@ -5,7 +5,7 @@ import useFetch from '../../../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../../../app/config'
 const { Option } = Select
 
-interface IProjectDeviceAddModal {
+interface IProjectMachineAddModal {
     centered?: boolean
     width?: number
     visible: boolean
@@ -14,15 +14,15 @@ interface IProjectDeviceAddModal {
     id: number
 }
 
-const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
+const ProjectMachineAddModal: React.FC<IProjectMachineAddModal> = ({
     id,
     onClose,
     update,
     visible,
     ...props
 }) => {
-    const [devices, setDevices] = useState<any[]>([])
-    const [selectDevice, setSelectDevice] = useState<any>([])
+    const [machines, setMachines] = useState<any[]>([])
+    const [selectMachine, setSelectMachine] = useState<any>([])
     const [roles, setRoles] = useState<any[]>(["user", "driver"])
     const [selectRole, setSelectRole] = useState<any>([])
 
@@ -38,13 +38,13 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
-            setDevices(response.data)
+            setMachines(response.data)
         }
     }, [response])
 
-    function onChangeDevice(value: any) {
-        console.log(`selected device ${value}`)
-        setSelectDevice(value)
+    function onChangeMachine(value: any) {
+        console.log(`selected machine ${value}`)
+        setSelectMachine(value)
     }
 
     function onSearch(val: any) {
@@ -55,10 +55,10 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
         {} as any
     )
 
-    const handleAddNewDevice = () => {
+    const handleAddNewMachine = () => {
         const query = {
             action: 'update',
-            machine_id: selectDevice,
+            machine_id: selectMachine,
             project_id: id,
         }
         setRequestUpdate({
@@ -95,11 +95,11 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
                 onCancel={onClose}
                 title="Thêm máy móc vào dự án"
                 footer={
-                    <Button onClick={handleAddNewDevice}>Thêm vào dự án</Button>
+                    <Button onClick={handleAddNewMachine}>Thêm vào dự án</Button>
                 }
             >
-                <div className="project-device-add-container">
-                    {/* <div className="project-device-add-select">
+                <div className="project-machine-add-container">
+                    {/* <div className="project-machine-add-select">
                         Chức vụ:
                         <Select
                             style={{ width: 200 }}
@@ -116,14 +116,14 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
                                 ))}
                         </Select>
                     </div> */}
-                    <div className="project-device-add-select">
+                    <div className="project-machine-add-select">
                         Thiết bị:
                         <Select
                             showSearch
                             style={{ width: 200 }}
                             placeholder="Chọn thiết bị"
                             optionFilterProp="children"
-                            onChange={onChangeDevice}
+                            onChange={onChangeMachine}
                             onSearch={onSearch}
                             filterOption={(input, option) =>
                                 option?.children
@@ -131,10 +131,10 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
                                     .indexOf(input.toLowerCase()) >= 0
                             }
                         >
-                            {devices &&
-                                devices.map((device) => (
-                                    <Option value={device.id} key={device.id}>
-                                        {device.name}
+                            {machines &&
+                                machines.map((machine) => (
+                                    <Option value={machine.id} key={machine.id}>
+                                        {machine.name}
                                     </Option>
                                 ))}
                         </Select>
@@ -145,4 +145,4 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
     )
 }
 
-export default ProjectDeviceAddModal
+export default ProjectMachineAddModal

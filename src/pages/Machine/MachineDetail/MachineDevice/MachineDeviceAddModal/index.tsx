@@ -1,6 +1,6 @@
 import './index.scss'
 import { useEffect, useState } from 'react'
-import { Button, message, Modal, Select } from 'antd'
+import { Button, message, Select } from 'antd'
 
 import useFetch from '../../../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../../../app/config'
@@ -8,7 +8,7 @@ import AddModal from '../../../../../components/AddModal'
 
 const { Option } = Select
 
-interface IProjectDeviceAddModal {
+interface IMachineDeviceAddModal {
     centered?: boolean
     width?: number
     visible: boolean
@@ -17,7 +17,7 @@ interface IProjectDeviceAddModal {
     id: number
 }
 
-const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
+const MachineDeviceAddModal: React.FC<IMachineDeviceAddModal> = ({
     id,
     onClose,
     update,
@@ -98,7 +98,7 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
     }, [responseUpdate])
 
     return (
-        <div className={`project_summary_container`}>
+        <div className={`machine_summary_container`}>
             <AddModal
                 {...props}
                 visible={visible}
@@ -107,8 +107,8 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
                 title="Thêm thiết bị kết nối với máy móc"
                 footer={<Button onClick={handleAddNewDevice}>Thêm</Button>}
             >
-                <div className="project-device-add-container">
-                    {/* <div className="project-device-add-select">
+                <div className="machine-device-add-container">
+                    {/* <div className="machine-device-add-select">
                         Chức vụ:
                         <Select
                             style={{ width: 200 }}
@@ -125,7 +125,7 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
                                 ))}
                         </Select>
                     </div> */}
-                    <div className="project-device-add-select">
+                    <div className="machine-device-add-select">
                         Thiết bị:
                         <Select
                             showSearch
@@ -154,4 +154,4 @@ const ProjectDeviceAddModal: React.FC<IProjectDeviceAddModal> = ({
     )
 }
 
-export default ProjectDeviceAddModal
+export default MachineDeviceAddModal

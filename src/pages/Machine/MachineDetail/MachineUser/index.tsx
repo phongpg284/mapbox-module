@@ -69,7 +69,7 @@ const MachineUser = ({ id, data, refetch }: any) => {
         <div className={style.machine_users_list_wrapper}>
             <div className={style.machine_users_list_control}>
                 <div className={style.machine_users_list_control_search}>
-                    <Input prefix={<SearchOutlined className="site-form-item-icon" />} value={search} onChange={onChangeSearch} placeholder="Tên máy" />
+                    <Input prefix={<SearchOutlined className="site-form-item-icon" />} value={search} onChange={onChangeSearch} placeholder="Tên người dùng" />
                 </div>
                 <div className={style.machine_users_list_control_actions}>
                     <Button onClick={handleShowMachineUserAddModal}>
