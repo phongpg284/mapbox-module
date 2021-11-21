@@ -104,24 +104,58 @@ const DeviceSummary: React.FC<ISummaryDevice> = ({ data }) => {
                 {/* <Table className={style.device_table_content} columns={column} dataSource={dataSource?.slice(0, 7)} showHeader={false} pagination={false} />
                 <Table className={style.device_table_content} columns={column} dataSource={dataSource?.slice(7)} showHeader={false} pagination={false} /> */}
 
-                <Descriptions bordered>
-                    <Descriptions.Item label="Sim IMEI">{data?.sim_imei}</Descriptions.Item>
-                    <Descriptions.Item label="Tên thiết bị">{data?.name}</Descriptions.Item>
-                    <Descriptions.Item label="Mô tả">{data?.description}</Descriptions.Item>
-                    <Descriptions.Item label="Sim Manufacturer">{data?.sim_manufacturer}</Descriptions.Item>
-                    <Descriptions.Item label="Sim Model">{data?.sim_model}</Descriptions.Item>
-                    <Descriptions.Item label="Sim Status">{data?.sim_status}</Descriptions.Item>
-                    <Descriptions.Item label="Sim Signal Strength">{data?.sim_signal}</Descriptions.Item>
-                    <Descriptions.Item label="Caster IP">{data?.caster_ip}</Descriptions.Item>
-                    <Descriptions.Item label="Caster Port">{data?.caster_port}</Descriptions.Item>
-                    <Descriptions.Item label="Mount Point">{data?.mount_point}</Descriptions.Item>
-                    <Descriptions.Item label="NTRIP Username">{data?.ntrip_username}</Descriptions.Item>
-                    <Descriptions.Item label="NTRIP Password">{data?.ntrip_password}</Descriptions.Item>
-                    <Descriptions.Item label="Digital In 1">{data?.digital_in_1}</Descriptions.Item>
-                    <Descriptions.Item label="Digital In 2">{data?.digital_in_2}</Descriptions.Item>
-                    <Descriptions.Item label="Digital Out 1">{data?.digital_out_1}</Descriptions.Item>
-                    <Descriptions.Item label="Digital Out 2">{data?.digital_out_2}</Descriptions.Item>
-                    <Descriptions.Item label="GPS Signal">{data?.gps_signal}</Descriptions.Item>
+                <Descriptions>
+                    <Descriptions.Item label="Tên thiết bị" labelStyle={{ fontWeight: 500 }}>
+                        {data?.name}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Mô tả" labelStyle={{ fontWeight: 500 }}>
+                        {data?.description}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Sim IMEI" labelStyle={{ fontWeight: 500 }}>
+                        {data?.sim_imei}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Sim Manufacturer" labelStyle={{ fontWeight: 500 }}>
+                        {data?.sim_manufacturer}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Sim Model" labelStyle={{ fontWeight: 500 }}>
+                        {data?.sim_model}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Sim Status" labelStyle={{ fontWeight: 500 }}>
+                        {data?.sim_status}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Sim Signal Strength" labelStyle={{ fontWeight: 500 }}>
+                        {data?.sim_signal}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Caster IP" labelStyle={{ fontWeight: 500 }}>
+                        {data?.caster_ip}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Caster Port" labelStyle={{ fontWeight: 500 }}>
+                        {data?.caster_port}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Mount Point" labelStyle={{ fontWeight: 500 }}>
+                        {data?.mount_point}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="NTRIP Username" labelStyle={{ fontWeight: 500 }}>
+                        {data?.ntrip_username}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="NTRIP Password" labelStyle={{ fontWeight: 500 }}>
+                        {data?.ntrip_password}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Digital In 1" labelStyle={{ fontWeight: 500 }}>
+                        {data?.digital_in_1}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Digital In 2" labelStyle={{ fontWeight: 500 }}>
+                        {data?.digital_in_2}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Digital Out 1" labelStyle={{ fontWeight: 500 }}>
+                        {data?.digital_out_1}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Digital Out 2" labelStyle={{ fontWeight: 500 }}>
+                        {data?.digital_out_2}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="GPS Signal" labelStyle={{ fontWeight: 500 }}>
+                        {data?.gps_signal}
+                    </Descriptions.Item>
                 </Descriptions>
             </div>
         </div>

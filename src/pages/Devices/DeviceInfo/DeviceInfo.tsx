@@ -71,7 +71,7 @@ const DeviceInfo = ({ match }: any) => {
             <div className="device-detail-wrapper">
                 <div className="device-detail-navigate">
                     <div className={currentTab === 'summary' ? 'device-detail-navigate-select' : ''} onClick={() => handleSelectTab('summary')}>
-                        Thông tin
+                        Thông tin chi tiết
                     </div>
                     <div className={currentTab === 'tasks' ? 'device-detail-navigate-select' : ''} onClick={() => handleSelectTab('tasks')}>
                         Lịch trình hoạt động theo ngày

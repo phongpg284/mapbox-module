@@ -1,24 +1,41 @@
 const columns = [
-  {
-    title: "Mã",
-    dataIndex: "id",
-    key: "id",
-  },
-  {
-    title: "Tên đăng nhập",
-    dataIndex: "username",
-    key: "username",
-  },
-  {
-    title: "Số điện thoại",
-    dataIndex: "phone",
-    key: "phone",
-  },
-  {
-    title: "Chức vụ",
-    dataIndex: "role",
-    key: "role",
-  },
-];
+    {
+        title: 'STT',
+        dataIndex: 'index',
+        render: (value: any, item:any, index: number) => index,
+    },
+    {
+        title: 'Tên đăng nhập',
+        dataIndex: 'username',
+        key: 'username',
+    },
+    {
+        title: 'Số điện thoại',
+        dataIndex: 'phone',
+        key: 'phone',
+    },
+    {
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
+    },
+    {
+        title: 'Địa chỉ',
+        dataIndex: 'address',
+        key: 'address',
+    },
 
-export default columns;
+    {
+        title: 'Chức vụ',
+        dataIndex: 'role',
+        key: 'role',
+    },
+
+    {
+        title: 'Đơn vị công tác',
+        dataIndex: 'project',
+        key: 'project',
+    },
+]
+
+export default columns

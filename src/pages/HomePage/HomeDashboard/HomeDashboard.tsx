@@ -57,7 +57,7 @@ const HomeDashboard = ({ selectItem, visible }: any) => {
                         </li>
                     </ul>
                 </li>
-                <li className="function-menu-group">
+                {/* <li className="function-menu-group">
                     <div className="group-title">Lịch sử track</div>
                     <ul className="group-list">
                         <li className="group-item">
@@ -69,7 +69,7 @@ const HomeDashboard = ({ selectItem, visible }: any) => {
                             <div className="item-title">Cards</div>
                         </li>
                     </ul>
-                </li>
+                </li> */}
             </ul>
         </div>
     )

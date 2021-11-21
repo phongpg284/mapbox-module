@@ -1,12 +1,16 @@
-import './style.css'
+import style from './index.module.scss'
 import columns from './columns'
-import { Button, Space, Table } from 'antd'
-import { Link } from 'react-router-dom'
+import { Button, Input, Space, Table } from 'antd'
+import { Link, useHistory } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import ProjectDeviceAddModal from './ProjectDeviceAddModal'
+import { AiOutlineDelete, AiOutlineInfoCircle } from 'react-icons/ai'
+import useFilter from '../../../../hooks/useFilter'
+import { SearchOutlined } from '@ant-design/icons'
+import { BsArrowDownCircle, BsPlusCircle } from 'react-icons/bs'
 
-const ProjectDevice = ({id, data, refetch }: any) => {
-    // const [isUpdate, setIsUpdate] = useState(true)
+const ProjectDevice = ({ id, data, refetch }: any) => {
+    const history = useHistory()
 
     const tableColumns = [
         ...columns.slice(0, 1),
@@ -14,9 +18,7 @@ const ProjectDevice = ({id, data, refetch }: any) => {
             title: 'Tên',
             dataIndex: 'name',
             key: 'name',
-            render: (text: any, record: any) => (
-                <Link to={`/devices/${record.key}`}>{text}</Link>
-            ),
+            render: (text: any, record: any) => <Link to={`/devices/${record.id}`}>{text}</Link>,
         },
         ...columns.slice(1),
         {
@@ -24,31 +26,16 @@ const ProjectDevice = ({id, data, refetch }: any) => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button>SMS</button>
-                    <button>Thoát dự án</button>
+                    <button className={style.control_button} onClick={() => history.push(`/devices/${record.id}`)}>
+                        <AiOutlineInfoCircle />
+                    </button>
+                    <button className={style.control_button}>
+                        <AiOutlineDelete />
+                    </button>
                 </Space>
             ),
         },
     ]
-
-    // const [response, isFetching, setRequest] = useFetch({} as any)
-
-    // useEffect(() => {
-    //     if (isUpdate) {
-    //         setRequest({
-    //             endPoint: ENDPOINT_URL + '/project-machine/',
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-type': 'application/json',
-    //             },
-    //             requestBody: {
-    //                 action: 'read',
-    //                 project_id: id,
-    //             },
-    //         })
-    //         setIsUpdate(false)
-    //     }
-    // }, [isUpdate])
 
     const [deviceList, setDeviceList] = useState<any>([])
     useEffect(() => {
@@ -67,8 +54,7 @@ const ProjectDevice = ({id, data, refetch }: any) => {
         }
     }, [data])
 
-    const [isShowProjectDeviceAddModal, setIsShowProjectDeviceAddModal] =
-        useState(false)
+    const [isShowProjectDeviceAddModal, setIsShowProjectDeviceAddModal] = useState(false)
 
     const handleShowProjectDeviceAddModal = () => {
         setIsShowProjectDeviceAddModal(true)
@@ -78,37 +64,29 @@ const ProjectDevice = ({id, data, refetch }: any) => {
         setIsShowProjectDeviceAddModal(false)
     }
 
-    const reFetchAfterUpdate = () => {
-        refetch(true)
-    }
+    const [search, onChangeSearch, filterData] = useFilter(deviceList, 'name')
 
     return (
-        <div className="project-devices-container">
-            <div className="project-devices-control">
-                <div className="project-list-control-report">
-                    <Button>Xuất báo cáo</Button>
+        <div className={style.project_devices_list_wrapper}>
+            <div className={style.project_devices_list_control}>
+                <div className={style.project_devices_list_control_search}>
+                    <Input prefix={<SearchOutlined className="site-form-item-icon" />} value={search} onChange={onChangeSearch} placeholder="Tên máy" />
                 </div>
-                <div className="project-list-control-add">
+                <div className={style.project_devices_list_control_actions}>
                     <Button onClick={handleShowProjectDeviceAddModal}>
-                        Thêm máy móc vào dự án
+                        <BsPlusCircle />
+                        Thêm
+                    </Button>
+                    <Button>
+                        <BsArrowDownCircle />
+                        Xuất file
                     </Button>
                 </div>
             </div>
-            <div className="project-list-table">
-                <Table
-                    columns={tableColumns}
-                    dataSource={deviceList}
-                    bordered
-                />
+            <div className={style.project_devices_list_table}>
+                <Table columns={tableColumns} dataSource={filterData} bordered />
             </div>
-            <ProjectDeviceAddModal
-                update={reFetchAfterUpdate}
-                id={id}
-                centered
-                width={800}
-                visible={isShowProjectDeviceAddModal}
-                onClose={handleHideProjectDeviceAddModal}
-            />
+            <ProjectDeviceAddModal update={refetch} id={id} centered width={800} visible={isShowProjectDeviceAddModal} onClose={handleHideProjectDeviceAddModal} />
         </div>
     )
 }

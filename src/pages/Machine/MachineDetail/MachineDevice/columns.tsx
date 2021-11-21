@@ -1,3 +1,7 @@
+import dayjs from "dayjs";
+import StatusTag from '../../../../components/StatusTag'
+
+
 const columns = [
     {
         title: 'ID',
@@ -38,9 +42,15 @@ const columns = [
         title: 'Tình trạng sử dụng',
         dataIndex: 'status',
         key: 'status',
-        render: (text: any, record: any) => (
-          <div>{record.status ? "Có" : "Không"}</div>
-        )
+        render: (text: any, record: any) => <StatusTag status={text} />,
+    },
+    {
+        title: 'Thời gian tạo',
+        dataIndex: 'create_time',
+        render: (text: any) => {
+            if (text) return <div>{dayjs(text).format('DD/MM/YYYY HH:mm:ss')}</div>
+        },
+        sorter: (a: any, b: any) => dayjs(a.create_time).diff(dayjs(b.create_time)),
     },
 ]
 

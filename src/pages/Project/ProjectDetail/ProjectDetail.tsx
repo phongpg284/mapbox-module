@@ -69,7 +69,7 @@ const ProjectDetail = ({ match }: any) => {
             <div className="project-detail-wrapper">
                 <div className="project-detail-navigate">
                     <div className={currentTab === 'summary' ? 'project-detail-navigate-select' : ''} onClick={() => handleSelectTab('summary')}>
-                        Thông tin chung
+                        Thông tin chi tiết
                     </div>
                     <div className={currentTab === 'user' ? 'project-detail-navigate-select' : ''} onClick={() => handleSelectTab('user')}>
                         Danh sách người dùng

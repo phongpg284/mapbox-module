@@ -1,34 +1,31 @@
 const columns = [
-  {
-    title: "STT",
-    dataIndex: "index",
-    key: "index",
-  },
-  {
-    title: "Lái máy chính",
-    dataIndex: "mainDriver",
-    key: "mainDriver",
-  },
-  {
-    title: "Lái máy phụ",
-    dataIndex: "sideDriver",
-    key: "sideDriver",
-  },
-  {
-    title: "Quản lí",
-    dataIndex: "manager",
-    key: "manager",
-  },
-  {
-    title: "Tình trạng sử dụng",
-    dataIndex: "status",
-    key: "status",
-  },
-  {
-    title: "Khoảng hoạt động",
-    dataIndex: "range",
-    key: "range",
-  }
-];
+    {
+        title: 'STT',
+        dataIndex: 'index',
+        key: 'index',
+    },
+    {
+        title: 'Kiểu xe',
+        dataIndex: 'model',
+    },
+    {
+        title: 'Mô tả',
+        dataIndex: 'description',
+    },
+    {
+        title: 'Thời gian tạo',
+        dataIndex: 'create_time',
+        render: (text: any) => {
+            if (text) return <div>{new Date(text).toLocaleString()}</div>
+        },
+    },
+    {
+        title: 'Thời gian cập nhật',
+        dataIndex: 'update_time',
+        render: (text: any) => {
+            if (text) return <div>{new Date(text).toLocaleString()}</div>
+        },
+    },
+]
 
-export default columns;
+export default columns

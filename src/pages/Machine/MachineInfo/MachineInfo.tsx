@@ -72,13 +72,13 @@ const MachineDetail = ({ match }: any) => {
             <div className="machine-detail-wrapper">
                 <div className="machine-detail-navigate">
                     <div className={currentTab === 'summary' ? 'machine-detail-navigate-select' : ''} onClick={() => handleSelectTab('summary')}>
-                        Thông tin chung
-                    </div>
-                    <div className={currentTab === 'user' ? 'machine-detail-navigate-select' : ''} onClick={() => handleSelectTab('user')}>
-                        Danh mục thiết bị
+                        Thông tin chi tiết
                     </div>
                     <div className={currentTab === 'device' ? 'machine-detail-navigate-select' : ''} onClick={() => handleSelectTab('device')}>
                         Danh mục thiết bị
+                    </div>
+                    <div className={currentTab === 'user' ? 'machine-detail-navigate-select' : ''} onClick={() => handleSelectTab('user')}>
+                        Danh mục người dùng
                     </div>
                 </div>
 
