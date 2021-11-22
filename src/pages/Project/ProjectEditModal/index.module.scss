@@ -4,14 +4,15 @@
 }
 
 .project_edit_content {
-    border: groove 1px;
     padding: 5px;
 }
 
 .project_table_content {
     :global {
         .ant-table-tbody > tr > td {
-            border: none;
+            // border: none;
         }
     }
 }
+
+

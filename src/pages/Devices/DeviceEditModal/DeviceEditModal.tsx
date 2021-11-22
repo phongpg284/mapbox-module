@@ -1,6 +1,6 @@
 import style from './index.module.scss'
 import { useEffect, useState } from 'react'
-import { Button, Modal, Form, Input, message, Spin } from 'antd'
+import { Button, Form, Input, message, Spin } from 'antd'
 
 import useFetch from '../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../app/config'
@@ -15,13 +15,7 @@ interface IDeviceEditModal {
     id: number
 }
 
-const DeviceEditModal: React.FC<IDeviceEditModal> = ({
-    id,
-    onClose,
-    visible,
-    update,
-    ...props
-}) => {
+const DeviceEditModal: React.FC<IDeviceEditModal> = ({ id, onClose, visible, update, ...props }) => {
     const [form] = Form.useForm()
 
     const [data, setData] = useState<any>()
@@ -45,19 +39,14 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
             setData(response.data)
+            form.setFieldsValue(response.data)
         }
     }, [response])
 
-    const [updateResponse, isFetchingUpdate, setRequestUpdate] = useFetch(
-        {} as any
-    )
+    const [updateResponse, isFetchingUpdate, setRequestUpdate] = useFetch({} as any)
 
     useEffect(() => {
-        if (
-            !isFetchingUpdate &&
-            updateResponse?.data &&
-            !updateResponse.hasError
-        ) {
+        if (!isFetchingUpdate && updateResponse?.data && !updateResponse.hasError) {
             update()
             message.success(updateResponse.data)
             onClose()
@@ -65,7 +54,6 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
     }, [updateResponse])
 
     const onFinish = (value: any) => {
-        console.log(value)
         setRequestUpdate({
             endPoint: ENDPOINT_URL + '/device/',
             method: 'POST',
@@ -81,7 +69,7 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
     }
 
     const onFinishFailed = () => {
-        message.error('Submit failed!')
+        message.error('Lỗi cập nhật!')
     }
 
     const handleSubmitEdit = () => {
@@ -90,39 +78,11 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
 
     return (
         <div className={style.device_edit_container}>
-            <AddModal
-                {...props}
-                visible={visible}
-                onCancel={onClose}
-                title={`Cập nhật thiết bị ${data?.name}`}
-                footer={<Button onClick={handleSubmitEdit}>Cập nhật</Button>}
-            >
+            <AddModal {...props} visible={visible} onCancel={onClose} title={`Cập nhật thiết bị ${data?.name}`} footer={<Button onClick={handleSubmitEdit}>Cập nhật</Button>}>
                 <div className={style.device_edit_content}>
-                    {!data && <Spin />}
+                    {isFetching && <Spin />}
                     {data && (
-                        <Form
-                            form={form}
-                            layout="vertical"
-                            onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
-                            autoComplete="off"
-                        >
-                            <div style={{ overflow: 'hidden' }}>
-                                <Form.Item
-                                    name="sim_imei"
-                                    label="IMEI"
-                                    rules={[
-                                        { required: true },
-                                        //@ts-ignore
-                                        { type: 'string', warningOnly: true },
-                                    ]}
-                                >
-                                    <Input
-                                        placeholder=""
-                                        defaultValue={data.sim_imei}
-                                    />
-                                </Form.Item>
-                            </div>
+                        <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
                             <div style={{ overflow: 'hidden' }}>
                                 <Form.Item
                                     name="name"
@@ -133,64 +93,47 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
                                         { type: 'string', warningOnly: true },
                                     ]}
                                 >
-                                    <Input
-                                        placeholder=""
-                                        defaultValue={data.name}
-                                    />
+                                    <Input placeholder="" />
+                                </Form.Item>
+                            </div>
+                            <div style={{ overflow: 'hidden' }}>
+                                <Form.Item
+                                    name="sim_imei"
+                                    label="IMEI"
+                                    rules={[
+                                        { required: true },
+                                        //@ts-ignore
+                                        { type: 'string', warningOnly: true },
+                                    ]}
+                                >
+                                    <Input placeholder="" />
                                 </Form.Item>
                             </div>
                             <div style={{ overflow: 'hidden' }}>
                                 <Form.Item name="caster_ip" label="Caster Ip">
-                                    <Input
-                                        placeholder=""
-                                        defaultValue={data.caster_ip}
-                                    />
+                                    <Input placeholder="" />
                                 </Form.Item>
                             </div>
                             <div style={{ overflow: 'hidden' }}>
-                                <Form.Item
-                                    name="caster_port"
-                                    label="Caster Port"
-                                >
-                                    <Input
-                                        placeholder=""
-                                        defaultValue={data.caster_port}
-                                    />
+                                <Form.Item name="caster_port" label="Caster Port">
+                                    <Input placeholder="" />
                                 </Form.Item>
                             </div>
 
                             <div style={{ overflow: 'hidden' }}>
-                                <Form.Item
-                                    name="ntrip_username"
-                                    label="Ntrip Username"
-                                >
-                                    <Input
-                                        placeholder=""
-                                        defaultValue={data.ntrip_username}
-                                    />
+                                <Form.Item name="ntrip_username" label="Ntrip Username">
+                                    <Input placeholder="" />
                                 </Form.Item>
                             </div>
 
                             <div style={{ overflow: 'hidden' }}>
-                                <Form.Item
-                                    name="ntrip_password"
-                                    label="Ntrip Password"
-                                >
-                                    <Input
-                                        placeholder=""
-                                        defaultValue={data.ntrip_password}
-                                    />
+                                <Form.Item name="ntrip_password" label="Ntrip Password">
+                                    <Input placeholder="" />
                                 </Form.Item>
                             </div>
                             <div style={{ overflow: 'hidden' }}>
-                                <Form.Item
-                                    name="mount_point"
-                                    label="Mount Point"
-                                >
-                                    <Input
-                                        placeholder=""
-                                        defaultValue={data.mount_point}
-                                    />
+                                <Form.Item name="mount_point" label="Mount Point">
+                                    <Input placeholder="" />
                                 </Form.Item>
                             </div>
                         </Form>
