@@ -5,6 +5,7 @@ import { Button, Modal, Table, Form, Input, FormInstance, message } from 'antd'
 import { fixedData } from '../MachinesList/columns'
 import useFetch from '../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../app/config'
+import AddModal from '../../../components/AddModal'
 
 const column = [
     {
@@ -322,7 +323,7 @@ const MachineEditModal: React.FC<IMachineEditModal> = ({
 
     return (
         <div className={style.machine_edit_container}>
-            <Modal
+            <AddModal
                 {...props}
                 visible={visible}
                 onCancel={onClose}
@@ -340,7 +341,7 @@ const MachineEditModal: React.FC<IMachineEditModal> = ({
                         pagination={false}
                     />
                 </div>
-            </Modal>
+            </AddModal>
         </div>
     )
 }

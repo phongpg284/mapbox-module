@@ -1,14 +1,12 @@
 import style from './index.module.scss'
-import { useEffect, useState } from 'react'
 import { Button, message, Modal, Select } from 'antd'
-
+import { useEffect, useState } from 'react'
 import useFetch from '../../../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../../../app/config'
 import AddModal from '../../../../../components/AddModal'
-
 const { Option } = Select
 
-interface IProjectUserAddModal {
+interface IProjectMachineAddModal {
     centered?: boolean
     width?: number
     visible: boolean
@@ -17,36 +15,31 @@ interface IProjectUserAddModal {
     id: number
 }
 
-const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({ id, update, onClose, visible, ...props }) => {
-    const [users, setUsers] = useState<any[]>([])
-    const [roles, setRoles] = useState<any[]>([])
-    const [selectUser, setSelectUser] = useState<any>([])
-    const [selectRole, setSelectRole] = useState<any>(['user', 'driver'])
+const ProjectMachineAddModal: React.FC<IProjectMachineAddModal> = ({ id, onClose, update, visible, ...props }) => {
+    const [machines, setMachines] = useState<any[]>([])
+    const [selectMachine, setSelectMachine] = useState<any>([])
+    const [roles, setRoles] = useState<any[]>(['user', 'driver'])
+    const [selectRole, setSelectRole] = useState<any>([])
 
     const [response, isFetching, setRequest] = useFetch({} as any)
 
     useEffect(() => {
         if (visible)
             setRequest({
-                endPoint: ENDPOINT_URL + '/user/',
+                endPoint: ENDPOINT_URL + '/machine/',
                 method: 'GET',
             })
     }, [visible])
 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
-            setUsers(response.data)
+            setMachines(response.data)
         }
     }, [response])
 
-    function onChangeUser(value: any) {
-        console.log(`selected user ${value}`)
-        setSelectUser(value)
-    }
-
-    function onChangeRole(value: any) {
-        console.log(`selected role ${value}`)
-        setSelectRole(value)
+    function onChangeMachine(value: any) {
+        console.log(`selected machine ${value}`)
+        setSelectMachine(value)
     }
 
     function onSearch(val: any) {
@@ -55,14 +48,14 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({ id, update, onClo
 
     const [responseUpdate, isFetchingUpdate, setRequestUpdate] = useFetch({} as any)
 
-    const handleAddNewUser = () => {
+    const handleAddNewMachine = () => {
         const query = {
             action: 'update',
-            user_id: selectUser,
+            machine_id: selectMachine,
             project_id: id,
         }
         setRequestUpdate({
-            endPoint: ENDPOINT_URL + '/project-user/',
+            endPoint: ENDPOINT_URL + '/project-machine/',
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
@@ -87,42 +80,25 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({ id, update, onClo
                 {...props}
                 visible={visible}
                 onCancel={onClose}
-                title="Thêm người dùng vào dự án"
-                footer={<Button onClick={handleAddNewUser}>Thêm vào dự án</Button>}
+                title="Thêm máy móc vào dự án"
+                footer={<Button onClick={handleAddNewMachine}>Thêm vào dự án</Button>}
                 width={600}
             >
-                <div className={style.project_user_add_container}>
-                    {/* <div className="project-user-add-select">
-                        Chức vụ:
-                        <Select
-                            style={{ width: 200 }}
-                            placeholder="Chọn chức vụ"
-                            optionFilterProp="children"
-                            onChange={onChangeRole}
-                            onSearch={onSearch}
-                        >
-                            {roles &&
-                                roles.map((role) => (
-                                    <Option value={role.name} key={role.id}>
-                                        {role.name}
-                                    </Option>
-                                ))}
-                        </Select>
-                    </div> */}
-                    <div className={style.project_user_add_select}>
+                <div className={style.project_machine_add_container}>
+                    <div className={style.project_machine_add_select}>
                         <Select
                             showSearch
                             style={{ width: 300 }}
-                            placeholder="Chọn người dùng"
+                            placeholder="Chọn máy móc"
                             optionFilterProp="children"
-                            onChange={onChangeUser}
+                            onChange={onChangeMachine}
                             onSearch={onSearch}
                             filterOption={(input, option) => option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                         >
-                            {users &&
-                                users.map((user) => (
-                                    <Option value={user.id} key={user.id}>
-                                        {user.name}
+                            {machines &&
+                                machines.map((machine) => (
+                                    <Option value={machine.id} key={machine.id}>
+                                        {machine.name}
                                     </Option>
                                 ))}
                         </Select>
@@ -133,4 +109,4 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({ id, update, onClo
     )
 }
 
-export default ProjectUserAddModal
+export default ProjectMachineAddModal

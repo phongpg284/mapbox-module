@@ -5,6 +5,7 @@ import { Button, Modal, Table, Form, Input, FormInstance, message } from 'antd'
 import { fixedData } from '../ProjectList/columns'
 import useFetch from '../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../app/config'
+import AddModal from '../../../components/AddModal'
 
 const column = [
     {
@@ -314,7 +315,7 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
 
     return (
         <div className={style.project_edit_container}>
-            <Modal
+            <AddModal
                 {...props}
                 visible={visible}
                 onCancel={onClose}
@@ -332,7 +333,7 @@ const ProjectEditModal: React.FC<IProjectEditModal> = ({
                         pagination={false}
                     />
                 </div>
-            </Modal>
+            </AddModal>
         </div>
     )
 }

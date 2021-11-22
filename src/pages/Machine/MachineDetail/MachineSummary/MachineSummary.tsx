@@ -1,24 +1,23 @@
 import style from './index.module.scss'
-import { Table } from 'antd'
+import { Descriptions, Table } from 'antd'
 import { useEffect, useState } from 'react'
+import dayjs from "dayjs"
 
-const column = [
-    {
-        key: 'ckey',
-        dataIndex: 'ckey',
-        render: (text: string) => (
-            <h6 style={{ fontWeight: 'bold' }}>{text}</h6>
-        ),
-    },
-    {
-        key: 'value',
-        dataIndex: 'value',
-    },
-]
+// const column = [
+//     {
+//         key: 'ckey',
+//         dataIndex: 'ckey',
+//         render: (text: string) => <h6 style={{ fontWeight: 'bold' }}>{text}</h6>,
+//     },
+//     {
+//         key: 'value',
+//         dataIndex: 'value',
+//     },
+// ]
 
 const IKeyCode = {
     name: {
-        brand: 'Tên dự án',
+        brand: 'Tên máy',
         type: 'string',
     },
     model: {
@@ -64,8 +63,7 @@ const MachineSummary: React.FC<ISummaryMachine> = ({ data }) => {
                         ckey: brand,
                         value: value,
                     }
-                    if (type === 'date')
-                        pushData.value = new Date(value as any).toLocaleString()
+                    if (type === 'date') pushData.value = new Date(value as any).toLocaleString()
                     convertDataSource.push(pushData)
                 }
             }
@@ -76,13 +74,39 @@ const MachineSummary: React.FC<ISummaryMachine> = ({ data }) => {
     return (
         <div className={style.machine_summary_container}>
             <div className={style.machine_summary_content}>
-                <Table
+                {/* <Table
                     className={style.machine_table_content}
                     columns={column}
                     dataSource={dataSource}
                     showHeader={false}
                     pagination={false}
-                />
+                /> */}
+                <Descriptions>
+                    <Descriptions.Item label="Tên máy" labelStyle={{ fontWeight: 500 }}>
+                        {data?.name}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Kiểu máy" labelStyle={{ fontWeight: 500 }}>
+                        {data?.model}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Mô tả" labelStyle={{ fontWeight: 500 }}>
+                        {data?.description}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Lái máy" labelStyle={{ fontWeight: 500 }}>
+                        {data?.driver}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Thiết bị sử dụng" labelStyle={{ fontWeight: 500 }}>
+                        {data?.device}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Dự án" labelStyle={{ fontWeight: 500 }}>
+                        {data?.project}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Thời gian khởi tạo" labelStyle={{ fontWeight: 500 }}>
+                        {dayjs(data?.create_time)?.format('DD/MM/YYYY HH:mm:ss')}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Thời gian cập nhật" labelStyle={{ fontWeight: 500 }}>
+                        {dayjs(data?.update_time)?.format('DD/MM/YYYY HH:mm:ss')}
+                    </Descriptions.Item>
+                </Descriptions>
             </div>
         </div>
     )

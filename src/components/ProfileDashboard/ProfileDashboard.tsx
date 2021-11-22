@@ -38,9 +38,9 @@ const ProfileDashboard = () => {
             .then((res) => {
                 message.success('Đăng xuất thành công')
                 dispatch(clearToken())
+                history.push('/login')
             })
             .catch((err) => message.error(err))
-        history.push('/login')
     }
     return (
         <div className="profile-dashboard-wrapper">

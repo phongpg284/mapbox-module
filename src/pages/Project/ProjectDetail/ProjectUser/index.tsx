@@ -1,22 +1,25 @@
-import './style.css'
+import style from './index.module.scss'
 import columns from './columns'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
-import { Button, Space, Table } from 'antd'
+import { Button, Input, Space, Table } from 'antd'
 
 import ProjectUserAddModal from './ProjectUserAddModal'
+import { AiOutlineDelete, AiOutlineInfoCircle } from 'react-icons/ai'
+import { SearchOutlined } from '@ant-design/icons'
+import { BsArrowDownCircle, BsPlusCircle } from 'react-icons/bs'
+import useFilter from '../../../../hooks/useFilter'
 
-const ProjectUser = ({ id, data, refetch }: any) => {
+const ProjectUser = ({ id, data, refetch, isFetching }: any) => {
+    const history = useHistory()
     const tableColumns = [
         ...columns.slice(0, 1),
         {
-            title: 'Tên',
+            title: 'Họ Tên',
             dataIndex: 'name',
             key: 'name',
-            render: (text: any, record: any) => (
-                <Link to={`/users/${record.key}`}>{text}</Link>
-            ),
+            render: (text: any, record: any) => <Link to={`/users/${record.id}`}>{text}</Link>,
         },
         ...columns.slice(1),
         {
@@ -24,8 +27,12 @@ const ProjectUser = ({ id, data, refetch }: any) => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button>SMS</button>
-                    <button>Thoát dự án</button>
+                    <button className={style.control_button} onClick={() => history.push(`/users/${record.id}`)}>
+                        <AiOutlineInfoCircle />
+                    </button>
+                    <button className={style.control_button}>
+                        <AiOutlineDelete />
+                    </button>
                 </Space>
             ),
         },
@@ -49,8 +56,7 @@ const ProjectUser = ({ id, data, refetch }: any) => {
         }
     }, [data])
 
-    const [isShowProjectUserAddModal, setIsShowProjectUserAddModal] =
-        useState(false)
+    const [isShowProjectUserAddModal, setIsShowProjectUserAddModal] = useState(false)
 
     const handleShowProjectUserAddModal = () => {
         setIsShowProjectUserAddModal(true)
@@ -60,29 +66,29 @@ const ProjectUser = ({ id, data, refetch }: any) => {
         setIsShowProjectUserAddModal(false)
     }
 
+    const [search, onChangeSearch, filterData] = useFilter(userList, 'name')
+
     return (
-        <div className="project-users-container">
-            <div className="project-users-control">
-                <div className="project-list-control-report">
-                    <Button>Xuất báo cáo</Button>
+        <div className={style.project_users_list_wrapper}>
+            <div className={style.project_users_list_control}>
+                <div className={style.project_users_list_control_search}>
+                    <Input prefix={<SearchOutlined className="site-form-item-icon" />} value={search} onChange={onChangeSearch} placeholder="Tên người dùng" />
                 </div>
-                <div className="project-list-control-add">
+                <div className={style.project_users_list_control_actions}>
                     <Button onClick={handleShowProjectUserAddModal}>
-                        Thêm người dùng vào dự án
+                        <BsPlusCircle />
+                        Thêm
+                    </Button>
+                    <Button>
+                        <BsArrowDownCircle />
+                        Xuất file
                     </Button>
                 </div>
             </div>
-            <div className="project-list-table">
-                <Table columns={tableColumns} dataSource={userList} bordered />
+            <div className={style.project_users_list_table}>
+                <Table columns={tableColumns} dataSource={filterData} bordered loading={isFetching}/>
             </div>
-            <ProjectUserAddModal
-                update={refetch}
-                id={id}
-                centered
-                width={800}
-                visible={isShowProjectUserAddModal}
-                onClose={handleHideProjectUserAddModal}
-            />
+            <ProjectUserAddModal update={refetch} id={id} centered width={800} visible={isShowProjectUserAddModal} onClose={handleHideProjectUserAddModal} />
         </div>
     )
 }

@@ -63,7 +63,7 @@ const DeviceDetailItem = ({ data }: any) => {
     )
 }
 
-const DeviceDetail = ({ id, currentDateData }: any) => {
+const DeviceDetail = ({ id, currentDateData, isFetching }: any) => {
     const history = useHistory()
     const location = useLocation()
 
@@ -71,7 +71,7 @@ const DeviceDetail = ({ id, currentDateData }: any) => {
         history.push(location.pathname + '/tasks')
     }
 
-    const [response, isFetching, setRequest] = useFetch({} as any)
+    const [response, isFetchingDateRange, setRequest] = useFetch({} as any)
     const [data, setData] = useState<any[]>([])
 
     const handleChangeDate = (dates: any, dateString: any) => {
@@ -106,7 +106,7 @@ const DeviceDetail = ({ id, currentDateData }: any) => {
     }, [currentDateData])
 
     useEffect(() => {
-        if (!isFetching && response && response.data && !response.hasError) {
+        if (!isFetchingDateRange && response && response.data && !response.hasError) {
             const convertData = []
             for (const [key, value] of Object.entries(response.data)) {
                 convertData.push({
@@ -140,7 +140,6 @@ const DeviceDetail = ({ id, currentDateData }: any) => {
                         <RangePicker onChange={handleChangeDate} />
                     </div>
                 </div>
-                {isFetching && <Spin indicator={antIcon} />}
                 <div className="device-tasks-list-item">
                     <div className="device-tasks-list-item-header container-fluid">
                         <div className="row">
@@ -150,6 +149,7 @@ const DeviceDetail = ({ id, currentDateData }: any) => {
                             <div className="col-4">Tổng thời gian</div>
                         </div>
                     </div>
+                    {(isFetchingDateRange || isFetching) && <Spin indicator={antIcon} />}
                     {data && data.map((deviceData) => <DeviceDetailItem key={deviceData.date} data={deviceData} />)}
                     {data.length === 0 && (
                         <div>

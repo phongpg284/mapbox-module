@@ -3,6 +3,7 @@ import { Button, Modal, Table } from 'antd'
 import useFetch from '../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
 import { ENDPOINT_URL } from '../../../app/config'
+import AddModal from '../../../components/AddModal'
 
 const column = [
     {
@@ -211,7 +212,7 @@ const ProjectSummaryModal: React.FC<ISummaryProjectModal> = ({
 
     return (
         <div className={style.project_summary_container}>
-            <Modal
+            <AddModal
                 {...props}
                 visible={visible}
                 onCancel={onClose}
@@ -228,7 +229,7 @@ const ProjectSummaryModal: React.FC<ISummaryProjectModal> = ({
                         loading={isFetching}
                     />
                 </div>
-            </Modal>
+            </AddModal>
         </div>
     )
 }

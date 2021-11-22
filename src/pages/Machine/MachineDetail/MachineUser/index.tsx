@@ -1,23 +1,26 @@
-import './style.css'
+import style from './index.module.scss'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
-import { Button, Space, Table } from 'antd'
+import { Button, Input, Space, Table } from 'antd'
 
 import MachineUserAddModal from './MachineUserAddModal'
 
 import columns from './columns'
+import { AiOutlineDelete, AiOutlineInfoCircle } from 'react-icons/ai'
+import { SearchOutlined } from '@ant-design/icons'
+import { BsArrowDownCircle, BsPlusCircle } from 'react-icons/bs'
+import useFilter from '../../../../hooks/useFilter'
 
-const MachineUser = ({ id, data, refetch }: any) => {
+const MachineUser = ({ id, data, refetch, isFetching }: any) => {
+    const history = useHistory()
     const tableColumns = [
         ...columns.slice(0, 1),
         {
             title: 'Tên',
             dataIndex: 'name',
             key: 'name',
-            render: (text: any, record: any) => (
-                <Link to={`/users/${record.id}`}>{text}</Link>
-            ),
+            render: (text: any, record: any) => <Link to={`/users/${record.id}`}>{text}</Link>,
         },
         ...columns.slice(1),
         {
@@ -25,12 +28,16 @@ const MachineUser = ({ id, data, refetch }: any) => {
             key: 'action',
             render: (text: any, record: any) => (
                 <Space size="middle">
-                    <button>Xóa</button>
+                    <button className={style.control_button} onClick={() => history.push(`/users/${record.id}`)}>
+                        <AiOutlineInfoCircle />
+                    </button>
+                    <button className={style.control_button}>
+                        <AiOutlineDelete />
+                    </button>
                 </Space>
             ),
         },
     ]
-
 
     const [userList, setUserList] = useState<any>([])
     useEffect(() => {
@@ -46,8 +53,7 @@ const MachineUser = ({ id, data, refetch }: any) => {
         }
     }, [data])
 
-    const [isShowMachineUserAddModal, setIsShowMachineUserAddModal] =
-        useState(false)
+    const [isShowMachineUserAddModal, setIsShowMachineUserAddModal] = useState(false)
 
     const handleShowMachineUserAddModal = () => {
         setIsShowMachineUserAddModal(true)
@@ -57,29 +63,29 @@ const MachineUser = ({ id, data, refetch }: any) => {
         setIsShowMachineUserAddModal(false)
     }
 
+    const [search, onChangeSearch, filterData] = useFilter(userList, 'name')
+
     return (
-        <div className="machine-users-container">
-            <div className="machine-users-control">
-                <div className="machine-list-control-report">
-                    <Button>Xuất báo cáo</Button>
+        <div className={style.machine_users_list_wrapper}>
+            <div className={style.machine_users_list_control}>
+                <div className={style.machine_users_list_control_search}>
+                    <Input prefix={<SearchOutlined className="site-form-item-icon" />} value={search} onChange={onChangeSearch} placeholder="Tên người dùng" />
                 </div>
-                <div className="machine-list-control-add">
+                <div className={style.machine_users_list_control_actions}>
                     <Button onClick={handleShowMachineUserAddModal}>
-                        Thêm lái máy
+                        <BsPlusCircle />
+                        Thêm
+                    </Button>
+                    <Button>
+                        <BsArrowDownCircle />
+                        Xuất file
                     </Button>
                 </div>
             </div>
             <div className="machine-list-table">
-                <Table columns={tableColumns} dataSource={userList} bordered />
+                <Table columns={tableColumns} dataSource={filterData} bordered loading={isFetching} />
             </div>
-            <MachineUserAddModal
-                update={refetch}
-                id={id}
-                centered
-                width={800}
-                visible={isShowMachineUserAddModal}
-                onClose={handleHideMachineUserAddModal}
-            />
+            <MachineUserAddModal update={refetch} id={id} centered width={800} visible={isShowMachineUserAddModal} onClose={handleHideMachineUserAddModal} />
         </div>
     )
 }

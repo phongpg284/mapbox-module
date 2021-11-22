@@ -12,7 +12,7 @@ const Chart = memo(({ taskData, setViewIndex, onEvents }: any) => {
     console.log(taskData);
     
     const options = {
-        grid: { top: 70, right: 10, bottom: 24, left: 10 },
+        grid: { top: 70, right: 10, bottom: 24, left: 22 },
         xAxis: {
             data: taskData.timestamp?.map((time: number) => dayjs.utc(time.toString(),"DMMYYHHmmss").local().format("HH:mm:ss")) || [],
             // show: false,

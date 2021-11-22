@@ -2,7 +2,7 @@ import style from './index.module.scss'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Button, Input, message, Space, Table } from 'antd'
+import { Button, Input, message, Space } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
 import MachineAddModal from '../MachineAddModal'
@@ -16,6 +16,8 @@ import DeleteConfirmModal from '../../../components/Modal/DeleteConfirmModal'
 import { ENDPOINT_URL } from '../../../app/config'
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineInfoCircle } from 'react-icons/ai'
 import { BsArrowDownCircle, BsPlusCircle } from 'react-icons/bs'
+import Table from '../../../components/Table'
+import { Sorter } from '../../../utils/sorter'
 
 const MachineList = () => {
     const [isUpdate, setIsUpdate] = useState(true)
@@ -57,6 +59,9 @@ const MachineList = () => {
             dataIndex: 'name',
             key: 'name',
             render: (text: any, record: any) => <Link to={`/machines/${record.id}`}>{text}</Link>,
+            sorter: {
+                compare: Sorter.DEFAULT,
+            },    
         },
         ...columns.slice(1),
         {

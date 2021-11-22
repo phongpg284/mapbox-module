@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { useState } from 'react'
 
 import ProjectUser from './ProjectUser'
-import ProjectDevice from './ProjectDevice'
+import ProjectMachine from './ProjectMachine'
 import ProjectSummary from './ProjectSummary'
 
 import useData from '../../../hooks/useData'
@@ -32,7 +32,7 @@ const ProjectDetail = ({ match }: any) => {
         },
     })
 
-    const [projectUserData, refetchProjectUser] = useData({
+    const [projectUserData, refetchProjectUser, isFetchingProjectUser] = useData({
         endPoint: ENDPOINT_URL + '/project-user/',
         method: 'POST',
         headers: {
@@ -44,7 +44,7 @@ const ProjectDetail = ({ match }: any) => {
         },
     })
 
-    const [projectDeviceData, refetchProjectDevice] = useData({
+    const [projectMachineData, refetchProjectMachine, isFetchingProjectMachine] = useData({
         endPoint: ENDPOINT_URL + '/project-machine/',
         method: 'POST',
         headers: {
@@ -69,7 +69,7 @@ const ProjectDetail = ({ match }: any) => {
             <div className="project-detail-wrapper">
                 <div className="project-detail-navigate">
                     <div className={currentTab === 'summary' ? 'project-detail-navigate-select' : ''} onClick={() => handleSelectTab('summary')}>
-                        Thông tin chung
+                        Thông tin chi tiết
                     </div>
                     <div className={currentTab === 'user' ? 'project-detail-navigate-select' : ''} onClick={() => handleSelectTab('user')}>
                         Danh sách người dùng
@@ -81,8 +81,8 @@ const ProjectDetail = ({ match }: any) => {
 
                 <div className="project-detail-content">
                     {currentTab === 'summary' && <ProjectSummary data={data} />}
-                    {currentTab === 'user' && <ProjectUser id={id} data={projectUserData} refetch={refetchProjectUser} />}
-                    {currentTab === 'device' && <ProjectDevice id={id} data={projectDeviceData} refetch={refetchProjectDevice} />}
+                    {currentTab === 'user' && <ProjectUser id={id} data={projectUserData} refetch={refetchProjectUser} isFetching={isFetchingProjectUser} />}
+                    {currentTab === 'device' && <ProjectMachine id={id} data={projectMachineData} refetch={refetchProjectMachine} isFetching={isFetchingProjectMachine} />}
                     {/* {currentTab === 'moderator' && <ProjectModerator id={id} />} */}
                 </div>
             </div>

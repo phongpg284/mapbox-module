@@ -1,43 +1,59 @@
 import StatusTag from '../../../components/StatusTag'
 import dayjs from 'dayjs'
+import { Sorter } from '../../../utils/sorter'
 
 const columns = [
     {
         title: 'STT',
         dataIndex: 'index',
-        render: (value: any, item:any, index: number) => index,
-        // sorter: (a: any, b: any) => a.index - b.index,
+        render: (value: any, item: any, index: number) => index,
+        sorter: {
+            compare: Sorter.DEFAULT,
+        },
     },
     {
         title: 'Sim Imei',
         dataIndex: 'sim_imei',
-        sorter: (a: any, b: any) => a.sim_imei - b.sim_imei,
+        sorter: {
+            compare: Sorter.DEFAULT,
+        },
     },
     {
         title: 'Caster Ip',
         dataIndex: 'caster_ip',
-        sorter: (a: any, b: any) => a.caster_ip - b.caster_ip,
+        sorter: {
+            compare: Sorter.DEFAULT,
+        },
     },
     {
         title: 'NTRIP Username',
         dataIndex: 'ntrip_username',
-        sorter: (a: any, b: any) => a.ntrip_username - b.ntrip_username,
+        sorter: {
+            compare: Sorter.DEFAULT,
+        },
     },
     {
         title: 'NTRIP Passwword',
         dataIndex: 'ntrip_password',
-        sorter: (a: any, b: any) => a.ntrip_password - b.ntrip_password,
+        sorter: {
+            compare: Sorter.DEFAULT,
+        },
     },
     {
         title: 'Mount Point',
         dataIndex: 'mount_point',
-        sorter: (a: any, b: any) => a.mount_point - b.mount_point,
+        sorter: {
+            compare: Sorter.DEFAULT,
+        },
     },
     {
         title: 'Trạng thái hoạt động',
         dataIndex: 'status',
         render: (text: any) => {
             return <StatusTag status={text} />
+        },
+        sorter: {
+            compare: Sorter.DEFAULT,
         },
     },
     {
@@ -46,7 +62,9 @@ const columns = [
         render: (text: any) => {
             if (text) return <div>{dayjs(text).format('DD/MM/YYYY HH:mm:ss')}</div>
         },
-        sorter: (a: any, b: any) => dayjs(a.create_time).diff(dayjs(b.create_time)),
+        sorter: {
+            compare: Sorter.DATE,
+        },
     },
     // {
     //     title: 'Update Time',

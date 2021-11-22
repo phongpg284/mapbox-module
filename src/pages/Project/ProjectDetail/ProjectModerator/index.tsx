@@ -3,6 +3,7 @@ import columns from './columns'
 import { Button, Modal, Space, Table } from 'antd'
 import { useState } from 'react'
 import ModeratorProjectModal from '../../../../components/Modal/ModeratorProjectModal'
+import AddModal from '../../../../components/AddModal'
 const ProjectModerator = () => {
     let data: any[] = []
 
@@ -59,7 +60,7 @@ const ProjectModerator = () => {
             <div className="project-moderators-table">
                 <Table columns={tableColumns} dataSource={data} bordered />
             </div>
-            <Modal
+            <AddModal
                 centered
                 width={1000}
                 visible={isModalVisible}
@@ -68,7 +69,7 @@ const ProjectModerator = () => {
                 title="Thông tin quản trị viên"
             >
                 <ModeratorProjectModal />
-            </Modal>
+            </AddModal>
         </div>
     )
 }
