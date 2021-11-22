@@ -34,7 +34,6 @@ const MachineDeviceAddModal: React.FC<IMachineDeviceAddModal> = ({ id, onClose, 
     useEffect(() => {
         if (!isFetching && response && response.data && !response.hasError) {
             setDevices(response.data)
-            console.log(response.data)
         }
     }, [response])
 

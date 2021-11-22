@@ -11,12 +11,14 @@ import useFetch from '../../../../hooks/useFetch'
 import TaskList from './TaskList'
 import { ENDPOINT_URL } from '../../../../app/config'
 import SecondFormat from '../../../../utils/SecondFormat'
+import { useMediaQuery } from 'react-responsive'
 const { RangePicker } = DatePicker
 const { Option } = Select
 const { Panel } = Collapse
 
 const DeviceDetailItem = ({ data }: any) => {
     const { task } = data
+    const isMobile = useMediaQuery({ query: `(max-width: 425px)` })
     return (
         <div className="device-detail-item-wrapper">
             <Collapse className="device-detail-item-header" expandIconPosition="right">
@@ -24,15 +26,20 @@ const DeviceDetailItem = ({ data }: any) => {
                     header={
                         <div className="device-detail-item-header-content container-fluid">
                             <div className="row">
-                                <div className="col-2">{data?.date}</div>
-                                <div className="col-3">
-                                    {/* <span>
-                                        <GoPrimitiveDot />
-                                    </span> */}
-                                    {data?.avg_speed?.toFixed(2) ?? ''}
-                                </div>
-                                <div className="col-3">{data?.avg_accuracy?.toFixed(2) ?? ''}</div>
-                                <div className="col-4">{SecondFormat(data?.total_time / 1000)}</div>
+                                {isMobile && (
+                                    <>
+                                        <div className="col-4">{data?.date}</div>
+                                        <div className="col-8">{SecondFormat(data?.total_time / 1000)}</div>
+                                    </>
+                                )}
+                                {!isMobile && (
+                                    <>
+                                        <div className="col-2">{data?.date}</div>
+                                        <div className="col-3">{data?.avg_speed?.toFixed(2) ?? ''}</div>
+                                        <div className="col-3">{data?.avg_accuracy?.toFixed(2) ?? ''}</div>
+                                        <div className="col-4">{SecondFormat(data?.total_time / 1000)}</div>
+                                    </>
+                                )}
                             </div>
                         </div>
                     }
@@ -66,6 +73,7 @@ const DeviceDetailItem = ({ data }: any) => {
 const DeviceDetail = ({ id, currentDateData, isFetching }: any) => {
     const history = useHistory()
     const location = useLocation()
+    const isMobile = useMediaQuery({ query: `(max-width: 425px)` })
 
     const handleShowTracks = () => {
         history.push(location.pathname + '/tasks')
@@ -143,10 +151,20 @@ const DeviceDetail = ({ id, currentDateData, isFetching }: any) => {
                 <div className="device-tasks-list-item">
                     <div className="device-tasks-list-item-header container-fluid">
                         <div className="row">
-                            <div className="col-2">Ngày</div>
-                            <div className="col-3">Tốc độ (km/h)</div>
-                            <div className="col-3">Độ chính xác (cm)</div>
-                            <div className="col-4">Tổng thời gian</div>
+                            {isMobile && (
+                                <>
+                                    <div className="col-4">Ngày</div>
+                                    <div className="col-8">Tổng thời gian</div>
+                                </>
+                            )}
+                            {!isMobile && (
+                                <>
+                                    <div className="col-2">Ngày</div>
+                                    <div className="col-3">Tốc độ (km/h)</div>
+                                    <div className="col-3">Độ chính xác (cm)</div>
+                                    <div className="col-4">Tổng thời gian</div>
+                                </>
+                            )}
                         </div>
                     </div>
                     {(isFetchingDateRange || isFetching) && <Spin indicator={antIcon} />}

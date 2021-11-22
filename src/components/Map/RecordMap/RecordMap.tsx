@@ -1,4 +1,4 @@
-import './index.css'
+import './index.scss'
 import { createContext, useEffect, useState } from 'react'
 import * as turf from '@turf/turf'
 
@@ -116,7 +116,7 @@ const RecordMap = ({ match }: any) => {
 
             <div className="record-graph">
                 <ViewIndexContext.Provider value={{ viewWidth: viewWidth, setViewWidth: setViewWidth }}>
-                    <RecordInfo data={recordData} taskData={singleTaskResponse?.data} deviceData={deviceResponse?.data}/>
+                    <RecordInfo data={recordData} taskData={singleTaskResponse?.data} deviceData={deviceResponse?.data} isFetching={isFetchingSingleTask || isFetchingDevice} />
                 </ViewIndexContext.Provider>
             </div>
         </div>

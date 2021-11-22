@@ -5,7 +5,6 @@ import { useAppSelector } from '../../../app/store'
 const HomeDashboard = ({ selectItem, visible }: any) => {
     const account = useAppSelector((state) => state.account)
     const location = useLocation()
-    console.log(location)
     const handleSelectItem = (key: string) => {
         selectItem(key)
     }

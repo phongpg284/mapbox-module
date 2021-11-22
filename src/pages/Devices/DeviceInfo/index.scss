@@ -3,6 +3,9 @@
     max-width: 1500px;
     padding: 10px 40px;
     background-color: white;
+    @media (max-width: 425px) {
+        padding: 5px 10px;
+    }
 }
 
 .device-detail-title {
@@ -16,6 +19,12 @@
         font-size: 1.2rem;
         padding: 1px 8px 5px 8px;
         border-radius: 8px;
+        @media (max-width: 400px) {
+            margin-left: 0;
+            padding: 10px 0 10px 10px;
+            font-size: 1rem;
+            width: 45vw
+        }
     }
     .device-tag-active {
         background-color: #cbfaf0;
@@ -24,6 +33,9 @@
     .device-tag-no-active {
         background-color: #fadbd8;
         color: #e74c3c;
+    }
+    @media (max-width: 425px) {
+        font-size: 1.5rem;
     }
 }
 
@@ -35,6 +47,9 @@
     align-items: center;
     color: #717883;
     margin-bottom: 10px;
+    @media (max-width: 425px) {
+        font-size: 1rem;
+    }    
     &-icon {
         display: flex;
         justify-content: center;
@@ -57,6 +72,9 @@
         font-weight: 650;
         cursor: pointer;
         color: #989da6;
+        @media (max-width: 425px) {
+            font-size: 0.9rem;
+        }
         &:hover {
             color: #5e6673;
             background-color: #f9fafb;

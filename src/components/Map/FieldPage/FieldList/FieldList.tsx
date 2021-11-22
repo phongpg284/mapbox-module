@@ -122,7 +122,6 @@ const FieldList = ({ data }: Partial<IFieldListProps>) => {
 
   const handleDelete = () => {
     // TODO: CALL DELETE API
-    console.log(deleteItem, "hehe");
     localStorage.removeItem(deleteItem.name);
     localStorage.setItem(
       "fakeDB",
