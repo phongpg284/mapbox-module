@@ -2,7 +2,7 @@ import style from './index.module.scss'
 
 import { Link, useHistory } from 'react-router-dom'
 
-import { Button, Input, message, Space, Table } from 'antd'
+import { Button, Input, message, Space } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
 import columns from './columns'
@@ -14,6 +14,8 @@ import DeleteConfirmModal from '../../../components/Modal/DeleteConfirmModal'
 import { ENDPOINT_URL } from '../../../app/config'
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineInfoCircle } from 'react-icons/ai'
 import { BsArrowDownCircle, BsPlusCircle } from 'react-icons/bs'
+import { Sorter } from '../../../utils/sorter'
+import Table from '../../../components/Table'
 
 const UserList = () => {
     const history = useHistory()
@@ -36,6 +38,9 @@ const UserList = () => {
             dataIndex: 'name',
             key: 'name',
             render: (text: any, record: any) => <Link to={`/users/${record.id}`}>{text}</Link>,
+            sorter: {
+                compare: Sorter.DEFAULT,
+            },    
         },
         ...columns.slice(1),
         {

@@ -1,3 +1,5 @@
+import { Sorter } from "../../../utils/sorter"
+
 export const fixedData = {
     code: "",
     name: "",
@@ -9,17 +11,25 @@ const columns = [
         title: 'STT',
         dataIndex: 'index',
         render: (value: any, item:any, index: number) => index,
-        // sorter: (a: any, b: any) => a.index - b.index,
+        sorter: {
+            compare: Sorter.DEFAULT,
+        },
     },
     {
         title: 'Mã dự án',
         dataIndex: 'code',
         key: 'code',
+        sorter: {
+            compare: Sorter.DEFAULT,
+        },
     },
     {
         title: 'Mô tả tổng quan',
         dataIndex: 'description',
         key: 'description',
+        sorter: {
+            compare: Sorter.DEFAULT,
+        },
     },
 
     {
@@ -29,6 +39,9 @@ const columns = [
         render: (text: any) => {
             if (text) return <div>{new Date(text).toLocaleString()}</div>
         },
+        sorter: {
+            compare: Sorter.DATE,
+        },
     },
     {
         title: 'Thời gian kết thúc',
@@ -36,6 +49,9 @@ const columns = [
         key: 'end_time',
         render: (text: any) => {
             if (text) return <div>{new Date(text).toLocaleString()}</div>
+        },
+        sorter: {
+            compare: Sorter.DATE,
         },
     },
     {
@@ -45,6 +61,9 @@ const columns = [
         render: (text: any) => {
             if (text) return <div>{new Date(text).toLocaleString()}</div>
         },
+        sorter: {
+            compare: Sorter.DATE,
+        },
     },
     {
         title: 'Thời gian cập nhật',
@@ -52,6 +71,9 @@ const columns = [
         key: 'update_time',
         render: (text: any) => {
             if (text) return <div>{new Date(text).toLocaleString()}</div>
+        },
+        sorter: {
+            compare: Sorter.DATE,
         },
     },
 ]
