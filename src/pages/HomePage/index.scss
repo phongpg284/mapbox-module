@@ -28,8 +28,7 @@
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     height: 70px;
     padding: 0;
-    padding-right: 20px; 
-    .float-start {
+    .menu-and-logo {
         display: flex;
         .branch {
             display: flex;
@@ -87,8 +86,53 @@
 
         }
     }
-    &-avatar {
-        float: right
+    .ant-dropdown {
+        top: 70px;
+    }
+    .user-toggle {
+        display: flex;
+        width: 70px;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        .user-avatar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border: 3px solid #FFFFFF;
+            border-radius: 50%;
+            background-color: #3B9E3E;
+            &-img {
+                background: url(../../assets/ProfileMenu/userAvatarIcon.svg);
+                background-size: cover;
+                width: 30px;
+                height: 30px;
+                filter: invert(1) brightness(100);
+            }
+        }
+        &:hover,:focus {
+            background-color: #FFFFFF;
+            .user-avatar {
+                border-color: #3B9E3E;
+                background-color: #FFFFFF;
+                &-img {
+                    filter: none;
+                }
+            }
+        }
+        &.active {
+            background-color: #FFFFFF;
+            .user-avatar {
+                border-color: #3B9E3E;
+                background-color: #FFFFFF;
+                &-img {
+                    filter: none;
+                }
+            }
+        }
     }
 }
 

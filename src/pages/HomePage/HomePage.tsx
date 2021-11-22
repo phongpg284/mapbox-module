@@ -84,7 +84,7 @@ const HomePage = ({ parentPath, match }: any) => {
                     <ProfileDashboard />
                 </Drawer> */}
                 <Header className="header">
-                    <div className="float-start">
+                    <div className="menu-and-logo float-start">
                         <button className={`menu-toggle-button ${!isSideboardCollapse ? '' : 'active'}`} type="button" onClick={handleClickMenu}>
                             <div className="button-image"></div>
                         </button>
@@ -99,17 +99,13 @@ const HomePage = ({ parentPath, match }: any) => {
                     </div>
 
                     {account.accessToken && account.id && account.role && (
-                        <div className="header-avatar">
-                            <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight">
-                                <img
-                                    alt="no?"
-                                    src="https://s3-ap-northeast-1.amazonaws.com/agri-info-design-public/icons/ic_person_black_48dp.png"
-                                    className=""
-                                    style={{ height: '40px' }}
-                                    onClick={handleClickProfile}
-                                ></img>
-                            </Dropdown>
-                        </div>
+                        <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight">
+                            <div className={`float-end user-toggle ${!isProfileCollapse ? '' : 'active'}`} onClick={handleClickProfile}>
+                                <div className="user-avatar">
+                                    <div className="user-avatar-img"></div>
+                                </div>
+                             </div>
+                        </Dropdown>
                     )}
                     
                     {!account.accessToken && !account.id && !account.role && (
