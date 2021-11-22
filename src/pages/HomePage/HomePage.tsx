@@ -48,8 +48,8 @@ const HomePage = ({ parentPath, match }: any) => {
         setIsSideboardCollapse(!isSideboardCollapse)
     }
 
-    const handleClickProfile = () => {
-        setIsProfileCollapse(!isProfileCollapse)
+    const handleClickProfile = (visible: boolean) => {
+        setIsProfileCollapse(visible)
     }
 
     const handleSelectMenuItem = (key: string) => {
@@ -94,12 +94,12 @@ const HomePage = ({ parentPath, match }: any) => {
                     </div>
 
                     {account.accessToken && account.id && account.role && (
-                        <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight">
-                            <div className={`float-end user-toggle ${!isProfileCollapse ? '' : 'active'}`} onClick={handleClickProfile}>
+                        <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight" onVisibleChange={handleClickProfile}>
+                            <div className={`float-end user-toggle ${!isProfileCollapse ? '' : 'active'}`} >
                                 <div className="user-avatar">
                                     <div className="user-avatar-img"></div>
                                 </div>
-                             </div>
+                            </div>
                         </Dropdown>
                     )}
 
