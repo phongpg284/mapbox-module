@@ -9,7 +9,7 @@ import useFilter from '../../../../hooks/useFilter'
 import { SearchOutlined } from '@ant-design/icons'
 import { BsArrowDownCircle, BsPlusCircle } from 'react-icons/bs'
 
-const ProjectMachine = ({ id, data, refetch }: any) => {
+const ProjectMachine = ({ id, data, refetch, isFetching }: any) => {
     const history = useHistory()
 
     const tableColumns = [
@@ -84,7 +84,7 @@ const ProjectMachine = ({ id, data, refetch }: any) => {
                 </div>
             </div>
             <div className={style.project_machines_list_table}>
-                <Table columns={tableColumns} dataSource={filterData} bordered />
+                <Table columns={tableColumns} dataSource={filterData} bordered loading={isFetching} />
             </div>
             <ProjectMachineAddModal update={refetch} id={id} centered width={800} visible={isShowProjectMachineAddModal} onClose={handleHideProjectMachineAddModal} />
         </div>

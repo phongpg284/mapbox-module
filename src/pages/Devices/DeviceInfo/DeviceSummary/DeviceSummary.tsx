@@ -1,5 +1,5 @@
 import style from './index.module.scss'
-import { Badge, Descriptions, Table } from 'antd'
+import { Badge, Descriptions, Spin, Table } from 'antd'
 import { useEffect, useState } from 'react'
 
 const column = [
@@ -75,9 +75,10 @@ const IKeyCode = {
 
 interface ISummaryDevice {
     data: any
+    isFetching: boolean
 }
 
-const DeviceSummary: React.FC<ISummaryDevice> = ({ data }) => {
+const DeviceSummary: React.FC<ISummaryDevice> = ({ data, isFetching }) => {
     const [dataSource, setDataSource] = useState<any>()
 
     useEffect(() => {
@@ -101,9 +102,6 @@ const DeviceSummary: React.FC<ISummaryDevice> = ({ data }) => {
     return (
         <div className={style.device_summary_container}>
             <div className={style.device_summary_content}>
-                {/* <Table className={style.device_table_content} columns={column} dataSource={dataSource?.slice(0, 7)} showHeader={false} pagination={false} />
-                <Table className={style.device_table_content} columns={column} dataSource={dataSource?.slice(7)} showHeader={false} pagination={false} /> */}
-
                 <Descriptions>
                     <Descriptions.Item label="Tên thiết bị" labelStyle={{ fontWeight: 500 }}>
                         {data?.name}

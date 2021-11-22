@@ -32,7 +32,7 @@ const ProjectDetail = ({ match }: any) => {
         },
     })
 
-    const [projectUserData, refetchProjectUser] = useData({
+    const [projectUserData, refetchProjectUser, isFetchingProjectUser] = useData({
         endPoint: ENDPOINT_URL + '/project-user/',
         method: 'POST',
         headers: {
@@ -44,7 +44,7 @@ const ProjectDetail = ({ match }: any) => {
         },
     })
 
-    const [projectMachineData, refetchProjectMachine] = useData({
+    const [projectMachineData, refetchProjectMachine, isFetchingProjectMachine] = useData({
         endPoint: ENDPOINT_URL + '/project-machine/',
         method: 'POST',
         headers: {
@@ -81,8 +81,8 @@ const ProjectDetail = ({ match }: any) => {
 
                 <div className="project-detail-content">
                     {currentTab === 'summary' && <ProjectSummary data={data} />}
-                    {currentTab === 'user' && <ProjectUser id={id} data={projectUserData} refetch={refetchProjectUser} />}
-                    {currentTab === 'device' && <ProjectMachine id={id} data={projectMachineData} refetch={refetchProjectMachine} />}
+                    {currentTab === 'user' && <ProjectUser id={id} data={projectUserData} refetch={refetchProjectUser} isFetching={isFetchingProjectUser} />}
+                    {currentTab === 'device' && <ProjectMachine id={id} data={projectMachineData} refetch={refetchProjectMachine} isFetching={isFetchingProjectMachine} />}
                     {/* {currentTab === 'moderator' && <ProjectModerator id={id} />} */}
                 </div>
             </div>

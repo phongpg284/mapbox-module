@@ -11,7 +11,7 @@ import { SearchOutlined } from '@ant-design/icons'
 import { BsArrowDownCircle, BsPlusCircle } from 'react-icons/bs'
 import useFilter from '../../../../hooks/useFilter'
 
-const ProjectUser = ({ id, data, refetch }: any) => {
+const ProjectUser = ({ id, data, refetch, isFetching }: any) => {
     const history = useHistory()
     const tableColumns = [
         ...columns.slice(0, 1),
@@ -86,7 +86,7 @@ const ProjectUser = ({ id, data, refetch }: any) => {
                 </div>
             </div>
             <div className={style.project_users_list_table}>
-                <Table columns={tableColumns} dataSource={filterData} bordered />
+                <Table columns={tableColumns} dataSource={filterData} bordered loading={isFetching}/>
             </div>
             <ProjectUserAddModal update={refetch} id={id} centered width={800} visible={isShowProjectUserAddModal} onClose={handleHideProjectUserAddModal} />
         </div>

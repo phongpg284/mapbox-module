@@ -1,22 +1,28 @@
-import { Descriptions } from 'antd'
-import { useHistory } from 'react-router'
-import TaskMap from '../../../../components/Map/TaskMap'
-import SecondFormat from '../../../../utils/SecondFormat'
-import dayjs from 'dayjs'
 import './index.scss'
-import { Link } from 'react-router-dom'
-const DeviceTask = ({ id, data }: any) => {
+import dayjs from 'dayjs'
+
+import { Descriptions, Spin } from 'antd'
+import { useHistory } from 'react-router'
+
+import { LoadingOutlined } from '@ant-design/icons'
+
+import SecondFormat from '../../../../utils/SecondFormat'
+
+const DeviceTask = ({ data, isFetching }: any) => {
     const history = useHistory()
     const handleClickTaskItem = (id: number) => {
         history.push(`/tasks/${id}`)
     }
+
+    const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />
+
     return (
         <div className="device-task">
             <div>
+                {isFetching && <Spin indicator={antIcon} />}
                 {data &&
                     data.map((task: any) => (
                         <div className="device-task-item" key={task.id} onClick={() => handleClickTaskItem(task?.id)}>
-                            {/* <Link to={`/tasks/${task?.id}`} className="device-task-item-info">Xem lộ trình</Link> */}
                             <Descriptions title={`Lộ trình hoạt động #${task?.id}`}>
                                 <Descriptions.Item label="Quãng đường">{`${task?.distance?.toFixed(2) ?? ''} km`}</Descriptions.Item>
                                 <Descriptions.Item label="Độ chính xác">{`${task?.accuracy?.toFixed(2) ?? ''} cm`}</Descriptions.Item>
@@ -28,7 +34,6 @@ const DeviceTask = ({ id, data }: any) => {
                         </div>
                     ))}
             </div>
-            {/* <TaskMap id={id} /> */}
         </div>
     )
 }

@@ -12,7 +12,7 @@ import { SearchOutlined } from '@ant-design/icons'
 import { BsArrowDownCircle, BsPlusCircle } from 'react-icons/bs'
 import useFilter from '../../../../hooks/useFilter'
 
-const MachineUser = ({ id, data, refetch }: any) => {
+const MachineUser = ({ id, data, refetch, isFetching }: any) => {
     const history = useHistory()
     const tableColumns = [
         ...columns.slice(0, 1),
@@ -83,7 +83,7 @@ const MachineUser = ({ id, data, refetch }: any) => {
                 </div>
             </div>
             <div className="machine-list-table">
-                <Table columns={tableColumns} dataSource={filterData} bordered />
+                <Table columns={tableColumns} dataSource={filterData} bordered loading={isFetching} />
             </div>
             <MachineUserAddModal update={refetch} id={id} centered width={800} visible={isShowMachineUserAddModal} onClose={handleHideMachineUserAddModal} />
         </div>

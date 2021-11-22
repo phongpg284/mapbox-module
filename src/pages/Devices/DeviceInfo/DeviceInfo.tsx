@@ -32,7 +32,7 @@ const DeviceInfo = ({ match }: any) => {
         },
     })
 
-    const [deviceDetailData, refetchDeviceDetail] = useData({
+    const [deviceDetailData, refetchDeviceDetail, isFetchingDeviceDetail] = useData({
         endPoint: ENDPOINT_URL + '/task-info/',
         method: 'POST',
         headers: {
@@ -82,9 +82,9 @@ const DeviceInfo = ({ match }: any) => {
                 </div>
 
                 <div className="device-detail-content">
-                    {currentTab === 'summary' && <DeviceSummary data={data} />}
-                    {currentTab === 'tasks' && <DeviceDetail id={id} currentDateData={deviceDetailData} />}
-                    {currentTab === 'all-tasks' && <DeviceTask id={id} data={tasks} />}
+                    {currentTab === 'summary' && <DeviceSummary data={data} isFetching={isFetching}/>}
+                    {currentTab === 'tasks' && <DeviceDetail id={id} currentDateData={deviceDetailData} isFetching={isFetchingDeviceDetail}/>}
+                    {currentTab === 'all-tasks' && <DeviceTask id={id} data={tasks} isFetching={isFetchingTasks}/>}
                 </div>
             </div>
         </div>

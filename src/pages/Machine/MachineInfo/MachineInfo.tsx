@@ -31,7 +31,7 @@ const MachineDetail = ({ match }: any) => {
         },
     })
 
-    const [machineUserData, refetchMachineUser] = useData({
+    const [machineUserData, refetchMachineUser, isFetchingMachineUser] = useData({
         endPoint: ENDPOINT_URL + '/machine-user/',
         method: 'POST',
         headers: {
@@ -43,7 +43,7 @@ const MachineDetail = ({ match }: any) => {
         },
     })
 
-    const [machineDeviceData, refetchMachineDevice] = useData({
+    const [machineDeviceData, refetchMachineDevice, isFetchingMachineDevice] = useData({
         endPoint: ENDPOINT_URL + '/machine-device/',
         method: 'POST',
         headers: {
@@ -84,8 +84,8 @@ const MachineDetail = ({ match }: any) => {
 
                 <div className="machine-detail-content">
                     {currentTab === 'summary' && <MachineSummary data={data} />}
-                    {currentTab === 'user' && <MachineUser id={id} data={machineUserData} refetch={refetchMachineUser} />}
-                    {currentTab === 'device' && <MachineDevice id={id} data={machineDeviceData} refetch={refetchMachineDevice} />}
+                    {currentTab === 'user' && <MachineUser id={id} data={machineUserData} refetch={refetchMachineUser} isFetching={isFetchingMachineUser} />}
+                    {currentTab === 'device' && <MachineDevice id={id} data={machineDeviceData} refetch={refetchMachineDevice} isFetching={isFetchingMachineDevice} />}
                     {/* {currentTab === 'moderator' && <MachineModerator id={id} />} */}
                 </div>
             </div>
