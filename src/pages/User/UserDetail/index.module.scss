@@ -1,6 +1,6 @@
 .user_detail_container {
-    /* margin: auto; */
-    border: groove 1px;
+    margin: auto;
+    max-width: 900px;
     background-color: white;
     margin: 30px auto;
     display: flex;
@@ -37,4 +37,17 @@
 .user_update_button {
     text-align: end;
     padding-right: 20px;
+}
+
+.antd_footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user_back_button {
+    display: flex;
+    align-items: center;
+    svg {
+        margin-right: 5px;
+    }    
 }

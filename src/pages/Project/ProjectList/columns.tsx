@@ -1,15 +1,10 @@
 import { Sorter } from "../../../utils/sorter"
 
-export const fixedData = {
-    code: "",
-    name: "",
-    description: "",
-}
-
 const columns = [
     {
         title: 'STT',
         dataIndex: 'index',
+        width: 50,
         render: (value: any, item:any, index: number) => index,
         sorter: {
             compare: Sorter.DEFAULT,

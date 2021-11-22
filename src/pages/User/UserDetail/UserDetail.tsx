@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react'
 import useFetch from '../../../hooks/useFetch'
 import { useHistory } from 'react-router'
 import { ENDPOINT_URL } from '../../../app/config'
+import { AiOutlineArrowLeft } from 'react-icons/ai'
 
 const column = [
     {
         key: 'ckey',
         dataIndex: 'ckey',
-        render: (text: string) => (
-            <h6 style={{ fontWeight: 'bold' }}>{text}</h6>
-        ),
+        render: (text: string) => <h6 style={{ fontWeight: 'bold' }}>{text}</h6>,
+        width: '40%',
     },
     {
         key: 'value',
@@ -81,10 +81,7 @@ const UserDetail = ({ match }: any) => {
                             ckey: brand,
                             value: value,
                         }
-                        if (type === 'date')
-                            pushData.value = new Date(
-                                value as any
-                            ).toLocaleString()
+                        if (type === 'date') pushData.value = new Date(value as any).toLocaleString()
                         convertDataSource.push(pushData)
                     }
                 }
@@ -100,27 +97,22 @@ const UserDetail = ({ match }: any) => {
                 dataSource={dataSource}
                 showHeader={false}
                 pagination={false}
-                title={() => (
-                    <h4 style={{ textAlign: 'left' }}>
-                        Chi tiết người dùng {response?.data?.[0]?.name}
-                    </h4>
-                )}
+                title={() => <h4 style={{ textAlign: 'left' }}>Chi tiết người dùng {response?.data?.[0]?.name}</h4>}
                 footer={() => (
-                    <Button
-                        danger
-                        style={{ display: 'flex' }}
-                        onClick={() => history.push('/users/edit/' + id)}
-                    >
-                        Cập nhật thông tin
-                    </Button>
+                    <div className={style.antd_footer}>
+                        <Button className={style.user_back_button} onClick={() => history.push("/users/list")}>
+                            <AiOutlineArrowLeft />
+                            Quay lại
+                        </Button>
+                        <Button danger style={{ display: 'flex' }} onClick={() => history.push('/users/edit/' + id)}>
+                            Cập nhật thông tin
+                        </Button>
+                    </div>
                 )}
                 loading={isFetching}
             />
             <div className={style.user_avatar}>
-                <img
-                    alt="avatar"
-                    src="https://apsec.iafor.org/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg"
-                ></img>
+                <img alt="avatar" src="https://apsec.iafor.org/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg"></img>
             </div>
         </div>
     )

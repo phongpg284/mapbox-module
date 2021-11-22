@@ -67,6 +67,7 @@ const ProjectList = () => {
         {
             title: 'Thao tác',
             key: 'action',
+            width: 100,
             render: (text: any, record: any) => (
                 <Space size="middle">
                     <button className={style.control_button} onClick={() => handleShowSummary(record.id)}>
