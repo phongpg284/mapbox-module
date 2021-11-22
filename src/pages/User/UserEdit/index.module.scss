@@ -1,40 +1,52 @@
 .user_edit_container {
-    /* margin: auto; */
-    border: groove 1px;
     background-color: white;
-    margin: 30px auto;
-    display: flex;
-    justify-content: center;
-    .user_table_content {
-        flex-grow: 2;
-    }
-    .user_avatar {
-        flex-grow: 1;
-        img {
-            display: block;
-            width: 200px;
-            margin: 20px;
-        }
-    }
+    margin: auto;
+    padding: 20px;
+    max-width: 550px;
+    color: #566573;
 }
 
 .user_edit_title {
-    color: rgb(70, 70, 224);
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     text-align: left;
-    padding: 15px;
-    border-bottom: groove 1px;
-    align-self: center;
+    margin-bottom: 20px;
+}
+
+.user_edit_avatar {
+    img {
+        height: 90px;
+        border-radius: 50%;
+    }
+    margin: 10px 0;
 }
 
 .user_edit_content {
-    border: groove 1px;
-    margin: 20px;
     padding: 5px;
+    input {
+        border-radius: 5px;
+        background-color: #F1F8FC;
+        border-color: #AED6F1;
+    }
+    label {
+        font-weight: 500;
+        color: #909497;
+    }
 }
 
-.user_update_button {
-    text-align: end;
-    padding-right: 20px;
+.submit_button {
+    button {
+        margin: 0;
+        width: 150px;
+        border-radius: 5px;
+        margin-top: 20px;
+        padding: 5px 0;
+        border: none;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        background-color: #48C9B0;
+        color: white;
+        &:hover {
+            background-color: #27AE60;
+        }
+    }
 }
