@@ -1,7 +1,9 @@
 .ant-menu-item-selected::after {
     display: none;
 }
-
+.ant-dropdown  {
+    top: 70px !important;
+}
 .home-content {
     // padding: 20px;
     height: 100vh;
@@ -86,9 +88,7 @@
 
         }
     }
-    .ant-dropdown {
-        top: 70px;
-    }
+
     .user-toggle {
         display: flex;
         width: 70px;
