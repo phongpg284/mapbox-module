@@ -2,6 +2,7 @@ import './index.scss'
 
 import { useState } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
+import { useAppSelector } from '../../app/store'
 
 import { Drawer, Dropdown, Layout } from 'antd'
 
@@ -13,6 +14,7 @@ import FieldPage from '../../components/Map/FieldPage'
 import FieldList from '../../components/Map/FieldPage/FieldList'
 import FieldCard from '../../components/Map/FieldPage/FieldCard'
 import RecordMap from '../../components/Map/RecordMap'
+import RealtimeMap from '../../components/Map/RealtimeMap'
 
 import ProjectList from '../Project/ProjectList'
 import ProjectDetail from '../Project/ProjectDetail'
@@ -32,11 +34,8 @@ import UserEdit from '../User/UserEdit'
 import ModeratorList from '../Moderator/ModeratorList'
 import ModeratorEdit from '../Moderator/ModeratorEdit'
 import ModeratorDetail from '../Moderator/ModeratorDetail'
+
 import ActiveDeviceList from '../ActiveDevice/ActiveDeviceList'
-import TrackingMap from '../../components/Map/TrackingMap'
-import RealtimeMap from '../../components/Map/RealtimeMap'
-import TaskMap from '../../components/Map/TaskMap'
-import { useAppSelector } from '../../app/store'
 
 const { Header, Content } = Layout
 
@@ -92,10 +91,6 @@ const HomePage = ({ parentPath, match }: any) => {
                             <div className="branch-logo"></div>
                             <div className="branch-name">iMET</div>
                         </button>
-                        {/* <Dehaze
-                            onClick={handleClickMenu}
-                            style={{ color: 'white' }}
-                        /> */}
                     </div>
 
                     {account.accessToken && account.id && account.role && (
@@ -111,10 +106,8 @@ const HomePage = ({ parentPath, match }: any) => {
                             </Dropdown>
                         </div>
                     )}
-                    
-                    {!account.accessToken && !account.id && !account.role && (
-                        <button onClick={() => history.push("/login")}>Đăng nhập</button>
-                    )}
+
+                    {!account.accessToken && !account.id && !account.role && <button onClick={() => history.push('/login')}>Đăng nhập</button>}
                 </Header>
                 <Content className="home-content">
                     <Switch>

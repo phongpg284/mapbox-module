@@ -1,8 +1,12 @@
 import './index.scss'
-import useData from '../../../hooks/useData'
-import { Link, useHistory } from 'react-router-dom'
-import { ENDPOINT_URL } from '../../../app/config'
+
+import dayjs from 'dayjs'
+import { useHistory } from 'react-router-dom'
+
 import { Descriptions, Empty } from 'antd'
+
+import useData from '../../../hooks/useData'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const ActiveDeviceList = () => {
     const [tasks, refetchTasks] = useData({
@@ -22,9 +26,9 @@ const ActiveDeviceList = () => {
                 {tasks &&
                     tasks.map((task: any) => (
                         <div className="active-device-task-item" key={task.device_id} onClick={() => handleClickTaskItem(task?.device_id, task?.task_id)}>
-                            {/* <Link to={`/tasks/${task?.id}`} className="device-task-item-info">Xem lộ trình</Link> */}
-                            <Descriptions title={`Lộ trình hoạt động #${task?.task_id}`}></Descriptions>
-                            <Descriptions title={`Thiết bị #${task?.device_id}`}>
+                            <Descriptions title={`Thiết bị ${task?.device_name}`}>
+                                <Descriptions.Item label={`Lộ trình hoạt động`}>{task?.task_id}</Descriptions.Item>
+                                <Descriptions.Item label="Thời gian bắt đầu">{dayjs(task?.task_create_time).format('DD/MM/YYYY HH:mm:ss')}</Descriptions.Item>
                                 <Descriptions.Item label="Quãng đường">{`${task?.distance?.toFixed(2) ?? '0'} km`}</Descriptions.Item>
                             </Descriptions>
                         </div>

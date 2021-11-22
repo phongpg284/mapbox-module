@@ -1,43 +1,57 @@
-import { createContext, useEffect, useRef, useState } from 'react'
+import './index.scss'
+import { createContext, useEffect, useRef } from 'react'
 import { useParams } from 'react-router'
 
 import Mapbox from '../Mapbox'
 
-import GetRealtimeData from '../../../utils/GetRealtimeData'
 import useRealtimeFetch from './useRealtimeFetch'
+import useFetch from '../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../app/config'
 
 const accessToken = process.env.REACT_APP_MAPBOX_TOKEN_ACCESS
+
 export const TrackingDataContext = createContext<any>(null)
 
 const RealtimeMap = () => {
-  const mapRef = useRef();
-  //@ts-ignore
+    const mapRef = useRef()
+    //@ts-ignore
     const { device, task } = useParams()
+
+    const [deviceResponse, isFetchingDevice, setRequestDevice] = useFetch({} as any)
+
+    useEffect(() => {
+        setRequestDevice({
+            endPoint: ENDPOINT_URL + '/device/',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            requestBody: {
+                action: 'read',
+                pk: device,
+            },
+        })
+    },[])
+
     const query = {
         device_id: device,
         task_id: task,
     }
-    const endpoint = process.env.REACT_APP_API_URL + '/task-online/'
-    
-    const [trackingData] = useRealtimeFetch(endpoint, query, mapRef);
+    const endpoint = ENDPOINT_URL + '/task-online/'
+
+    const [trackingData] = useRealtimeFetch(endpoint, query, mapRef)
 
     return (
-        <div className="wrapper">
-            <div className="content">
-                <div className="title fw-bold fs-3 mb-4 d-flex">
-                    <div>Hoạt động của thiết bị ID {device}</div>
+        <div className="realtime-map-wrapper">
+            <div className="realtime-map-content">
+                <div className="realtime-map-title">
+                    <div>Hoạt động của thiết bị {deviceResponse?.data?.name}</div>
                 </div>
-            </div>
-            <div className="mapbox-container">
-                <TrackingDataContext.Provider value={trackingData}>
-                    <Mapbox
-                        accessToken={accessToken}
-                        maxWidth="100%"
-                        height="calc(100vh - 175px)"
-                        realtimeMode
-                        mapInstance={mapRef}
-                    />
-                </TrackingDataContext.Provider>
+                <div className="realtime-map-mapbox-container">
+                    <TrackingDataContext.Provider value={trackingData}>
+                        <Mapbox accessToken={accessToken} maxWidth="100%" height="calc(100vh - 150px)" realtimeMode mapInstance={mapRef} />
+                    </TrackingDataContext.Provider>
+                </div>
             </div>
         </div>
     )
