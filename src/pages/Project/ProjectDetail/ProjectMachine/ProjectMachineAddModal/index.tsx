@@ -1,8 +1,9 @@
-import './index.scss'
+import style from './index.module.scss'
 import { Button, message, Modal, Select } from 'antd'
 import { useEffect, useState } from 'react'
 import useFetch from '../../../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../../../app/config'
+import AddModal from '../../../../../components/AddModal'
 const { Option } = Select
 
 interface IProjectMachineAddModal {
@@ -14,16 +15,10 @@ interface IProjectMachineAddModal {
     id: number
 }
 
-const ProjectMachineAddModal: React.FC<IProjectMachineAddModal> = ({
-    id,
-    onClose,
-    update,
-    visible,
-    ...props
-}) => {
+const ProjectMachineAddModal: React.FC<IProjectMachineAddModal> = ({ id, onClose, update, visible, ...props }) => {
     const [machines, setMachines] = useState<any[]>([])
     const [selectMachine, setSelectMachine] = useState<any>([])
-    const [roles, setRoles] = useState<any[]>(["user", "driver"])
+    const [roles, setRoles] = useState<any[]>(['user', 'driver'])
     const [selectRole, setSelectRole] = useState<any>([])
 
     const [response, isFetching, setRequest] = useFetch({} as any)
@@ -51,9 +46,7 @@ const ProjectMachineAddModal: React.FC<IProjectMachineAddModal> = ({
         console.log('search:', val)
     }
 
-    const [responseUpdate, isFetchingUpdate, setRequestUpdate] = useFetch(
-        {} as any
-    )
+    const [responseUpdate, isFetchingUpdate, setRequestUpdate] = useFetch({} as any)
 
     const handleAddNewMachine = () => {
         const query = {
@@ -72,64 +65,35 @@ const ProjectMachineAddModal: React.FC<IProjectMachineAddModal> = ({
     }
 
     useEffect(() => {
-        if (
-            !isFetchingUpdate &&
-            responseUpdate &&
-            responseUpdate.data &&
-            !responseUpdate.hasError
-        ) {
+        if (!isFetchingUpdate && responseUpdate && responseUpdate.data && !responseUpdate.hasError) {
             update()
             message.success(responseUpdate.data)
-        }
-        else if (!isFetching && response.hasError) {
+        } else if (!isFetching && response.hasError) {
             message.error(response.hasError)
         }
         onClose()
     }, [responseUpdate])
 
     return (
-        <div className={`project_summary_container`}>
-            <Modal
+        <div className={style.project_summary_container}>
+            <AddModal
                 {...props}
                 visible={visible}
                 onCancel={onClose}
                 title="Thêm máy móc vào dự án"
-                footer={
-                    <Button onClick={handleAddNewMachine}>Thêm vào dự án</Button>
-                }
+                footer={<Button onClick={handleAddNewMachine}>Thêm vào dự án</Button>}
+                width={600}
             >
-                <div className="project-machine-add-container">
-                    {/* <div className="project-machine-add-select">
-                        Chức vụ:
-                        <Select
-                            style={{ width: 200 }}
-                            placeholder="Chọn chức vụ"
-                            optionFilterProp="children"
-                            onChange={onChangeRole}
-                            onSearch={onSearch}
-                        >
-                            {roles &&
-                                roles.map((role) => (
-                                    <Option value={role.name} key={role.id}>
-                                        {role.name}
-                                    </Option>
-                                ))}
-                        </Select>
-                    </div> */}
-                    <div className="project-machine-add-select">
-                        Thiết bị:
+                <div className={style.project_machine_add_container}>
+                    <div className={style.project_machine_add_select}>
                         <Select
                             showSearch
-                            style={{ width: 200 }}
-                            placeholder="Chọn thiết bị"
+                            style={{ width: 300 }}
+                            placeholder="Chọn máy móc"
                             optionFilterProp="children"
                             onChange={onChangeMachine}
                             onSearch={onSearch}
-                            filterOption={(input, option) =>
-                                option?.children
-                                    .toLowerCase()
-                                    .indexOf(input.toLowerCase()) >= 0
-                            }
+                            filterOption={(input, option) => option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                         >
                             {machines &&
                                 machines.map((machine) => (
@@ -140,7 +104,7 @@ const ProjectMachineAddModal: React.FC<IProjectMachineAddModal> = ({
                         </Select>
                     </div>
                 </div>
-            </Modal>
+            </AddModal>
         </div>
     )
 }

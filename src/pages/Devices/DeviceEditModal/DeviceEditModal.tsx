@@ -4,6 +4,7 @@ import { Button, Modal, Form, Input, message, Spin } from 'antd'
 
 import useFetch from '../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../app/config'
+import AddModal from '../../../components/AddModal'
 
 interface IDeviceEditModal {
     centered?: boolean
@@ -89,7 +90,7 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
 
     return (
         <div className={style.device_edit_container}>
-            <Modal
+            <AddModal
                 {...props}
                 visible={visible}
                 onCancel={onClose}
@@ -195,7 +196,7 @@ const DeviceEditModal: React.FC<IDeviceEditModal> = ({
                         </Form>
                     )}
                 </div>
-            </Modal>
+            </AddModal>
         </div>
     )
 }

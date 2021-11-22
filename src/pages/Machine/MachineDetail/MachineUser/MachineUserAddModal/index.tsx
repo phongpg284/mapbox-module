@@ -1,4 +1,4 @@
-import './index.scss'
+import style from './index.module.scss'
 import { useEffect, useState } from 'react'
 import { Button, message, Select } from 'antd'
 
@@ -80,10 +80,10 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({ id, onClose, upda
     }, [responseUpdate])
 
     return (
-        <div className={`machine_summary_container`}>
+        <div className={style.machine_summary_container}>
             <AddModal {...props} visible={visible} onCancel={onClose} width={600} title="Thêm lái máy" footer={<Button onClick={handleAddNewUser}>Thêm</Button>}>
-                <div className="machine-user-add-container">
-                    <div className="machine-user-add-select">
+                <div className={style.machine_user_add_container}>
+                    {/* <div className="machine-user-add-select">
                         Chức vụ:
                         <Select style={{ width: 200 }} placeholder="Chọn chức vụ" optionFilterProp="children" onChange={onChangeRole} onSearch={onSearch}>
                             {roles &&
@@ -93,26 +93,24 @@ const MachineUserAddModal: React.FC<IMachineUserAddModal> = ({ id, onClose, upda
                                     </Option>
                                 ))}
                         </Select>
-                    </div>
-                    <div className="machine-user-add-select">
-                        Người dùng:
-                        <Select
-                            showSearch
-                            style={{ width: 200 }}
-                            placeholder="Chọn người dùng"
-                            optionFilterProp="children"
-                            onChange={onChangeUser}
-                            onSearch={onSearch}
-                            filterOption={(input, option) => option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                        >
-                            {users &&
-                                users.map((user) => (
-                                    <Option value={user.id} key={user.id}>
-                                        {user.name}
-                                    </Option>
-                                ))}
-                        </Select>
-                    </div>
+                    </div> */}
+                    <Select
+                        className={style.machine_user_add_select}
+                        showSearch
+                        style={{ width: 300 }}
+                        placeholder="Chọn người dùng"
+                        optionFilterProp="children"
+                        onChange={onChangeUser}
+                        onSearch={onSearch}
+                        filterOption={(input, option) => option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    >
+                        {users &&
+                            users.map((user) => (
+                                <Option value={user.id} key={user.id}>
+                                    {user.name}
+                                </Option>
+                            ))}
+                    </Select>
                 </div>
             </AddModal>
         </div>

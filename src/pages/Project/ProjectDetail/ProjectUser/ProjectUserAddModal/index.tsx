@@ -1,9 +1,10 @@
-import './index.scss'
+import style from './index.module.scss'
 import { useEffect, useState } from 'react'
 import { Button, message, Modal, Select } from 'antd'
 
 import useFetch from '../../../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../../../app/config'
+import AddModal from '../../../../../components/AddModal'
 
 const { Option } = Select
 
@@ -16,17 +17,11 @@ interface IProjectUserAddModal {
     id: number
 }
 
-const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({
-    id,
-    update,
-    onClose,
-    visible,
-    ...props
-}) => {
+const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({ id, update, onClose, visible, ...props }) => {
     const [users, setUsers] = useState<any[]>([])
     const [roles, setRoles] = useState<any[]>([])
     const [selectUser, setSelectUser] = useState<any>([])
-    const [selectRole, setSelectRole] = useState<any>(["user", "driver"])
+    const [selectRole, setSelectRole] = useState<any>(['user', 'driver'])
 
     const [response, isFetching, setRequest] = useFetch({} as any)
 
@@ -58,9 +53,7 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({
         console.log('search:', val)
     }
 
-    const [responseUpdate, isFetchingUpdate, setRequestUpdate] = useFetch(
-        {} as any
-    )
+    const [responseUpdate, isFetchingUpdate, setRequestUpdate] = useFetch({} as any)
 
     const handleAddNewUser = () => {
         const query = {
@@ -79,35 +72,27 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({
     }
 
     useEffect(() => {
-        if (
-            !isFetchingUpdate &&
-            responseUpdate &&
-            responseUpdate.data &&
-            !responseUpdate.hasError
-        )
-            {
-                update()
-                message.success(responseUpdate.data)
-            }
-        else if (!isFetching && response.hasError) {
+        if (!isFetchingUpdate && responseUpdate && responseUpdate.data && !responseUpdate.hasError) {
+            update()
+            message.success(responseUpdate.data)
+        } else if (!isFetching && response.hasError) {
             message.error(response.hasError)
         }
         onClose()
     }, [responseUpdate])
 
     return (
-        <div className={`project_summary_container`}>
-            <Modal
+        <div className={style.project_summary_container}>
+            <AddModal
                 {...props}
                 visible={visible}
                 onCancel={onClose}
                 title="Thêm người dùng vào dự án"
-                footer={
-                    <Button onClick={handleAddNewUser}>Thêm vào dự án</Button>
-                }
+                footer={<Button onClick={handleAddNewUser}>Thêm vào dự án</Button>}
+                width={600}
             >
-                <div className="project-user-add-container">
-                    <div className="project-user-add-select">
+                <div className={style.project_user_add_container}>
+                    {/* <div className="project-user-add-select">
                         Chức vụ:
                         <Select
                             style={{ width: 200 }}
@@ -123,21 +108,16 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({
                                     </Option>
                                 ))}
                         </Select>
-                    </div>
-                    <div className="project-user-add-select">
-                        Người dùng:
+                    </div> */}
+                    <div className={style.project_user_add_select}>
                         <Select
                             showSearch
-                            style={{ width: 200 }}
+                            style={{ width: 300 }}
                             placeholder="Chọn người dùng"
                             optionFilterProp="children"
                             onChange={onChangeUser}
                             onSearch={onSearch}
-                            filterOption={(input, option) =>
-                                option?.children
-                                    .toLowerCase()
-                                    .indexOf(input.toLowerCase()) >= 0
-                            }
+                            filterOption={(input, option) => option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                         >
                             {users &&
                                 users.map((user) => (
@@ -148,7 +128,7 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({
                         </Select>
                     </div>
                 </div>
-            </Modal>
+            </AddModal>
         </div>
     )
 }
