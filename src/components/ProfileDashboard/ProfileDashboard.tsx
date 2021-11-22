@@ -57,7 +57,7 @@ const ProfileDashboard = () => {
                         <div className="profile-dashboard-info-role">{account.role}</div>
                     </div>
                 </div>
-                <Divider />
+                <Divider/>
                 <ProfileDashboardItem label="Thông tin cá nhân" icon={<BsFillPersonFill />} />
                 <ProfileDashboardItem label="Cài đặt" icon={<MdSettings />} />
                 <button className="profile-dashboard-logout" onClick={handleLogout}>
