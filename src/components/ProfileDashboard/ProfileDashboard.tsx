@@ -11,14 +11,12 @@ import { MdLogout, MdSettings } from 'react-icons/md'
 import { IoIosArrowForward } from 'react-icons/io'
 import { BsFillPersonFill } from 'react-icons/bs'
 
-const ProfileDashboardItem = ({ icon, label }: any) => {
+const ProfileDashboardItem = ({ label }: any) => {
     return (
         <div className="profile-dashboard-item-wrapper">
-            <div className="profile-dashboard-item-icon">{icon}</div>
+            <div className="profile-dashboard-item-icon"></div>
             <div className="profile-dashboard-item-label">{label}</div>
-            <div className="profile-dashboard-item-arrow">
-                <IoIosArrowForward />
-            </div>
+            <div className="profile-dashboard-item-arrow"></div>
         </div>
     )
 }
@@ -54,15 +52,16 @@ const ProfileDashboard = () => {
                     </div>
                     <div>
                         <div className="profile-dashboard-info-name">{account.name}</div>
-                        <div className="profile-dashboard-info-role">{account.role}</div>
+                        <div className="profile-dashboard-info-role">{`(${account.role})`}</div>
+                        <div className="profile-dashboard-info-modify">Chỉnh sửa hồ sơ</div>
                     </div>
                 </div>
                 <Divider/>
-                <ProfileDashboardItem label="Thông tin cá nhân" icon={<BsFillPersonFill />} />
-                <ProfileDashboardItem label="Cài đặt" icon={<MdSettings />} />
+                {/* <ProfileDashboardItem label="Thông tin cá nhân" icon={<BsFillPersonFill />} /> */}
+                <ProfileDashboardItem label="Cài đặt" />
                 <button className="profile-dashboard-logout" onClick={handleLogout}>
-                    <div className="profile-dashboard-logout-icon"><MdLogout /></div>
-                    <div className="profile-dashboard-logout-title">Logout</div>
+                    <div className="profile-dashboard-logout-icon"></div>
+                    <div className="profile-dashboard-logout-title">Đăng xuất</div>
                 </button>
             </div>
         </div>
