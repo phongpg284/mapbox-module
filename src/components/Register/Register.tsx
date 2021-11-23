@@ -1,4 +1,6 @@
-import './index.css'
+import './index.scss'
+import imetLogo from '../../assets/imet-logo.png'
+
 import { Form, Input, Button } from 'antd'
 import { ENDPOINT_URL } from '../../app/config'
 
@@ -28,9 +30,20 @@ const Register = () => {
     }
 
     return (
-        <div className="register-wrapper">
-            <div className="register-container">
+        <div className="register-pc-wrapper">
+            <div className="register-pc-intro">
+                <div className="register-pc-theme"></div>
+                <div className="pc-intro-info">
+                    <img src={imetLogo} alt="" className="pc-intro-logo" />
+                    <div className="pc-intro-title">WELCOME TO iMET</div>
+                    <div className="pc-intro-description">The best construction vehicles tracking-app</div>
+                    <div className="pc-intro-description">you can find!</div>
+                </div>
+            </div>
+            <div className="register-pc-container">
+                <div className="register-pc-title">SIGN UP</div>
                 <Form
+                    className="register-pc-form"
                     name="basic"
                     layout="vertical"
                     labelCol={{ span: 16 }}
@@ -41,7 +54,6 @@ const Register = () => {
                     autoComplete="off"
                 >
                     <Form.Item
-                        label="Username"
                         name="username"
                         rules={[
                             {
@@ -50,11 +62,10 @@ const Register = () => {
                             },
                         ]}
                     >
-                        <Input />
+                         <input type="text" className="register-pc-form-input pc-input-username" placeholder="Username" />
                     </Form.Item>
 
                     <Form.Item
-                        label="Password"
                         name="password"
                         rules={[
                             {
@@ -63,11 +74,10 @@ const Register = () => {
                             },
                         ]}
                     >
-                        <Input.Password />
+                        <input type="password" className="register-pc-form-input pc-input-password" placeholder="Password" />
                     </Form.Item>
 
                     <Form.Item
-                        label="Confirm Password"
                         name="confirmPassword"
                         rules={[
                             {
@@ -76,17 +86,18 @@ const Register = () => {
                             },
                         ]}
                     >
-                        <Input.Password />
+                        <input type="password" className="register-pc-form-input pc-input-password" placeholder="Confirm Password" />
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-                        <Button type="primary" htmlType="submit">
-                            Register
+                        <Button className="register-pc-form-button" type="primary" htmlType="submit">
+                            REGISTER
                         </Button>
                     </Form.Item>
                 </Form>
             </div>
         </div>
+
     )
 }
 
