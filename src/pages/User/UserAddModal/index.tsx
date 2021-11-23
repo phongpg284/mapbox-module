@@ -13,18 +13,6 @@ interface IModal {
 
 const UserAddModal: React.FC<IModal> = ({ update, onClose, ...props }) => {
     const [form] = Form.useForm()
-    const onRoleChange = (value: string) => {
-        switch (value) {
-            case 'male':
-                form.setFieldsValue({ note: 'Hi, man!' })
-                return
-            case 'female':
-                form.setFieldsValue({ note: 'Hi, lady!' })
-                return
-            case 'other':
-                form.setFieldsValue({ note: 'Hi there!' })
-        }
-    }
     const addNewUser = async (value: any) => {
         const query = {
             ...value,

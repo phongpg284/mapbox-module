@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import style from './index.module.scss'
 
 import { Link, useHistory } from 'react-router-dom'
@@ -40,7 +41,7 @@ const UserList = () => {
             render: (text: any, record: any) => <Link to={`/users/${record.id}`}>{text}</Link>,
             sorter: {
                 compare: Sorter.DEFAULT,
-            },    
+            },
         },
         ...columns.slice(1),
         {

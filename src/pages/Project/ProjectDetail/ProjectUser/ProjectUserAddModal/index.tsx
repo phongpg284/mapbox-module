@@ -1,6 +1,6 @@
 import style from './index.module.scss'
 import { useEffect, useState } from 'react'
-import { Button, message, Modal, Select } from 'antd'
+import { Button, message, Select } from 'antd'
 
 import useFetch from '../../../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../../../app/config'
@@ -19,7 +19,6 @@ interface IProjectUserAddModal {
 
 const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({ id, update, onClose, visible, ...props }) => {
     const [users, setUsers] = useState<any[]>([])
-    const [roles, setRoles] = useState<any[]>([])
     const [selectUser, setSelectUser] = useState<any>([])
     const [selectRole, setSelectRole] = useState<any>(['user', 'driver'])
 
@@ -92,23 +91,6 @@ const ProjectUserAddModal: React.FC<IProjectUserAddModal> = ({ id, update, onClo
                 width={600}
             >
                 <div className={style.project_user_add_container}>
-                    {/* <div className="project-user-add-select">
-                        Chức vụ:
-                        <Select
-                            style={{ width: 200 }}
-                            placeholder="Chọn chức vụ"
-                            optionFilterProp="children"
-                            onChange={onChangeRole}
-                            onSearch={onSearch}
-                        >
-                            {roles &&
-                                roles.map((role) => (
-                                    <Option value={role.name} key={role.id}>
-                                        {role.name}
-                                    </Option>
-                                ))}
-                        </Select>
-                    </div> */}
                     <div className={style.project_user_add_select}>
                         <Select
                             showSearch

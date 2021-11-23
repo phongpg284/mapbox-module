@@ -1,7 +1,7 @@
 import './index.css'
 
 import { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { Button, Input, Space, Table } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'

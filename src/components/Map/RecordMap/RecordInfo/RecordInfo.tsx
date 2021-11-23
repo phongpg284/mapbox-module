@@ -1,15 +1,14 @@
 import './index.scss'
 
+import { Button, Spin } from 'antd'
 import { CalendarOutlined, ColumnWidthOutlined, LoadingOutlined } from '@ant-design/icons'
 
 import { FaMapMarkerAlt, FaSatellite } from 'react-icons/fa'
 import { SiSpeedtest } from 'react-icons/si'
 import { BiArea } from 'react-icons/bi'
 import { GiPathDistance } from 'react-icons/gi'
-import { Button, Spin } from 'antd'
-import { AiOutlineArrowRight } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
-import { BsArrowDownCircle, BsPlusCircle } from 'react-icons/bs'
+import { BsArrowDownCircle } from 'react-icons/bs'
+
 import BackButton from '../../../BackButton'
 
 const RecordInfoItem = ({ icon, title, content }: any) => {

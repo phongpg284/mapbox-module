@@ -1,5 +1,5 @@
 import style from './index.module.scss'
-import { Button, Modal, Table } from 'antd'
+import { Button, Table } from 'antd'
 import useFetch from '../../../hooks/useFetch'
 import { useEffect, useState } from 'react'
 import { ENDPOINT_URL } from '../../../app/config'

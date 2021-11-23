@@ -1,4 +1,4 @@
-import { Form, Input, message, Button, Modal } from 'antd'
+import { Form, Input, message, Button} from 'antd'
 import { ENDPOINT_URL } from '../../../app/config'
 import AddModal from '../../../components/AddModal'
 

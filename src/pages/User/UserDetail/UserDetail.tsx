@@ -68,6 +68,7 @@ const UserDetail = ({ match }: any) => {
                 'Content-type': 'application/json',
             },
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -88,6 +89,7 @@ const UserDetail = ({ match }: any) => {
             }
             setDataSource(convertDataSource)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [response])
     return (
         <div className={style.user_detail_container}>

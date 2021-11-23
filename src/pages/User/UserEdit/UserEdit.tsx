@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import style from './index.module.scss'
 import { useEffect, useState } from 'react'
 import { Input, Form, message, Spin, Row, Col } from 'antd'

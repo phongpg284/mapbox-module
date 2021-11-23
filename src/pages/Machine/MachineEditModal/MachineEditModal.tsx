@@ -1,45 +1,10 @@
 import style from './index.module.scss'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import { Button, Form, Input, FormInstance, message, Spin } from 'antd'
+import { useEffect, useState } from 'react'
+import { Button, Form, Input, message, Spin } from 'antd'
 
 import { ENDPOINT_URL } from '../../../app/config'
 import useFetch from '../../../hooks/useFetch'
 import AddModal from '../../../components/AddModal'
-
-const IKeyCode = {
-    name: {
-        brand: 'Tên máy móc',
-        type: 'string',
-    },
-    model: {
-        brand: 'Kiểu xe',
-        type: 'string',
-    },
-    description: {
-        brand: 'Mô tả tổng quan',
-        type: 'string',
-    },
-    driver: {
-        brand: 'Lái máy',
-        type: 'string',
-    },
-    create_time: {
-        brand: 'Thời gian tạo',
-        type: 'date',
-    },
-    update_time: {
-        brand: 'Thời gian cập nhật',
-        type: 'date',
-    },
-    start_time: {
-        brand: 'Thời gian bắt đầu',
-        type: 'date',
-    },
-    end_time: {
-        brand: 'Thời gian kết thúc',
-        type: 'date',
-    },
-}
 
 interface IMachineEditModal {
     centered?: boolean

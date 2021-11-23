@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button, Select } from 'antd'
 import AddModal from '../../../components/AddModal'
 const { Option } = Select
@@ -7,7 +7,7 @@ const ModeratorAddModal = ({ ...props }) => {
     const [users, setUsers] = useState<any[]>([])
     const [roles, setRoles] = useState<any[]>([])
     const [selectUser, setSelectUser] = useState<any>([])
-    const [selectRole, setSelectRole] = useState<any>(["user", "driver"])
+    const [selectRole, setSelectRole] = useState<any>(['user', 'driver'])
 
     function onChangeUser(value: any) {
         console.log(`selected user ${value}`)
@@ -25,29 +25,10 @@ const ModeratorAddModal = ({ ...props }) => {
 
     const handleAddNewModerator = async (value: any) => {
         window.alert('Create new mod')
-        const query = {
-            ...value,
-            action: 'create',
-        }
-        // const res = await fetch(ENDPOINT_URL + '/project/', {
-        //     method: 'POST',
-        //     body: JSON.stringify(query),
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        // })
-
-        // const result = await res.json()
-        // return result
     }
 
     return (
-        <AddModal
-            {...props}
-            width={600}
-            title="Thêm quản trị viên"
-            footer={<Button onClick={handleAddNewModerator}>Đăng ký</Button>}
-        >
+        <AddModal {...props} width={600} title="Thêm quản trị viên" footer={<Button onClick={handleAddNewModerator}>Đăng ký</Button>}>
             <div className="moderator-add-container">
                 <Select
                     showSearch
@@ -56,11 +37,7 @@ const ModeratorAddModal = ({ ...props }) => {
                     optionFilterProp="children"
                     onChange={onChangeUser}
                     onSearch={onSearch}
-                    filterOption={(input, option) =>
-                        option?.children
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                    }
+                    filterOption={(input, option) => option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                 >
                     {users &&
                         users.map((user) => (
@@ -68,17 +45,9 @@ const ModeratorAddModal = ({ ...props }) => {
                                 {user.name}
                             </Option>
                         ))}
-                    {/* <Option value="lucy">Lucy</Option>
-                    <Option value="tom">Tom</Option> */}
                 </Select>
 
-                <Select
-                    style={{ width: 200 }}
-                    placeholder="Chọn chức vụ"
-                    optionFilterProp="children"
-                    onChange={onChangeRole}
-                    onSearch={onSearch}
-                >
+                <Select style={{ width: 200 }} placeholder="Chọn chức vụ" optionFilterProp="children" onChange={onChangeRole} onSearch={onSearch}>
                     {roles &&
                         roles.map((role) => (
                             <Option value={role.name} key={role.id}>

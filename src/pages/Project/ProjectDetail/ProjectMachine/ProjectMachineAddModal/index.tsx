@@ -1,5 +1,5 @@
 import style from './index.module.scss'
-import { Button, message, Modal, Select } from 'antd'
+import { Button, message, Select } from 'antd'
 import { useEffect, useState } from 'react'
 import useFetch from '../../../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../../../app/config'
@@ -18,8 +18,6 @@ interface IProjectMachineAddModal {
 const ProjectMachineAddModal: React.FC<IProjectMachineAddModal> = ({ id, onClose, update, visible, ...props }) => {
     const [machines, setMachines] = useState<any[]>([])
     const [selectMachine, setSelectMachine] = useState<any>([])
-    const [roles, setRoles] = useState<any[]>(['user', 'driver'])
-    const [selectRole, setSelectRole] = useState<any>([])
 
     const [response, isFetching, setRequest] = useFetch({} as any)
 
