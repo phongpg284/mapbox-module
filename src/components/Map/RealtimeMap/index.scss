@@ -1,5 +1,5 @@
 .realtime-map-content {
-    padding: 10px
+    padding: 10px;
 }
 .realtime-map-title {
     font-size: 2rem;
@@ -10,7 +10,15 @@
     align-items: center;
     justify-content: space-between;
     margin-right: 20px;
+    @media (max-width: '425px') {
+        font-size: 1.4rem;
+        margin-right: 0;
+    }
 }
 
 .realtime-map-mapbox-container {
+    height: calc(100vh - 150px);
+    @media (max-width: '425px') {
+        height: calc(100vh - 170px);
+    }
 }

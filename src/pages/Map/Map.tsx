@@ -65,10 +65,10 @@ const MapPage = ({ parentPath }: any) => {
           className="header"
           style={{ height: "70px", backgroundColor: "#00a26a" }}
         >
-          <div className="float-start">
+          <div className="float-left">
             <MdDehaze onClick={handleClickMenu} style={{ color: "white" }} />
           </div>
-          <div className="float-end">
+          <div className="float-right">
             <img
               alt="no?"
               src="https://s3-ap-northeast-1.amazonaws.com/agri-info-design-public/icons/ic_person_black_48dp.png"

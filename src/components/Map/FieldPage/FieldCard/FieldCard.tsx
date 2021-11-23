@@ -78,7 +78,7 @@ const FieldCard = ({ data }: any) => {
                         }}
                       >
                         <Button
-                          className="float-end m-1"
+                          className="float-right m-1"
                           danger
                           type="primary"
                           size="large"
