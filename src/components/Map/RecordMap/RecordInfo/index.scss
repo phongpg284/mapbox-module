@@ -1,4 +1,15 @@
-.record-info-container {
+.record-info-route {
+    margin-right: 25px;
+    text-align: right;
+    a {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        font-size: 1.2rem;
+        svg {
+            margin-left: 5px;
+        }
+    }
 }
 
 .record-info-content {
@@ -9,7 +20,7 @@
     border-radius: 15px;
 
     box-shadow: 3 px 3px 3px rgba(68, 68, 68, 0.6);
-    background-color: #A3E4D7;
+    background-color: #a3e4d7;
 }
 
 .record-info-item-divider {
@@ -54,6 +65,5 @@
     &-content {
         font-weight: bold;
         font-size: 1.6rem;
-
     }
 }

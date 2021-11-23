@@ -6,6 +6,10 @@
     font-weight: 700;
     text-align: left;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 20px;
 }
 
 .realtime-map-mapbox-container {

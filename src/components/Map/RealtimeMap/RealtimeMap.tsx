@@ -7,6 +7,7 @@ import Mapbox from '../Mapbox'
 import useRealtimeFetch from './useRealtimeFetch'
 import useFetch from '../../../hooks/useFetch'
 import { ENDPOINT_URL } from '../../../app/config'
+import BackButton from '../../BackButton'
 
 const accessToken = process.env.REACT_APP_MAPBOX_TOKEN_ACCESS
 
@@ -31,7 +32,7 @@ const RealtimeMap = () => {
                 pk: device,
             },
         })
-    },[])
+    }, [])
 
     const query = {
         device_id: device,
@@ -46,6 +47,9 @@ const RealtimeMap = () => {
             <div className="realtime-map-content">
                 <div className="realtime-map-title">
                     <div>Hoạt động của thiết bị {deviceResponse?.data?.name}</div>
+                    <div className="realtime-map-back-button">
+                        <BackButton route="/active-devices/list" />
+                    </div>
                 </div>
                 <div className="realtime-map-mapbox-container">
                     <TrackingDataContext.Provider value={trackingData}>

@@ -1,12 +1,14 @@
 import './index.scss'
 
-import { CalendarOutlined, ColumnWidthOutlined } from '@ant-design/icons'
+import { CalendarOutlined, ColumnWidthOutlined, LoadingOutlined } from '@ant-design/icons'
 
 import { FaMapMarkerAlt, FaSatellite } from 'react-icons/fa'
 import { SiSpeedtest } from 'react-icons/si'
 import { BiArea } from 'react-icons/bi'
 import { GiPathDistance } from 'react-icons/gi'
 import { Spin } from 'antd'
+import { AiOutlineArrowRight } from 'react-icons/ai'
+import { Link } from 'react-router-dom'
 
 const RecordInfoItem = ({ icon, title, content }: any) => {
     return (
@@ -21,19 +23,6 @@ const RecordInfoItem = ({ icon, title, content }: any) => {
 }
 
 const RecordInfo = ({ data, taskData, deviceData, isFetching }: any) => {
-    // const [selectedTask, setSelectedTask] = useState()
-
-    // function handleChange(value: any) {
-    //     changeSelectTask(value)
-    //     setSelectedTask(value)
-    // }
-
-    // const { viewWidth, setViewWidth } = useContext(viewWidthContextKey === 'record' ? RecordViewIndex : TaskViewIndex)
-
-    // const handleChangeWidth = (value: number) => {
-    //     setViewWidth(value)
-    // }
-
     let total = {
         speed: 0,
         accuracy: 0,
@@ -50,10 +39,20 @@ const RecordInfo = ({ data, taskData, deviceData, isFetching }: any) => {
         speed: total.speed / data?.speed?.length,
         accuray: total.accuracy / data?.accuracy?.length,
     }
+
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
+
     return (
         <div className="record-info-container">
             <div className={`record-info-content`}>
-                {isFetching && <Spin tip="Loading..." />}
+                {deviceData?.id && (
+                    <div className="record-info-route">
+                        <Link to={`/devices/${deviceData?.id}`}>
+                            Quay lại <AiOutlineArrowRight />
+                        </Link>
+                    </div>
+                )}
+                {isFetching && <Spin indicator={antIcon} tip="Đang tải lộ trình..." />}
                 {!isFetching && (
                     <>
                         <div className="record-info-title">Thiết bị {deviceData?.name}</div>

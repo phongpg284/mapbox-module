@@ -72,15 +72,15 @@ const RecordMap = ({ match }: any) => {
         }
     }, [singleTaskResponse])
 
-
     const [deviceResponse, isFetchingDevice, setRequestDevice] = useFetch({} as any)
 
     useEffect(() => {
-        const query = {
-            action: 'read',
-            pk: singleTaskResponse?.data?.device_id,
-        }
+        console.log(singleTaskResponse?.data?.device_id)
         if (singleTaskResponse?.data?.device_id) {
+            const query = {
+                action: 'read',
+                pk: singleTaskResponse?.data?.device_id,
+            }
             setRequestDevice({
                 endPoint: ENDPOINT_URL + '/device/',
                 method: 'POST',
