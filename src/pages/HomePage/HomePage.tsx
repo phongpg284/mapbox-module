@@ -37,6 +37,8 @@ import ModeratorDetail from '../Moderator/ModeratorDetail'
 
 import ActiveDeviceList from '../ActiveDevice/ActiveDeviceList'
 
+import ProfileEdit from '../Profile/ProfileEdit'
+
 const { Header, Content } = Layout
 
 const HomePage = ({ parentPath, match }: any) => {
@@ -107,6 +109,8 @@ const HomePage = ({ parentPath, match }: any) => {
                 </Header>
                 <Content className="home-content">
                     <Switch>
+                        <PrivateRoute path={`${parentPath}profile/edit`} component={ProfileEdit} />
+                        
                         <PrivateRoute path={`${parentPath}devices/list`} component={DeviceList} />
                         <PrivateRoute path={`${parentPath}devices/:id/tasks`} component={DeviceTask} />
                         <PrivateRoute path={`${parentPath}devices/:id`} component={DeviceInfo} />

@@ -5,6 +5,7 @@
     margin: 30px auto;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     .user_table_content {
         flex-grow: 2;
     }
