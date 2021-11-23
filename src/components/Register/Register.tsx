@@ -86,7 +86,7 @@ const Register = () => {
                             },
                         ]}
                     >
-                        <input type="password" className="register-pc-form-input pc-input-password" placeholder="Confirm Password" />
+                        <input type="password" className="register-pc-form-input pc-input-password-confirm" placeholder="Confirm Password" />
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
