@@ -85,24 +85,6 @@ const HomePage = ({ parentPath, match }: any) => {
                 >
                     <ProfileDashboard />
                 </Drawer> */}
-<<<<<<< HEAD
-                <Header className="header">
-                    <div className="menu-and-logo float-start">
-                        <button className={`menu-toggle-button ${!isSideboardCollapse ? '' : 'active'}`} type="button" onClick={handleClickMenu}>
-                            <div className="button-image"></div>
-                        </button>
-                        <button className="branch" onClick={() => history.push("/projects/list")}>
-                            <div className="branch-logo"></div>
-                            <div className="branch-name">iMET</div>
-                        </button>
-                    </div>
-
-                    {account.accessToken && account.id && account.role && (
-                        <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight" onVisibleChange={handleClickProfile}>
-                            <div className={`float-end user-toggle ${!isProfileCollapse ? '' : 'active'}`} >
-                                <div className="user-avatar">
-                                    <div className="user-avatar-img"></div>
-=======
 
                 <Affix offsetTop={0}>
                     <Header className="header">
@@ -122,7 +104,6 @@ const HomePage = ({ parentPath, match }: any) => {
                                     <div className="user-avatar">
                                         <div className="user-avatar-img"></div>
                                     </div>
->>>>>>> 5f2d72e020f20197ed66e8d468f90489bbba35e3
                                 </div>
                             </Dropdown>
                         )}
