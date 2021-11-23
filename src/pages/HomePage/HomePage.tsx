@@ -39,6 +39,7 @@ import ActiveDeviceList from '../ActiveDevice/ActiveDeviceList'
 
 import ProfileEdit from '../Profile/ProfileEdit'
 import HomeContent from './HomeContent'
+import HomeHeader from './HomeContent/HomeHeader'
 
 const { Header, Content } = Layout
 
@@ -86,31 +87,39 @@ const HomePage = ({ parentPath, match }: any) => {
                     <ProfileDashboard />
                 </Drawer> */}
 
-                <Affix offsetTop={0}>
-                    <Header className="header">
-                        <div className="menu-and-logo float-left">
-                            <button className={`menu-toggle-button ${!isSideboardCollapse ? '' : 'active'}`} type="button" onClick={handleClickMenu}>
-                                <div className="button-image"></div>
-                            </button>
-                            <button className="branch" onClick={() => history.push('/')}>
-                                <div className="branch-logo"></div>
-                                <div className="branch-name">iMET</div>
-                            </button>
-                        </div>
-
-                        {account.accessToken && account.id && account.role && (
-                            <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight" onVisibleChange={handleClickProfile}>
-                                <div className={`float-right user-toggle ${!isProfileCollapse ? '' : 'active'}`}>
-                                    <div className="user-avatar">
-                                        <div className="user-avatar-img"></div>
-                                    </div>
+                {account.accessToken && account.role && (
+                    <Affix offsetTop={0}>
+                        <Header className="header">
+                            <>
+                                <div className="menu-and-logo float-left">
+                                    <button className={`menu-toggle-button ${!isSideboardCollapse ? '' : 'active'}`} type="button" onClick={handleClickMenu}>
+                                        <div className="button-image"></div>
+                                    </button>
+                                    <button className="branch" onClick={() => history.push('/')}>
+                                        <div className="branch-logo"></div>
+                                        <div className="branch-name">iMET</div>
+                                    </button>
                                 </div>
-                            </Dropdown>
-                        )}
 
-                        {/* {!account.accessToken && !account.id && !account.role && <button onClick={() => history.push('/login')}>Đăng nhập</button>} */}
-                    </Header>
-                </Affix>
+                                {/* {account.accessToken && account.id && account.role && ( */}
+                                <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight" onVisibleChange={handleClickProfile}>
+                                    <div className={`float-right user-toggle ${!isProfileCollapse ? '' : 'active'}`}>
+                                        <div className="user-avatar">
+                                            <div className="user-avatar-img"></div>
+                                        </div>
+                                    </div>
+                                </Dropdown>
+                                {/* )} */}
+                            </>
+                            // {/* {!account.accessToken && !account.id && !account.role && <button onClick={() => history.push('/login')}>Đăng nhập</button>} */}
+                        </Header>
+                    </Affix>
+                )}
+                {!account?.accessToken && !account?.role && (
+                    <Affix offsetTop={0}>
+                        <HomeHeader />
+                    </Affix>
+                )}
                 <Content className="home-content">
                     <Switch>
                         <PrivateRoute path={`${parentPath}profile/edit`} component={ProfileEdit} />
