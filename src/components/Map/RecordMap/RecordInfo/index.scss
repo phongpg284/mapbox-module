@@ -67,3 +67,22 @@
         font-size: 1.6rem;
     }
 }
+
+.record-info-control {
+    height: 40px;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10px;
+    button {
+        height: 100%;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        font-weight: 500;
+        svg {
+            margin-right: 5px;
+            font-size: 1.1rem;
+        }
+    }
+}

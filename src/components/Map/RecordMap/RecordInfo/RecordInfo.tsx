@@ -6,9 +6,11 @@ import { FaMapMarkerAlt, FaSatellite } from 'react-icons/fa'
 import { SiSpeedtest } from 'react-icons/si'
 import { BiArea } from 'react-icons/bi'
 import { GiPathDistance } from 'react-icons/gi'
-import { Spin } from 'antd'
+import { Button, Spin } from 'antd'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
+import { BsArrowDownCircle, BsPlusCircle } from 'react-icons/bs'
+import BackButton from '../../../BackButton'
 
 const RecordInfoItem = ({ icon, title, content }: any) => {
     return (
@@ -45,13 +47,6 @@ const RecordInfo = ({ data, taskData, deviceData, isFetching }: any) => {
     return (
         <div className="record-info-container">
             <div className={`record-info-content`}>
-                {deviceData?.id && (
-                    <div className="record-info-route">
-                        <Link to={`/devices/${deviceData?.id}`}>
-                            Quay lại <AiOutlineArrowRight />
-                        </Link>
-                    </div>
-                )}
                 {isFetching && <Spin indicator={antIcon} tip="Đang tải lộ trình..." />}
                 {!isFetching && (
                     <>
@@ -63,6 +58,13 @@ const RecordInfo = ({ data, taskData, deviceData, isFetching }: any) => {
                         <RecordInfoItem icon={<FaMapMarkerAlt />} title="Độ chính xác trung bình" content={`${average.accuray.toFixed(2) ?? ''} cm`} />
                         <RecordInfoItem icon={<SiSpeedtest />} title="Tốc độ trung bình" content={`${average.speed.toFixed(2) ?? ''} km/h`} />
                         <RecordInfoItem icon={<FaSatellite />} title="GNSS" content={taskData?.gnss ?? ''} />
+                        <div className="record-info-control">
+                            <BackButton route={`/devices/${deviceData?.id}`} />
+                            <Button>
+                                <BsArrowDownCircle />
+                                Xuất dữ liệu
+                            </Button>
+                        </div>
                     </>
                 )}
             </div>
