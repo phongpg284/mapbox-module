@@ -53,7 +53,7 @@ const RealtimeMap = () => {
                 </div>
                 <div className="realtime-map-mapbox-container">
                     <TrackingDataContext.Provider value={trackingData}>
-                        <Mapbox accessToken={accessToken} maxWidth="100%" height="calc(100vh - 150px)" realtimeMode mapInstance={mapRef} />
+                        <Mapbox accessToken={accessToken} maxWidth="100%" height="100%" realtimeMode mapInstance={mapRef} />
                     </TrackingDataContext.Provider>
                 </div>
             </div>

@@ -160,7 +160,7 @@ const Mapbox: any = memo(
         }))
 
         return (
-            <div>
+            <>
                 <Map
                     style={`mapbox://styles/mapbox/${visibleLayer}`}
                     containerStyle={{
@@ -299,7 +299,7 @@ const Mapbox: any = memo(
                             </>
                         ))} */}
                 </Map>
-            </div>
+            </>
         )
     })
 )
