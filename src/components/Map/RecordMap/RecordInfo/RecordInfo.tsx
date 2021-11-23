@@ -10,6 +10,9 @@ import { GiPathDistance } from 'react-icons/gi'
 import { BsArrowDownCircle } from 'react-icons/bs'
 
 import BackButton from '../../../BackButton'
+import useFetch from '../../../../hooks/useFetch'
+import { ENDPOINT_URL } from '../../../../app/config'
+import { useEffect } from 'react'
 
 const RecordInfoItem = ({ icon, title, content }: any) => {
     return (
@@ -43,6 +46,35 @@ const RecordInfo = ({ data, taskData, deviceData, isFetching }: any) => {
 
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 
+    function download(blob: any, filename: any) {
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.style.display = 'none'
+        a.href = url
+        // the filename you want
+        a.download = filename
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        window.URL.revokeObjectURL(url)
+    }
+
+    const handleCreateFile = () => {
+        if (taskData?.task_id && deviceData?.id)
+            fetch(ENDPOINT_URL + '/task-export/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    task_id: taskData.task_id,
+                    device_id: deviceData.id,
+                }),
+            })
+                .then((res) => res.blob())
+                .then((blob) => download(blob, 'task_csv'))
+    }
+
     return (
         <div className="record-info-container">
             <div className={`record-info-content`}>
@@ -59,7 +91,7 @@ const RecordInfo = ({ data, taskData, deviceData, isFetching }: any) => {
                         <RecordInfoItem icon={<FaSatellite />} title="GNSS" content={taskData?.gnss ?? ''} />
                         <div className="record-info-control">
                             <BackButton route={`/devices/${deviceData?.id}`} />
-                            <Button>
+                            <Button onClick={handleCreateFile}>
                                 <BsArrowDownCircle />
                                 Xuất dữ liệu
                             </Button>

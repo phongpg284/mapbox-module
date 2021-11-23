@@ -75,7 +75,6 @@ const RecordMap = ({ match }: any) => {
     const [deviceResponse, isFetchingDevice, setRequestDevice] = useFetch({} as any)
 
     useEffect(() => {
-        console.log(singleTaskResponse?.data?.device_id)
         if (singleTaskResponse?.data?.device_id) {
             const query = {
                 action: 'read',
