@@ -108,7 +108,7 @@ const HomePage = ({ parentPath, match }: any) => {
                             </Dropdown>
                         )}
 
-                        {!account.accessToken && !account.id && !account.role && <button onClick={() => history.push('/login')}>Đăng nhập</button>}
+                        {/* {!account.accessToken && !account.id && !account.role && <button onClick={() => history.push('/login')}>Đăng nhập</button>} */}
                     </Header>
                 </Affix>
                 <Content className="home-content">
