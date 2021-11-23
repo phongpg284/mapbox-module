@@ -139,7 +139,7 @@ const UserList = () => {
                 <Table columns={tableColumns} dataSource={filterData} bordered loading={isFetching} />;
             </div>
             <UserAddModal update={reFetchAfterUpdate} centered width={800} visible={isAddModalVisible} onClose={handleHideAddProject} />
-            <DeleteConfirmModal title={`dự án ${selectDeleteName}`} visible={deleteModalVisible} setVisible={setDeleteModalVisible} handleOK={handleConfirmDelete} />
+            <DeleteConfirmModal title={`nguời dùng ${selectDeleteName}`} visible={deleteModalVisible} setVisible={setDeleteModalVisible} handleOK={handleConfirmDelete} />
         </div>
     )
 }
