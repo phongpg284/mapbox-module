@@ -8,12 +8,19 @@
     }
 }
 
+.device-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .device-detail-title {
     font-size: 2rem;
     font-weight: 600;
     text-align: left;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     span {
         margin-left: 10px;
         font-size: 1.2rem;

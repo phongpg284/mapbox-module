@@ -11,6 +11,7 @@ import useData from '../../../hooks/useData'
 import { ENDPOINT_URL } from '../../../app/config'
 
 import { AiFillCalendar } from 'react-icons/ai'
+import BackButton from '../../../components/BackButton'
 
 const ProjectDetail = ({ match }: any) => {
     const id = match?.params?.id
@@ -58,7 +59,13 @@ const ProjectDetail = ({ match }: any) => {
 
     return (
         <div className="project-detail-container">
-            <div className="project-detail-title">Dự án {data?.name ?? ''}</div>
+            <div className="device-detail-header">
+                <div className="project-detail-title">Dự án {data?.name ?? ''}</div>
+                <div className="device-detail-back-button">
+                    <BackButton route="list" />
+                </div>
+            </div>
+
             <div className="project-detail-date">
                 <div className="project-detail-date-icon">
                     <AiFillCalendar />

@@ -87,7 +87,7 @@ const HomePage = ({ parentPath, match }: any) => {
                         <button className={`menu-toggle-button ${!isSideboardCollapse ? '' : 'active'}`} type="button" onClick={handleClickMenu}>
                             <div className="button-image"></div>
                         </button>
-                        <button className="branch">
+                        <button className="branch" onClick={() => history.push("/")}>
                             <div className="branch-logo"></div>
                             <div className="branch-name">iMET</div>
                         </button>

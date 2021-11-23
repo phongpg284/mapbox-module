@@ -10,6 +10,7 @@ import MachineSummary from '../MachineDetail/MachineSummary'
 import { ENDPOINT_URL } from '../../../app/config'
 import useData from '../../../hooks/useData'
 import { AiFillCalendar } from 'react-icons/ai'
+import BackButton from '../../../components/BackButton'
 
 const MachineDetail = ({ match }: any) => {
     const id = match?.params?.id
@@ -57,10 +58,15 @@ const MachineDetail = ({ match }: any) => {
 
     return (
         <div className="machine-detail-container">
-            <div className="machine-detail-title">
-                Máy {data?.name ?? ''}
-                {/* {isDeviceActive && <span className="device-tag-active">Đang hoạt động</span>}
+            <div className="device-detail-header">
+                <div className="machine-detail-title">
+                    Máy {data?.name ?? ''}
+                    {/* {isDeviceActive && <span className="device-tag-active">Đang hoạt động</span>}
                 {!isDeviceActive && <span className="device-tag-no-active">Không hoạt động</span>} */}
+                </div>
+                <div className="device-detail-back-button">
+                    <BackButton route="list" />
+                </div>
             </div>
             <div className="machine-detail-date">
                 <div className="machine-detail-date-icon">

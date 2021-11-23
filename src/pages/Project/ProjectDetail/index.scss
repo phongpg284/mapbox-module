@@ -3,7 +3,17 @@
     max-width: 1500px;
     padding: 10px 40px;
     background-color: white;
+    @media (max-width: 425px) {
+        padding: 5px 10px;
+    }
 }
+
+.device-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
 .project-detail-title {
     font-size: 2rem;

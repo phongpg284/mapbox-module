@@ -10,6 +10,7 @@ import DeviceSummary from './DeviceSummary'
 import DeviceTask from './DeviceTask'
 
 import { AiFillCalendar } from 'react-icons/ai'
+import BackButton from '../../../components/BackButton'
 
 const DeviceInfo = ({ match }: any) => {
     const id = match.params.id
@@ -56,10 +57,15 @@ const DeviceInfo = ({ match }: any) => {
 
     return (
         <div className="device-detail-container">
-            <div className="device-detail-title">
-                Thiết bị {data?.name ?? ''}
-                {isDeviceActive && <span className="device-tag-active">Đang hoạt động</span>}
-                {!isDeviceActive && <span className="device-tag-no-active">Không hoạt động</span>}
+            <div className="device-detail-header">
+                <div className="device-detail-title">
+                    Thiết bị {data?.name ?? ''}
+                    {isDeviceActive && <span className="device-tag-active">Đang hoạt động</span>}
+                    {!isDeviceActive && <span className="device-tag-no-active">Không hoạt động</span>}
+                </div>
+                <div className="device-detail-back-button">
+                    <BackButton route="list" />
+                </div>
             </div>
             <div className="device-detail-date">
                 <div className="device-detail-date-icon">
@@ -82,9 +88,9 @@ const DeviceInfo = ({ match }: any) => {
                 </div>
 
                 <div className="device-detail-content">
-                    {currentTab === 'summary' && <DeviceSummary data={data} isFetching={isFetching}/>}
-                    {currentTab === 'tasks' && <DeviceDetail id={id} currentDateData={deviceDetailData} isFetching={isFetchingDeviceDetail}/>}
-                    {currentTab === 'all-tasks' && <DeviceTask id={id} data={tasks} isFetching={isFetchingTasks}/>}
+                    {currentTab === 'summary' && <DeviceSummary data={data} isFetching={isFetching} />}
+                    {currentTab === 'tasks' && <DeviceDetail id={id} currentDateData={deviceDetailData} isFetching={isFetchingDeviceDetail} />}
+                    {currentTab === 'all-tasks' && <DeviceTask id={id} data={tasks} isFetching={isFetchingTasks} />}
                 </div>
             </div>
         </div>
