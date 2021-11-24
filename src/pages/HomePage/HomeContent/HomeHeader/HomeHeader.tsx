@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom'
 
+import { useState } from 'react'
+import togglerIcon from '../../../../assets/HomeContent/toggle.png'
+
 const HomeHeader = () => {
+    const [isToggled, setIsToggled] = useState(false);
+    const handleToggle = () => {
+        setIsToggled(!isToggled);
+    }
+
     return (
         <div className="home-header">
             <nav className="navbar sticky-top navbar-expand-lg imet-navbar">
@@ -9,19 +17,10 @@ const HomeHeader = () => {
                         <div className="imet-branch-logo"></div>
                         <div className="imet-branch-name">imet</div>
                     </a>
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon"></span>
+                    <button className="d-flex d-lg-none imet-navbar-toggle justify-content-center align-items-center" type="button" onClick={handleToggle}>
+                        <img src={togglerIcon} alt="" className="imet-navbar-toggle-img" />
                     </button>
-
-                    <div className="collapse navbar-collapse imet-navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+                    <div className={`imet-navbar-collapse ${isToggled ? 'active' : ''} d-lg-flex justify-content-end align-items-lg-center`}>
                         <ul className="navbar-nav imet-navbar-nav mr-auto">
                             <li className="imet-navbar-nav-item nav-item">
                                 <a className="imet-navbar-nav-link nav-link" href="#aboutUs">
