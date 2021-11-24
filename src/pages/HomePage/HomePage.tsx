@@ -40,8 +40,9 @@ import ActiveDeviceList from '../ActiveDevice/ActiveDeviceList'
 import ProfileEdit from '../Profile/ProfileEdit'
 import HomeContent from './HomeContent'
 import HomeHeader from './HomeContent/HomeHeader'
+import HomeFooter from './HomeContent/HomeFooter'
 
-const { Header, Content } = Layout
+const { Header, Content, Footer } = Layout
 
 const HomePage = ({ parentPath, match }: any) => {
     const account = useAppSelector((state) => state.account)
@@ -116,11 +117,11 @@ const HomePage = ({ parentPath, match }: any) => {
                     </Affix>
                 )}
                 {!account?.accessToken && !account?.role && (
-                    <Affix offsetTop={0}>
+                    <Affix>
                         <HomeHeader />
                     </Affix>
                 )}
-                <Content className="home-content">
+                <Content className="home">
                     <Switch>
                         <PrivateRoute path={`${parentPath}profile/edit`} component={ProfileEdit} />
 
@@ -162,6 +163,12 @@ const HomePage = ({ parentPath, match }: any) => {
                             <HomeContent />
                         </Route>
                     </Switch>
+                    <Footer> 
+                        {!account?.accessToken && !account?.role && (
+                            <HomeFooter />
+                        )}
+                        
+                    </Footer>
                 </Content>
             </Layout>
         </div>

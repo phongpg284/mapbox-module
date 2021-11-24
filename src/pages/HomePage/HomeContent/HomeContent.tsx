@@ -3,7 +3,7 @@ import poster from '../../../assets/HomeContent/poster.png'
 const HomeContent = () => {
     return (
         <div className="home-content">
-            <div className="about-us d-flex align-items-center" id="about-us">
+            <div className="about-us d-flex align-items-center" id="aboutUs">
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
@@ -33,13 +33,7 @@ const HomeContent = () => {
                     </div>
                 </div>
             </div>
-            <div className="imet-footer" id="contacts">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12"></div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     )
 }

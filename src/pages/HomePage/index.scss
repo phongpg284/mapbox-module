@@ -1,9 +1,15 @@
 .ant-menu-item-selected::after {
     display: none;
 }
+
 .ant-dropdown  {
     top: 70px !important;
 }
+
+.ant-layout-footer {
+    padding: 0 !important;
+}
+
 .home-content {
     // padding: 20px;
     height: 100vh;
@@ -25,7 +31,7 @@
     height: calc(100% -  70px);
 }
 
-.home-content {
+.home-header {
     .imet-navbar {
         background-color: #3B9E3E;
         height: 70px;
@@ -49,6 +55,8 @@
             height: 70px;
             list-style-type: none;
             &-item {
+                display: flex;
+                align-items: center;
                 cursor: pointer;
                 padding: 8px;
                 
@@ -61,8 +69,19 @@
                     text-decoration: underline;
                 }
             }
+            &-divider {
+                width: 2px;
+                height: 30%;
+                background-color: #FFFFFF;
+                margin: auto;
+                margin: auto 15px;
+            }
         }
     }
+
+}
+
+.home-content {
     
     .about-us {
         width: 100%;
@@ -113,13 +132,86 @@
             }
         }
     }
-    .imet-footer {
-        background-color: #3B9E3E;
-        height: 400px;
-        
-    }
 }
 
+.imet-footer {
+    width: 100%;
+    height: 100%;
+    background-color: #3B9E3E;
+    font-family: 'Montserrat', sans-serif;
+    color: #ffffff;
+    .company {
+        width: 100%;
+        height: 400px;
+        &-logo {
+            width: 120px;
+            height: 120px;
+            background: url(../../assets/imet-logo.png);
+            background-size: cover;
+        }
+        &-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px 0;
+        }
+    }
+    .company-info {
+        width: 100%;
+        height: 400px;
+        list-style-type: none;
+        &-item {
+            position: relative;
+            font-size: 1.3rem;
+            padding: 10px 15px;
+            margin-left: 50px;
+            a {
+                color: #FFFFFF;
+
+            }
+            &.phone {
+                &::before {
+                    position: absolute;
+                    content: url(../../assets/HomeContent/phoneIcon.svg);
+                    width: 20px;
+                    height: 20px;
+                    top: 13px;
+                    left: -25px;
+                }
+            }
+            &.website {
+                &::before {
+                    position: absolute;
+                    content: url(../../assets/HomeContent/websiteIcon.svg);
+                    width: 20px;
+                    height: 20px;
+                    top: 13px;
+                    left: -25px;
+                }
+            }
+            &.email {
+                &::before {
+                    position: absolute;
+                    content: url(../../assets/HomeContent/mailIcon.svg);
+                    width: 20px;
+                    height: 20px;
+                    top: 13px;
+                    left: -25px;
+                }
+            }
+            &.address {
+                &::before {
+                    position: absolute;
+                    content: url(../../assets/HomeContent/addressIcon.svg);
+                    width: 20px;
+                    height: 20px;
+                    top: 13px;
+                    left: -25px;
+                }
+            }
+        }
+    }
+}
 
 .header {
     background-color: #3B9E3E;

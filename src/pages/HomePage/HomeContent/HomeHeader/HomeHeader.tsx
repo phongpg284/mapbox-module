@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const HomeHeader = () => {
     return (
-        <>
+        <div className="home-header">
             <nav className="navbar sticky-top navbar-expand-lg imet-navbar">
                 <div className="container">
                     <a className="navbar-brand imet-branch d-flex align-items-center" href="#">
@@ -33,10 +33,7 @@ const HomeHeader = () => {
                                     Contacts
                                 </a>
                             </li>
-                            <li className="imet-navbar-nav-item nav-item">
-                                <div className="imet-nav-divider"></div>
-                            </li>
-                            <div className="imet-nav-divider"></div>
+                            <div className="imet-navbar-nav-divider"></div>
                             <li className="imet-navbar-nav-item nav-item">
                                 <Link className="imet-navbar-nav-link nav-link" to="/login">
                                     Sign In
@@ -51,7 +48,7 @@ const HomeHeader = () => {
                     </div>
                 </div>
             </nav>
-        </>
+        </div>
     )
 }
 
