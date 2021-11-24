@@ -1,8 +1,10 @@
+import { useHistory } from 'react-router'
 import poster from '../../../assets/HomeContent/poster.png'
 
 const HomeContent = () => {
+    const history = useHistory()
     return (
-        <div className="home-content">
+        <div className="home-content-wrapper">
             <div className="about-us d-flex align-items-center" id="about-us">
                 <div className="container">
                     <div className="row">
@@ -26,7 +28,7 @@ const HomeContent = () => {
                     </div>
                     <div className="row">
                         <div className="col-12">
-                            <button className="about-us-button" type="button">
+                            <button className="about-us-button" type="button" onClick={() => history.push('/login')}>
                                 Sign In
                             </button>
                         </div>

@@ -101,7 +101,6 @@ const HomePage = ({ parentPath, match }: any) => {
                                     </button>
                                 </div>
 
-                                {/* {account.accessToken && account.id && account.role && ( */}
                                 <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight" onVisibleChange={handleClickProfile}>
                                     <div className={`float-right user-toggle ${!isProfileCollapse ? '' : 'active'}`}>
                                         <div className="user-avatar">
@@ -109,9 +108,7 @@ const HomePage = ({ parentPath, match }: any) => {
                                         </div>
                                     </div>
                                 </Dropdown>
-                                {/* )} */}
                             </>
-                            // {/* {!account.accessToken && !account.id && !account.role && <button onClick={() => history.push('/login')}>Đăng nhập</button>} */}
                         </Header>
                     </Affix>
                 )}
