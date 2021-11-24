@@ -89,14 +89,14 @@
         font-family: 'Montserrat', sans-serif;
         .about-us-title {
             color: #3B9E3E;
-            font-size: 2.5rem;
+            font-size: 1.5rem;
             font-weight: 600;
             text-transform: uppercase;  
-            margin-bottom: 60px;         
+            margin: 20px 0;         
         }
         .about-us-icon {
-            width: 226px;
-            height: 226px;
+            width: 70px;
+            height: 70px;
             margin: auto;
             &.safety {
                 background: url(../../assets/HomeContent/safetyIcon.svg);
@@ -112,21 +112,21 @@
             }
         }
         .about-us-description {
-            margin-top: 30px;
-            font-size: 2rem;
+            margin: 15px 0;
+            font-size: 1.2rem;
             font-weight: 500;
             color: #3B9E3E;
         }
         .about-us-button {
-            width: 180px;
-            height: 50px;
+            width: 120px;
+            height: 35px;
             border-radius: 30px;
             background-color: #3B9E3E;
             color: #FFFFFF;
-            font-size: 1.5rem;
+            font-size: 1rem;
             font-weight: 600;
             border: none;
-            margin-top: 60px;
+            margin: 20px 0;
             &:hover,:focus {
                 background-color: #266628;
             }
@@ -424,6 +424,29 @@
 
 
 @media (min-width: 992px) {
+    .home-content {
+        .about-us {
+            .about-us-title {
+                font-size: 2.5rem;
+                margin: 60px 0;         
+            }
+            .about-us-icon {
+                width: 226px;
+                height: 226px;
+            }
+            .about-us-description {
+                margin: 30px 0;
+                font-size: 2rem;
+            }
+            .about-us-button {
+                width: 180px;
+                height: 50px;
+                font-size: 1.5rem;
+                margin: 60px 0;
+            }
+        }
+    }
+
     .imet-footer {
         .company {
             &-logo {

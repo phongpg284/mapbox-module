@@ -114,9 +114,7 @@ const HomePage = ({ parentPath, match }: any) => {
                     </Affix>
                 )}
                 {!account?.accessToken && !account?.role && (
-                    <Affix>
-                        <HomeHeader />
-                    </Affix>
+                    <HomeHeader />
                 )}
                 <Content className="home">
                     <Switch>
