@@ -92,7 +92,7 @@ const HomePage = ({ parentPath, match }: any) => {
                     <Affix offsetTop={0}>
                         <Header className="header">
                             <>
-                                <div className="menu-and-logo float-left">
+                                <div className="menu-and-logo float-start">
                                     <button className={`menu-toggle-button ${!isSideboardCollapse ? '' : 'active'}`} type="button" onClick={handleClickMenu}>
                                         <div className="button-image"></div>
                                     </button>
@@ -103,7 +103,7 @@ const HomePage = ({ parentPath, match }: any) => {
                                 </div>
 
                                 <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight" onVisibleChange={handleClickProfile}>
-                                    <div className={`float-right user-toggle ${!isProfileCollapse ? '' : 'active'}`}>
+                                    <div className={`float-end user-toggle ${!isProfileCollapse ? '' : 'active'}`}>
                                         <div className="user-avatar">
                                             <div className="user-avatar-img"></div>
                                         </div>
@@ -158,12 +158,12 @@ const HomePage = ({ parentPath, match }: any) => {
                             <HomeContent />
                         </Route>
                     </Switch>
-                    <Footer> 
-                        {!account?.accessToken && !account?.role && (
+                    {!account?.accessToken && !account?.role && (
+                        <Footer> 
                             <HomeFooter />
-                        )}
                         
-                    </Footer>
+                         </Footer>
+                    )}
                 </Content>
             </Layout>
         </div>

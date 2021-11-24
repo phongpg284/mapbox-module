@@ -82,7 +82,8 @@
 }
 
 .home-content {
-    
+    width: 100%;
+    height: calc(100% - 70px);
     .about-us {
         width: 100%;
         height: 100%;
@@ -92,7 +93,7 @@
             font-size: 1.5rem;
             font-weight: 600;
             text-transform: uppercase;  
-            margin: 20px 0;         
+            margin: 30px 0;         
         }
         .about-us-icon {
             width: 70px;
@@ -126,7 +127,7 @@
             font-size: 1rem;
             font-weight: 600;
             border: none;
-            margin: 20px 0;
+            margin: 30px 0;
             &:hover,:focus {
                 background-color: #266628;
             }
@@ -426,6 +427,7 @@
 @media (min-width: 992px) {
     .home-content {
         .about-us {
+            padding: 80px;
             .about-us-title {
                 font-size: 2.5rem;
                 margin: 60px 0;         
