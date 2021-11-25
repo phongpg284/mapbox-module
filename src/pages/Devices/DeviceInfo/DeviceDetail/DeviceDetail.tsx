@@ -1,8 +1,7 @@
 import './index.scss'
 import { useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router'
 
-import { Col, Collapse, DatePicker, Empty, Row, Select, Spin, Statistic, Table } from 'antd'
+import { Col, Collapse, DatePicker, Empty, Row, Select, Spin, Statistic } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
 import dayjs from 'dayjs'

@@ -64,7 +64,7 @@ const HomePage = ({ parentPath, match }: any) => {
 
     return (
         <div>
-            <Layout style={{ maxHeight: '100vh' }}>
+            <Layout style={{ minHeight: 'calc(100vh - 0px)' }}>
                 <Drawer
                     className="control-menu"
                     placement="left"
@@ -92,7 +92,7 @@ const HomePage = ({ parentPath, match }: any) => {
                     <Affix offsetTop={0}>
                         <Header className="header">
                             <>
-                                <div className="menu-and-logo float-start">
+                                <div className="menu-and-logo float-left">
                                     <button className={`menu-toggle-button ${!isSideboardCollapse ? '' : 'active'}`} type="button" onClick={handleClickMenu}>
                                         <div className="button-image"></div>
                                     </button>
@@ -103,7 +103,7 @@ const HomePage = ({ parentPath, match }: any) => {
                                 </div>
 
                                 <Dropdown overlay={<ProfileDashboard />} trigger={['click']} placement="bottomRight" onVisibleChange={handleClickProfile}>
-                                    <div className={`float-end user-toggle ${!isProfileCollapse ? '' : 'active'}`}>
+                                    <div className={`float-right user-toggle ${!isProfileCollapse ? '' : 'active'}`}>
                                         <div className="user-avatar">
                                             <div className="user-avatar-img"></div>
                                         </div>
